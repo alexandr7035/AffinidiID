@@ -1,4 +1,4 @@
-package by.alexandr7035.myapplication
+package by.alexandr7035.affinidi_id
 
 import org.junit.Test
 
