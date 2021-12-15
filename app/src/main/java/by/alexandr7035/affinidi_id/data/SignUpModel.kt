@@ -9,6 +9,6 @@ abstract class SignUpModel {
     ): SignUpModel()
 
     data class Fail(
-        val e: ErrorType
+        val errorType: ErrorType
     ): SignUpModel()
 }

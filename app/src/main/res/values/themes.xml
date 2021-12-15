@@ -28,10 +28,15 @@
         <item name="boxCornerRadiusTopStart">@dimen/auth_field_corner_radius</item>
     </style>
 
+    <style name="AuthFieldPasswordLayoutStyle" parent="AuthFieldLayoutStyle">
+        <item name="passwordToggleEnabled">true</item>
+    </style>
+
     <style name="AuthFieldEditTextStyle">
         <item name="android:textSize">18sp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="AuthLabel">
