@@ -9,4 +9,5 @@
     <string name="error_user_exists">User already exists. Try to sgin in</string>
     <string name="error_wromg_password_format">Wrong password format. At least 8 charaters, both latin symbols and numbers</string>
     <string name="error_passwords_not_match">Passwords do not match</string>
+    <string name="sign_in">Sign In</string>
 </resources>
