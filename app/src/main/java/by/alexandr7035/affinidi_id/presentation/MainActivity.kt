@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id
+package by.alexandr7035.affinidi_id.presentation
 
 import android.graphics.Color
 import android.os.Bundle
@@ -8,8 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val navController: NavController by lazy(LazyThreadSafetyMode.NONE) {
