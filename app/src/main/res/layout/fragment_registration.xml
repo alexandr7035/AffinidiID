@@ -6,14 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".presentation.registration.RegistrationFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/AuthCardStyle"
+        android:padding="@dimen/auth_form_padding"
+        android:layout_marginStart="@dimen/auth_form_horizontal_margin"
+        android:layout_marginEnd="@dimen/auth_form_horizontal_margin"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Registration"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/signUpLabel"
+            style="@style/AuthLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/create_id"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginField"
+            style="@style/AuthFieldLayoutStyle"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/signUpLabel"
+            android:hint="@string/enter_your_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginEditText"
+                style="@style/AuthFieldEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/loginField"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
