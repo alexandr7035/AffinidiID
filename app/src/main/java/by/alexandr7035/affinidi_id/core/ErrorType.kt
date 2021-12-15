@@ -1,0 +1,6 @@
+package by.alexandr7035.affinidi_id.core
+
+enum class ErrorType {
+    FAILED_CONNECTION,
+    USER_ALREADY_EXISTS
+}
