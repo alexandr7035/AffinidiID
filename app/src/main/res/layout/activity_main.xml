@@ -22,6 +22,7 @@
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        style="@style/BottomNavigationStyle"
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -93,4 +93,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="BottomNavigationStyle">
+        <item name="itemIconTint">@color/color_bottom_nav_icon</item>
+        <item name="itemTextColor">@color/color_bottom_nav_icon</item>
+        <item name="android:background">@drawable/background_bottom_navigation</item>
+    </style>
+
 </resources>

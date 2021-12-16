@@ -4,4 +4,14 @@
         android:title="@string/profile"
         android:icon="@drawable/ic_person_filled" />
 
+    <item
+        android:enabled="false"
+        android:title="@string/your_credentials"
+        android:icon="@drawable/ic_credential" />
+
+    <item
+        android:enabled="false"
+        android:title="@string/contacts"
+        android:icon="@drawable/ic_contacts" />
+
 </menu>
