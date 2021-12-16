@@ -67,13 +67,14 @@
 
         <TextView
             android:id="@+id/userDidView"
+            android:background="@drawable/background_copied_field"
             android:textSize="16sp"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
             android:ellipsize="middle"
-            tools:text="did:elem:sdndhvbw834g7enuscvuc23mvjisbvduhynuscvuc23mvdsvsfvsvvnuscvuc23mvnuscvuc23mvnuscvuc23mv"/>
+            tools:text="did:elem:sdndhvbw834g7enuscvuc23mvjisbvduhynuscvuc23mvdsvsfvsvvnuscvuc23mvnuscvuc23mvnuscvuc23mv"
+            android:singleLine="true" />
 
     </LinearLayout>
 
