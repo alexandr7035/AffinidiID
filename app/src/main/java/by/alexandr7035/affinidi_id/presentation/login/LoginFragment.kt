@@ -69,9 +69,16 @@ class LoginFragment : Fragment() {
             binding.loginProgressView.isVisible = false
 
             when (response) {
+
+                // Auth successful
                 is SignInModel.Success -> {
+                    // API doesn't provide username
+                    // So save it manually
+                    viewModel.saveUserName(binding.userNameEditText.text.toString())
                     findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
                 }
+
+                // Auth failed
                 is SignInModel.Fail -> {
                     when (response.errorType) {
                         ErrorType.USER_DOES_NOT_EXIST -> {

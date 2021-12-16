@@ -14,4 +14,6 @@ interface AuthRepository {
     ): SignInModel
 
     fun checkIfAuthorized(): Boolean
+
+    fun saveUserName(userName: String)
 }

@@ -63,6 +63,10 @@ class AuthRepositoryImpl @Inject constructor(
         return authDataStorage.getAccessToken() != null
     }
 
+    override fun saveUserName(userName: String) {
+        authDataStorage.saveUserName(userName)
+    }
+
     private fun saveAuthData(userDid: String, accessToken: String) {
         authDataStorage.saveDid(userDid)
         authDataStorage.saveAccessToken(accessToken)

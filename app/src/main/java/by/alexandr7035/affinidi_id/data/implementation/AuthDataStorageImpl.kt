@@ -2,7 +2,9 @@ package by.alexandr7035.affinidi_id.data.implementation
 
 import android.app.Application
 import android.content.Context
+import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.data.AuthDataStorage
+import timber.log.Timber
 import javax.inject.Inject
 
 class AuthDataStorageImpl @Inject constructor(private val application: Application): AuthDataStorage {
@@ -26,6 +28,7 @@ class AuthDataStorageImpl @Inject constructor(private val application: Applicati
     }
 
     override fun saveUserName(userName: String?) {
+        Timber.debug("USER NAME SAVE $userName")
         prefs.edit().putString(USER_NAME_STR, userName).apply()
     }
 

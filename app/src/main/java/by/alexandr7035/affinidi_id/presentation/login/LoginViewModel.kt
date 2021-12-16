@@ -24,4 +24,8 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository)
             }
         }
     }
+
+    fun saveUserName(userName: String) {
+        repository.saveUserName(userName)
+    }
 }
