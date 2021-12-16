@@ -71,4 +71,8 @@ dependencies {
     // ViewBinding delegate
     def viewbindingdelegate_version = "1.5.3"
     implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewbindingdelegate_version"
+
+    // Coil
+    implementation "io.coil-kt:coil:1.4.0"
+    implementation "io.coil-kt:coil-svg:1.4.0"
 }
