@@ -7,7 +7,11 @@
     <string name="confirm_password">Confirm password</string>
     <string name="error_empty_field">This field cannot be empty</string>
     <string name="error_user_exists">User already exists. Try to sgin in</string>
+    <string name="error_user_not_found">User not found.</string>
+    <string name="error_wrong_user_or_password">Wrong e-mail or password</string>
     <string name="error_wromg_password_format">Wrong password format. At least 8 charaters, both latin symbols and numbers</string>
     <string name="error_passwords_not_match">Passwords do not match</string>
     <string name="sign_in">Sign In</string>
+    <string name="error_failed_connection">Network error. Check your internet connection and try again</string>
+    <string name="error_unknown">Unknown error. Try again later or contact the developer</string>
 </resources>

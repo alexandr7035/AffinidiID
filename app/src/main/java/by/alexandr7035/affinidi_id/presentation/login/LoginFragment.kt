@@ -9,6 +9,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.data.model.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
@@ -32,6 +33,11 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.signInBtn.setOnClickListener {
+
+            // Clear errors before request
+            binding.userNameField.clearError()
+            binding.passwordField.clearError()
+
             if (chekIfFormIsValid()) {
                 viewModel.signIn(
                     userName = binding.userNameEditText.text.toString(),
@@ -59,7 +65,21 @@ class LoginFragment : Fragment() {
                     Toast.makeText(requireContext(), response.userDid, Toast.LENGTH_LONG).show()
                 }
                 is SignInModel.Fail -> {
-                    Toast.makeText(requireContext(), response.errorType.name, Toast.LENGTH_LONG).show()
+                    when (response.errorType) {
+                        ErrorType.USER_DOES_NOT_EXIST -> {
+                            binding.userNameField.error = getString(R.string.error_user_not_found)
+                        }
+                        ErrorType.WRONG_USERNAME_OR_PASSWORD -> {
+                            binding.userNameField.error = getString(R.string.error_wrong_user_or_password)
+                            binding.passwordField.error = getString(R.string.error_wrong_user_or_password)
+                        }
+                        ErrorType.FAILED_CONNECTION -> {
+                            Toast.makeText(requireContext(), getString(R.string.error_failed_connection), Toast.LENGTH_LONG).show()
+                        }
+                        else -> {
+                            Toast.makeText(requireContext(), getString(R.string.error_unknown), Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }
         })
