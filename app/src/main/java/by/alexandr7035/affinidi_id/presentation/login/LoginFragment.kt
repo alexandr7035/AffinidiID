@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.clearError
-import by.alexandr7035.affinidi_id.data.SignUpModel
 import by.alexandr7035.affinidi_id.data.model.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult

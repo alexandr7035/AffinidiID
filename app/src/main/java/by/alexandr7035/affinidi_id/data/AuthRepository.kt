@@ -8,7 +8,7 @@ interface AuthRepository {
         password: String,
     ): SignUpModel
 
-    fun signIn(
+    suspend fun signIn(
         userName: String,
         password: String,
     ): SignInModel

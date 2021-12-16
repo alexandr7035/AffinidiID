@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.data.AuthRepository
-import by.alexandr7035.affinidi_id.data.SignUpModel
 import by.alexandr7035.affinidi_id.data.model.SignInModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
