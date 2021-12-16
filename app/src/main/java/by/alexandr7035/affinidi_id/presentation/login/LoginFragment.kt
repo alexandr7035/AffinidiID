@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -39,6 +40,8 @@ class LoginFragment : Fragment() {
             binding.passwordField.clearError()
 
             if (chekIfFormIsValid()) {
+                binding.loginProgressView.isVisible = true
+
                 viewModel.signIn(
                     userName = binding.userNameEditText.text.toString(),
                     password = binding.passwordEditText.text.toString()
@@ -60,6 +63,9 @@ class LoginFragment : Fragment() {
 
 
         viewModel.signInLiveData.observe(viewLifecycleOwner, { response ->
+
+            binding.loginProgressView.isVisible = false
+
             when (response) {
                 is SignInModel.Success -> {
                     Toast.makeText(requireContext(), response.userDid, Toast.LENGTH_LONG).show()
