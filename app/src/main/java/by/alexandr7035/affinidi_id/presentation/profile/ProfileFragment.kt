@@ -38,7 +38,9 @@ class ProfileFragment : Fragment() {
 
 
         viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
+
             binding.userNameView.text = profile.userName
+            binding.userDidView.text = profile.userDid
             Timber.debug("DID ${profile.userDid}")
 
             binding.profileImageView.load(

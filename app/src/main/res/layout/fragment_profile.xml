@@ -7,6 +7,7 @@
     tools:context=".presentation.profile.ProfileFragment">
 
     <LinearLayout
+        android:id="@+id/headerCard"
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_width="0dp"
@@ -24,13 +25,13 @@
 
         <ImageView
             android:id="@+id/profileImageView"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:src="@mipmap/ic_launcher"/>
 
         <TextView
             android:id="@+id/userNameView"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
@@ -38,6 +39,41 @@
             tools:text="example@mail.com"
             android:ellipsize="middle"
             android:singleLine="true" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/didCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_card"
+        android:padding="@dimen/default_card_padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerCard"
+        android:layout_marginStart="@dimen/default_fragment_margin"
+        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_did"/>
+
+        <TextView
+            android:id="@+id/userDidView"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="middle"
+            tools:text="did:elem:sdndhvbw834g7enuscvuc23mvjisbvduhynuscvuc23mvdsvsfvsvvnuscvuc23mvnuscvuc23mvnuscvuc23mv"/>
 
     </LinearLayout>
 
