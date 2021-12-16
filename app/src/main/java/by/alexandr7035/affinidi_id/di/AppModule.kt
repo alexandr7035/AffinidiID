@@ -1,9 +1,12 @@
 package by.alexandr7035.affinidi_id.di
 
+import android.app.Application
 import by.alexandr7035.affinidi_id.core.AuthInterceptor
 import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.data.ApiService
+import by.alexandr7035.affinidi_id.data.AuthDataStorage
 import by.alexandr7035.affinidi_id.data.AuthRepository
+import by.alexandr7035.affinidi_id.data.implementation.AuthDataStorageImpl
 import by.alexandr7035.affinidi_id.data.implementation.AuthRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -51,7 +54,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provieAuthRepository(apiService: ApiService): AuthRepository {
-        return AuthRepositoryImpl(apiService)
+    fun provieAuthRepository(apiService: ApiService, authDataStorage: AuthDataStorage): AuthRepository {
+        return AuthRepositoryImpl(apiService, authDataStorage)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideAuthDataStorage(application: Application): AuthDataStorage {
+        return AuthDataStorageImpl(application)
     }
 }
