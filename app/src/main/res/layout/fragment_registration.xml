@@ -7,8 +7,8 @@
     tools:context=".presentation.registration.RegistrationFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/AuthCardStyle"
-        android:padding="@dimen/auth_form_padding"
+        style="@style/PrimaryCardStyle"
+        android:padding="@dimen/primary_card_padding"
         android:layout_marginStart="@dimen/auth_form_horizontal_margin"
         android:layout_marginEnd="@dimen/auth_form_horizontal_margin"
         android:layout_width="0dp"

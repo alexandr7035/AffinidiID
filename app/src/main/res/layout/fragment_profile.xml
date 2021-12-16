@@ -8,20 +8,17 @@
 
     <LinearLayout
         android:id="@+id/headerCard"
+        style="@style/PrimaryCardStyle"
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_card"
-        android:padding="@dimen/default_card_padding"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="@dimen/avatar_corner_radius"
         android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginTop="@dimen/default_fragment_margin"
-        android:layout_marginEnd="@dimen/default_fragment_margin"
-        android:elevation="@dimen/primary_card_elevation">
+        android:layout_marginEnd="@dimen/default_fragment_margin">
 
         <ImageView
             android:id="@+id/profileImageView"
@@ -31,24 +28,20 @@
 
         <TextView
             android:id="@+id/userNameView"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            style="@style/UserNameField"
             android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="example@mail.com"
-            android:ellipsize="middle"
-            android:singleLine="true" />
+            tools:text="example@mail.com" />
 
     </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/didCard"
+        style="@style/PrimaryCardStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_card"
-        android:padding="@dimen/default_card_padding"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerCard"
@@ -58,23 +51,18 @@
         android:orientation="vertical">
 
         <TextView
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
+            style="@style/CardHeaderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/your_did"/>
 
         <TextView
             android:id="@+id/userDidView"
-            android:background="@drawable/background_copied_field"
-            android:textSize="16sp"
+            style="@style/DidCopiedField"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="middle"
-            tools:text="did:elem:sdndhvbw834g7enuscvuc23mvjisbvduhynuscvuc23mvdsvsfvsvvnuscvuc23mvnuscvuc23mvnuscvuc23mv"
-            android:singleLine="true" />
+            tools:text="did:elem:sdndhvbw834g7enuscvuc23mvjisbvduhynuscvuc23mvdsvsfvsvvnuscvuc23mvnuscvuc23mvnuscvuc23mv" />
 
     </LinearLayout>
 

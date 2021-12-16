@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="auth_form_horizontal_margin">30dp</dimen>
-    <dimen name="auth_form_padding">16dp</dimen>
+    <dimen name="primary_card_padding">16dp</dimen>
     <dimen name="auth_field_corner_radius">12dp</dimen>
 
     <dimen name="primary_button_corner_radius">12dp</dimen>
