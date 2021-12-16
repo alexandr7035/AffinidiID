@@ -6,8 +6,10 @@ import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.data.ApiService
 import by.alexandr7035.affinidi_id.data.AuthDataStorage
 import by.alexandr7035.affinidi_id.data.AuthRepository
+import by.alexandr7035.affinidi_id.data.ProfileRepository
 import by.alexandr7035.affinidi_id.data.implementation.AuthDataStorageImpl
 import by.alexandr7035.affinidi_id.data.implementation.AuthRepositoryImpl
+import by.alexandr7035.affinidi_id.data.implementation.ProfileRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,6 +58,12 @@ object AppModule {
     @Singleton
     fun provieAuthRepository(apiService: ApiService, authDataStorage: AuthDataStorage): AuthRepository {
         return AuthRepositoryImpl(apiService, authDataStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(authDataStorage: AuthDataStorage): ProfileRepository {
+        return ProfileRepositoryImpl(authDataStorage)
     }
 
 

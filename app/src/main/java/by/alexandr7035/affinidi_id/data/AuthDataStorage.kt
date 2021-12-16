@@ -8,4 +8,8 @@ interface AuthDataStorage {
     fun saveAccessToken(accessToken: String?)
 
     fun getAccessToken(): String?
+
+    fun saveUserName(userName: String?)
+
+    fun getUserName(): String?
 }

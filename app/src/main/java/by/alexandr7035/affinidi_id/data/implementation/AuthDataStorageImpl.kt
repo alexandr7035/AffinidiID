@@ -25,9 +25,18 @@ class AuthDataStorageImpl @Inject constructor(private val application: Applicati
         return prefs.getString(ACCESS_TOKEN_STR, null)
     }
 
+    override fun saveUserName(userName: String?) {
+        prefs.edit().putString(USER_NAME_STR, userName).apply()
+    }
+
+    override fun getUserName(): String? {
+        return prefs.getString(USER_NAME_STR, null)
+    }
+
     companion object {
         private const val PREFERENCES_NAME = "AUTH_DATA_PREFS"
         private val ACCESS_TOKEN_STR = "ACCESS_TOKEN"
         private val USER_DID_STR = "USER_DID"
+        private val USER_NAME_STR = "USER_NAME"
     }
 }
