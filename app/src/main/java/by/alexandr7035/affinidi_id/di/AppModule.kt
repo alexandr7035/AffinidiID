@@ -1,6 +1,7 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.core.AuthInterceptor
+import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.data.ApiService
 import by.alexandr7035.affinidi_id.data.AuthRepository
 import by.alexandr7035.affinidi_id.data.implementation.AuthRepositoryImpl
@@ -24,6 +25,7 @@ object AppModule {
     fun provideHttpClient(): OkHttpClient {
         return  OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor())
+            .addInterceptor(ErrorInterceptor())
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
