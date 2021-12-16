@@ -3,12 +3,10 @@ package by.alexandr7035.affinidi_id.di
 import android.app.Application
 import by.alexandr7035.affinidi_id.core.AuthInterceptor
 import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
-import by.alexandr7035.affinidi_id.data.ApiService
-import by.alexandr7035.affinidi_id.data.AuthDataStorage
-import by.alexandr7035.affinidi_id.data.AuthRepository
-import by.alexandr7035.affinidi_id.data.ProfileRepository
+import by.alexandr7035.affinidi_id.data.*
 import by.alexandr7035.affinidi_id.data.implementation.AuthDataStorageImpl
 import by.alexandr7035.affinidi_id.data.implementation.AuthRepositoryImpl
+import by.alexandr7035.affinidi_id.data.implementation.DicebearAvatarsHelperImpl
 import by.alexandr7035.affinidi_id.data.implementation.ProfileRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -62,8 +60,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(authDataStorage: AuthDataStorage): ProfileRepository {
-        return ProfileRepositoryImpl(authDataStorage)
+    fun provideProfileRepository(authDataStorage: AuthDataStorage, avatarsHelper: DicebearAvatarsHelper): ProfileRepository {
+        return ProfileRepositoryImpl(authDataStorage, avatarsHelper)
     }
 
 
@@ -71,5 +69,10 @@ object AppModule {
     @Singleton
     fun provideAuthDataStorage(application: Application): AuthDataStorage {
         return AuthDataStorageImpl(application)
+    }
+
+    @Provides
+    fun provideDicebearAvatarsHelper(): DicebearAvatarsHelper {
+        return DicebearAvatarsHelperImpl()
     }
 }

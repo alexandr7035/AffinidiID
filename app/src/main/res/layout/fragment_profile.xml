@@ -23,6 +23,7 @@
         android:elevation="@dimen/primary_card_elevation">
 
         <ImageView
+            android:id="@+id/profileImageView"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:src="@mipmap/ic_launcher"/>

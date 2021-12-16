@@ -4,4 +4,6 @@ import by.alexandr7035.affinidi_id.data.model.UserProfile
 
 interface ProfileRepository {
     fun getProfile(): UserProfile
+
+    fun getProfileImageUrl(userDid: String): String
 }
