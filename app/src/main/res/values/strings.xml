@@ -14,4 +14,6 @@
     <string name="sign_in">Sign In</string>
     <string name="error_failed_connection">Network error. Check your internet connection and try again</string>
     <string name="error_unknown">Unknown error. Try again later or contact the developer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

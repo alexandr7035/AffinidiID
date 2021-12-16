@@ -9,9 +9,11 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.data.model.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
@@ -68,7 +70,7 @@ class LoginFragment : Fragment() {
 
             when (response) {
                 is SignInModel.Success -> {
-                    Toast.makeText(requireContext(), response.userDid, Toast.LENGTH_LONG).show()
+                    findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
                 }
                 is SignInModel.Fail -> {
                     when (response.errorType) {

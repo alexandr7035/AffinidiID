@@ -3,6 +3,7 @@ package by.alexandr7035.affinidi_id.data.implementation
 import by.alexandr7035.affinidi_id.core.AppError
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.data.ApiService
+import by.alexandr7035.affinidi_id.data.AuthDataStorage
 import by.alexandr7035.affinidi_id.data.AuthRepository
 import by.alexandr7035.affinidi_id.data.SignUpModel
 import by.alexandr7035.affinidi_id.data.model.SignInRequest
@@ -11,7 +12,10 @@ import by.alexandr7035.affinidi_id.data.model.SignInResponse
 import java.lang.Exception
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(private val apiService: ApiService): AuthRepository {
+class AuthRepositoryImpl @Inject constructor(
+    private val apiService: ApiService,
+    private val authDataStorage: AuthDataStorage
+): AuthRepository {
     override suspend fun signUp(userName: String, password: String): SignUpModel {
 
         // FIXME test only
@@ -24,6 +28,10 @@ class AuthRepositoryImpl @Inject constructor(private val apiService: ApiService)
             val res = apiService.signIn(SignInRequest(userName, password))
             if (res.isSuccessful) {
                 val data = res.body() as SignInResponse
+
+                // TODO think if should do this through fragment - viewmodel - repo chain
+                saveAuthData(userDid = data.userDid, accessToken = data.accessToken)
+
                 return SignInModel.Success(data.accessToken, data.userDid)
             }
             else {
@@ -49,5 +57,14 @@ class AuthRepositoryImpl @Inject constructor(private val apiService: ApiService)
         catch (e: Exception) {
             return SignInModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
+    }
+
+    override fun checkIfAuthorized(): Boolean {
+        return authDataStorage.getAccessToken() != null
+    }
+
+    private fun saveAuthData(userDid: String, accessToken: String) {
+        authDataStorage.saveDid(userDid)
+        authDataStorage.saveAccessToken(accessToken)
     }
 }

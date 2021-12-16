@@ -12,4 +12,6 @@ interface AuthRepository {
         userName: String,
         password: String,
     ): SignInModel
+
+    fun checkIfAuthorized(): Boolean
 }
