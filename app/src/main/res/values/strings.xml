@@ -20,4 +20,6 @@
     <string name="your_did_copied">Your DID has been copied!</string>
     <string name="your_credentials">Your credentials</string>
     <string name="contacts">Contacts</string>
+    <string name="your_affinidi_id">Your Affinidi ID</string>
+    <string name="log_out">Log out</string>
 </resources>

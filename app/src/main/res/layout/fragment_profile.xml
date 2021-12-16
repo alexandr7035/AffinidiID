@@ -6,6 +6,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.profile.ProfileFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        app:menu="@menu/menu_profile_toolbar"
+        app:title="@string/your_affinidi_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <LinearLayout
         android:id="@+id/headerCard"
         style="@style/PrimaryCardStyle"
@@ -15,7 +26,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginTop="@dimen/default_fragment_margin"
         android:layout_marginEnd="@dimen/default_fragment_margin">

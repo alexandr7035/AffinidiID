@@ -99,4 +99,8 @@
         <item name="android:background">@drawable/background_bottom_navigation</item>
     </style>
 
+    <style name="Toolbar">
+        <item name="background">@android:color/transparent</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
 </resources>
