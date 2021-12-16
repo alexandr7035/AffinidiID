@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = Color.TRANSPARENT
         window.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_window))
 
-        // TODO populate with fragments
-        val bottomNavigationDestinations = emptyList<Int>()
+        // Primary destinations shown in bottom navigation
+        val bottomNavigationDestinations = listOf(R.id.profileFragment)
 
         // Hide bottom navigation for non-primary fragments
         navController.addOnDestinationChangedListener { _, destination, _ ->
