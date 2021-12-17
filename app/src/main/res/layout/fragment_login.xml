@@ -79,11 +79,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/goToSignUpBtn"
+        style="@style/goToSignUpText"
+        tools:text="Don't have Affinidi account? Sign up"
+        android:layout_margin="@dimen/default_fragment_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <FrameLayout
         android:id="@+id/loginProgressView"
         style="@style/ProgressFrameLayout"
         android:visibility="gone"
-        tools:visibility="visible"
+        tools:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -1,10 +1,13 @@
 package by.alexandr7035.affinidi_id.presentation.login
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -13,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
+import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.data.model.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
@@ -98,6 +102,24 @@ class LoginFragment : Fragment() {
                 }
             }
         })
+
+//        binding.goToSignUpBtn.text =
+
+        val goToSignUpText = getString(R.string.go_to_sign_up)
+        val spannable = goToSignUpText.getClickableSpannable(
+            clickableText = getString(R.string.go_to_sign_up_clickable),
+            clickListener = {
+                findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToRegistrationFragment())
+            },
+            isBold = true,
+            spannableColor = ContextCompat.getColor(requireContext(), R.color.white)
+        )
+
+        binding.goToSignUpBtn.apply {
+            text = spannable
+            movementMethod = LinkMovementMethod.getInstance()
+            highlightColor = Color.TRANSPARENT
+        }
     }
 
     private fun chekIfFormIsValid(): Boolean {

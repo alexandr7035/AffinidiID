@@ -23,4 +23,8 @@
     <string name="your_affinidi_id">Your Affinidi ID</string>
     <string name="log_out">Log out</string>
     <string name="successful_logout">Successful logout</string>
+
+    <string name="go_to_sign_up">Don\'t have an account? Sign up</string>
+    <string name="go_to_sign_up_clickable">Sign up</string>
+
 </resources>
