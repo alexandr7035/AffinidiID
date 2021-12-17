@@ -5,7 +5,7 @@ import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.data.ApiService
 import by.alexandr7035.affinidi_id.data.AuthDataStorage
 import by.alexandr7035.affinidi_id.data.AuthRepository
-import by.alexandr7035.affinidi_id.data.SignUpModel
+import by.alexandr7035.affinidi_id.data.model.SignUpModel
 import by.alexandr7035.affinidi_id.data.model.SignInRequest
 import by.alexandr7035.affinidi_id.data.model.SignInModel
 import by.alexandr7035.affinidi_id.data.model.SignInResponse

@@ -1,7 +1,6 @@
-package by.alexandr7035.affinidi_id.data
+package by.alexandr7035.affinidi_id.data.model
 
 import by.alexandr7035.affinidi_id.core.ErrorType
-import java.lang.Exception
 
 abstract class SignUpModel {
     data class Success(
