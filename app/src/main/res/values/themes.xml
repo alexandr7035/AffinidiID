@@ -103,8 +103,14 @@
     <style name="Toolbar">
         <item name="background">@android:color/transparent</item>
         <item name="titleTextColor">@color/white</item>
-        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStart">@dimen/default_fragment_margin</item>
+    </style>
+
+    <style name="ToolbarWithBackNav" parent="Toolbar">
+        <item name="background">@android:color/transparent</item>
+        <item name="titleTextColor">@color/white</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="navigationIcon">?attr/actionModeCloseDrawable</item>
     </style>
 
     <style name="ToolbarNavIconStyle" parent="Widget.AppCompat.Toolbar.Button.Navigation">
