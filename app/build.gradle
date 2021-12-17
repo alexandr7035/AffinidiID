@@ -10,7 +10,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "by.alexandr7035.myapplication"
+        applicationId "by.alexandr7035.affinidi_id"
         minSdk 21
         targetSdk 31
         versionCode 1
