@@ -4,7 +4,7 @@ import by.alexandr7035.affinidi_id.core.ErrorType
 
 abstract class SignUpModel {
     data class Success(
-        val userDid: String
+        val confirmSignUpToken: String
     ): SignUpModel()
 
     data class Fail(

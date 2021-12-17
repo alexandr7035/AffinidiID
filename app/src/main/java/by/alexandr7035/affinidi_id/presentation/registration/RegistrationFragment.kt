@@ -6,7 +6,9 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +17,7 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
+import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.model.SignUpModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
@@ -44,18 +47,24 @@ class RegistrationFragment : Fragment() {
 
         binding.signUpBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                viewModel.signUp("name", "password")
+                binding.loginProgressView.isVisible = true
+
+                viewModel.signUp(
+                    binding.userNameEditText.text.toString(),
+                    binding.passwordSetEditText.text.toString())
             }
         }
 
 
-        viewModel.signUpLiveData.observe(viewLifecycleOwner, {
-            when (it) {
-                is SignUpModel.Success -> {
+        viewModel.signUpLiveData.observe(viewLifecycleOwner, { signUpResult ->
+            binding.loginProgressView.isVisible = false
 
+            when (signUpResult) {
+                is SignUpModel.Success -> {
+                    requireContext().showToast(signUpResult.confirmSignUpToken)
                 }
                 is SignUpModel.Fail -> {
-                    handleAPIError(it.errorType)
+                    handleAPIError(signUpResult.errorType)
                 }
             }
         })
@@ -97,6 +106,9 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun handleAPIError(errorType: ErrorType) {
+        requireContext().showToast(errorType.name)
+
+        // TODO handle other errors
         when (errorType) {
             ErrorType.USER_ALREADY_EXISTS -> {
                 binding.userNameField.error = getString(R.string.error_user_exists)

@@ -2,13 +2,12 @@ package by.alexandr7035.affinidi_id.data.implementation
 
 import by.alexandr7035.affinidi_id.core.AppError
 import by.alexandr7035.affinidi_id.core.ErrorType
+import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.data.ApiService
 import by.alexandr7035.affinidi_id.data.AuthDataStorage
 import by.alexandr7035.affinidi_id.data.AuthRepository
-import by.alexandr7035.affinidi_id.data.model.SignUpModel
-import by.alexandr7035.affinidi_id.data.model.SignInRequest
-import by.alexandr7035.affinidi_id.data.model.SignInModel
-import by.alexandr7035.affinidi_id.data.model.SignInResponse
+import by.alexandr7035.affinidi_id.data.model.*
+import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -18,8 +17,47 @@ class AuthRepositoryImpl @Inject constructor(
 ): AuthRepository {
     override suspend fun signUp(userName: String, password: String): SignUpModel {
 
-        // FIXME test only
-        return SignUpModel.Fail(ErrorType.USER_ALREADY_EXISTS)
+        try {
+
+            val res = apiService.signUp(
+                SignUpRequest(
+                    userName = userName,
+                    password = password,
+                    // Use with default params
+                    signUpOptions = SignUpOptions(),
+                    signUpMessageParams = SignUpMessageParams()
+                )
+            )
+
+            if (res.isSuccessful) {
+                // Get token for signup confirmation and return
+                return SignUpModel.Success(res.body() as String)
+            }
+            else {
+                Timber.debug("RES FAILED")
+                return when (res.code()) {
+                    409 -> {
+                        SignUpModel.Fail(ErrorType.USER_ALREADY_EXISTS)
+                    }
+                    else -> {
+                        SignUpModel.Fail(ErrorType.UNKNOWN_ERROR)
+                    }
+                }
+            }
+        }
+        // Handled in ErrorInterceptor
+        catch (appError: AppError) {
+            Timber.debug("RES FAILED ${appError.errorType.name}")
+            return SignUpModel.Fail(appError.errorType)
+        }
+        // Unknown exception
+        catch (e: Exception) {
+            e.printStackTrace()
+            return SignUpModel.Fail(ErrorType.UNKNOWN_ERROR)
+        }
+
+        // TODO remove
+        return SignUpModel.Fail(ErrorType.UNKNOWN_ERROR)
     }
 
     override suspend fun signIn(userName: String, password: String): SignInModel {
