@@ -28,5 +28,11 @@
     <string name="go_to_sign_up_clickable">Sign up</string>
     <string name="go_to_sign_in">Already have an account? Sign in</string>
     <string name="go_to_sign_in_clickable">Sign in</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_confirmation_code">Enter confirmation code</string>
+    <string name="confirm">Confim</string>
+    <string name="otp_verification">OTP verification</string>
+    <string name="confirmation_code_explanation">We have sent a confirmation code to the e-mail address you have speciied. Check your inbox.</string>
 
 </resources>

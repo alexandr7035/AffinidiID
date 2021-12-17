@@ -9,7 +9,24 @@
         android:id="@+id/registrationFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.registration.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_registrationConfirmationFragment"
+            app:destination="@id/registrationConfirmationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registrationConfirmationFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.registration.RegistrationConfirmationFragment"
+        android:label="RegistrationConfirmationFragment"
+        tools:layout="@layout/fragment_registration_confirmation">
+        <action
+            android:id="@+id/action_registrationConfirmationFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <argument
+            android:name="confirmSignUpToken"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
@@ -25,6 +42,7 @@
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.profile.ProfileFragment"
@@ -36,4 +54,5 @@
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
 </navigation>

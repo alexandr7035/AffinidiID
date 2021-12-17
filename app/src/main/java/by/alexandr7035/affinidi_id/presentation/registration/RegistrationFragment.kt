@@ -16,6 +16,7 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
@@ -61,6 +62,10 @@ class RegistrationFragment : Fragment() {
             when (signUpResult) {
                 is SignUpModel.Success -> {
                     requireContext().showToast(signUpResult.confirmSignUpToken)
+                    findNavController()
+                        .navigateSafe(RegistrationFragmentDirections.actionRegistrationFragmentToRegistrationConfirmationFragment(
+                            signUpResult.confirmSignUpToken
+                        ))
                 }
                 is SignUpModel.Fail -> {
                     handleAPIError(signUpResult.errorType)
