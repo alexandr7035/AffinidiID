@@ -22,4 +22,5 @@
     <string name="contacts">Contacts</string>
     <string name="your_affinidi_id">Your Affinidi ID</string>
     <string name="log_out">Log out</string>
+    <string name="successful_logout">Successful logout</string>
 </resources>

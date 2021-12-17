@@ -1,16 +1,19 @@
 package by.alexandr7035.affinidi_id.data.implementation
 
-import by.alexandr7035.affinidi_id.data.AuthDataStorage
-import by.alexandr7035.affinidi_id.data.DicebearAvatarsHelper
-import by.alexandr7035.affinidi_id.data.DicebearImageType
-import by.alexandr7035.affinidi_id.data.ProfileRepository
+import by.alexandr7035.affinidi_id.core.AppError
+import by.alexandr7035.affinidi_id.core.ErrorType
+import by.alexandr7035.affinidi_id.core.extensions.debug
+import by.alexandr7035.affinidi_id.data.*
+import by.alexandr7035.affinidi_id.data.model.LogOutModel
 import by.alexandr7035.affinidi_id.data.model.UserProfile
+import timber.log.Timber
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
     private val authDataStorage: AuthDataStorage,
-    private val avatarsHelper: DicebearAvatarsHelper
-):  ProfileRepository {
+    private val avatarsHelper: DicebearAvatarsHelper,
+    private val apiService: ApiService
+) : ProfileRepository {
     override fun getProfile(): UserProfile {
         return UserProfile(
             userName = authDataStorage.getUserName() ?: "Unknown username",
@@ -30,5 +33,48 @@ class ProfileRepositoryImpl @Inject constructor(
             dataString = uniqueString,
             imageSize = 1
         )
+    }
+
+    override suspend fun logOut(): LogOutModel {
+        try {
+            val res = apiService.logOut(authDataStorage.getAccessToken() ?: "")
+
+            if (res.isSuccessful) {
+                Timber.debug("LOGOUT SUCCESSFUL")
+
+                authDataStorage.saveUserName(null)
+                authDataStorage.saveAccessToken(null)
+                authDataStorage.saveDid(null)
+
+                return LogOutModel.Success()
+            }
+            else {
+                return when (res.code()) {
+                    401 -> {
+                        // Authorization token already unactual
+                        // Just clear it and return success logout
+                        authDataStorage.saveUserName(null)
+                        authDataStorage.saveAccessToken(null)
+                        authDataStorage.saveDid(null)
+                        return LogOutModel.Success()
+                    }
+                    else -> {
+                        LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
+                    }
+                }
+            }
+        }
+        // Handled in ErrorInterceptor
+        catch (appError: AppError) {
+            appError.printStackTrace()
+            Timber.debug("ERRORTYPE ${appError.errorType.name}")
+            return LogOutModel.Fail(appError.errorType)
+        }
+        // Unknown exception
+        catch (e: Exception) {
+            Timber.debug("LOGOUT FAILED other exception $e")
+            e.printStackTrace()
+            return LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
+        }
     }
 }
