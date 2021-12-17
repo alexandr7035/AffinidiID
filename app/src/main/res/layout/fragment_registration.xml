@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".presentation.registration.RegistrationFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        app:navigationIcon="?attr/actionModeCloseDrawable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/PrimaryCardStyle"
         android:padding="@dimen/primary_card_padding"
@@ -99,5 +109,16 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/goToSignInBtn"
+        style="@style/goToSignUpText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_fragment_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Already have an account? Sign in" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,24 +1,26 @@
 package by.alexandr7035.affinidi_id.presentation.registration
 
+import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
-import androidx.fragment.app.Fragment
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
-import by.alexandr7035.affinidi_id.core.extensions.debug
+import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.data.SignUpModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidatorImpl
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -33,6 +35,10 @@ class RegistrationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
 
         val formValidator = InputValidatorImpl()
 
@@ -71,6 +77,22 @@ class RegistrationFragment : Fragment() {
             if (text?.isNotEmpty() == true) {
                 binding.passwordConfirmField.clearError()
             }
+        }
+
+        val goToSignUpText = getString(R.string.go_to_sign_in)
+        val spannable = goToSignUpText.getClickableSpannable(
+            clickableText = getString(R.string.go_to_sign_in_clickable),
+            clickListener = {
+                findNavController().navigateUp()
+            },
+            isBold = true,
+            spannableColor = ContextCompat.getColor(requireContext(), R.color.white)
+        )
+
+        binding.goToSignInBtn.apply {
+            text = spannable
+            movementMethod = LinkMovementMethod.getInstance()
+            highlightColor = Color.TRANSPARENT
         }
     }
 

@@ -26,5 +26,7 @@
 
     <string name="go_to_sign_up">Don\'t have an account? Sign up</string>
     <string name="go_to_sign_up_clickable">Sign up</string>
+    <string name="go_to_sign_in">Already have an account? Sign in</string>
+    <string name="go_to_sign_in_clickable">Sign in</string>
 
 </resources>
