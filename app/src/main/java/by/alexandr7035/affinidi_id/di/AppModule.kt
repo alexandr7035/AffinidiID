@@ -1,7 +1,7 @@
 package by.alexandr7035.affinidi_id.di
 
 import android.app.Application
-import by.alexandr7035.affinidi_id.core.AuthInterceptor
+import by.alexandr7035.affinidi_id.core.network.AuthInterceptor
 import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.data.*
 import by.alexandr7035.affinidi_id.data.implementation.AuthDataStorageImpl
@@ -60,8 +60,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(authDataStorage: AuthDataStorage, avatarsHelper: DicebearAvatarsHelper): ProfileRepository {
-        return ProfileRepositoryImpl(authDataStorage, avatarsHelper)
+    fun provideProfileRepository(authDataStorage: AuthDataStorage, avatarsHelper: DicebearAvatarsHelper, apiService: ApiService): ProfileRepository {
+        return ProfileRepositoryImpl(authDataStorage, avatarsHelper, apiService)
     }
 
 

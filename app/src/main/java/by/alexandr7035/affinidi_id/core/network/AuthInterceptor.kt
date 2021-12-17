@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.core
+package by.alexandr7035.affinidi_id.core.network
 
 import by.alexandr7035.affinidi_id.BuildConfig
 import okhttp3.Interceptor
