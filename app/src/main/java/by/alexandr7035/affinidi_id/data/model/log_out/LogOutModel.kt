@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.data.model
+package by.alexandr7035.affinidi_id.data.model.log_out
 
 import by.alexandr7035.affinidi_id.core.ErrorType
 

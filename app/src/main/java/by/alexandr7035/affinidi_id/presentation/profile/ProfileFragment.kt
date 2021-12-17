@@ -16,7 +16,7 @@ import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showToast
-import by.alexandr7035.affinidi_id.data.model.LogOutModel
+import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
 import by.alexandr7035.affinidi_id.databinding.FragmentProfileBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader

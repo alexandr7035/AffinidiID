@@ -4,8 +4,9 @@ import by.alexandr7035.affinidi_id.core.AppError
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.data.*
-import by.alexandr7035.affinidi_id.data.model.LogOutModel
-import by.alexandr7035.affinidi_id.data.model.UserProfile
+import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
+import by.alexandr7035.affinidi_id.data.model.profile.UserProfileModel
+import by.alexandr7035.affinidi_id.data.model.profile.DicebearImageType
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -14,8 +15,8 @@ class ProfileRepositoryImpl @Inject constructor(
     private val avatarsHelper: DicebearAvatarsHelper,
     private val apiService: ApiService
 ) : ProfileRepository {
-    override fun getProfile(): UserProfile {
-        return UserProfile(
+    override fun getProfile(): UserProfileModel {
+        return UserProfileModel(
             userName = authDataStorage.getUserName() ?: "Unknown username",
             userDid = authDataStorage.getDid() ?: "Unknown DID"
         )

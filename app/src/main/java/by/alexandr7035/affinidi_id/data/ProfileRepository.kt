@@ -1,10 +1,10 @@
 package by.alexandr7035.affinidi_id.data
 
-import by.alexandr7035.affinidi_id.data.model.LogOutModel
-import by.alexandr7035.affinidi_id.data.model.UserProfile
+import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
+import by.alexandr7035.affinidi_id.data.model.profile.UserProfileModel
 
 interface ProfileRepository {
-    fun getProfile(): UserProfile
+    fun getProfile(): UserProfileModel
 
     fun getProfileImageUrl(userDid: String): String
 

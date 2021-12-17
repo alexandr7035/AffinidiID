@@ -18,7 +18,7 @@ import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
-import by.alexandr7035.affinidi_id.data.model.SignInModel
+import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidatorImpl

@@ -1,7 +1,7 @@
 package by.alexandr7035.affinidi_id.data
 
-import by.alexandr7035.affinidi_id.data.model.SignInModel
-import by.alexandr7035.affinidi_id.data.model.SignUpModel
+import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
+import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
 
 interface AuthRepository {
     suspend fun signUp(

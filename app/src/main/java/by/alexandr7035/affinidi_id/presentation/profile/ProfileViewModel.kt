@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.data.ProfileRepository
-import by.alexandr7035.affinidi_id.data.model.LogOutModel
-import by.alexandr7035.affinidi_id.data.model.UserProfile
+import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
+import by.alexandr7035.affinidi_id.data.model.profile.UserProfileModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val repository: ProfileRepository): ViewModel() {
 
-    val userProfileLiveData = MutableLiveData<UserProfile>()
+    val userProfileLiveData = MutableLiveData<UserProfileModel>()
     var logOutLiveData = MutableLiveData<LogOutModel>()
 
     fun init() {

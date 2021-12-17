@@ -1,9 +1,8 @@
 package by.alexandr7035.affinidi_id.data
 
-import by.alexandr7035.affinidi_id.data.model.SignInRequest
-import by.alexandr7035.affinidi_id.data.model.SignInResponse
-import by.alexandr7035.affinidi_id.data.model.SignUpRequest
-import by.alexandr7035.affinidi_id.data.model.SignUpResponse
+import by.alexandr7035.affinidi_id.data.model.sign_in.SignInRequest
+import by.alexandr7035.affinidi_id.data.model.sign_in.SignInResponse
+import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header

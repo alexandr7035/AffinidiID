@@ -6,7 +6,6 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -18,7 +17,7 @@ import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.showToast
-import by.alexandr7035.affinidi_id.data.model.SignUpModel
+import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidatorImpl

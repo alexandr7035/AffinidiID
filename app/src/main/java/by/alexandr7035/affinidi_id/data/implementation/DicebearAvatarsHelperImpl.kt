@@ -2,7 +2,7 @@ package by.alexandr7035.affinidi_id.data.implementation
 
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.data.DicebearAvatarsHelper
-import by.alexandr7035.affinidi_id.data.DicebearImageType
+import by.alexandr7035.affinidi_id.data.model.profile.DicebearImageType
 import timber.log.Timber
 
 class DicebearAvatarsHelperImpl: DicebearAvatarsHelper {

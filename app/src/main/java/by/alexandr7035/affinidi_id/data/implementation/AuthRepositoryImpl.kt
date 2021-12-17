@@ -6,7 +6,13 @@ import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.data.ApiService
 import by.alexandr7035.affinidi_id.data.AuthDataStorage
 import by.alexandr7035.affinidi_id.data.AuthRepository
-import by.alexandr7035.affinidi_id.data.model.*
+import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
+import by.alexandr7035.affinidi_id.data.model.sign_in.SignInRequest
+import by.alexandr7035.affinidi_id.data.model.sign_in.SignInResponse
+import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpMessageParams
+import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
+import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpOptions
+import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpRequest
 import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
