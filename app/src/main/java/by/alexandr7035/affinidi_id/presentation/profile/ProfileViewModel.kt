@@ -16,7 +16,6 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(private val repository: ProfileRepository): ViewModel() {
 
     val userProfileLiveData = MutableLiveData<UserProfileModel>()
-    var logOutLiveData = MutableLiveData<LogOutModel>()
 
     fun init() {
         userProfileLiveData.value = repository.getProfile()
@@ -26,13 +25,4 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
         return repository.getProfileImageUrl(userDid)
     }
 
-    fun logOut() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val res = repository.logOut()
-
-            withContext(Dispatchers.Main) {
-                logOutLiveData.value = res
-            }
-        }
-    }
 }

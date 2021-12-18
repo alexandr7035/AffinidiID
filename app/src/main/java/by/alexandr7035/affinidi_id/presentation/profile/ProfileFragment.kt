@@ -58,29 +58,6 @@ class ProfileFragment : Fragment() {
             )
         })
 
-
-        viewModel.logOutLiveData.observe(viewLifecycleOwner, { logout ->
-            when (logout) {
-                is LogOutModel.Success -> {
-                    requireContext().showToast(getString(R.string.successful_logout))
-                    findNavController().navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
-                }
-                is LogOutModel.Fail -> {
-                    when (logout.errorType) {
-                        ErrorType.FAILED_CONNECTION -> {
-                            requireContext().showToast(getString(R.string.error_failed_connection))
-                        }
-                        ErrorType.UNKNOWN_ERROR -> {
-                            requireContext().showToast(getString(R.string.error_unknown))
-                        }
-                        else -> {
-                            requireContext().showToast(getString(R.string.error_unknown))
-                        }
-                    }
-                }
-            }
-        })
-
         viewModel.init()
 
         binding.userDidView.setOnClickListener {
@@ -101,8 +78,7 @@ class ProfileFragment : Fragment() {
 
             when (it.itemId) {
                 R.id.logoutItem -> {
-                    // TODO dialog
-                    viewModel.logOut()
+                    findNavController().navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLogoutFragment())
                 }
             }
 

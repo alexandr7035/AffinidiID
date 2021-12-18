@@ -35,5 +35,7 @@
     <string name="otp_verification">OTP verification</string>
     <string name="confirmation_code_explanation">We have sent a confirmation code to the e-mail address you have speciied. Check your inbox.</string>
     <string name="error_wrong_confirmation_code">Wrong confirmation code</string>
+    <string name="want_to_log_out">Want to log out?</string>
+    <string name="log_out_explanation">Make sure you have saved your verifiable credentials. Otherwise you will have to re-issue them.</string>
 
 </resources>

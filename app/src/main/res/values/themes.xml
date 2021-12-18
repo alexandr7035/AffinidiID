@@ -126,4 +126,9 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/gray_500</item>
     </style>
+
+    <style name="BottomDialogBackground">
+        <item name="android:background">@drawable/background_bottom_dialog</item>
+        <item name="android:padding">@dimen/default_card_padding</item>
+    </style>
 </resources>

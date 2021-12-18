@@ -17,4 +17,5 @@
     <dimen name="copied_field_corners">8dp</dimen>
     <dimen name="copied_field_padding">4dp</dimen>
     <dimen name="bottom_nav_corner">16dp</dimen>
+    <dimen name="bottom_dialog_corner_radius">16dp</dimen>
 </resources>

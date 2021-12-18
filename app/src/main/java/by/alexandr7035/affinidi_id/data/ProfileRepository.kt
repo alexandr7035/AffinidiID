@@ -7,6 +7,4 @@ interface ProfileRepository {
     fun getProfile(): UserProfileModel
 
     fun getProfileImageUrl(userDid: String): String
-
-    suspend fun logOut(): LogOutModel
 }

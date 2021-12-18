@@ -51,10 +51,20 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_profileFragment_to_logoutFragment"
+            app:destination="@id/logoutFragment" />
     </fragment>
+
+    <dialog
+        android:id="@+id/logoutFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.logout.LogoutFragment"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" >
+        <action
+            android:id="@+id/action_logoutFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/logoutFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
 
 </navigation>

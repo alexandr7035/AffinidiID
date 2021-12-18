@@ -36,46 +36,4 @@ class ProfileRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun logOut(): LogOutModel {
-        try {
-            val res = apiService.logOut(authDataStorage.getAccessToken() ?: "")
-
-            if (res.isSuccessful) {
-                Timber.debug("LOGOUT SUCCESSFUL")
-
-                authDataStorage.saveUserName(null)
-                authDataStorage.saveAccessToken(null)
-                authDataStorage.saveDid(null)
-
-                return LogOutModel.Success()
-            }
-            else {
-                return when (res.code()) {
-                    401 -> {
-                        // Authorization token already unactual
-                        // Just clear it and return success logout
-                        authDataStorage.saveUserName(null)
-                        authDataStorage.saveAccessToken(null)
-                        authDataStorage.saveDid(null)
-                        return LogOutModel.Success()
-                    }
-                    else -> {
-                        LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
-                    }
-                }
-            }
-        }
-        // Handled in ErrorInterceptor
-        catch (appError: AppError) {
-            appError.printStackTrace()
-            Timber.debug("ERRORTYPE ${appError.errorType.name}")
-            return LogOutModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            Timber.debug("LOGOUT FAILED other exception $e")
-            e.printStackTrace()
-            return LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
-        }
-    }
 }
