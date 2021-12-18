@@ -80,7 +80,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
-        android:id="@+id/loginProgressView"
+        android:id="@+id/progressView"
         style="@style/ProgressFrameLayout"
         android:visibility="gone"
         tools:visibility="gone"

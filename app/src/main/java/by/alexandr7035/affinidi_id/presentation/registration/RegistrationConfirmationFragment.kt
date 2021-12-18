@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -45,14 +46,16 @@ class RegistrationConfirmationFragment : Fragment() {
             }
         }
 
-        viewModel.signUpConfirmationLiveData.observe(viewLifecycleOwner, { signUpConfirmationReult ->
-            when (signUpConfirmationReult) {
+        viewModel.signUpConfirmationLiveData.observe(viewLifecycleOwner, { signUpConfirmationResult ->
+            binding.progressView.isVisible = false
+
+            when (signUpConfirmationResult) {
                 is SignUpConfirmationModel.Success -> {
                     requireContext().showToast("Successful registration")
                     findNavController().navigateSafe(RegistrationConfirmationFragmentDirections.actionRegistrationConfirmationFragmentToProfileFragment())
                 }
                 is SignUpConfirmationModel.Fail -> {
-                    when (signUpConfirmationReult.errorType) {
+                    when (signUpConfirmationResult.errorType) {
                         ErrorType.FAILED_CONNECTION -> {
                             requireContext().showToast(getString(R.string.error_failed_connection))
                         }
@@ -70,6 +73,8 @@ class RegistrationConfirmationFragment : Fragment() {
 
         binding.confirmBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
+                binding.progressView.isVisible = true
+
                 viewModel.confirmSignUp(
                     confirmationCode = binding.confirmationCodeEditText.text.toString(),
                     confirmationToken = args.confirmSignUpToken
