@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
     private val binding by viewBinding(FragmentRegistrationBinding::bind)
-    private val viewModel by viewModels<AuthViewModel>()
+    private val viewModel by viewModels<RegistrationViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

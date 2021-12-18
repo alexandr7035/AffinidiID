@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(private val repository: AuthRepository): ViewModel() {
+class RegistrationViewModel @Inject constructor(private val repository: AuthRepository): ViewModel() {
 
     val signUpLiveData = MutableLiveData<SignUpModel>()
     val signUpConfirmationLiveData = MutableLiveData<SignUpConfirmationModel>()

@@ -26,7 +26,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class RegistrationConfirmationFragment : Fragment() {
 
-    private val viewModel by viewModels<AuthViewModel>()
+    private val viewModel by viewModels<RegistrationViewModel>()
     private val binding by viewBinding(FragmentRegistrationConfirmationBinding::bind)
     private val args by navArgs<RegistrationConfirmationFragmentArgs>()
 
