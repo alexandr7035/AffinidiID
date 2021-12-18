@@ -9,10 +9,7 @@ import by.alexandr7035.affinidi_id.data.AuthRepository
 import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
 import by.alexandr7035.affinidi_id.data.model.sign_in.SignInRequest
 import by.alexandr7035.affinidi_id.data.model.sign_in.SignInResponse
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpMessageParams
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpOptions
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpRequest
+import by.alexandr7035.affinidi_id.data.model.sign_up.*
 import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
@@ -35,13 +32,12 @@ class AuthRepositoryImpl @Inject constructor(
                 )
             )
 
-            if (res.isSuccessful) {
+            return if (res.isSuccessful) {
                 // Get token for signup confirmation and return
-                return SignUpModel.Success(res.body() as String)
-            }
-            else {
+                SignUpModel.Success(res.body() as String)
+            } else {
                 Timber.debug("RES FAILED")
-                return when (res.code()) {
+                when (res.code()) {
                     409 -> {
                         SignUpModel.Fail(ErrorType.USER_ALREADY_EXISTS)
                     }
@@ -61,10 +57,45 @@ class AuthRepositoryImpl @Inject constructor(
             e.printStackTrace()
             return SignUpModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
-
-        // TODO remove
-        return SignUpModel.Fail(ErrorType.UNKNOWN_ERROR)
     }
+
+    override suspend fun confirmSignUp(confirmationToken: String, confirmationCode: String): SignUpConfirmationModel {
+        try {
+            val res = apiService.confirmSignUp(ConfirmSignUpRequest(
+                token = confirmationToken,
+                confirmationCode = confirmationCode
+            ))
+
+            if (res.isSuccessful) {
+                val data = res.body() as ConfirmSignUpResponse
+
+                return SignUpConfirmationModel.Success(
+                    accessToken = data.accessToken,
+                    userDid = data.userDid
+                )
+            }
+            else {
+                return when (res.code()) {
+                    400 -> {
+                        SignUpConfirmationModel.Fail(ErrorType.WRONG_CONFIRMATION_CODE)
+                    }
+                    else -> {
+                        SignUpConfirmationModel.Fail(ErrorType.UNKNOWN_ERROR)
+                    }
+                }
+            }
+        }
+        // Handled in ErrorInterceptor
+        catch (appError: AppError) {
+            return SignUpConfirmationModel.Fail(appError.errorType)
+        }
+        // Unknown exception
+        catch (e: Exception) {
+            return SignUpConfirmationModel.Fail(ErrorType.UNKNOWN_ERROR)
+        }
+
+    }
+
 
     override suspend fun signIn(userName: String, password: String): SignInModel {
 

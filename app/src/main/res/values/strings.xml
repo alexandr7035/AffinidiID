@@ -34,5 +34,6 @@
     <string name="confirm">Confim</string>
     <string name="otp_verification">OTP verification</string>
     <string name="confirmation_code_explanation">We have sent a confirmation code to the e-mail address you have speciied. Check your inbox.</string>
+    <string name="error_wrong_confirmation_code">Wrong confirmation code</string>
 
 </resources>
