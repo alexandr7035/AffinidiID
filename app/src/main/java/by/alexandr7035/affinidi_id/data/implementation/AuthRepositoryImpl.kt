@@ -69,6 +69,9 @@ class AuthRepositoryImpl @Inject constructor(
             if (res.isSuccessful) {
                 val data = res.body() as ConfirmSignUpResponse
 
+                // TODO think if should do this through fragment - viewmodel - repo chain
+                saveAuthData(userDid = data.userDid, accessToken = data.accessToken)
+
                 return SignUpConfirmationModel.Success(
                     accessToken = data.accessToken,
                     userDid = data.userDid
