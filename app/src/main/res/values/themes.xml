@@ -129,6 +129,5 @@
 
     <style name="BottomDialogBackground">
         <item name="android:background">@drawable/background_bottom_dialog</item>
-        <item name="android:padding">@dimen/default_card_padding</item>
     </style>
 </resources>

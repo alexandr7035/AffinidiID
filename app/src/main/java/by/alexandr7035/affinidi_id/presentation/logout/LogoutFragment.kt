@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
@@ -33,6 +34,9 @@ class LogoutFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.logOutLiveData.observe(viewLifecycleOwner, { logout ->
+
+            binding.progressView.isVisible = false
+
             when (logout) {
                 is LogOutModel.Success -> {
                     requireContext().showToast(getString(R.string.successful_logout))
@@ -55,6 +59,7 @@ class LogoutFragment : BottomSheetDialogFragment() {
         })
 
         binding.logoutBtn.setOnClickListener {
+            binding.progressView.isVisible = true
             viewModel.logOut()
         }
     }
