@@ -39,7 +39,6 @@ class LogoutFragment : BottomSheetDialogFragment() {
 
             when (logout) {
                 is LogOutModel.Success -> {
-                    requireContext().showToast(getString(R.string.successful_logout))
                     findNavController().navigateSafe(LogoutFragmentDirections.actionLogoutFragmentToLoginFragment())
                 }
                 is LogOutModel.Fail -> {
