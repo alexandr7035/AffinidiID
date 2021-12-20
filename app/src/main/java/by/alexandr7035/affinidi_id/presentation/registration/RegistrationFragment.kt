@@ -133,7 +133,9 @@ class RegistrationFragment : Fragment() {
             when (signUpConfirmationResult) {
 
                 is SignUpConfirmationModel.Success -> {
-                    requireContext().showToast("success registration")
+                    // Save username to storage
+                    // DID and token already saved by repository
+                    viewModel.saveUserName(binding.userNameEditText.text.toString())
                     findNavController().navigateSafe(RegistrationConfirmationFragmentDirections.actionGlobalProfileFragment())
                 }
 

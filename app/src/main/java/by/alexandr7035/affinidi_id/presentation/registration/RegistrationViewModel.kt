@@ -39,4 +39,7 @@ class RegistrationViewModel @Inject constructor(private val repository: AuthRepo
         }
     }
 
+    fun saveUserName(userName: String) {
+        repository.saveUserName(userName)
+    }
 }
