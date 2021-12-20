@@ -149,7 +149,7 @@ class RegistrationFragment : Fragment() {
                         }
                         ErrorType.WRONG_CONFIRMATION_CODE -> {
                             showErrorDialog(
-                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_wrong_confirmation_code_title),
                                 getString(R.string.error_wrong_confirmation_code)
                             )
                         }
