@@ -15,10 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
-import by.alexandr7035.affinidi_id.core.extensions.clearError
-import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
-import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
-import by.alexandr7035.affinidi_id.core.extensions.showToast
+import by.alexandr7035.affinidi_id.core.extensions.*
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
@@ -26,6 +23,7 @@ import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidatorImpl
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -63,7 +61,6 @@ class RegistrationFragment : Fragment() {
 
             when (signUpResult) {
                 is SignUpModel.Success -> {
-//                    requireContext().showToast(signUpResult.confirmSignUpToken)
                     findNavController()
                         .navigateSafe(
                             RegistrationFragmentDirections.actionRegistrationFragmentToRegistrationConfirmationFragment(
@@ -72,13 +69,24 @@ class RegistrationFragment : Fragment() {
                         )
                 }
                 is SignUpModel.Fail -> {
-                    requireContext().showToast(signUpResult.errorType.name)
                     binding.loginProgressView.isVisible = false
 
-                    // TODO handle other errors
                     when (signUpResult.errorType) {
                         ErrorType.USER_ALREADY_EXISTS -> {
                             binding.userNameField.error = getString(R.string.error_user_exists)
+                        }
+                        ErrorType.FAILED_CONNECTION -> {
+                            showErrorDialog(
+                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_failed_connection)
+                            )
+                        }
+                        // Including UNKNOWN_ERROR
+                        else -> {
+                            showErrorDialog(
+                                getString(R.string.error_unknown_title),
+                                getString(R.string.error_unknown)
+                            )
                         }
                     }
                 }
@@ -134,17 +142,26 @@ class RegistrationFragment : Fragment() {
 
                     when (signUpConfirmationResult.errorType) {
                         ErrorType.FAILED_CONNECTION -> {
-                            requireContext().showToast(getString(R.string.error_failed_connection))
+                            showErrorDialog(
+                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_failed_connection)
+                            )
                         }
                         ErrorType.WRONG_CONFIRMATION_CODE -> {
-                            requireContext().showToast(getString(R.string.error_wrong_confirmation_code))
+                            showErrorDialog(
+                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_wrong_confirmation_code)
+                            )
                         }
                         ErrorType.CONFIRMATION_CODE_DIALOG_DISMISSED -> {
                             // DO NOTHING
                             // Type used just to be caught here and hide progressbar
                         }
                         else -> {
-                            requireContext().showToast(getString(R.string.error_unknown))
+                            showErrorDialog(
+                                getString(R.string.error_unknown_title),
+                                getString(R.string.error_unknown)
+                            )
                         }
                     }
                 }
@@ -200,5 +217,10 @@ class RegistrationFragment : Fragment() {
         }
 
         return isValid
+    }
+
+    private fun showErrorDialog(title: String, message: String) {
+        findNavController().navigateSafe(RegistrationFragmentDirections
+            .actionGlobalErrorDialogFragment(title, message))
     }
 }

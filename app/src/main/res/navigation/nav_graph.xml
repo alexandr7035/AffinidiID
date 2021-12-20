@@ -68,4 +68,19 @@
             app:popUpToInclusive="true" />
     </navigation>
 
+    <dialog
+        android:id="@+id/errorDialogFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.error_dialog.ErrorDialogFragment"
+        android:label="fragment_error_dialog"
+        tools:layout="@layout/fragment_error_dialog" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="message"
+            app:argType="string" />
+    </dialog>
+
+    <action android:id="@+id/action_global_errorDialogFragment" app:destination="@id/errorDialogFragment" />
+
 </navigation>
