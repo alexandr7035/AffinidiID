@@ -47,6 +47,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ErrorAuthLabel" parent="AuthLabel">
+        <item name="android:textColor">@color/purple_300</item>
+    </style>
+
     <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">@dimen/primary_button_corner_radius</item>
         <item name="android:height">@dimen/primary_button_height</item>
@@ -54,6 +58,10 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/primary_button_text_size</item>
         <item name="backgroundTint">?attr/colorPrimary</item>
+    </style>
+
+    <style name="ErrorButton" parent="PrimaryButton">
+        <item name="backgroundTint">@color/purple_300</item>
     </style>
 
     <!--    Elevation to show the view on the top of views with elevation
