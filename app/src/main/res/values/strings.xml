@@ -2,22 +2,27 @@
     <string name="app_name">AffinidiID</string>
     <string name="create_id">Create ID</string>
     <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+
     <string name="enter_your_login">Enter your login</string>
     <string name="set_password">Set password</string>
     <string name="confirm_password">Confirm password</string>
+
     <string name="error_empty_field">This field cannot be empty</string>
-    <string name="error_user_exists">User already exists. Try to sgin in</string>
-    <string name="error_user_not_found">User not found.</string>
+    <string name="error_user_exists">User already exists. Try to sign in</string>
+    <string name="error_user_not_found">User not found</string>
     <string name="error_wrong_user_or_password">Wrong e-mail or password</string>
     <string name="error_wromg_password_format">Wrong password format. At least 8 charaters, both latin symbols and numbers</string>
     <string name="error_passwords_not_match">Passwords do not match</string>
-    <string name="sign_in">Sign In</string>
 
     <string name="error_failed_connection_title">Network error</string>
     <string name="error_failed_connection">Network error. Check your internet connection and try again</string>
 
-    <string name="error_unknown_title">Unknown error. Try again later or contact the developer</string>
+    <string name="error_unknown_title">Unknown error</string>
     <string name="error_unknown">Unknown error. Try again later or contact the developer</string>
+
+    <string name="error_wrong_confirmation_code_title">Wrong confirmation code</string>
+    <string name="error_wrong_confirmation_code">Wrong confirmation code. Try again. We will send a new one to your e-mail</string>
 
     <string name="profile">Profile</string>
     <string name="your_did">Your DID</string>
@@ -32,15 +37,11 @@
     <string name="go_to_sign_up_clickable">Sign up</string>
     <string name="go_to_sign_in">Already have an account? Sign in</string>
     <string name="go_to_sign_in_clickable">Sign in</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="enter_confirmation_code">Enter confirmation code</string>
-    <string name="confirm">Confim</string>
+    <string name="confirm">Confirm</string>
     <string name="otp_verification">OTP verification</string>
     <string name="confirmation_code_explanation">We have sent a confirmation code to the e-mail address you have specified. Check your inbox.</string>
-
-    <string name="error_wrong_confirmation_code_title">Wrong confirmation code.</string>
-    <string name="error_wrong_confirmation_code">Wrong confirmation code. Try again. We will send a new one to your e-mail.</string>
 
     <string name="want_to_log_out">Want to log out?</string>
     <string name="log_out_explanation">Make sure you have saved your verifiable credentials. Otherwise you will have to re-issue them.</string>
