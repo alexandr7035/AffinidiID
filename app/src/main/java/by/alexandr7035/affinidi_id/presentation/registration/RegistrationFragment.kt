@@ -12,12 +12,14 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showToast
+import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
@@ -29,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
     private val binding by viewBinding(FragmentRegistrationBinding::bind)
-    private val viewModel by viewModels<RegistrationViewModel>()
+    private val viewModel by navGraphViewModels<RegistrationViewModel>(R.id.signUpGraph) { defaultViewModelProviderFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -51,24 +53,34 @@ class RegistrationFragment : Fragment() {
 
                 viewModel.signUp(
                     binding.userNameEditText.text.toString(),
-                    binding.passwordSetEditText.text.toString())
+                    binding.passwordSetEditText.text.toString()
+                )
             }
         }
 
 
         viewModel.signUpLiveData.observe(viewLifecycleOwner, { signUpResult ->
-            binding.loginProgressView.isVisible = false
 
             when (signUpResult) {
                 is SignUpModel.Success -> {
-                    requireContext().showToast(signUpResult.confirmSignUpToken)
+//                    requireContext().showToast(signUpResult.confirmSignUpToken)
                     findNavController()
-                        .navigateSafe(RegistrationFragmentDirections.actionRegistrationFragmentToRegistrationConfirmationFragment(
-                            signUpResult.confirmSignUpToken
-                        ))
+                        .navigateSafe(
+                            RegistrationFragmentDirections.actionRegistrationFragmentToRegistrationConfirmationFragment(
+                                signUpResult.confirmSignUpToken
+                            )
+                        )
                 }
                 is SignUpModel.Fail -> {
-                    handleAPIError(signUpResult.errorType)
+                    requireContext().showToast(signUpResult.errorType.name)
+                    binding.loginProgressView.isVisible = false
+
+                    // TODO handle other errors
+                    when (signUpResult.errorType) {
+                        ErrorType.USER_ALREADY_EXISTS -> {
+                            binding.userNameField.error = getString(R.string.error_user_exists)
+                        }
+                    }
                 }
             }
         })
@@ -107,19 +119,38 @@ class RegistrationFragment : Fragment() {
             movementMethod = LinkMovementMethod.getInstance()
             highlightColor = Color.TRANSPARENT
         }
-    }
 
-    private fun handleAPIError(errorType: ErrorType) {
-        requireContext().showToast(errorType.name)
 
-        // TODO handle other errors
-        when (errorType) {
-            ErrorType.USER_ALREADY_EXISTS -> {
-                binding.userNameField.error = getString(R.string.error_user_exists)
+        viewModel.signUpConfirmationLiveData.observe(viewLifecycleOwner, { signUpConfirmationResult ->
+            when (signUpConfirmationResult) {
+
+                is SignUpConfirmationModel.Success -> {
+                    requireContext().showToast("success registration")
+                    findNavController().navigateSafe(RegistrationConfirmationFragmentDirections.actionGlobalProfileFragment())
+                }
+
+                is SignUpConfirmationModel.Fail -> {
+                    binding.loginProgressView.isVisible = false
+
+                    when (signUpConfirmationResult.errorType) {
+                        ErrorType.FAILED_CONNECTION -> {
+                            requireContext().showToast(getString(R.string.error_failed_connection))
+                        }
+                        ErrorType.WRONG_CONFIRMATION_CODE -> {
+                            requireContext().showToast(getString(R.string.error_wrong_confirmation_code))
+                        }
+                        ErrorType.CONFIRMATION_CODE_DIALOG_DISMISSED -> {
+                            // DO NOTHING
+                            // Type used just to be caught here and hide progressbar
+                        }
+                        else -> {
+                            requireContext().showToast(getString(R.string.error_unknown))
+                        }
+                    }
+                }
             }
-        }
+        })
     }
-
 
     private fun chekIfFormIsValid(): Boolean {
 

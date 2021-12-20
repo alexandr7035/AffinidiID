@@ -109,7 +109,7 @@ class LoginFragment : Fragment() {
         val spannable = goToSignUpText.getClickableSpannable(
             clickableText = getString(R.string.go_to_sign_up_clickable),
             clickListener = {
-                findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToRegistrationFragment())
+                findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToSignUpGraph())
             },
             isBold = true,
             spannableColor = ContextCompat.getColor(requireContext(), R.color.white)
