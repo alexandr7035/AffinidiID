@@ -22,6 +22,7 @@ import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidatorImpl
+import by.alexandr7035.affinidi_id.presentation.registration.RegistrationFragmentDirections
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -93,10 +94,17 @@ class LoginFragment : Fragment() {
                             binding.passwordField.error = getString(R.string.error_wrong_user_or_password)
                         }
                         ErrorType.FAILED_CONNECTION -> {
-                            Toast.makeText(requireContext(), getString(R.string.error_failed_connection), Toast.LENGTH_LONG).show()
+                            showErrorDialog(
+                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_failed_connection)
+                            )
                         }
+                        // Including unknown error
                         else -> {
-                            Toast.makeText(requireContext(), getString(R.string.error_unknown), Toast.LENGTH_LONG).show()
+                            showErrorDialog(
+                                getString(R.string.error_unknown_title),
+                                getString(R.string.error_unknown)
+                            )
                         }
                     }
                 }
@@ -150,6 +158,12 @@ class LoginFragment : Fragment() {
         }
 
         return isValid
+    }
+
+    private fun showErrorDialog(title: String, message: String) {
+        findNavController().navigateSafe(
+            RegistrationFragmentDirections
+            .actionGlobalErrorDialogFragment(title, message))
     }
 
 }
