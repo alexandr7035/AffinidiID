@@ -22,3 +22,9 @@ In the first version (v0.1-alpha) covers the following use cases:
 
 ## Screenshots
 
+<p align="left">
+<img src="doc/screenshot_sign_in.webp" width="23%"/>
+<img src="doc/screenshot_sign_up.webp" width="23%"/>
+<img src="doc/screenshot_profile.webp" width="23%"/>
+<img src="doc/screenshot_logout.webp" width="23%"/>
+</p>
