@@ -15,6 +15,7 @@ import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.databinding.FragmentLogoutBinding
 import by.alexandr7035.affinidi_id.presentation.profile.ProfileFragmentDirections
+import by.alexandr7035.affinidi_id.presentation.registration.RegistrationFragmentDirections
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,13 +45,17 @@ class LogoutFragment : BottomSheetDialogFragment() {
                 is LogOutModel.Fail -> {
                     when (logout.errorType) {
                         ErrorType.FAILED_CONNECTION -> {
-                            requireContext().showToast(getString(R.string.error_failed_connection))
+                            showErrorDialog(
+                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_failed_connection)
+                            )
                         }
-                        ErrorType.UNKNOWN_ERROR -> {
-                            requireContext().showToast(getString(R.string.error_unknown))
-                        }
+                        // Including UNKNOWN_ERROR
                         else -> {
-                            requireContext().showToast(getString(R.string.error_unknown))
+                            showErrorDialog(
+                                getString(R.string.error_unknown_title),
+                                getString(R.string.error_unknown)
+                            )
                         }
                     }
                 }
@@ -61,5 +66,11 @@ class LogoutFragment : BottomSheetDialogFragment() {
             binding.progressView.isVisible = true
             viewModel.logOut()
         }
+    }
+
+    private fun showErrorDialog(title: String, message: String) {
+        findNavController().navigateSafe(
+            RegistrationFragmentDirections
+                .actionGlobalErrorDialogFragment(title, message))
     }
 }
