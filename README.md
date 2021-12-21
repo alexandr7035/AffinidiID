@@ -19,7 +19,7 @@ In this application the [Affinidi APIs](https://build.affinidi.com/docs/api) are
 Also [DiceBear Avatars API](https://avatars.dicebear.com/) is used to generate unique avatars depending on the user's DID.
 
 ## Implemented use cases
-In the first version (v0.1-alpha) covers the following use cases:
+The first version (v0.1-alpha) covers the following use cases:
 - Sign up
 - Sign in
 - View profile info (username, DID)
@@ -42,4 +42,4 @@ In the first version (v0.1-alpha) covers the following use cases:
 - [ViewBindingPropertyDelegate](https://github.com/androidbroadcast/ViewBindingPropertyDelegate) lib to make work with view binding simplier (avoid boilerplate and safe calls)
 - [Retrofit](https://github.com/square/retrofit) for making API requests (plus [OkHttp Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)). 
 - [Timber](https://github.com/JakeWharton/timber) for logging.
-- [Coil](https://github.com/coil-kt/coil) to load SVG profile image from 
+- [Coil](https://github.com/coil-kt/coil) to load SVG images into ImageView.
