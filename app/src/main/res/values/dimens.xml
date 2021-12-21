@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="auth_form_horizontal_margin">30dp</dimen>
+    <dimen name="primary_card_padding">16dp</dimen>
+    <dimen name="auth_field_corner_radius">12dp</dimen>
+
+    <dimen name="primary_button_corner_radius">12dp</dimen>
+    <dimen name="primary_button_height">48dp</dimen>
+    <dimen name="primary_button_text_size">16sp</dimen>
+    <dimen name="primary_card_elevation">4dp</dimen>
+
+    <dimen name="default_fragment_margin">16dp</dimen>
+    <dimen name="default_card_padding">16dp</dimen>
+    <dimen name="avatar_corner_radius">16dp</dimen>
+    <dimen name="profile_image_margin">56dp</dimen>
+
+    <dimen name="copied_field_corners">8dp</dimen>
+    <dimen name="copied_field_padding">4dp</dimen>
+    <dimen name="bottom_nav_corner">16dp</dimen>
+    <dimen name="bottom_dialog_corner_radius">16dp</dimen>
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpGraph"
+            app:destination="@id/signUpGraph" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_logoutFragment"
+            app:destination="@id/logoutFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/logoutFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.logout.LogoutFragment"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" >
+        <action
+            android:id="@+id/action_logoutFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/logoutFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <navigation android:id="@+id/signUpGraph"
+        app:startDestination="@id/registrationFragment">
+        <fragment
+            android:id="@+id/registrationFragment"
+            android:name="by.alexandr7035.affinidi_id.presentation.registration.RegistrationFragment"
+            android:label="fragment_registration"
+            tools:layout="@layout/fragment_registration">
+            <action
+                android:id="@+id/action_registrationFragment_to_registrationConfirmationFragment"
+                app:destination="@id/registrationConfirmationFragment" />
+        </fragment>
+        <dialog
+            android:id="@+id/registrationConfirmationFragment"
+            android:name="by.alexandr7035.affinidi_id.presentation.registration.RegistrationConfirmationFragment"
+            android:label="RegistrationConfirmationFragment"
+            tools:layout="@layout/fragment_registration_confirmation">
+            <argument
+                android:name="confirmSignUpToken"
+                app:argType="string" />
+        </dialog>
+        <action
+            android:id="@+id/action_global_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/signUpGraph"
+            app:popUpToInclusive="true" />
+    </navigation>
+
+    <dialog
+        android:id="@+id/errorDialogFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.error_dialog.ErrorDialogFragment"
+        android:label="fragment_error_dialog"
+        tools:layout="@layout/fragment_error_dialog" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="message"
+            app:argType="string" />
+    </dialog>
+
+    <action android:id="@+id/action_global_errorDialogFragment" app:destination="@id/errorDialogFragment" />
+
+</navigation>
