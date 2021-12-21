@@ -18,6 +18,7 @@ import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
@@ -158,12 +159,6 @@ class LoginFragment : Fragment() {
         }
 
         return isValid
-    }
-
-    private fun showErrorDialog(title: String, message: String) {
-        findNavController().navigateSafe(
-            RegistrationFragmentDirections
-            .actionGlobalErrorDialogFragment(title, message))
     }
 
 }

@@ -10,12 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
-import by.alexandr7035.affinidi_id.core.extensions.*
+import by.alexandr7035.affinidi_id.core.extensions.clearError
+import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
@@ -23,7 +25,6 @@ import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
 import by.alexandr7035.affinidi_id.presentation.helpers.InputValidatorImpl
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -221,8 +222,4 @@ class RegistrationFragment : Fragment() {
         return isValid
     }
 
-    private fun showErrorDialog(title: String, message: String) {
-        findNavController().navigateSafe(RegistrationFragmentDirections
-            .actionGlobalErrorDialogFragment(title, message))
-    }
 }

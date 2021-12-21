@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
@@ -68,9 +69,4 @@ class LogoutFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun showErrorDialog(title: String, message: String) {
-        findNavController().navigateSafe(
-            RegistrationFragmentDirections
-                .actionGlobalErrorDialogFragment(title, message))
-    }
 }
