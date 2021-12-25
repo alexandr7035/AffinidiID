@@ -4,6 +4,8 @@ import android.app.Application
 import by.alexandr7035.affinidi_id.core.network.AuthInterceptor
 import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.data.*
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelperImpl
 import by.alexandr7035.affinidi_id.data.implementation.AuthDataStorageImpl
 import by.alexandr7035.affinidi_id.data.implementation.AuthRepositoryImpl
 import by.alexandr7035.affinidi_id.data.implementation.DicebearAvatarsHelperImpl
@@ -74,5 +76,10 @@ object AppModule {
     @Provides
     fun provideDicebearAvatarsHelper(): DicebearAvatarsHelper {
         return DicebearAvatarsHelperImpl()
+    }
+
+    @Provides
+    fun provideInputValidationHelper(): InputValidationHelper {
+        return InputValidationHelperImpl()
     }
 }
