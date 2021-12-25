@@ -5,7 +5,7 @@ import android.util.Patterns
 class InputValidationHelperImpl: InputValidationHelper {
     override fun validateUserName(userName: String): InputValidationResult {
         return when {
-            userName.isEmpty() -> InputValidationResult.EMPTY_FIELD
+            userName.isBlank() -> InputValidationResult.EMPTY_FIELD
 
             ! Patterns.EMAIL_ADDRESS.matcher(userName).matches() -> InputValidationResult.WRONG_FORMAT
 
@@ -16,7 +16,7 @@ class InputValidationHelperImpl: InputValidationHelper {
     override fun validatePassword(password: String): InputValidationResult {
 
         return when {
-            password.isEmpty() -> {
+            password.isBlank() -> {
                 InputValidationResult.EMPTY_FIELD
             }
 
@@ -28,7 +28,7 @@ class InputValidationHelperImpl: InputValidationHelper {
 
     override fun validateConfirmationCode(confirmationCode: String): InputValidationResult {
         return when {
-            confirmationCode.isEmpty() -> {
+            confirmationCode.isBlank() -> {
                 InputValidationResult.EMPTY_FIELD
             }
 
