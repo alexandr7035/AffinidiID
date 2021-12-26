@@ -80,6 +80,6 @@ object AppModule {
 
     @Provides
     fun provideInputValidationHelper(): InputValidationHelper {
-        return InputValidationHelperImpl()
+        return InputValidationHelperImpl(minPasswordLength = 8)
     }
 }

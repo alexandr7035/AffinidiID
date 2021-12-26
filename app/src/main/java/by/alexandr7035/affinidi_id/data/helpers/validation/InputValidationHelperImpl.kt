@@ -2,9 +2,8 @@ package by.alexandr7035.affinidi_id.data.helpers.validation
 
 import android.util.Patterns
 
-class InputValidationHelperImpl: InputValidationHelper {
+class InputValidationHelperImpl(minPasswordLength: Int): InputValidationHelper {
 
-    private val minPasswordLength = 8
     private val passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{$minPasswordLength,}\$".toPattern()
 
     override fun validateUserName(userName: String): InputValidationResult {
