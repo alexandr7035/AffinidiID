@@ -30,4 +30,8 @@ class ResetPasswordViewModel @Inject constructor(private val resetPasswordReposi
     fun validateUserName(username: String): InputValidationResult {
         return inputValidationHelper.validateUserName(username)
     }
+
+    fun validatePassword(password: String): InputValidationResult {
+        return inputValidationHelper.validatePassword(password)
+    }
 }

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
@@ -59,6 +60,7 @@ class ResetPasswordSetUsernameFragment : Fragment() {
             when (result) {
                 is InitializePasswordResetModel.Success -> {
                     requireContext().showToast("sucess ${result.userName}")
+                    findNavController().navigateSafe(ResetPasswordSetUsernameFragmentDirections.actionResetPasswordSetUsernameFragmentToResetPasswordSetPasswordFragment())
                 }
 
                 is InitializePasswordResetModel.Fail -> {
