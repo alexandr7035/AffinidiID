@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_loginFragment_to_signUpGraph"
             app:destination="@id/signUpGraph" />
+        <action
+            android:id="@+id/action_loginFragment_to_resetPasswordSetUsernameFragment"
+            app:destination="@id/resetPasswordSetUsernameFragment" />
     </fragment>
 
     <fragment
@@ -82,5 +85,12 @@
     </dialog>
 
     <action android:id="@+id/action_global_errorDialogFragment" app:destination="@id/errorDialogFragment" />
+
+
+    <fragment
+        android:id="@+id/resetPasswordSetUsernameFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordSetUsernameFragment"
+        android:label="ResetPasswordSetUsernameFragment"
+        tools:layout="@layout/fragment_reset_password_set_username"/>
 
 </navigation>
