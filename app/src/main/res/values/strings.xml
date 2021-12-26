@@ -47,5 +47,6 @@
     <string name="want_to_log_out">Want to log out?</string>
     <string name="log_out_explanation">Make sure you have saved your verifiable credentials. Otherwise you will have to re-issue them.</string>
     <string name="close">Close</string>
+    <string name="forgot_password">Forgot password?</string>
 
 </resources>
