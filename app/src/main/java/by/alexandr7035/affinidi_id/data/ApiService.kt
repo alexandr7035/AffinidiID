@@ -1,5 +1,6 @@
 package by.alexandr7035.affinidi_id.data
 
+import by.alexandr7035.affinidi_id.data.model.reset_password.ConfirmResetPasswordRequest
 import by.alexandr7035.affinidi_id.data.model.reset_password.InitializeResetPasswordRequest
 import by.alexandr7035.affinidi_id.data.model.sign_in.SignInRequest
 import by.alexandr7035.affinidi_id.data.model.sign_in.SignInResponse
@@ -30,4 +31,8 @@ interface ApiService {
     // This request doesn't return anything but sends OTP to user's email
     @POST("api/v1/users/forgot-password")
     suspend fun initializePasswordReset(@Body body: InitializeResetPasswordRequest): Response<Unit>
+
+    // This request doesn't return anything. 204 code for success
+    @POST("api/v1/users/forgot-password/confirm")
+    suspend fun confirmPasswordReset(@Body body: ConfirmResetPasswordRequest): Response<Unit>
 }

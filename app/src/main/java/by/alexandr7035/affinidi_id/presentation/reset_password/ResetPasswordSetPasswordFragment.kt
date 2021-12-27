@@ -8,8 +8,10 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.clearError
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordSetPasswordBinding
@@ -20,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ResetPasswordSetPasswordFragment : Fragment() {
     private val binding by viewBinding(FragmentResetPasswordSetPasswordBinding::bind)
     private val viewModel by viewModels<ResetPasswordViewModel>()
+    private val safeArgs by navArgs<ResetPasswordSetPasswordFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -43,8 +46,13 @@ class ResetPasswordSetPasswordFragment : Fragment() {
 
         binding.continueBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                // TODO navigate next
-                requireContext().showToast("ok")
+                findNavController().navigateSafe(
+                    ResetPasswordSetPasswordFragmentDirections
+                        .actionResetPasswordSetPasswordFragmentToResetPasswordConfirmationFragment(
+                            safeArgs.userName,
+                            binding.passwordSetEditText.text.toString()
+                        )
+                )
             }
         }
     }
@@ -74,7 +82,8 @@ class ResetPasswordSetPasswordFragment : Fragment() {
                 formIsValid = false
             }
 
-            InputValidationResult.NO_ERRORS -> {}
+            InputValidationResult.NO_ERRORS -> {
+            }
         }
 
         when (viewModel.validatePassword(passwordConfirmation)) {
@@ -88,7 +97,8 @@ class ResetPasswordSetPasswordFragment : Fragment() {
                 formIsValid = false
             }
 
-            InputValidationResult.NO_ERRORS -> {}
+            InputValidationResult.NO_ERRORS -> {
+            }
         }
 
         return formIsValid

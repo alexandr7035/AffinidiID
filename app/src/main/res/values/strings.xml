@@ -53,5 +53,6 @@
 
     <string name="continue_text">Continue</string>
     <string name="set_new_password">Set new password</string>
+    <string name="confirm_password_reset">Confirm new password</string>
 
 </resources>

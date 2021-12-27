@@ -101,6 +101,32 @@
         android:id="@+id/resetPasswordSetPasswordFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordSetPasswordFragment"
         android:label="ResetPasswordSetPasswordFragment"
-        tools:layout="@layout/fragment_reset_password_set_password"/>
+        tools:layout="@layout/fragment_reset_password_set_password">
+        <action
+            android:id="@+id/action_resetPasswordSetPasswordFragment_to_resetPasswordConfirmationFragment"
+            app:destination="@id/resetPasswordConfirmationFragment" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resetPasswordConfirmationFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordConfirmationFragment"
+        android:label="ResetPasswordConfirmationFragment"
+        tools:layout="@layout/fragment_reset_password_confirmation">
+        <argument
+            android:name="userName"
+            app:argType="string" />
+        <argument
+            android:name="newPassword"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_resetPasswordConfirmationFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/resetPasswordConfirmationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>
