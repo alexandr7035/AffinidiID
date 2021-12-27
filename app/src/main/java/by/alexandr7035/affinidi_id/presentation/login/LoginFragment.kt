@@ -128,7 +128,7 @@ class LoginFragment : Fragment() {
 
         binding.forgotPasswordBtn.setOnClickListener {
             findNavController()
-                .navigateSafe(LoginFragmentDirections.actionLoginFragmentToResetPasswordSetUsernameFragment())
+                .navigateSafe(LoginFragmentDirections.actionLoginFragmentToResetPasswordGraph())
         }
     }
 

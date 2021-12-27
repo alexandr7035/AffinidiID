@@ -19,8 +19,8 @@
             android:id="@+id/action_loginFragment_to_signUpGraph"
             app:destination="@id/signUpGraph" />
         <action
-            android:id="@+id/action_loginFragment_to_resetPasswordSetUsernameFragment"
-            app:destination="@id/resetPasswordSetUsernameFragment" />
+            android:id="@+id/action_loginFragment_to_resetPasswordGraph"
+            app:destination="@id/resetPasswordGraph" />
     </fragment>
 
     <fragment
@@ -87,46 +87,47 @@
     <action android:id="@+id/action_global_errorDialogFragment" app:destination="@id/errorDialogFragment" />
 
 
-    <fragment
-        android:id="@+id/resetPasswordSetUsernameFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordSetUsernameFragment"
-        android:label="ResetPasswordSetUsernameFragment"
-        tools:layout="@layout/fragment_reset_password_set_username">
-        <action
-            android:id="@+id/action_resetPasswordSetUsernameFragment_to_resetPasswordSetPasswordFragment"
-            app:destination="@id/resetPasswordSetPasswordFragment" />
-    </fragment>
+    <navigation android:id="@+id/resetPasswordGraph"
+        app:startDestination="@id/resetPasswordSetUsernameFragment">
+        <fragment
+            android:id="@+id/resetPasswordConfirmationFragment"
+            android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordConfirmationFragment"
+            android:label="ResetPasswordConfirmationFragment"
+            tools:layout="@layout/fragment_reset_password_confirmation">
+            <argument
+                android:name="userName"
+                app:argType="string" />
+            <argument
+                android:name="newPassword"
+                app:argType="string" />
 
-    <fragment
-        android:id="@+id/resetPasswordSetPasswordFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordSetPasswordFragment"
-        android:label="ResetPasswordSetPasswordFragment"
-        tools:layout="@layout/fragment_reset_password_set_password">
+        </fragment>
+        <fragment
+            android:id="@+id/resetPasswordSetPasswordFragment"
+            android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordSetPasswordFragment"
+            android:label="ResetPasswordSetPasswordFragment"
+            tools:layout="@layout/fragment_reset_password_set_password">
+            <action
+                android:id="@+id/action_resetPasswordSetPasswordFragment_to_resetPasswordConfirmationFragment"
+                app:destination="@id/resetPasswordConfirmationFragment" />
+            <argument
+                android:name="userName"
+                app:argType="string" />
+        </fragment>
+        <fragment
+            android:id="@+id/resetPasswordSetUsernameFragment"
+            android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordSetUsernameFragment"
+            android:label="ResetPasswordSetUsernameFragment"
+            tools:layout="@layout/fragment_reset_password_set_username">
+            <action
+                android:id="@+id/action_resetPasswordSetUsernameFragment_to_resetPasswordSetPasswordFragment"
+                app:destination="@id/resetPasswordSetPasswordFragment" />
+        </fragment>
         <action
-            android:id="@+id/action_resetPasswordSetPasswordFragment_to_resetPasswordConfirmationFragment"
-            app:destination="@id/resetPasswordConfirmationFragment" />
-        <argument
-            android:name="userName"
-            app:argType="string" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/resetPasswordConfirmationFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.reset_password.ResetPasswordConfirmationFragment"
-        android:label="ResetPasswordConfirmationFragment"
-        tools:layout="@layout/fragment_reset_password_confirmation">
-        <argument
-            android:name="userName"
-            app:argType="string" />
-        <argument
-            android:name="newPassword"
-            app:argType="string" />
-
-        <action
-            android:id="@+id/action_resetPasswordConfirmationFragment_to_loginFragment"
+            android:id="@+id/action_global_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/resetPasswordConfirmationFragment"
+            app:popUpTo="@id/resetPasswordGraph"
             app:popUpToInclusive="true" />
-    </fragment>
+    </navigation>
 
 </navigation>

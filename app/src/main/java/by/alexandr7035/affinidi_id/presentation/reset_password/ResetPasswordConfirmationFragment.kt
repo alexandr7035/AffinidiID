@@ -62,7 +62,7 @@ class ResetPasswordConfirmationFragment : Fragment() {
                 is ConfirmPasswordResetModel.Success -> {
                     findNavController().navigateSafe(ResetPasswordConfirmationFragmentDirections
                         // TODO show success dialog
-                        .actionResetPasswordConfirmationFragmentToLoginFragment())
+                        .actionGlobalLoginFragment())
                 }
 
                 is ConfirmPasswordResetModel.Fail -> {
