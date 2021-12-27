@@ -19,7 +19,7 @@
     <string name="error_failed_connection_title">Network error</string>
     <string name="error_failed_connection">Network error. Check your internet connection and try again</string>
 
-    <string name="error_unknown_title">Unknown error</string>
+    <string name="error_unknown_title">Something went wrong</string>
     <string name="error_unknown">Unknown error. Try again later or contact the developer</string>
 
     <string name="error_wrong_confirmation_code_title">Wrong confirmation code</string>
@@ -48,8 +48,6 @@
     <string name="log_out_explanation">Make sure you have saved your verifiable credentials. Otherwise you will have to re-issue them.</string>
     <string name="close">Close</string>
     <string name="forgot_password">Forgot password?</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="continue_text">Continue</string>
     <string name="set_new_password">Set new password</string>
