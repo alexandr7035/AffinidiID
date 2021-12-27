@@ -125,6 +125,11 @@ class LoginFragment : Fragment() {
             movementMethod = LinkMovementMethod.getInstance()
             highlightColor = Color.TRANSPARENT
         }
+
+        binding.forgotPasswordBtn.setOnClickListener {
+            findNavController()
+                .navigateSafe(LoginFragmentDirections.actionLoginFragmentToResetPasswordGraph())
+        }
     }
 
     private fun chekIfFormIsValid(): Boolean {

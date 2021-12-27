@@ -6,10 +6,7 @@ import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.data.*
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelperImpl
-import by.alexandr7035.affinidi_id.data.implementation.AuthDataStorageImpl
-import by.alexandr7035.affinidi_id.data.implementation.AuthRepositoryImpl
-import by.alexandr7035.affinidi_id.data.implementation.DicebearAvatarsHelperImpl
-import by.alexandr7035.affinidi_id.data.implementation.ProfileRepositoryImpl
+import by.alexandr7035.affinidi_id.data.implementation.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -64,6 +61,12 @@ object AppModule {
     @Singleton
     fun provideProfileRepository(authDataStorage: AuthDataStorage, avatarsHelper: DicebearAvatarsHelper, apiService: ApiService): ProfileRepository {
         return ProfileRepositoryImpl(authDataStorage, avatarsHelper, apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideResetPasswordRepository(apiService: ApiService): ResetPasswordRepository {
+        return ResetPasswordRepositoryImpl(apiService)
     }
 
 
