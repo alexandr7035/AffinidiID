@@ -1,25 +1,26 @@
 package by.alexandr7035.affinidi_id.presentation.reset_password
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
-import by.alexandr7035.affinidi_id.core.extensions.*
+import by.alexandr7035.affinidi_id.core.extensions.clearError
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
+import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.data.model.reset_password.ConfirmPasswordResetModel
 import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordConfirmationBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import java.lang.Error
 
 @AndroidEntryPoint
 class ResetPasswordConfirmationFragment : Fragment() {
@@ -45,7 +46,7 @@ class ResetPasswordConfirmationFragment : Fragment() {
         binding.confirmBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
                 binding.progressView.isVisible = true
-                Timber.debug("password ${safeArgs.newPassword} username ${safeArgs.userName}")
+
                 viewModel.confirmPasswordReset(
                     username = safeArgs.userName,
                     newPassword = safeArgs.newPassword,
@@ -61,8 +62,10 @@ class ResetPasswordConfirmationFragment : Fragment() {
             when (result) {
                 is ConfirmPasswordResetModel.Success -> {
                     findNavController().navigateSafe(ResetPasswordConfirmationFragmentDirections
-                        // TODO show success dialog
                         .actionGlobalLoginFragment())
+
+                    // TODO show success dialog
+                    requireContext().showToast(getString(R.string.password_changed_successfully))
                 }
 
                 is ConfirmPasswordResetModel.Fail -> {
