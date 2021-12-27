@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
@@ -26,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ResetPasswordConfirmationFragment : Fragment() {
 
     private val binding by viewBinding(FragmentResetPasswordConfirmationBinding::bind)
-    private val viewModel by viewModels<ResetPasswordViewModel>()
+    private val viewModel by navGraphViewModels<ResetPasswordViewModel>(R.id.resetPasswordGraph) { defaultViewModelProviderFactory }
     private val safeArgs by navArgs<ResetPasswordConfirmationFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

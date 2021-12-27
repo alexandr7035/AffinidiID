@@ -1,14 +1,14 @@
 package by.alexandr7035.affinidi_id.presentation.reset_password
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ResetPasswordSetUsernameFragment : Fragment() {
 
     private val binding by viewBinding(FragmentResetPasswordSetUsernameBinding::bind)
-    private val viewModel by viewModels<ResetPasswordViewModel>()
+    private val viewModel by navGraphViewModels<ResetPasswordViewModel>(R.id.resetPasswordGraph) { defaultViewModelProviderFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -59,7 +59,6 @@ class ResetPasswordSetUsernameFragment : Fragment() {
 
             when (result) {
                 is InitializePasswordResetModel.Success -> {
-                    requireContext().showToast("sucess ${result.userName}")
                     findNavController().navigateSafe(ResetPasswordSetUsernameFragmentDirections
                         .actionResetPasswordSetUsernameFragmentToResetPasswordSetPasswordFragment(result.userName))
                 }
