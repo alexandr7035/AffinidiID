@@ -53,8 +53,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provieAuthRepository(apiService: ApiService, authDataStorage: AuthDataStorage): AuthRepository {
-        return AuthRepositoryImpl(apiService, authDataStorage)
+    fun provideRegistrationRepository(apiService: ApiService, authDataStorage: AuthDataStorage): RegistrationRepository {
+        return RegistrationRepositoryImpl(apiService, authDataStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(apiService: ApiService, authDataStorage: AuthDataStorage): LoginRepository {
+        return LoginRepositoryImpl(apiService, authDataStorage)
     }
 
     @Provides

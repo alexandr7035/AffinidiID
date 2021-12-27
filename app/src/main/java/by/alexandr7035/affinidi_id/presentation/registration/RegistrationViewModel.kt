@@ -3,7 +3,7 @@ package by.alexandr7035.affinidi_id.presentation.registration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
-import by.alexandr7035.affinidi_id.data.AuthRepository
+import by.alexandr7035.affinidi_id.data.RegistrationRepository
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val repository: AuthRepository,
+    private val repository: RegistrationRepository,
     private val inputValidationHelper: InputValidationHelper
 ): ViewModel() {
 

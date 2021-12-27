@@ -1,11 +1,9 @@
 package by.alexandr7035.affinidi_id.data
 
-import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
-import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
 
-interface AuthRepository {
+interface RegistrationRepository {
     suspend fun signUp(
         userName: String,
         password: String,
@@ -16,14 +14,6 @@ interface AuthRepository {
         confirmationCode: String
     ): SignUpConfirmationModel
 
-    suspend fun signIn(
-        userName: String,
-        password: String,
-    ): SignInModel
-
-    fun checkIfAuthorized(): Boolean
-
+    // FIXME refactoring
     fun saveUserName(userName: String)
-
-    suspend fun logOut(): LogOutModel
 }
