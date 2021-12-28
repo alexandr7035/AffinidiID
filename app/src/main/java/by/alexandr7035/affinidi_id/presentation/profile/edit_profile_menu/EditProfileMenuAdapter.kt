@@ -10,6 +10,7 @@ class EditProfileMenuAdapter(private val items: List<MenuItemModel>): RecyclerVi
     inner class MenuItemViewHolder(val binding: ViewPrimaryMenuItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(itemModel: MenuItemModel) {
             binding.root.text = itemModel.title
+            binding.root.setOnClickListener(itemModel.clickListener)
         }
     }
 
