@@ -5,12 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
+import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
+import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.data.model.change_password.ChangePasswordModel
 import by.alexandr7035.affinidi_id.databinding.FragmentChangePasswordBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,9 +54,46 @@ class ChangePasswordFragment : Fragment() {
 
         binding.confirmBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                // todo do change password
+                binding.progressView.isVisible = true
+
+                viewModel.changePassword(
+                    oldPassword = binding.oldPasswordEditText.text.toString(),
+                    newPassword = binding.newPasswordEditText.text.toString()
+                )
             }
         }
+
+        viewModel.changePasswordLiveData.observe(viewLifecycleOwner, { result ->
+            binding.progressView.isVisible = false
+
+            when (result) {
+                is ChangePasswordModel.Success -> {
+                    // TODO dialog
+                    requireContext().showToast(getString(R.string.successful_password_change))
+                }
+                is ChangePasswordModel.Fail -> {
+                    when (result.errorType) {
+                        ErrorType.FAILED_CONNECTION -> {
+                            showErrorDialog(
+                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_failed_connection)
+                            )
+                        }
+
+                        ErrorType.WRONG_CURRENT_PASSWORD -> {
+                            binding.oldPasswordField.error = getString(R.string.error_wrong_current_password)
+                        }
+
+                        else -> {
+                            showErrorDialog(
+                                getString(R.string.error_unknown_title),
+                                getString(R.string.error_unknown)
+                            )
+                        }
+                    }
+                }
+            }
+        })
     }
 
     private fun chekIfFormIsValid(): Boolean {

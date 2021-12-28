@@ -75,6 +75,11 @@ object AppModule {
         return ResetPasswordRepositoryImpl(apiService)
     }
 
+    @Provides
+    @Singleton
+    fun provideChangeProfileRepository(apiService: ApiService, authDataStorage: AuthDataStorage): ChangeProfileRepository {
+        return ChangeProfileRepositoryImpl(apiService, authDataStorage)
+    }
 
     @Provides
     @Singleton
