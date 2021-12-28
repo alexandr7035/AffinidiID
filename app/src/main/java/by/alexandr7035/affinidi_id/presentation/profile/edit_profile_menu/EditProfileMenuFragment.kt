@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentEditProfileMenuBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import timber.log.Timber
@@ -41,7 +42,8 @@ class EditProfileMenuFragment : Fragment() {
             MenuItemModel(
                 title = getString(R.string.change_password),
                 clickListener = {
-                    Timber.debug("test menu")
+                    findNavController().navigateSafe(EditProfileMenuFragmentDirections
+                        .actionEditProfileMenuFragmentToChangePasswordFragment())
                 })
         )
 
