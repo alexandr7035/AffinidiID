@@ -58,4 +58,10 @@
     <string name="reset_password_stage_2">2/3 Set new password</string>
     <string name="reset_password_stage_3">3/3 Confirm new password</string>
 
+    <string name="change_password">Change password</string>
+    <string name="change_username">Change username</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="error_wrong_current_password">Wrong current password</string>
+    <string name="successful_password_change">Password changed successfully</string>
+
 </resources>

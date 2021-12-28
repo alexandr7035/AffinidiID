@@ -1,5 +1,6 @@
 package by.alexandr7035.affinidi_id.data
 
+import by.alexandr7035.affinidi_id.data.model.change_password.ChangePasswordRequest
 import by.alexandr7035.affinidi_id.data.model.reset_password.ConfirmResetPasswordRequest
 import by.alexandr7035.affinidi_id.data.model.reset_password.InitializeResetPasswordRequest
 import by.alexandr7035.affinidi_id.data.model.sign_in.SignInRequest
@@ -35,4 +36,11 @@ interface ApiService {
     // This request doesn't return anything. 204 code for success
     @POST("api/v1/users/forgot-password/confirm")
     suspend fun confirmPasswordReset(@Body body: ConfirmResetPasswordRequest): Response<Unit>
+
+    // 204 for success
+    @POST("/api/v1/users/change-password")
+    suspend fun changePassword(
+        @Header("Authorization") accessToken: String,
+        @Body body: ChangePasswordRequest
+    ): Response<Unit>
 }
