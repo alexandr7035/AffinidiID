@@ -18,11 +18,10 @@ import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
-import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
-import by.alexandr7035.affinidi_id.presentation.helpers.InputValidatorImpl
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,8 +42,6 @@ class RegistrationFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-
-        val formValidator = InputValidatorImpl()
 
         binding.signUpBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
@@ -95,6 +92,7 @@ class RegistrationFragment : Fragment() {
         })
 
 
+        // TODO dry
         binding.userNameEditText.doOnTextChanged { text, start, before, count ->
             if (text?.isNotEmpty() == true) {
                 binding.userNameField.clearError()
@@ -173,16 +171,21 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun chekIfFormIsValid(): Boolean {
+        var formIsValid = true
 
-        // FIXME move from here to viewmodel (?)
-        val validator = InputValidatorImpl()
+        val userName = binding.userNameEditText.text.toString()
+        when (viewModel.validateUserName(userName)) {
+            InputValidationResult.EMPTY_FIELD -> {
+                binding.userNameField.error = getString(R.string.error_empty_field)
+                formIsValid = false
+            }
 
-        var isValid = true
+            InputValidationResult.WRONG_FORMAT -> {
+                binding.userNameField.error = getString(R.string.error_invalid_user_name)
+                formIsValid = false
+            }
 
-        // FIXME use validator
-        if (binding.userNameEditText.text!!.isEmpty()) {
-            binding.userNameField.error = getString(R.string.error_empty_field)
-            isValid = false
+            InputValidationResult.NO_ERRORS -> {}
         }
 
         val password = binding.passwordSetEditText.text.toString()
@@ -191,35 +194,39 @@ class RegistrationFragment : Fragment() {
         if (password != passwordConfirmation) {
             binding.passwordConfirmField.error = getString(R.string.error_passwords_not_match)
             binding.passwordSetField.error = getString(R.string.error_passwords_not_match)
-            isValid = false
+            formIsValid = false
         }
 
 
-        when (validator.validatePassword(password)) {
-            InputValidationResult.PASSWORD_IS_EMPTY -> {
+        when (viewModel.validatePassword(password)) {
+            InputValidationResult.EMPTY_FIELD -> {
                 binding.passwordSetField.error = getString(R.string.error_empty_field)
-                isValid = false
+                formIsValid = false
             }
 
-            InputValidationResult.PASSWORD_WRONG_FORMAT -> {
+            InputValidationResult.WRONG_FORMAT -> {
                 binding.passwordSetField.error = getString(R.string.error_wromg_password_format)
-                isValid = false
+                formIsValid = false
             }
+
+            InputValidationResult.NO_ERRORS -> {}
         }
 
-        when (validator.validatePassword(passwordConfirmation)) {
-            InputValidationResult.PASSWORD_IS_EMPTY -> {
+        when (viewModel.validatePassword(passwordConfirmation)) {
+            InputValidationResult.EMPTY_FIELD -> {
                 binding.passwordConfirmField.error = getString(R.string.error_empty_field)
-                isValid = false
+                formIsValid = false
             }
 
-            InputValidationResult.PASSWORD_WRONG_FORMAT -> {
+            InputValidationResult.WRONG_FORMAT -> {
                 binding.passwordConfirmField.error = getString(R.string.error_wromg_password_format)
-                isValid = false
+                formIsValid = false
             }
+
+            InputValidationResult.NO_ERRORS -> {}
         }
 
-        return isValid
+        return formIsValid
     }
 
 }

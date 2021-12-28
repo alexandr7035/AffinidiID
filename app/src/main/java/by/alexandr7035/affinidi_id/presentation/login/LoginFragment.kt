@@ -6,7 +6,6 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -19,11 +18,9 @@ import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
-import by.alexandr7035.affinidi_id.presentation.helpers.InputValidationResult
-import by.alexandr7035.affinidi_id.presentation.helpers.InputValidatorImpl
-import by.alexandr7035.affinidi_id.presentation.registration.RegistrationFragmentDirections
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -112,7 +109,6 @@ class LoginFragment : Fragment() {
             }
         })
 
-//        binding.goToSignUpBtn.text =
 
         val goToSignUpText = getString(R.string.go_to_sign_up)
         val spannable = goToSignUpText.getClickableSpannable(
@@ -129,36 +125,47 @@ class LoginFragment : Fragment() {
             movementMethod = LinkMovementMethod.getInstance()
             highlightColor = Color.TRANSPARENT
         }
+
+        binding.forgotPasswordBtn.setOnClickListener {
+            findNavController()
+                .navigateSafe(LoginFragmentDirections.actionLoginFragmentToResetPasswordGraph())
+        }
     }
 
     private fun chekIfFormIsValid(): Boolean {
 
-        // FIXME move from here to viewmodel (?)
-        val validator = InputValidatorImpl()
+        var formIsValid = true
 
-        var isValid = true
+        val userName = binding.userNameEditText.text.toString()
+        when (viewModel.validateUserName(userName)) {
+            InputValidationResult.EMPTY_FIELD -> {
+                binding.userNameField.error = getString(R.string.error_empty_field)
+                formIsValid = false
+            }
 
-        // FIXME use validator
-        if (binding.userNameEditText.text!!.isEmpty()) {
-            binding.userNameField.error = getString(R.string.error_empty_field)
-            isValid = false
+            InputValidationResult.WRONG_FORMAT -> {
+                binding.userNameField.error = getString(R.string.error_invalid_user_name)
+                formIsValid = false
+            }
+
+            InputValidationResult.NO_ERRORS -> {}
         }
 
         val password = binding.passwordEditText.text.toString()
-
-        when (validator.validatePassword(password)) {
-            InputValidationResult.PASSWORD_IS_EMPTY -> {
+        when (viewModel.validatePassword(password)) {
+            InputValidationResult.EMPTY_FIELD -> {
                 binding.passwordField.error = getString(R.string.error_empty_field)
-                isValid = false
+                formIsValid = false
             }
 
-            InputValidationResult.PASSWORD_WRONG_FORMAT -> {
+            InputValidationResult.WRONG_FORMAT -> {
                 binding.passwordField.error = getString(R.string.error_wromg_password_format)
-                isValid = false
+                formIsValid = false
             }
+
+            InputValidationResult.NO_ERRORS -> {}
         }
 
-        return isValid
+        return formIsValid
     }
-
 }

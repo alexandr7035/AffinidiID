@@ -4,10 +4,9 @@ import android.app.Application
 import by.alexandr7035.affinidi_id.core.network.AuthInterceptor
 import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.data.*
-import by.alexandr7035.affinidi_id.data.implementation.AuthDataStorageImpl
-import by.alexandr7035.affinidi_id.data.implementation.AuthRepositoryImpl
-import by.alexandr7035.affinidi_id.data.implementation.DicebearAvatarsHelperImpl
-import by.alexandr7035.affinidi_id.data.implementation.ProfileRepositoryImpl
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelperImpl
+import by.alexandr7035.affinidi_id.data.implementation.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,14 +53,26 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provieAuthRepository(apiService: ApiService, authDataStorage: AuthDataStorage): AuthRepository {
-        return AuthRepositoryImpl(apiService, authDataStorage)
+    fun provideRegistrationRepository(apiService: ApiService, authDataStorage: AuthDataStorage): RegistrationRepository {
+        return RegistrationRepositoryImpl(apiService, authDataStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(apiService: ApiService, authDataStorage: AuthDataStorage): LoginRepository {
+        return LoginRepositoryImpl(apiService, authDataStorage)
     }
 
     @Provides
     @Singleton
     fun provideProfileRepository(authDataStorage: AuthDataStorage, avatarsHelper: DicebearAvatarsHelper, apiService: ApiService): ProfileRepository {
         return ProfileRepositoryImpl(authDataStorage, avatarsHelper, apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideResetPasswordRepository(apiService: ApiService): ResetPasswordRepository {
+        return ResetPasswordRepositoryImpl(apiService)
     }
 
 
@@ -74,5 +85,10 @@ object AppModule {
     @Provides
     fun provideDicebearAvatarsHelper(): DicebearAvatarsHelper {
         return DicebearAvatarsHelperImpl()
+    }
+
+    @Provides
+    fun provideInputValidationHelper(): InputValidationHelper {
+        return InputValidationHelperImpl(minPasswordLength = 8)
     }
 }

@@ -9,6 +9,9 @@
     <dimen name="primary_button_text_size">16sp</dimen>
     <dimen name="primary_card_elevation">4dp</dimen>
 
+    <dimen name="text_button_height">36dp</dimen>
+    <dimen name="text_button_corner_radius">12dp</dimen>
+
     <dimen name="default_fragment_margin">16dp</dimen>
     <dimen name="default_card_padding">16dp</dimen>
     <dimen name="avatar_corner_radius">16dp</dimen>
