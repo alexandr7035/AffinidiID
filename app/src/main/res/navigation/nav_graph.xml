@@ -135,7 +135,7 @@
 
     <fragment
         android:id="@+id/editProfileMenuFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.profile.EditProfileMenuFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.profile.edit_profile_menu.EditProfileMenuFragment"
         android:label="EditProfileMenuFragment"
         tools:layout="@layout/fragment_edit_profile_menu"/>
 

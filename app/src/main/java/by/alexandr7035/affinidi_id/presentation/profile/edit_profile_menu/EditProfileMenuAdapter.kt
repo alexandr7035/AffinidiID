@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.profile
+package by.alexandr7035.affinidi_id.presentation.profile.edit_profile_menu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
