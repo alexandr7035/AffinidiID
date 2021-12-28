@@ -147,4 +147,11 @@
     <style name="BottomDialogBackground">
         <item name="android:background">@drawable/background_bottom_dialog</item>
     </style>
+
+    <style name="PrimaryMenuItem">
+        <item name="android:background">@drawable/background_primary_menu_item</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">@dimen/primary_menu_item_padding</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

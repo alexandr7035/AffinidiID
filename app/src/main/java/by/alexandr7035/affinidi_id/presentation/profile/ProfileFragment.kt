@@ -84,5 +84,10 @@ class ProfileFragment : Fragment() {
 
             true
         }
+
+        binding.editMenuBtn.setOnClickListener {
+            findNavController().navigateSafe(ProfileFragmentDirections
+                .actionProfileFragmentToEditProfileMenuFragment())
+        }
     }
 }
