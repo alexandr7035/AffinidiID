@@ -26,8 +26,8 @@ android {
         applicationId "by.alexandr7035.affinidi_id"
         minSdk 21
         targetSdk 31
-        versionCode 100
-        versionName "0.1-alpha"
+        versionCode 200
+        versionName "0.2-alpha"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
