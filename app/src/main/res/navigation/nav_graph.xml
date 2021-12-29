@@ -32,8 +32,8 @@
             android:id="@+id/action_profileFragment_to_logoutFragment"
             app:destination="@id/logoutFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_editProfileMenuFragment"
-            app:destination="@id/editProfileMenuFragment" />
+            android:id="@+id/action_profileFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
     </fragment>
 
     <dialog
@@ -134,13 +134,16 @@
     </navigation>
 
     <fragment
-        android:id="@+id/editProfileMenuFragment"
+        android:id="@+id/mainMenuFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.main_menu.MainMenuFragment"
-        android:label="EditProfileMenuFragment"
+        android:label="MainMenuFragment"
         tools:layout="@layout/fragment_main_menu">
         <action
-            android:id="@+id/action_editProfileMenuFragment_to_changePasswordFragment"
+            android:id="@+id/action_mainMenuFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+        <argument
+            android:name="profileImageUrl"
+            app:argType="string" />
     </fragment>
 
     <fragment

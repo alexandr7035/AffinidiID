@@ -48,15 +48,20 @@ class ProfileFragment : Fragment() {
 
 
         viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
-
             binding.userNameView.text = profile.userName
             binding.userDidView.text = profile.userDid
-            Timber.debug("DID ${profile.userDid}")
+
+            val profileImageUri = viewModel.getProfileImageUrl(profile.userDid)
 
             binding.profileImageView.load(
-                uri = viewModel.getProfileImageUrl(profile.userDid),
+                uri = profileImageUri,
                 imageLoader = imageLoader
             )
+
+            binding.profileImageView.setOnClickListener {
+                findNavController().navigateSafe(ProfileFragmentDirections
+                    .actionProfileFragmentToMainMenuFragment(profileImageUri))
+            }
         })
 
         viewModel.init()
@@ -86,9 +91,5 @@ class ProfileFragment : Fragment() {
             true
         }
 
-        binding.profileImageView.setOnClickListener {
-            findNavController().navigateSafe(ProfileFragmentDirections
-                .actionProfileFragmentToEditProfileMenuFragment())
-        }
     }
 }

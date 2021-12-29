@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.BuildConfig
@@ -15,11 +16,15 @@ import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentMainMenuBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.load
 import timber.log.Timber
 
 class MainMenuFragment : Fragment() {
 
     private val binding by viewBinding(FragmentMainMenuBinding::bind)
+    private val safeArgs by navArgs<MainMenuFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -44,7 +49,7 @@ class MainMenuFragment : Fragment() {
                 title = getString(R.string.change_password),
                 clickListener = {
                     findNavController().navigateSafe(MainMenuFragmentDirections
-                        .actionEditProfileMenuFragmentToChangePasswordFragment())
+                        .actionMainMenuFragmentToChangePasswordFragment())
                 }),
             MenuItemModel(
                 title = getString(R.string.reset_password),
@@ -74,6 +79,17 @@ class MainMenuFragment : Fragment() {
         binding.appVersionView.text = getString(
             R.string.app_name_with_version,
             BuildConfig.VERSION_NAME
+        )
+
+        val imageLoader = ImageLoader.Builder(requireContext())
+            .componentRegistry {
+                add(SvgDecoder(requireContext()))
+            }
+            .build()
+
+        binding.profileImageView.load(
+            uri = safeArgs.profileImageUrl,
+            imageLoader = imageLoader
         )
     }
 }

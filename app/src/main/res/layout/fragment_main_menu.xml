@@ -16,16 +16,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:padding="@dimen/default_fragment_margin"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="72dp"
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:padding="@dimen/default_fragment_margin"
+        app:layout_constraintBottom_toTopOf="@id/appVersionView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/appVersionView"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
 
     <TextView
         android:id="@+id/appVersionView"
