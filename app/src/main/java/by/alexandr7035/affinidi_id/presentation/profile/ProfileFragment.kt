@@ -60,7 +60,21 @@ class ProfileFragment : Fragment() {
 
         viewModel.init()
 
-        binding.userDidView.setOnClickListener {
+        binding.copyUserNameBtn.setOnClickListener {
+            val clipLabel = getString(R.string.your_username_copied)
+
+            val clipBoard = ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
+            clipBoard?.setPrimaryClip(
+                ClipData.newPlainText(
+                    clipLabel,
+                    binding.userNameView.text.toString()
+                )
+            )
+
+            Toast.makeText(requireContext(), clipLabel, Toast.LENGTH_LONG).show()
+        }
+
+        binding.copyUserDidBtn.setOnClickListener {
             val clipLabel = getString(R.string.your_did_copied)
 
             val clipBoard = ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
@@ -85,9 +99,9 @@ class ProfileFragment : Fragment() {
             true
         }
 
-        binding.editMenuBtn.setOnClickListener {
-            findNavController().navigateSafe(ProfileFragmentDirections
-                .actionProfileFragmentToEditProfileMenuFragment())
-        }
+//        binding.editMenuBtn.setOnClickListener {
+//            findNavController().navigateSafe(ProfileFragmentDirections
+//                .actionProfileFragmentToEditProfileMenuFragment())
+//        }
     }
 }
