@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.alexandr7035.affinidi_id.BuildConfig
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
@@ -44,6 +45,11 @@ class MainMenuFragment : Fragment() {
                 clickListener = {
                     findNavController().navigateSafe(MainMenuFragmentDirections
                         .actionEditProfileMenuFragmentToChangePasswordFragment())
+                }),
+            MenuItemModel(
+                title = getString(R.string.reset_password),
+                clickListener = {
+                    Timber.debug("test menu")
                 })
         )
 
@@ -63,5 +69,11 @@ class MainMenuFragment : Fragment() {
         val adapter = MainProfileMenuAdapter(menuItems)
         binding.recycler.adapter = adapter
         binding.recycler.layoutManager = layoutManager
+
+
+        binding.appVersionView.text = getString(
+            R.string.app_name_with_version,
+            BuildConfig.VERSION_NAME
+        )
     }
 }

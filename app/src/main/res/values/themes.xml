@@ -167,6 +167,7 @@
     <style name="PrimaryMenuItem">
         <item name="android:background">@drawable/background_primary_menu_item</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:paddingTop">@dimen/primary_menu_item_padding_vertical</item>
         <item name="android:paddingBottom">@dimen/primary_menu_item_padding_vertical</item>
         <item name="android:paddingStart">@dimen/primary_menu_item_padding_horizontal</item>
@@ -174,4 +175,9 @@
         <item name="android:textColor">@color/gray_500</item>
     </style>
 
+    <style name="AppVersionStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
 </resources>
