@@ -86,9 +86,9 @@ class ProfileFragment : Fragment() {
             true
         }
 
-//        binding.editMenuBtn.setOnClickListener {
-//            findNavController().navigateSafe(ProfileFragmentDirections
-//                .actionProfileFragmentToEditProfileMenuFragment())
-//        }
+        binding.profileImageView.setOnClickListener {
+            findNavController().navigateSafe(ProfileFragmentDirections
+                .actionProfileFragmentToEditProfileMenuFragment())
+        }
     }
 }

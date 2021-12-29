@@ -17,7 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:clickable="true"
+            android:focusable="true"
             android:id="@+id/profileImageView"
+            android:background="?android:attr/actionBarItemBackground"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_gravity="left"
