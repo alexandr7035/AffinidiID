@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.profile.edit_profile_menu
+package by.alexandr7035.affinidi_id.presentation.main_menu
 
 import android.view.View
 

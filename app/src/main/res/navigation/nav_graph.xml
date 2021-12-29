@@ -135,9 +135,9 @@
 
     <fragment
         android:id="@+id/editProfileMenuFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.profile.edit_profile_menu.EditProfileMenuFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.main_menu.MainMenuFragment"
         android:label="EditProfileMenuFragment"
-        tools:layout="@layout/fragment_edit_profile_menu">
+        tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/action_editProfileMenuFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />

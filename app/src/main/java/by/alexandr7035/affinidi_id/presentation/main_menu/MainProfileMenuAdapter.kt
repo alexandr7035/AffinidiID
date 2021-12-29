@@ -1,11 +1,11 @@
-package by.alexandr7035.affinidi_id.presentation.profile.edit_profile_menu
+package by.alexandr7035.affinidi_id.presentation.main_menu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.affinidi_id.databinding.ViewPrimaryMenuItemBinding
 
-class EditProfileMenuAdapter(private val items: List<MenuItemModel>): RecyclerView.Adapter<EditProfileMenuAdapter.MenuItemViewHolder>() {
+class MainProfileMenuAdapter(private val items: List<MenuItemModel>): RecyclerView.Adapter<MainProfileMenuAdapter.MenuItemViewHolder>() {
 
     inner class MenuItemViewHolder(val binding: ViewPrimaryMenuItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(itemModel: MenuItemModel) {
