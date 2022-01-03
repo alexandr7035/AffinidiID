@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
 <!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
-        <item name="android:statusBarColor">@color/gray_200</item>
+        <item name="android:statusBarColor">@color/purple_500</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/white</item>
         <item name="android:navigationBarColor">@color/black</item>
@@ -140,11 +140,31 @@
         <item name="navigationIconTint">@color/gray_500</item>
     </style>
 
+    <style name="ToolbarWhiteText">
+        <item name="background">@android:color/transparent</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="contentInsetStart">@dimen/default_fragment_margin</item>
+        <item name="titleTextAppearance">@style/ToolbarTextAppearanceWhiteText</item>
+    </style>
+
+    <style name="ToolbarWithBackNavWhiteText" parent="ToolbarWhiteText">
+        <item name="background">@android:color/transparent</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="navigationIcon">?attr/actionModeCloseDrawable</item>
+        <item name="navigationIconTint">@color/white</item>
+    </style>
+
     <style name="ToolbarNavIconStyle" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">@color/gray_500</item>
     </style>
 
     <style name="ToolbarTextAppearance">
+        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ToolbarTextAppearanceWhiteText">
         <item name="android:textColor">@color/gray_500</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
