@@ -18,7 +18,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/newUserNameField"
-        style="@style/AuthFieldPasswordLayoutStyle"
+        style="@style/AuthFieldLayoutStyle"
         android:hint="@string/specify_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/newUserNameEditText"
             style="@style/AuthFieldEditTextStyle"
-            android:inputType="textWebPassword"
+            android:inputType="textWebEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
