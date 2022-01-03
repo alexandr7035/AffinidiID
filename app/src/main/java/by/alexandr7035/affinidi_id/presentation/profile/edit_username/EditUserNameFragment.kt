@@ -10,11 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.clearError
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentEditUserNameBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class EditUserNameFragment : Fragment() {
@@ -42,7 +44,11 @@ class EditUserNameFragment : Fragment() {
 
         binding.continueBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                requireContext().showToast("continue")
+                val userName = binding.newUserNameEditText.text.toString()
+                    .lowercase(Locale.getDefault())
+
+                findNavController().navigateSafe(EditUserNameFragmentDirections
+                    .actionEditUserNameFragmentToEditUserNameConfirmationFragment(userName))
             }
         }
     }

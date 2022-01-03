@@ -159,6 +159,20 @@
         android:id="@+id/editUserNameFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.profile.edit_username.EditUserNameFragment"
         android:label="EditUserNameFragment"
-        tools:layout="@layout/fragment_edit_user_name"/>
+        tools:layout="@layout/fragment_edit_user_name">
+        <action
+            android:id="@+id/action_editUserNameFragment_to_editUserNameConfirmationFragment"
+            app:destination="@id/editUserNameConfirmationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editUserNameConfirmationFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.profile.edit_username.EditUserNameConfirmationFragment"
+        android:label="EditUserNameConfirmationFragment"
+        tools:layout="@layout/fragment_edit_user_name_confirmation">
+        <argument
+            android:name="userName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

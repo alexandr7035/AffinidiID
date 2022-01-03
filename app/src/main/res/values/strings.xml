@@ -58,22 +58,19 @@
     <string name="confirm_password_reset">Confirm new password</string>
     <string name="password_changed_successfully">Your password has been successfully changed. Try to sign in.</string>
 
+    <string name="reset_password">Reset password</string>
     <string name="reset_password_stage_1">1/3 Specify username</string>
     <string name="reset_password_stage_2">2/3 Set new password</string>
     <string name="reset_password_stage_3">3/3 Confirm new password</string>
 
     <string name="specify_username">Specify username</string>
-    <string name="edit_username_stage_1">1/3 Specify username</string>
-    <string name="edit_username_stage_2">1/3 Confirm new username</string>
+    <string name="edit_username_stage_1">1/2 Specify username</string>
+    <string name="edit_username_stage_2">2/2 Confirm new username</string>
 
     <string name="change_password">Change password</string>
     <string name="change_username">Change username</string>
     <string name="edit_profile">Edit profile</string>
     <string name="error_wrong_current_password">Wrong current password</string>
     <string name="successful_password_change">Password changed successfully</string>
-
-    <string name="reset_password">Reset password</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
