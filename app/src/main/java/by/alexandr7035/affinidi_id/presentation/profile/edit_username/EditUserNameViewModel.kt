@@ -8,7 +8,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditUserNameViewModel @Inject constructor(private val inputValidationHelper: InputValidationHelper) : ViewModel() {
+
     fun validateUserName(userName: String): InputValidationResult {
         return inputValidationHelper.validateUserName(userName)
+    }
+
+    fun validateConfirmationCode(code: String): InputValidationResult {
+        return inputValidationHelper.validateConfirmationCode(code)
     }
 }
