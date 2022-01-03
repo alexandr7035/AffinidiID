@@ -42,7 +42,8 @@ class MainMenuFragment : Fragment() {
             MenuItemModel(
                 title = getString(R.string.change_username),
                 clickListener = {
-                    Timber.debug("test menu")
+                    findNavController().navigateSafe(MainMenuFragmentDirections
+                        .actionMainMenuFragmentToEditUserNameFragment())
                 }),
 
             MenuItemModel(

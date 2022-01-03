@@ -144,6 +144,9 @@
         <argument
             android:name="profileImageUrl"
             app:argType="string" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_editUserNameFragment"
+            app:destination="@id/editUserNameFragment" />
     </fragment>
 
     <fragment
@@ -151,5 +154,11 @@
         android:name="by.alexandr7035.affinidi_id.presentation.profile.edit_password.ChangePasswordFragment"
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_change_password"/>
+
+    <fragment
+        android:id="@+id/editUserNameFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.profile.edit_username.EditUserNameFragment"
+        android:label="EditUserNameFragment"
+        tools:layout="@layout/fragment_edit_user_name"/>
 
 </navigation>
