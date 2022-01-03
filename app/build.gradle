@@ -95,4 +95,7 @@ dependencies {
     // Coil
     implementation "io.coil-kt:coil:1.4.0"
     implementation "io.coil-kt:coil-svg:1.4.0"
+
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

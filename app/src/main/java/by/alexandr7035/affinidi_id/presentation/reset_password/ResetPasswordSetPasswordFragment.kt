@@ -54,6 +54,10 @@ class ResetPasswordSetPasswordFragment : Fragment() {
                 )
             }
         }
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
 

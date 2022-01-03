@@ -10,91 +10,106 @@
         android:id="@+id/toolbar"
         style="@style/Toolbar"
         app:menu="@menu/menu_profile_toolbar"
-        app:title="@string/your_affinidi_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/headerCard"
-        style="@style/PrimaryCardStyle"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_marginStart="@dimen/default_fragment_margin"
-        android:layout_marginTop="@dimen/default_fragment_margin"
-        android:layout_marginEnd="@dimen/default_fragment_margin">
-
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:clickable="true"
+            android:focusable="true"
             android:id="@+id/profileImageView"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@mipmap/ic_launcher"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:background="?android:attr/actionBarItemBackground"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="left"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/gray_500"
+            tools:src="@drawable/ic_edit"
+            android:layout_marginEnd="8dp"/>
 
         <TextView
-            android:id="@+id/userNameView"
-            style="@style/UserNameField"
-            android:layout_marginTop="16dp"
+            style="@style/ToolbarTextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="example@mail.com"
-            app:layout_constraintTop_toBottomOf="@id/profileImageView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:text="@string/your_affinidi_id"/>
 
-        <ImageView
-            android:id="@+id/editMenuBtn"
-            android:clickable="true"
-            android:background="?android:attr/actionBarItemBackground"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:backgroundTint="@android:color/transparent"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/gray_300" />
+    </androidx.appcompat.widget.Toolbar>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/userNameLabel"
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/your_username"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/default_fragment_margin"/>
 
+    <ImageView
+        android:id="@+id/copyUserNameBtn"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/actionBarItemBackground"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:padding="0dp"
+        android:src="@drawable/ic_copy"
+        app:layout_constraintTop_toTopOf="@id/userNameLabel"
+        app:layout_constraintBottom_toBottomOf="@id/userNameLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/default_fragment_margin"/>
 
-    <LinearLayout
-        android:id="@+id/didCard"
-        style="@style/PrimaryCardStyle"
+    <TextView
+        style="@style/UserNameField"
+        android:layout_marginTop="12dp"
+        tools:text="example@mail.com"
+        android:id="@+id/userNameView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/userNameLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerCard"
         android:layout_marginStart="@dimen/default_fragment_margin"
-        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"/>
+
+    <TextView
+        android:id="@+id/userDidLabel"
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/your_did"
+        app:layout_constraintTop_toBottomOf="@id/userNameView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/default_fragment_margin"/>
+
+    <ImageView
+        android:id="@+id/copyUserDidBtn"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/actionBarItemBackground"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:padding="0dp"
+        android:src="@drawable/ic_copy"
+        app:layout_constraintTop_toTopOf="@id/userDidLabel"
+        app:layout_constraintBottom_toBottomOf="@id/userDidLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/default_fragment_margin"/>
+
+    <TextView
+        style="@style/DidField"
+        android:layout_marginTop="12dp"
+        android:id="@+id/userDidView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/userDidLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginEnd="@dimen/default_fragment_margin"
-        android:orientation="vertical">
+        tools:text="did:elem:sdndhvbw834g7enuscvuc23mvjisbvduhynuscvuc23mvdsvsfvsvvnuscvuc23mvnuscvuc23mvnuscvuc23mv"/>
 
-        <TextView
-            style="@style/CardHeaderText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/your_did"/>
-
-        <TextView
-            android:id="@+id/userDidView"
-            style="@style/DidCopiedField"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="did:elem:sdndhvbw834g7enuscvuc23mvjisbvduhynuscvuc23mvdsvsfvsvvnuscvuc23mvnuscvuc23mvnuscvuc23mv" />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

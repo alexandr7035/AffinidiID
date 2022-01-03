@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
+import by.alexandr7035.affinidi_id.core.extensions.copyToClipboard
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showToast
@@ -47,29 +48,34 @@ class ProfileFragment : Fragment() {
 
 
         viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
-
             binding.userNameView.text = profile.userName
             binding.userDidView.text = profile.userDid
-            Timber.debug("DID ${profile.userDid}")
+
+            val profileImageUri = viewModel.getProfileImageUrl(profile.userDid)
 
             binding.profileImageView.load(
-                uri = viewModel.getProfileImageUrl(profile.userDid),
+                uri = profileImageUri,
                 imageLoader = imageLoader
             )
+
+            binding.profileImageView.setOnClickListener {
+                findNavController().navigateSafe(ProfileFragmentDirections
+                    .actionProfileFragmentToMainMenuFragment(profileImageUri))
+            }
         })
 
         viewModel.init()
 
-        binding.userDidView.setOnClickListener {
-            val clipLabel = getString(R.string.your_did_copied)
+        binding.copyUserNameBtn.setOnClickListener {
+            val clipLabel = getString(R.string.your_username_copied)
+            binding.userDidView.copyToClipboard(clipLabel)
 
-            val clipBoard = ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
-            clipBoard?.setPrimaryClip(
-                ClipData.newPlainText(
-                    clipLabel,
-                    binding.userDidView.text.toString()
-                )
-            )
+            Toast.makeText(requireContext(), clipLabel, Toast.LENGTH_LONG).show()
+        }
+
+        binding.copyUserDidBtn.setOnClickListener {
+            val clipLabel = getString(R.string.your_did_copied)
+            binding.userDidView.copyToClipboard(clipLabel)
 
             Toast.makeText(requireContext(), clipLabel, Toast.LENGTH_LONG).show()
         }
@@ -85,9 +91,5 @@ class ProfileFragment : Fragment() {
             true
         }
 
-        binding.editMenuBtn.setOnClickListener {
-            findNavController().navigateSafe(ProfileFragmentDirections
-                .actionProfileFragmentToEditProfileMenuFragment())
-        }
     }
 }

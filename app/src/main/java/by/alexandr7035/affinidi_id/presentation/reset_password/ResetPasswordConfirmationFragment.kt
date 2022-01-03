@@ -91,6 +91,10 @@ class ResetPasswordConfirmationFragment : Fragment() {
                 }
             }
         })
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun chekIfFormIsValid(): Boolean {

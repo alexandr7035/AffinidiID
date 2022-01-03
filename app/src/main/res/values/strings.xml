@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">AffinidiID</string>
+    <string name="app_name_with_version">AffinidiID v%1$s</string>
     <string name="create_id">Create ID</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+    <string name="menu">Menu</string>
 
     <string name="enter_your_login">Enter your login</string>
     <string name="set_password">Set password</string>
@@ -27,7 +29,9 @@
 
     <string name="profile">Profile</string>
     <string name="your_did">Your DID</string>
+    <string name="your_username">Your username</string>
     <string name="your_did_copied">Your DID has been copied!</string>
+    <string name="your_username_copied">Your username has been copied!</string>
     <string name="your_credentials">Your credentials</string>
     <string name="contacts">Contacts</string>
     <string name="your_affinidi_id">Your Affinidi ID</string>
@@ -63,5 +67,7 @@
     <string name="edit_profile">Edit profile</string>
     <string name="error_wrong_current_password">Wrong current password</string>
     <string name="successful_password_change">Password changed successfully</string>
+
+    <string name="reset_password">Reset password</string>
 
 </resources>
