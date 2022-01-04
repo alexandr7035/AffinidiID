@@ -51,11 +51,6 @@ class MainMenuFragment : Fragment() {
                 clickListener = {
                     findNavController().navigateSafe(MainMenuFragmentDirections
                         .actionMainMenuFragmentToChangePasswordFragment())
-                }),
-            MenuItemModel(
-                title = getString(R.string.reset_password),
-                clickListener = {
-                    Timber.debug("test menu")
                 })
         )
 
