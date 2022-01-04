@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
 
             binding.profileImageView.setOnClickListener {
                 findNavController().navigateSafe(ProfileFragmentDirections
-                    .actionProfileFragmentToMainMenuFragment(profileImageUri))
+                    .actionProfileFragmentToMainMenuFragment())
             }
         })
 

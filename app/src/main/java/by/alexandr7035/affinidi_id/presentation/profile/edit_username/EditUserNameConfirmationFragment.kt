@@ -65,9 +65,8 @@ class EditUserNameConfirmationFragment : Fragment() {
                         result.newUserName
                     ))
 
-                    // TODO fix profile image url
                     findNavController().navigateSafe(EditUserNameConfirmationFragmentDirections
-                        .actionEditUserNameConfirmationFragmentToMainMenuFragment(""))
+                        .actionEditUserNameConfirmationFragmentToMainMenuFragment())
                 }
                 is ConfirmChangeUserNameModel.Fail -> {
                     when (result.errorType) {

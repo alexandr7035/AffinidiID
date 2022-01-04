@@ -141,9 +141,6 @@
         <action
             android:id="@+id/action_mainMenuFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
-        <argument
-            android:name="profileImageUrl"
-            app:argType="string" />
         <action
             android:id="@+id/action_mainMenuFragment_to_editUserNameFragment"
             app:destination="@id/editUserNameFragment" />

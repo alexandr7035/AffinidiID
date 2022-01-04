@@ -6,25 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.BuildConfig
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentMainMenuBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.load
-import timber.log.Timber
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainMenuFragment : Fragment() {
 
     private val binding by viewBinding(FragmentMainMenuBinding::bind)
-    private val safeArgs by navArgs<MainMenuFragmentArgs>()
+    private val viewModel by viewModels<MainMenuViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -54,38 +54,43 @@ class MainMenuFragment : Fragment() {
                 })
         )
 
-
         val layoutManager = LinearLayoutManager(requireContext())
+
+        // Decoration (spacing) for menu items
         val decoration = DividerItemDecoration(
             binding.recycler.context,
             layoutManager.orientation
         )
-
         ContextCompat.getDrawable(requireContext(), R.drawable.primary_menu_item_decoration)?.let {
             decoration.setDrawable(it)
         }
-
         binding.recycler.addItemDecoration(decoration)
 
         val adapter = MainProfileMenuAdapter(menuItems)
         binding.recycler.adapter = adapter
         binding.recycler.layoutManager = layoutManager
 
-
+        // Set app version
         binding.appVersionView.text = getString(
             R.string.app_name_with_version,
             BuildConfig.VERSION_NAME
         )
 
+        // Set profile image
         val imageLoader = ImageLoader.Builder(requireContext())
             .componentRegistry {
                 add(SvgDecoder(requireContext()))
             }
             .build()
 
-        binding.profileImageView.load(
-            uri = safeArgs.profileImageUrl,
-            imageLoader = imageLoader
-        )
+        viewModel.init()
+        viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
+            val profileImageUri = viewModel.getProfileImageUrl(profile.userDid)
+
+            binding.profileImageView.load(
+                uri = profileImageUri,
+                imageLoader = imageLoader
+            )
+        })
     }
 }
