@@ -55,4 +55,7 @@ class RegistrationViewModel @Inject constructor(
         return inputValidationHelper.validatePassword(password)
     }
 
+    fun validateConfirmationCode(code: String): InputValidationResult {
+        return inputValidationHelper.validateConfirmationCode(code)
+    }
 }

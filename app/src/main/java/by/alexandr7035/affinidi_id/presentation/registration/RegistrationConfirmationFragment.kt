@@ -2,28 +2,20 @@ package by.alexandr7035.affinidi_id.presentation.registration
 
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.ErrorType
-import by.alexandr7035.affinidi_id.core.extensions.clearError
-import by.alexandr7035.affinidi_id.core.extensions.debug
-import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
-import by.alexandr7035.affinidi_id.core.extensions.showToast
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationConfirmationBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -42,7 +34,7 @@ class RegistrationConfirmationFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.confirmBtn.setOnClickListener {
-            // TODO validation
+
             if (chekIfFormIsValid()) {
                 binding.progressView.isVisible = true
 
@@ -61,8 +53,20 @@ class RegistrationConfirmationFragment : BottomSheetDialogFragment() {
         viewModel.signUpConfirmationLiveData.postValue(SignUpConfirmationModel.Fail(ErrorType.CONFIRMATION_CODE_DIALOG_DISMISSED))
     }
 
+
     private fun chekIfFormIsValid(): Boolean {
-        // TODO validation
-        return true
+        var formIsValid = true
+
+        val code = binding.confirmationCodeEditText.text.toString()
+        when (viewModel.validateConfirmationCode(code)) {
+            InputValidationResult.EMPTY_FIELD -> {
+                binding.confirmationCodeField.error = getString(R.string.error_empty_field)
+                formIsValid = false
+            }
+
+            InputValidationResult.NO_ERRORS -> { }
+        }
+
+        return formIsValid
     }
 }
