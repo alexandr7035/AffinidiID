@@ -7,6 +7,7 @@ import by.alexandr7035.affinidi_id.data.ChangeProfileRepository
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.data.model.change_username.ChangeUserNameModel
+import by.alexandr7035.affinidi_id.data.model.change_username.ConfirmChangeUserNameModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class EditUserNameViewModel @Inject constructor(
 ) : ViewModel() {
 
     val editUserNameLiveData = SingleLiveEvent<ChangeUserNameModel>()
+    val confirmEditUserNameLiveData = SingleLiveEvent<ConfirmChangeUserNameModel>()
 
     fun changeUserName(newUserName: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -27,6 +29,20 @@ class EditUserNameViewModel @Inject constructor(
 
             withContext(Dispatchers.Main) {
                 editUserNameLiveData.value = res
+            }
+        }
+    }
+
+    fun saveUserNameToCache(userName: String) {
+        repository.saveUserName(userName)
+    }
+
+    fun confirmChangeUserName(newUserName: String, confirmationCode: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = repository.confirmChangeUserName(newUserName, confirmationCode)
+
+            withContext(Dispatchers.Main) {
+                confirmEditUserNameLiveData.value = res
             }
         }
     }

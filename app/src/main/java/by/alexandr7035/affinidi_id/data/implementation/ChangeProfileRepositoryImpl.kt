@@ -9,6 +9,8 @@ import by.alexandr7035.affinidi_id.data.model.change_password.ChangePasswordMode
 import by.alexandr7035.affinidi_id.data.model.change_password.ChangePasswordRequest
 import by.alexandr7035.affinidi_id.data.model.change_username.ChangeUserNameModel
 import by.alexandr7035.affinidi_id.data.model.change_username.ChangeUserNameRequest
+import by.alexandr7035.affinidi_id.data.model.change_username.ConfirmChangeUserNameModel
+import by.alexandr7035.affinidi_id.data.model.change_username.ConfirmChangeUserNameRequest
 import javax.inject.Inject
 
 class ChangeProfileRepositoryImpl @Inject constructor(
@@ -82,5 +84,44 @@ class ChangeProfileRepositoryImpl @Inject constructor(
         catch (e: Exception) {
             return ChangeUserNameModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
+    }
+
+
+    override suspend fun confirmChangeUserName(newUserName: String, confirmationCode: String): ConfirmChangeUserNameModel {
+        try {
+            val res = apiService.confirmChangeUserName(
+                accessToken = authDataStorage.getAccessToken() ?: "",
+                body = ConfirmChangeUserNameRequest(
+                    newUserName = newUserName,
+                    confirmationCode = confirmationCode
+                )
+            )
+
+            return if (res.isSuccessful) {
+                ConfirmChangeUserNameModel.Success(newUserName = newUserName)
+            } else {
+                when (res.code()) {
+                    400 -> {
+                        ConfirmChangeUserNameModel.Fail(ErrorType.WRONG_CONFIRMATION_CODE)
+                    }
+                    // Unknown fail code
+                    else -> {
+                        ConfirmChangeUserNameModel.Fail(ErrorType.UNKNOWN_ERROR)
+                    }
+                }
+            }
+        }
+        // Handled in ErrorInterceptor
+        catch (appError: AppError) {
+            return ConfirmChangeUserNameModel.Fail(appError.errorType)
+        }
+        // Unknown exception
+        catch (e: Exception) {
+            return ConfirmChangeUserNameModel.Fail(ErrorType.UNKNOWN_ERROR)
+        }
+    }
+
+    override fun saveUserName(userName: String) {
+        authDataStorage.saveUserName(userName)
     }
 }
