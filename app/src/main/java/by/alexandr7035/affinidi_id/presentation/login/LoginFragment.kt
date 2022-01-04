@@ -23,6 +23,7 @@ import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -47,10 +48,9 @@ class LoginFragment : Fragment() {
             if (chekIfFormIsValid()) {
                 binding.loginProgressView.isVisible = true
 
-                viewModel.signIn(
-                    userName = binding.userNameEditText.text.toString(),
-                    password = binding.passwordEditText.text.toString()
-                )
+                val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
+                val password = binding.passwordEditText.text.toString()
+                viewModel.signIn(userName = username, password = password)
             }
         }
 

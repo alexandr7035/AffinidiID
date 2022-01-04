@@ -20,6 +20,7 @@ import by.alexandr7035.affinidi_id.data.model.reset_password.InitializePasswordR
 import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordSetUsernameBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class ResetPasswordSetUsernameFragment : Fragment() {
@@ -49,7 +50,7 @@ class ResetPasswordSetUsernameFragment : Fragment() {
             if (chekIfFormIsValid()) {
                 binding.progressView.isVisible = true
 
-                val userName = binding.userNameEditText.text.toString()
+                val userName = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
                 viewModel.initializePasswordReset(userName)
             }
         }
