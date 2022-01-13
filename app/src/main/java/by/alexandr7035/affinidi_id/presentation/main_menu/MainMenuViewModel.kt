@@ -4,20 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import by.alexandr7035.affinidi_id.data.ProfileRepository
 import by.alexandr7035.affinidi_id.data.model.profile.UserProfileModel
+import by.alexandr7035.affinidi_id.domain.model.UserProfile
+import by.alexandr7035.affinidi_id.domain.usecase.GetProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainMenuViewModel @Inject constructor(private val repository: ProfileRepository): ViewModel() {
+class MainMenuViewModel @Inject constructor(private val getProfileUseCase: GetProfileUseCase) : ViewModel() {
 
-    val userProfileLiveData = MutableLiveData<UserProfileModel>()
+    val userProfileLiveData = MutableLiveData<UserProfile>()
 
     fun init() {
-        userProfileLiveData.value = repository.getProfile()
+        userProfileLiveData.value = getProfileUseCase.execute()
     }
-
-    fun getProfileImageUrl(userDid: String): String {
-        return repository.getProfileImageUrl(userDid)
-    }
-
 }

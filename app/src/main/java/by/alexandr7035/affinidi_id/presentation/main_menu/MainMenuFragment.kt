@@ -85,10 +85,8 @@ class MainMenuFragment : Fragment() {
 
         viewModel.init()
         viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
-            val profileImageUri = viewModel.getProfileImageUrl(profile.userDid)
-
             binding.profileImageView.load(
-                uri = profileImageUri,
+                uri = profile.imageUrl,
                 imageLoader = imageLoader
             )
         })
