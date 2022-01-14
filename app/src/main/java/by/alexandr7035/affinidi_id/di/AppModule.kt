@@ -22,13 +22,6 @@ object AppModule {
         return retrofit.create(ApiService::class.java)
     }
 
-
-    @Provides
-    @Singleton
-    fun provideResetPasswordRepository(apiService: ApiService): ResetPasswordRepository {
-        return ResetPasswordRepositoryImpl(apiService)
-    }
-
     @Provides
     @Singleton
     fun provideChangeProfileRepository(apiService: ApiService, authDataStorage: AuthDataStorage): ChangeProfileRepository {
