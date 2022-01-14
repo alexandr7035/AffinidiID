@@ -9,10 +9,10 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationConfirmationBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +50,7 @@ class RegistrationConfirmationFragment : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        viewModel.signUpConfirmationLiveData.postValue(SignUpConfirmationModel.Fail(ErrorType.CONFIRMATION_CODE_DIALOG_DISMISSED))
+        viewModel.signUpConfirmationLiveData.postValue(ConfirmSignUpResponseModel.Fail(ErrorType.CONFIRMATION_CODE_DIALOG_DISMISSED))
     }
 
 
