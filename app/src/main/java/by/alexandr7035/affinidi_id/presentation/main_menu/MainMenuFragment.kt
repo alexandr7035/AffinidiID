@@ -40,13 +40,6 @@ class MainMenuFragment : Fragment() {
 
         val menuItems = listOf(
             MenuItemModel(
-                title = getString(R.string.change_username),
-                clickListener = {
-                    findNavController().navigateSafe(MainMenuFragmentDirections
-                        .actionMainMenuFragmentToEditUserNameFragment())
-                }),
-
-            MenuItemModel(
                 title = getString(R.string.change_password),
                 clickListener = {
                     findNavController().navigateSafe(MainMenuFragmentDirections
