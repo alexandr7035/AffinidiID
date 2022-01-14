@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.domain.model
+package by.alexandr7035.affinidi_id.domain.model.profile
 
 data class UserProfile(
     val userName: String,

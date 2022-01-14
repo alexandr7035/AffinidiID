@@ -1,6 +1,7 @@
 package by.alexandr7035.data.repository
 
-import by.alexandr7035.affinidi_id.domain.model.UserProfile
+import by.alexandr7035.affinidi_id.domain.model.profile.SaveProfileModel
+import by.alexandr7035.affinidi_id.domain.model.profile.UserProfile
 import by.alexandr7035.affinidi_id.domain.repository.ProfileRepository
 import by.alexandr7035.data.helpers.DicebearAvatarsHelper
 import by.alexandr7035.data.model.profile.DicebearImageType
@@ -28,5 +29,10 @@ class ProfileRepositoryImpl @Inject constructor(
             userDid = userDid,
             imageUrl = avatartUrl
         )
+    }
+
+    override fun saveProfile(saveProfileModel: SaveProfileModel) {
+        authDataStorage.saveUserName(saveProfileModel.userName)
+        authDataStorage.saveDid(saveProfileModel.userDid)
     }
 }
