@@ -40,13 +40,6 @@ class MainMenuFragment : Fragment() {
 
         val menuItems = listOf(
             MenuItemModel(
-                title = getString(R.string.change_username),
-                clickListener = {
-                    findNavController().navigateSafe(MainMenuFragmentDirections
-                        .actionMainMenuFragmentToEditUserNameFragment())
-                }),
-
-            MenuItemModel(
                 title = getString(R.string.change_password),
                 clickListener = {
                     findNavController().navigateSafe(MainMenuFragmentDirections
@@ -85,10 +78,8 @@ class MainMenuFragment : Fragment() {
 
         viewModel.init()
         viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
-            val profileImageUri = viewModel.getProfileImageUrl(profile.userDid)
-
             binding.profileImageView.load(
-                uri = profileImageUri,
+                uri = profile.imageUrl,
                 imageLoader = imageLoader
             )
         })

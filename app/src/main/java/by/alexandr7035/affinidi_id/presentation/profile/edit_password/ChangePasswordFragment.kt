@@ -10,13 +10,13 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showToast
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
-import by.alexandr7035.affinidi_id.data.model.change_password.ChangePasswordModel
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentChangePasswordBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -67,11 +67,11 @@ class ChangePasswordFragment : Fragment() {
             binding.progressView.isVisible = false
 
             when (result) {
-                is ChangePasswordModel.Success -> {
+                is ChangePasswordResModel.Success -> {
                     // TODO dialog
                     requireContext().showToast(getString(R.string.successful_password_change))
                 }
-                is ChangePasswordModel.Fail -> {
+                is ChangePasswordResModel.Fail -> {
                     when (result.errorType) {
                         ErrorType.FAILED_CONNECTION -> {
                             showErrorDialog(

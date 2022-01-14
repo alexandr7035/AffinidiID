@@ -10,14 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
-import by.alexandr7035.affinidi_id.core.extensions.showToast
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
-import by.alexandr7035.affinidi_id.data.model.reset_password.InitializePasswordResetModel
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordSetUsernameBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.reset_password.InitializePasswordResetResponseModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -59,12 +58,12 @@ class ResetPasswordSetUsernameFragment : Fragment() {
             binding.progressView.isVisible = false
 
             when (result) {
-                is InitializePasswordResetModel.Success -> {
+                is InitializePasswordResetResponseModel.Success -> {
                     findNavController().navigateSafe(ResetPasswordSetUsernameFragmentDirections
                         .actionResetPasswordSetUsernameFragmentToResetPasswordSetPasswordFragment(result.userName))
                 }
 
-                is InitializePasswordResetModel.Fail -> {
+                is InitializePasswordResetResponseModel.Fail -> {
                     when (result.errorType) {
                         ErrorType.USER_DOES_NOT_EXIST -> {
                             binding.userNameField.error = getString(R.string.error_user_not_found)

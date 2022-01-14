@@ -3,11 +3,16 @@ package by.alexandr7035.affinidi_id.presentation.registration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
-import by.alexandr7035.affinidi_id.data.RegistrationRepository
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.domain.model.profile.SaveProfileModel
+import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpRequestModel
+import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseModel
+import by.alexandr7035.affinidi_id.domain.model.signup.SignUpRequestModel
+import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
+import by.alexandr7035.affinidi_id.domain.usecase.ConfirmRegisterWithEmailUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.RegisterWithEmailUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.SaveProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,16 +21,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val repository: RegistrationRepository,
+    private val registerWithEmailUseCase: RegisterWithEmailUseCase,
+    private val confirmRegisterWithEmailUseCase: ConfirmRegisterWithEmailUseCase,
+    private val saveProfileUseCase: SaveProfileUseCase,
     private val inputValidationHelper: InputValidationHelper
 ): ViewModel() {
 
-    val signUpLiveData = SingleLiveEvent<SignUpModel>()
-    val signUpConfirmationLiveData = SingleLiveEvent<SignUpConfirmationModel>()
+    val signUpLiveData = SingleLiveEvent<SignUpResponseModel>()
+    val signUpConfirmationLiveData = SingleLiveEvent<ConfirmSignUpResponseModel>()
 
     fun signUp(userName: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.signUp(userName, password)
+            val result = registerWithEmailUseCase.execute(SignUpRequestModel(userName, password))
 
             withContext(Dispatchers.Main) {
                 signUpLiveData.value = result
@@ -35,7 +42,7 @@ class RegistrationViewModel @Inject constructor(
 
     fun confirmSignUp(confirmationToken: String, confirmationCode: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.confirmSignUp(confirmationToken, confirmationCode)
+            val result = confirmRegisterWithEmailUseCase.execute(ConfirmSignUpRequestModel(confirmationToken, confirmationCode))
 
             withContext(Dispatchers.Main) {
                 signUpConfirmationLiveData.value = result
@@ -43,8 +50,8 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    fun saveUserName(userName: String) {
-        repository.saveUserName(userName)
+    fun saveProfile(userName: String, userDid: String) {
+        saveProfileUseCase.execute(SaveProfileModel(userName, userDid))
     }
 
     fun validateUserName(userName: String): InputValidationResult {
