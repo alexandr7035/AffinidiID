@@ -11,14 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
-import by.alexandr7035.affinidi_id.data.model.reset_password.ConfirmPasswordResetModel
 import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordConfirmationBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordResetResponseModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,7 +60,7 @@ class ResetPasswordConfirmationFragment : Fragment() {
             binding.progressView.isVisible = false
 
             when (result) {
-                is ConfirmPasswordResetModel.Success -> {
+                is ConfirmPasswordResetResponseModel.Success -> {
                     findNavController().navigateSafe(ResetPasswordConfirmationFragmentDirections
                         .actionGlobalLoginFragment())
 
@@ -68,7 +68,7 @@ class ResetPasswordConfirmationFragment : Fragment() {
                     requireContext().showToast(getString(R.string.password_changed_successfully))
                 }
 
-                is ConfirmPasswordResetModel.Fail -> {
+                is ConfirmPasswordResetResponseModel.Fail -> {
                     when (result.errorType) {
                         ErrorType.WRONG_CONFIRMATION_CODE -> {
                             binding.confirmationCodeField.error = getString(R.string.error_wrong_confirmation_code)

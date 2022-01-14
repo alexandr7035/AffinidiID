@@ -1,0 +1,12 @@
+package by.alexandr7035.affinidi_id.domain.repository
+
+import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordResetRequestModel
+import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordResetResponseModel
+import by.alexandr7035.affinidi_id.domain.model.reset_password.InitializePasswordResetRequestModel
+import by.alexandr7035.affinidi_id.domain.model.reset_password.InitializePasswordResetResponseModel
+
+interface ResetPasswordRepository {
+    suspend fun initializePasswordReset(initializePasswordResetRequestModel: InitializePasswordResetRequestModel): InitializePasswordResetResponseModel
+
+    suspend fun confirmResetPassword(confirmPasswordResetRequestModel: ConfirmPasswordResetRequestModel): ConfirmPasswordResetResponseModel
+}

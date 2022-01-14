@@ -7,12 +7,14 @@ import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
 import by.alexandr7035.affinidi_id.domain.repository.ProfileRepository
 import by.alexandr7035.affinidi_id.domain.repository.RegistrationRepository
+import by.alexandr7035.affinidi_id.domain.repository.ResetPasswordRepository
 import by.alexandr7035.data.api.ApiService
 import by.alexandr7035.data.helpers.DicebearAvatarsHelper
 import by.alexandr7035.data.helpers.DicebearAvatarsHelperImpl
 import by.alexandr7035.data.repository.LoginRepositoryImpl
 import by.alexandr7035.data.repository.ProfileRepositoryImpl
 import by.alexandr7035.data.repository.RegistrationRepositoryImpl
+import by.alexandr7035.data.repository.ResetPasswordRepositoryImpl
 import by.alexandr7035.data.storage.ProfileStorage
 import by.alexandr7035.data.storage.ProfileStorageImpl
 import by.alexandr7035.data.storage.SecretsStorage
@@ -95,6 +97,12 @@ object DataModule {
     @Singleton
     fun provideRegistrationRepository(apiService: ApiService, secretsStorage: SecretsStorage): RegistrationRepository {
         return RegistrationRepositoryImpl(apiService, secretsStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideResetPasswordRepository(apiService: ApiService): ResetPasswordRepository {
+        return ResetPasswordRepositoryImpl(apiService)
     }
 
 }

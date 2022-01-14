@@ -1,5 +1,7 @@
 package by.alexandr7035.data.api
 
+import by.alexandr7035.data.model.reset_password.ConfirmResetPasswordRequest
+import by.alexandr7035.data.model.reset_password.InitializeResetPasswordRequest
 import by.alexandr7035.data.model.sign_in.SignInRequest
 import by.alexandr7035.data.model.sign_in.SignInResponse
 import by.alexandr7035.data.model.sign_up.ConfirmSignUpRequest
@@ -26,4 +28,12 @@ interface ApiService {
 
     @POST("api/v1/users/logout")
     suspend fun logOut(@Header("Authorization") accessToken: String): Response<Unit>
+
+    // This request doesn't return anything but sends OTP to user's email
+    @POST("api/v1/users/forgot-password")
+    suspend fun initializePasswordReset(@Body body: InitializeResetPasswordRequest): Response<Unit>
+
+    // This request doesn't return anything. 204 code for success
+    @POST("api/v1/users/forgot-password/confirm")
+    suspend fun confirmPasswordReset(@Body body: ConfirmResetPasswordRequest): Response<Unit>
 }
