@@ -5,23 +5,12 @@ import by.alexandr7035.affinidi_id.data.model.change_username.ChangeUserNameRequ
 import by.alexandr7035.affinidi_id.data.model.change_username.ConfirmChangeUserNameRequest
 import by.alexandr7035.affinidi_id.data.model.reset_password.ConfirmResetPasswordRequest
 import by.alexandr7035.affinidi_id.data.model.reset_password.InitializeResetPasswordRequest
-import by.alexandr7035.affinidi_id.data.model.sign_up.ConfirmSignUpRequest
-import by.alexandr7035.affinidi_id.data.model.sign_up.ConfirmSignUpResponse
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("/api/v1/users/signup")
-    // Returns TOKEN for sign up confirmation
-    suspend fun signUp(@Body body: SignUpRequest): Response<String>
-
-    @POST("/api/v1/users/signup/confirm")
-    suspend fun confirmSignUp(
-        @Body body: ConfirmSignUpRequest
-    ): Response<ConfirmSignUpResponse>
 
     // This request doesn't return anything but sends OTP to user's email
     @POST("api/v1/users/forgot-password")

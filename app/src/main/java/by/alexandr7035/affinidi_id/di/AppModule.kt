@@ -22,12 +22,6 @@ object AppModule {
         return retrofit.create(ApiService::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideRegistrationRepository(apiService: ApiService, authDataStorage: AuthDataStorage): RegistrationRepository {
-        return RegistrationRepositoryImpl(apiService, authDataStorage)
-    }
-
 
     @Provides
     @Singleton

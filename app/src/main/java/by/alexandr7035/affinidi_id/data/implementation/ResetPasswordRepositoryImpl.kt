@@ -2,16 +2,12 @@ package by.alexandr7035.affinidi_id.data.implementation
 
 import by.alexandr7035.affinidi_id.core.AppError
 import by.alexandr7035.affinidi_id.core.ErrorType
-import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.data.ApiService
 import by.alexandr7035.affinidi_id.data.ResetPasswordRepository
 import by.alexandr7035.affinidi_id.data.model.reset_password.ConfirmPasswordResetModel
 import by.alexandr7035.affinidi_id.data.model.reset_password.ConfirmResetPasswordRequest
 import by.alexandr7035.affinidi_id.data.model.reset_password.InitializePasswordResetModel
 import by.alexandr7035.affinidi_id.data.model.reset_password.InitializeResetPasswordRequest
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
-import timber.log.Timber
-import java.lang.Exception
 import javax.inject.Inject
 
 class ResetPasswordRepositoryImpl @Inject constructor(private val apiService: ApiService): ResetPasswordRepository{
