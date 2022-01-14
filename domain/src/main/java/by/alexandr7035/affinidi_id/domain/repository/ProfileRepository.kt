@@ -7,4 +7,6 @@ interface ProfileRepository {
     fun getProfile(): UserProfile
 
     fun saveProfile(saveProfileModel: SaveProfileModel)
+
+    fun clearProfile()
 }

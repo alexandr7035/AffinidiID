@@ -35,4 +35,9 @@ class ProfileRepositoryImpl @Inject constructor(
         profileStorage.saveUserName(saveProfileModel.userName)
         profileStorage.saveDid(saveProfileModel.userDid)
     }
+
+    override fun clearProfile() {
+        profileStorage.saveUserName(null)
+        profileStorage.saveDid(null)
+    }
 }

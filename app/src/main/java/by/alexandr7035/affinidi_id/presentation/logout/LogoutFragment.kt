@@ -8,15 +8,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
-import by.alexandr7035.affinidi_id.core.extensions.showToast
-import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
-import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.databinding.FragmentLogoutBinding
-import by.alexandr7035.affinidi_id.presentation.profile.ProfileFragmentDirections
-import by.alexandr7035.affinidi_id.presentation.registration.RegistrationFragmentDirections
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
