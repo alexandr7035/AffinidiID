@@ -58,7 +58,7 @@ class ProfileFragment : Fragment() {
 
         binding.copyUserNameBtn.setOnClickListener {
             val clipLabel = getString(R.string.your_username_copied)
-            binding.userDidView.copyToClipboard(clipLabel)
+            binding.userNameView.copyToClipboard(clipLabel)
 
             Toast.makeText(requireContext(), clipLabel, Toast.LENGTH_LONG).show()
         }
