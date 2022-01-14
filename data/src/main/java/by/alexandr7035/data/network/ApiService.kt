@@ -1,4 +1,4 @@
-package by.alexandr7035.data.api
+package by.alexandr7035.data.network
 
 import by.alexandr7035.data.model.profile.ChangePasswordRequest
 import by.alexandr7035.data.model.reset_password.ConfirmResetPasswordRequest

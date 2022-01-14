@@ -30,8 +30,6 @@ android {
         versionName "0.2-alpha"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String", "API_KEY", API_KEY)
     }
 
     buildTypes {

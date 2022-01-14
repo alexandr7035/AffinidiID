@@ -1,9 +1,8 @@
-package by.alexandr7035.affinidi_id.core.network
+package by.alexandr7035.data.network
 
-import by.alexandr7035.affinidi_id.core.App
-import by.alexandr7035.affinidi_id.core.AppError
-import by.alexandr7035.affinidi_id.core.ErrorType
-import by.alexandr7035.affinidi_id.core.extensions.debug
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.data.core.AppError
+import by.alexandr7035.data.extensions.debug
 import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
