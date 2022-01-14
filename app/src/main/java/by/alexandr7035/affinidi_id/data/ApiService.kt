@@ -5,8 +5,6 @@ import by.alexandr7035.affinidi_id.data.model.change_username.ChangeUserNameRequ
 import by.alexandr7035.affinidi_id.data.model.change_username.ConfirmChangeUserNameRequest
 import by.alexandr7035.affinidi_id.data.model.reset_password.ConfirmResetPasswordRequest
 import by.alexandr7035.affinidi_id.data.model.reset_password.InitializeResetPasswordRequest
-import by.alexandr7035.affinidi_id.data.model.sign_in.SignInRequest
-import by.alexandr7035.affinidi_id.data.model.sign_in.SignInResponse
 import by.alexandr7035.affinidi_id.data.model.sign_up.ConfirmSignUpRequest
 import by.alexandr7035.affinidi_id.data.model.sign_up.ConfirmSignUpResponse
 import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpRequest
@@ -24,12 +22,6 @@ interface ApiService {
     suspend fun confirmSignUp(
         @Body body: ConfirmSignUpRequest
     ): Response<ConfirmSignUpResponse>
-
-    @POST("api/v1/users/login")
-    suspend fun signIn(@Body body: SignInRequest): Response<SignInResponse>
-
-    @POST("api/v1/users/logout")
-    suspend fun logOut(@Header("Authorization") accessToken: String): Response<Unit>
 
     // This request doesn't return anything but sends OTP to user's email
     @POST("api/v1/users/forgot-password")

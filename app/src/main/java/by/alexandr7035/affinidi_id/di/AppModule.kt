@@ -30,12 +30,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(apiService: ApiService, authDataStorage: AuthDataStorage): LoginRepository {
-        return LoginRepositoryImpl(apiService, authDataStorage)
-    }
-
-    @Provides
-    @Singleton
     fun provideProfileRepository(authDataStorage: AuthDataStorage, avatarsHelper: DicebearAvatarsHelper, apiService: ApiService): ProfileRepository {
         return ProfileRepositoryImpl(authDataStorage, avatarsHelper, apiService)
     }

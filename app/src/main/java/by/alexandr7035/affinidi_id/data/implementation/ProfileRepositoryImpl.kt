@@ -1,13 +1,11 @@
 package by.alexandr7035.affinidi_id.data.implementation
 
-import by.alexandr7035.affinidi_id.core.AppError
-import by.alexandr7035.affinidi_id.core.ErrorType
-import by.alexandr7035.affinidi_id.core.extensions.debug
-import by.alexandr7035.affinidi_id.data.*
-import by.alexandr7035.affinidi_id.data.model.log_out.LogOutModel
-import by.alexandr7035.affinidi_id.data.model.profile.UserProfileModel
+import by.alexandr7035.affinidi_id.data.ApiService
+import by.alexandr7035.affinidi_id.data.AuthDataStorage
+import by.alexandr7035.affinidi_id.data.DicebearAvatarsHelper
+import by.alexandr7035.affinidi_id.data.ProfileRepository
 import by.alexandr7035.affinidi_id.data.model.profile.DicebearImageType
-import timber.log.Timber
+import by.alexandr7035.affinidi_id.data.model.profile.UserProfileModel
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
