@@ -4,17 +4,13 @@ import android.app.Application
 import android.content.Context
 import by.alexandr7035.affinidi_id.core.network.AuthInterceptor
 import by.alexandr7035.affinidi_id.core.network.ErrorInterceptor
-import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
-import by.alexandr7035.affinidi_id.domain.repository.ProfileRepository
-import by.alexandr7035.affinidi_id.domain.repository.RegistrationRepository
-import by.alexandr7035.affinidi_id.domain.repository.ResetPasswordRepository
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelperImpl
+import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.data.api.ApiService
 import by.alexandr7035.data.helpers.DicebearAvatarsHelper
 import by.alexandr7035.data.helpers.DicebearAvatarsHelperImpl
-import by.alexandr7035.data.repository.LoginRepositoryImpl
-import by.alexandr7035.data.repository.ProfileRepositoryImpl
-import by.alexandr7035.data.repository.RegistrationRepositoryImpl
-import by.alexandr7035.data.repository.ResetPasswordRepositoryImpl
+import by.alexandr7035.data.repository.*
 import by.alexandr7035.data.storage.ProfileStorage
 import by.alexandr7035.data.storage.ProfileStorageImpl
 import by.alexandr7035.data.storage.SecretsStorage
@@ -105,4 +101,15 @@ object DataModule {
         return ResetPasswordRepositoryImpl(apiService)
     }
 
+    @Provides
+    @Singleton
+    fun provideChangeProfileRepository(apiService: ApiService): ChangeProfileRepository {
+        return ChangeProfileRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideInputValidationHelper(): InputValidationHelper {
+        return InputValidationHelperImpl(minPasswordLength = 8)
+    }
 }

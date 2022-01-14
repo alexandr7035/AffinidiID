@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.data.model.change_password
+package by.alexandr7035.data.model.profile
 
 import com.google.gson.annotations.SerializedName
 

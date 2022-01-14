@@ -1,9 +1,6 @@
 package by.alexandr7035.affinidi_id.di
 
-import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
-import by.alexandr7035.affinidi_id.domain.repository.ProfileRepository
-import by.alexandr7035.affinidi_id.domain.repository.RegistrationRepository
-import by.alexandr7035.affinidi_id.domain.repository.ResetPasswordRepository
+import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.affinidi_id.domain.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -52,5 +49,10 @@ object DomainModule {
     @Provides
     fun provideConfirmPasswordResetUseCase(resetPasswordRepository: ResetPasswordRepository): ConfirmPasswordResetUseCase {
         return ConfirmPasswordResetUseCase(resetPasswordRepository)
+    }
+
+    @Provides
+    fun provideChangePasswordUseCase(changeProfileRepository: ChangeProfileRepository, getAuthStateUseCase: GetAuthStateUseCase): ChangePasswordUseCase {
+        return ChangePasswordUseCase(changeProfileRepository, getAuthStateUseCase)
     }
 }
