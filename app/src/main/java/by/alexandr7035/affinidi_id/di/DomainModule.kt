@@ -17,6 +17,16 @@ object DomainModule {
     }
 
     @Provides
+    fun provideClearProfileUseCase(profileRepository: ProfileRepository): ClearProfileUseCase {
+        return ClearProfileUseCase(profileRepository)
+    }
+
+    @Provides
+    fun provideSaveProfileUseCase(profileRepository: ProfileRepository): SaveProfileUseCase {
+        return SaveProfileUseCase(profileRepository)
+    }
+
+    @Provides
     fun provideSignInWithEmailUseCase(loginRepository: LoginRepository): SignInWithEmailUseCase {
         return SignInWithEmailUseCase(loginRepository)
     }
