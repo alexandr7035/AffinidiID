@@ -44,7 +44,7 @@
         <action
             android:id="@+id/action_logoutFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/logoutFragment"
+            app:popUpTo="@id/nav_graph.xml"
             app:popUpToInclusive="true" />
     </dialog>
     <navigation android:id="@+id/signUpGraph"
