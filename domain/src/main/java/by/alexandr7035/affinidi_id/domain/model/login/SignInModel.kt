@@ -6,8 +6,7 @@ import by.alexandr7035.affinidi_id.domain.core.ErrorType
 abstract class SignInModel {
     data class Success(
         val userDid: String,
-        val userName: String,
-        val accessToken: String
+        val userName: String
     ): SignInModel()
 
     data class Fail(

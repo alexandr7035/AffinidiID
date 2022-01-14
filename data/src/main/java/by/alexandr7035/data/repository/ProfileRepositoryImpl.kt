@@ -5,19 +5,19 @@ import by.alexandr7035.affinidi_id.domain.model.profile.UserProfile
 import by.alexandr7035.affinidi_id.domain.repository.ProfileRepository
 import by.alexandr7035.data.helpers.DicebearAvatarsHelper
 import by.alexandr7035.data.model.profile.DicebearImageType
-import by.alexandr7035.data.storage.AuthDataStorage
+import by.alexandr7035.data.storage.ProfileStorage
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
-    private val authDataStorage: AuthDataStorage,
+    private val profileStorage: ProfileStorage,
     private val avatarsHelper: DicebearAvatarsHelper,
 //    private val apiService: ApiService
 ): ProfileRepository {
     override fun getProfile(): UserProfile {
         // TODO FIXME
 
-        val userName = authDataStorage.getUserName() ?: "Unknown username"
-        val userDid = authDataStorage.getDid() ?: "Unknown DID"
+        val userName = profileStorage.getUserName() ?: "Unknown username"
+        val userDid = profileStorage.getDid() ?: "Unknown DID"
         // Did contains ":" symbol which can't be used in urls
         // So split did and get last part
         // Also take last 25 symbols as elem DID may be extremely long
@@ -32,7 +32,7 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
     override fun saveProfile(saveProfileModel: SaveProfileModel) {
-        authDataStorage.saveUserName(saveProfileModel.userName)
-        authDataStorage.saveDid(saveProfileModel.userDid)
+        profileStorage.saveUserName(saveProfileModel.userName)
+        profileStorage.saveDid(saveProfileModel.userDid)
     }
 }

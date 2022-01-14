@@ -2,6 +2,7 @@ package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
 import by.alexandr7035.affinidi_id.domain.repository.ProfileRepository
+import by.alexandr7035.affinidi_id.domain.usecase.GetAuthStateUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.GetProfileUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.SignInWithEmailUseCase
 import dagger.Module
@@ -21,5 +22,10 @@ object DomainModule {
     @Provides
     fun provideSignInWithEmailUseCase(loginRepository: LoginRepository): SignInWithEmailUseCase {
         return SignInWithEmailUseCase(loginRepository)
+    }
+
+    @Provides
+    fun provideGetAuthStateUseCase(loginRepository: LoginRepository): GetAuthStateUseCase {
+        return GetAuthStateUseCase(loginRepository)
     }
 }

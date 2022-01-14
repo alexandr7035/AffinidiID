@@ -1,0 +1,12 @@
+package by.alexandr7035.data.api
+
+import by.alexandr7035.data.model.sign_in.SignInRequest
+import by.alexandr7035.data.model.sign_in.SignInResponse
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+interface ApiService {
+    @POST("api/v1/users/login")
+    suspend fun signIn(@Body body: SignInRequest): Response<SignInResponse>
+}

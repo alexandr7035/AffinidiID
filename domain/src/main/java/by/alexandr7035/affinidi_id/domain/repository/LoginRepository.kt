@@ -8,6 +8,10 @@ interface LoginRepository {
         password: String,
     ): SignInModel
 
+    fun saveAccessToken(accessToken: String?)
+
+    fun getAccessToken(): String?
+
 //    fun checkIfAuthorized(): Boolean
 //
 //    fun saveUserName(userName: String)

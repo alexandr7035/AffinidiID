@@ -1,13 +1,9 @@
 package by.alexandr7035.data.storage
 
-interface AuthDataStorage {
+interface ProfileStorage {
     fun saveDid(userDid: String?)
 
     fun getDid(): String?
-
-    fun saveAccessToken(accessToken: String?)
-
-    fun getAccessToken(): String?
 
     fun saveUserName(userName: String?)
 
