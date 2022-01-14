@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationConfirmationBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseModel

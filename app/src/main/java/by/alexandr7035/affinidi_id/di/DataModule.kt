@@ -4,8 +4,8 @@ import android.app.Application
 import android.content.Context
 import by.alexandr7035.data.network.AuthInterceptor
 import by.alexandr7035.data.network.ErrorInterceptor
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelperImpl
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelperImpl
 import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.data.network.ApiService
 import by.alexandr7035.data.helpers.DicebearAvatarsHelper

@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.data.helpers.validation
+package by.alexandr7035.affinidi_id.presentation.helpers.validation
 
 import android.util.Patterns
 

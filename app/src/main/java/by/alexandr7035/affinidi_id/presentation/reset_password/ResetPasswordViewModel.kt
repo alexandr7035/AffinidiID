@@ -3,8 +3,8 @@ package by.alexandr7035.affinidi_id.presentation.reset_password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordResetRequestModel
 import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordResetResponseModel
 import by.alexandr7035.affinidi_id.domain.model.reset_password.InitializePasswordResetRequestModel

@@ -3,8 +3,8 @@ package by.alexandr7035.affinidi_id.presentation.profile.edit_password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationHelper
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordReqModel
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
 import by.alexandr7035.affinidi_id.domain.usecase.ChangePasswordUseCase
