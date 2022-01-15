@@ -13,16 +13,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
-import by.alexandr7035.affinidi_id.data.model.sign_in.SignInModel
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -47,10 +48,9 @@ class LoginFragment : Fragment() {
             if (chekIfFormIsValid()) {
                 binding.loginProgressView.isVisible = true
 
-                viewModel.signIn(
-                    userName = binding.userNameEditText.text.toString(),
-                    password = binding.passwordEditText.text.toString()
-                )
+                val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
+                val password = binding.passwordEditText.text.toString()
+                viewModel.signIn(userName = username, password = password)
             }
         }
 
@@ -75,9 +75,7 @@ class LoginFragment : Fragment() {
 
                 // Auth successful
                 is SignInModel.Success -> {
-                    // API doesn't provide username
-                    // So save it manually
-                    viewModel.saveUserName(binding.userNameEditText.text.toString())
+                    viewModel.saveProfile(userName = response.userName, userDid = response.userDid)
                     findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
                 }
 

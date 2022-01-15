@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_profileFragment_to_logoutFragment"
             app:destination="@id/logoutFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
     </fragment>
 
     <dialog
@@ -41,7 +44,7 @@
         <action
             android:id="@+id/action_logoutFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/logoutFragment"
+            app:popUpTo="@id/nav_graph.xml"
             app:popUpToInclusive="true" />
     </dialog>
     <navigation android:id="@+id/signUpGraph"
@@ -129,5 +132,21 @@
             app:popUpTo="@id/resetPasswordGraph"
             app:popUpToInclusive="true" />
     </navigation>
+
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.main_menu.MainMenuFragment"
+        android:label="MainMenuFragment"
+        tools:layout="@layout/fragment_main_menu">
+        <action
+            android:id="@+id/action_mainMenuFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.profile.edit_password.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password"/>
 
 </navigation>

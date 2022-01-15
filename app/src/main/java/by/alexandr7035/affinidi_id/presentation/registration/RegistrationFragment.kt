@@ -13,17 +13,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.ErrorType
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
-import by.alexandr7035.affinidi_id.data.helpers.validation.InputValidationResult
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpConfirmationModel
-import by.alexandr7035.affinidi_id.data.model.sign_up.SignUpModel
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseModel
+import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -47,10 +48,9 @@ class RegistrationFragment : Fragment() {
             if (chekIfFormIsValid()) {
                 binding.loginProgressView.isVisible = true
 
-                viewModel.signUp(
-                    binding.userNameEditText.text.toString(),
-                    binding.passwordSetEditText.text.toString()
-                )
+                val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
+                val password = binding.passwordSetEditText.text.toString()
+                viewModel.signUp(userName = username, password = password)
             }
         }
 
@@ -58,7 +58,7 @@ class RegistrationFragment : Fragment() {
         viewModel.signUpLiveData.observe(viewLifecycleOwner, { signUpResult ->
 
             when (signUpResult) {
-                is SignUpModel.Success -> {
+                is SignUpResponseModel.Success -> {
                     findNavController()
                         .navigateSafe(
                             RegistrationFragmentDirections.actionRegistrationFragmentToRegistrationConfirmationFragment(
@@ -66,7 +66,7 @@ class RegistrationFragment : Fragment() {
                             )
                         )
                 }
-                is SignUpModel.Fail -> {
+                is SignUpResponseModel.Fail -> {
                     binding.loginProgressView.isVisible = false
 
                     when (signUpResult.errorType) {
@@ -92,7 +92,6 @@ class RegistrationFragment : Fragment() {
         })
 
 
-        // TODO dry
         binding.userNameEditText.doOnTextChanged { text, start, before, count ->
             if (text?.isNotEmpty() == true) {
                 binding.userNameField.clearError()
@@ -131,14 +130,13 @@ class RegistrationFragment : Fragment() {
         viewModel.signUpConfirmationLiveData.observe(viewLifecycleOwner, { signUpConfirmationResult ->
             when (signUpConfirmationResult) {
 
-                is SignUpConfirmationModel.Success -> {
-                    // Save username to storage
-                    // DID and token already saved by repository
-                    viewModel.saveUserName(binding.userNameEditText.text.toString())
+                is ConfirmSignUpResponseModel.Success -> {
+                    // FIXME handle in models
+                    viewModel.saveProfile(binding.userNameEditText.text.toString(), signUpConfirmationResult.userDid)
                     findNavController().navigateSafe(RegistrationConfirmationFragmentDirections.actionGlobalProfileFragment())
                 }
 
-                is SignUpConfirmationModel.Fail -> {
+                is ConfirmSignUpResponseModel.Fail -> {
                     binding.loginProgressView.isVisible = false
 
                     when (signUpConfirmationResult.errorType) {
@@ -185,7 +183,8 @@ class RegistrationFragment : Fragment() {
                 formIsValid = false
             }
 
-            InputValidationResult.NO_ERRORS -> {}
+            InputValidationResult.NO_ERRORS -> {
+            }
         }
 
         val password = binding.passwordSetEditText.text.toString()
@@ -209,7 +208,8 @@ class RegistrationFragment : Fragment() {
                 formIsValid = false
             }
 
-            InputValidationResult.NO_ERRORS -> {}
+            InputValidationResult.NO_ERRORS -> {
+            }
         }
 
         when (viewModel.validatePassword(passwordConfirmation)) {
@@ -223,7 +223,8 @@ class RegistrationFragment : Fragment() {
                 formIsValid = false
             }
 
-            InputValidationResult.NO_ERRORS -> {}
+            InputValidationResult.NO_ERRORS -> {
+            }
         }
 
         return formIsValid

@@ -1,11 +1,8 @@
 package by.alexandr7035.affinidi_id.presentation
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -33,10 +30,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.navigationBarColor = Color.TRANSPARENT
-        window.statusBarColor = Color.TRANSPARENT
-        window.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_window))
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//        window.navigationBarColor = Color.TRANSPARENT
+//        window.statusBarColor = Color.TRANSPARENT
+//        window.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_window))
 
         // Primary destinations shown in bottom navigation
         val bottomNavigationDestinations = listOf(R.id.profileFragment)
