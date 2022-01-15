@@ -5,7 +5,7 @@
 * [What is Affinidi Wallet](#what-is-affinidi-wallet)
 * [Used APIs](#used-apis)
 * [Implemented use cases](#implemented-use-cases)
-* [Technical stack](#technical-stack)
+* [Technical details](#technical-details)
 
 
 ## Description
@@ -15,7 +15,7 @@
 <img src="doc/screenshot_sign_in.webp" width="23%"/>
 <img src="doc/screenshot_sign_up.webp" width="23%"/>
 <img src="doc/screenshot_profile.webp" width="23%"/>
-<img src="doc/screenshot_logout.webp" width="23%"/>
+<img src="doc/screenshot_menu.webp" width="23%"/>
 </p>
 
 ## What is Affinidi Wallet
@@ -31,11 +31,15 @@ The last version (v0.2-alpha) covers the following use cases:
 - Sign up
 - Sign in
 - View profile info (username, DID)
+- Change password
 - Logout
 - Reset password
 
-## Technical stack
+"Edit username" feature was deleted due to API issue. The original name becomes lost immediately after OTP is sent (without confirmation).
+
+## Technical details
 - Single activity approach and [Navigation component](https://developer.android.com/guide/navigation) (with SafeArgs) to navigate across fragments.
+- Attempts to use clean architecure approach (separate app, data and domain modules)
 - Kotlin coroutines for asynchronous operations.
 - [Hilt](https://dagger.dev/hilt/) for dependency injection.
 - [View binding](https://developer.android.com/topic/libraries/view-binding) is used to interact with views within fragments and recyclerview adapters.
