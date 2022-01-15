@@ -18,6 +18,7 @@
 
     <ImageView
         android:id="@+id/profileImageView"
+        android:contentDescription="@string/cd_profile_image"
         android:layout_marginTop="@dimen/default_fragment_margin"
         android:layout_width="96dp"
         android:layout_height="96dp"

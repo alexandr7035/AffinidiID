@@ -29,7 +29,7 @@ class ProfileStorageImpl @Inject constructor(private val application: Applicatio
 
     companion object {
         private const val PREFERENCES_NAME = "PROFILE_DATA_PREFS"
-        private val USER_DID_STR = "USER_DID"
-        private val USER_NAME_STR = "USER_NAME"
+        private const val USER_DID_STR = "USER_DID"
+        private const val USER_NAME_STR = "USER_NAME"
     }
 }

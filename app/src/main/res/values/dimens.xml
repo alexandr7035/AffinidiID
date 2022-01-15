@@ -14,8 +14,6 @@
 
     <dimen name="default_fragment_margin">16dp</dimen>
     <dimen name="default_card_padding">16dp</dimen>
-    <dimen name="avatar_corner_radius">16dp</dimen>
-    <dimen name="profile_image_margin">56dp</dimen>
 
     <dimen name="copied_field_corners">8dp</dimen>
     <dimen name="copied_field_padding">4dp</dimen>

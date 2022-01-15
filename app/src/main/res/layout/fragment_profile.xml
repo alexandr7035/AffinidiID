@@ -23,7 +23,7 @@
             android:background="?android:attr/actionBarItemBackground"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             app:civ_border_width="1dp"
             app:civ_border_color="@color/gray_500"
             tools:src="@drawable/ic_edit"
@@ -50,6 +50,7 @@
 
     <ImageView
         android:id="@+id/copyUserNameBtn"
+        android:contentDescription="@string/cd_copy_username"
         android:clickable="true"
         android:focusable="true"
         android:background="?android:attr/actionBarItemBackground"
@@ -87,6 +88,7 @@
 
     <ImageView
         android:id="@+id/copyUserDidBtn"
+        android:contentDescription="@string/cd_copy_username"
         android:clickable="true"
         android:focusable="true"
         android:background="?android:attr/actionBarItemBackground"

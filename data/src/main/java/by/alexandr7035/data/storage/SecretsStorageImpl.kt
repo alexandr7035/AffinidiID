@@ -18,6 +18,6 @@ class SecretsStorageImpl @Inject constructor(private val applicationContext: Con
 
     companion object {
         private const val PREFERENCES_NAME = "SECRET_DATA_PREFS"
-        private val ACCESS_TOKEN_STR = "ACCESS_TOKEN"
+        private const val ACCESS_TOKEN_STR = "ACCESS_TOKEN"
     }
 }

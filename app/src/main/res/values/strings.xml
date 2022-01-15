@@ -12,7 +12,6 @@
 
     <string name="error_empty_field">This field cannot be empty</string>
     <string name="error_user_exists">User already exists. Try to sign in</string>
-    <string name="error_username_is_taken">Username is already taken. Try another one</string>
     <string name="error_user_not_found">User not found</string>
     <string name="error_wrong_user_or_password">Wrong e-mail or password</string>
     <string name="error_wromg_password_format">Wrong password format. At least 8 charaters, both latin symbols and numbers</string>
@@ -37,7 +36,6 @@
     <string name="contacts">Contacts</string>
     <string name="your_affinidi_id">Your Affinidi ID</string>
     <string name="log_out">Log out</string>
-    <string name="successful_logout">Successful logout</string>
 
     <string name="go_to_sign_up">Don\'t have an account? Sign up</string>
     <string name="go_to_sign_up_clickable">Sign up</string>
@@ -59,20 +57,12 @@
     <string name="confirm_password_reset">Confirm new password</string>
     <string name="password_changed_successfully">Your password has been successfully changed. Try to sign in.</string>
 
-    <string name="reset_password">Reset password</string>
     <string name="reset_password_stage_1">1/3 Specify username</string>
     <string name="reset_password_stage_2">2/3 Set new password</string>
     <string name="reset_password_stage_3">3/3 Confirm new password</string>
 
-    <string name="specify_username">Specify username</string>
-    <string name="edit_username_stage_1">1/2 Specify username</string>
-    <string name="edit_username_stage_2">2/2 Confirm new username</string>
-
     <string name="change_password">Change password</string>
-    <string name="change_username">Change username</string>
-    <string name="edit_profile">Edit profile</string>
     <string name="error_wrong_current_password">Wrong current password</string>
     <string name="successful_password_change">Password changed successfully</string>
 
-    <string name="successful_username_change">Username successfully changed to %1$s</string>
 </resources>

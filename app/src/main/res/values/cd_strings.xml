@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cd_profile_image">This is an auto-generated profile image</string>
+    <string name="cd_copy_username">A button to copy username</string>
+    <string name="cd_copy_did">A button to copy DID</string>
+</resources>
