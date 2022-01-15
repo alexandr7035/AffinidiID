@@ -9,8 +9,8 @@ import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordRe
 import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordResetResponseModel
 import by.alexandr7035.affinidi_id.domain.model.reset_password.InitializePasswordResetRequestModel
 import by.alexandr7035.affinidi_id.domain.model.reset_password.InitializePasswordResetResponseModel
-import by.alexandr7035.affinidi_id.domain.usecase.ConfirmPasswordResetUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.InitializePasswordResetUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.ConfirmPasswordResetUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.InitializePasswordResetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

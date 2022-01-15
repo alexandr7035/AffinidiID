@@ -10,9 +10,9 @@ import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
-import by.alexandr7035.affinidi_id.domain.usecase.ConfirmRegisterWithEmailUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.RegisterWithEmailUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.SaveProfileUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.ConfirmRegisterWithEmailUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.RegisterWithEmailUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.SaveProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

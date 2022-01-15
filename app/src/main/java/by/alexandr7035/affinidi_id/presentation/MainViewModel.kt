@@ -1,7 +1,7 @@
 package by.alexandr7035.affinidi_id.presentation
 
 import androidx.lifecycle.ViewModel
-import by.alexandr7035.affinidi_id.domain.usecase.GetAuthStateUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.GetAuthStateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

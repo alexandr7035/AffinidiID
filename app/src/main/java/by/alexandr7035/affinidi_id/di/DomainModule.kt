@@ -1,7 +1,7 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.*
-import by.alexandr7035.affinidi_id.domain.usecase.*
+import by.alexandr7035.affinidi_id.domain.usecase.user.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
