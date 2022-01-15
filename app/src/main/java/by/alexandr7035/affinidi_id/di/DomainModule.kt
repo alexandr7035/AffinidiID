@@ -1,6 +1,7 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.*
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.*
 import dagger.Module
 import dagger.Provides
@@ -64,5 +65,10 @@ object DomainModule {
     @Provides
     fun provideChangePasswordUseCase(changeProfileRepository: ChangeProfileRepository, getAuthStateUseCase: GetAuthStateUseCase): ChangePasswordUseCase {
         return ChangePasswordUseCase(changeProfileRepository, getAuthStateUseCase)
+    }
+
+    @Provides
+    fun provideGetCredentialsListUseCase(): GetCredentialsListUseCase {
+        return GetCredentialsListUseCase()
     }
 }
