@@ -30,5 +30,6 @@
     <dimen name="credential_item_corners">16dp</dimen>
     <dimen name="credential_item_padding">16dp</dimen>
     <dimen name="credential_item_elevation">8dp</dimen>
+    <dimen name="credential_item_bottom_margin">16dp</dimen>
 
 </resources>
