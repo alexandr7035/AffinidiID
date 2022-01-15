@@ -149,4 +149,10 @@
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_change_password"/>
 
+    <fragment
+        android:id="@+id/credentialsListFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListFragment"
+        android:label="fragment_credentials_list"
+        tools:layout="@layout/fragment_credentials_list" />
+
 </navigation>
