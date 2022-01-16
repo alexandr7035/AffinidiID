@@ -54,7 +54,7 @@ class ChangePasswordFragment : Fragment() {
 
         binding.confirmBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                binding.progressView.isVisible = true
+                binding.progressView.root.isVisible = true
 
                 viewModel.changePassword(
                     oldPassword = binding.oldPasswordEditText.text.toString(),
@@ -64,7 +64,7 @@ class ChangePasswordFragment : Fragment() {
         }
 
         viewModel.changePasswordLiveData.observe(viewLifecycleOwner, { result ->
-            binding.progressView.isVisible = false
+            binding.progressView.root.isVisible = false
 
             when (result) {
                 is ChangePasswordResModel.Success -> {

@@ -46,7 +46,7 @@ class RegistrationFragment : Fragment() {
 
         binding.signUpBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                binding.loginProgressView.isVisible = true
+                binding.progressView.root.isVisible = true
 
                 val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
                 val password = binding.passwordSetEditText.text.toString()
@@ -67,7 +67,7 @@ class RegistrationFragment : Fragment() {
                         )
                 }
                 is SignUpResponseModel.Fail -> {
-                    binding.loginProgressView.isVisible = false
+                    binding.progressView.root.isVisible = false
 
                     when (signUpResult.errorType) {
                         ErrorType.USER_ALREADY_EXISTS -> {
@@ -137,7 +137,7 @@ class RegistrationFragment : Fragment() {
                 }
 
                 is ConfirmSignUpResponseModel.Fail -> {
-                    binding.loginProgressView.isVisible = false
+                    binding.progressView.root.isVisible = false
 
                     when (signUpConfirmationResult.errorType) {
                         ErrorType.FAILED_CONNECTION -> {

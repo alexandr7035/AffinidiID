@@ -51,7 +51,7 @@ class CredentialsListFragment : Fragment() {
         binding.recycler.addItemDecoration(decoration)
 
         viewModel.getCredentialsLiveData().observe(viewLifecycleOwner, {
-            binding.progressView.isVisible = false
+            binding.progressView.root.isVisible = false
 
             when (it) {
                 is CredentialListUiModel.Success -> {
@@ -80,7 +80,7 @@ class CredentialsListFragment : Fragment() {
 
     private fun loadData() {
         binding.errorView.root.isVisible = false
-        binding.progressView.isVisible = true
+        binding.progressView.root.isVisible = true
         viewModel.load()
     }
 }

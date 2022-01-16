@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -44,7 +45,11 @@ class ResetPasswordSetPasswordFragment : Fragment() {
         }
 
         binding.continueBtn.setOnClickListener {
+            binding.progressView.root.isVisible = true
+
             if (chekIfFormIsValid()) {
+                binding.progressView.root.isVisible = false
+
                 findNavController().navigateSafe(
                     ResetPasswordSetPasswordFragmentDirections
                         .actionResetPasswordSetPasswordFragmentToResetPasswordConfirmationFragment(

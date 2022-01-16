@@ -45,7 +45,7 @@ class ResetPasswordConfirmationFragment : Fragment() {
 
         binding.confirmBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                binding.progressView.isVisible = true
+                binding.progressView.root.isVisible = true
 
                 viewModel.confirmPasswordReset(
                     username = safeArgs.userName,
@@ -57,7 +57,7 @@ class ResetPasswordConfirmationFragment : Fragment() {
 
 
         viewModel.confirmPasswordResetLiveData.observe(viewLifecycleOwner, { result ->
-            binding.progressView.isVisible = false
+            binding.progressView.root.isVisible = false
 
             when (result) {
                 is ConfirmPasswordResetResponseModel.Success -> {
