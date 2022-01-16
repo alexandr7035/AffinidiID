@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialsListBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -49,9 +51,36 @@ class CredentialsListFragment : Fragment() {
         binding.recycler.addItemDecoration(decoration)
 
         viewModel.getCredentialsLiveData().observe(viewLifecycleOwner, {
-            adapter.setItems(it)
+            binding.progressView.isVisible = false
+
+            when (it) {
+                is CredentialListUiModel.Success -> {
+                    adapter.setItems(it.credentials)
+                }
+                is CredentialListUiModel.Fail -> {
+                    binding.errorView.root.isVisible = true
+
+                    when (it.errorType) {
+                        ErrorType.FAILED_CONNECTION -> {
+                            binding.errorView.errorTitle.text = getString(R.string.error_failed_connection_title)
+                            binding.errorView.errorText.text = getString(R.string.error_failed_connection)
+                        }
+
+                        else -> {
+                            binding.errorView.errorTitle.text = getString(R.string.error_unknown_title)
+                            binding.errorView.errorText.text = getString(R.string.error_unknown)
+                        }
+                    }
+                }
+            }
         })
 
+        loadData()
+    }
+
+    private fun loadData() {
+        binding.errorView.root.isVisible = false
+        binding.progressView.isVisible = true
         viewModel.load()
     }
 }

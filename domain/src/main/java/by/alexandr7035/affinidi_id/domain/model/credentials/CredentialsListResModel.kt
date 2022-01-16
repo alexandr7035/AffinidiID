@@ -6,5 +6,5 @@ import by.alexandr7035.affinidi_id.domain.core.ErrorType
 abstract class CredentialsListResModel {
     class Success(val credentials: List<Credential>): CredentialsListResModel()
 
-    class Fail(errorType: ErrorType): CredentialsListResModel()
+    class Fail(val errorType: ErrorType): CredentialsListResModel()
 }

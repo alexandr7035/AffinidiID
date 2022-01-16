@@ -14,39 +14,46 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class CredentialsListViewModel @Inject constructor(private val getCredentialsListUseCase: GetCredentialsListUseCase): ViewModel() {
+class CredentialsListViewModel @Inject constructor(private val getCredentialsListUseCase: GetCredentialsListUseCase) : ViewModel() {
 
-    private val credentialsLiveData = MutableLiveData<List<CredentialItemUiModel>>()
+    private val credentialsLiveData = MutableLiveData<CredentialListUiModel>()
 
     fun load() {
         viewModelScope.launch(Dispatchers.IO) {
             val res = getCredentialsListUseCase.execute()
 
-            // FIXME
-            val domainCreds = if (res is CredentialsListResModel.Success) {
-                res.credentials
-            }
-            else {
-                emptyList()
-            }
+            val credentialListUiModel: CredentialListUiModel = when (res) {
+                is CredentialsListResModel.Success -> {
 
-            val listCreds: List<CredentialItemUiModel> = domainCreds.map {
+                    // TODO mapper
+                    val uiCredentials: List<CredentialItemUiModel> = res.credentials.map {
 
-                val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:MM") ?: "-"
+                        val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:MM") ?: "-"
 
-                CredentialItemUiModel(
-                    expirationDate = "Expires: ${textExpirationDate}",
-                    credentialType = it.credentialType
-                )
+                        CredentialItemUiModel(
+                            expirationDate = "Expires: ${textExpirationDate}",
+                            credentialType = it.credentialType
+                        )
+                    }
+
+                    CredentialListUiModel.Success(uiCredentials)
+                }
+
+                is CredentialsListResModel.Fail -> {
+                    CredentialListUiModel.Fail(res.errorType)
+                }
+                else -> {
+                    throw RuntimeException("Unknown UI model type")
+                }
             }
 
             withContext(Dispatchers.Main) {
-                credentialsLiveData.value = listCreds
+                credentialsLiveData.value = credentialListUiModel
             }
         }
     }
 
-    fun getCredentialsLiveData(): LiveData<List<CredentialItemUiModel>> {
+    fun getCredentialsLiveData(): LiveData<CredentialListUiModel> {
         return credentialsLiveData
     }
 }
