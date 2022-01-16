@@ -23,6 +23,7 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
             if (res.isSuccessful) {
                 val data = res.body() as List<CredentialRes>
 
+                // TODO mapper
                 val domainCreds = data.map {
 
                     Timber.debug("${it.issuanceDate}")
@@ -36,8 +37,6 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
                     }
 
                     val issuanceDate = it.issuanceDate.getUnixDateFromStringFormat(CREDENTIAL_DATE_FORMAT)
-
-
 
                     Credential(
                         id = it.id,
@@ -53,8 +52,14 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
                 return CredentialsListResModel.Success(domainCreds)
             }
             else {
-                // FIXME
-                return CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)
+                return when (res.code()) {
+                    401 -> {
+                        CredentialsListResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    }
+                    else -> {
+                        CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)
+                    }
+                }
             }
         }
         // Handled in ErrorInterceptor
@@ -67,7 +72,6 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
             return CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
     }
-
 
     companion object {
         private const val CREDENTIAL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
