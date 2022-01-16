@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
+import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,15 @@ class CredentialsListViewModel @Inject constructor(private val getCredentialsLis
 
     fun load() {
         viewModelScope.launch(Dispatchers.IO) {
-            val domainCreds = getCredentialsListUseCase.execute()
+            val res = getCredentialsListUseCase.execute()
+
+            // FIXME
+            val domainCreds = if (res is CredentialsListResModel.Success) {
+                res.credentials
+            }
+            else {
+                emptyList()
+            }
 
             val listCreds: List<CredentialItemUiModel> = domainCreds.map {
 

@@ -68,7 +68,7 @@ object DomainModule {
     }
 
     @Provides
-    fun provideGetCredentialsListUseCase(): GetCredentialsListUseCase {
-        return GetCredentialsListUseCase()
+    fun provideGetCredentialsListUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialsListUseCase {
+        return GetCredentialsListUseCase(credentialsRepository, authStateUseCase)
     }
 }
