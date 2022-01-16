@@ -33,6 +33,8 @@ class CredentialsAdapter: RecyclerView.Adapter<CredentialsAdapter.CredentialView
         fun bind(item: CredentialItemUiModel) {
             binding.credentialTypeView.text = item.credentialType
             binding.credentialExpires.text = item.expirationDate
+            binding.statusLabel.text = item.credentialStatus
+            binding.statusMark.setColorFilter(item.statusMarkColor)
         }
     }
 

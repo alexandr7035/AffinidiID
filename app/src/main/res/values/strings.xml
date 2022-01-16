@@ -64,5 +64,8 @@
     <string name="change_password">Change password</string>
     <string name="error_wrong_current_password">Wrong current password</string>
     <string name="successful_password_change">Password changed successfully</string>
+    <string name="active">Active</string>
+    <string name="expired">Expired</string>
+    <string name="no_expiration">No expiration</string>
 
 </resources>

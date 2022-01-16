@@ -27,6 +27,7 @@
 
     <dimen name="default_under_toolbar_spacing">32dp</dimen>
 
+    <dimen name="credential_item_min_height">200dp</dimen>
     <dimen name="credential_item_corners">16dp</dimen>
     <dimen name="credential_item_padding">16dp</dimen>
     <dimen name="credential_item_elevation">8dp</dimen>
@@ -38,5 +39,6 @@
     <dimen name="error_view_corners">16dp</dimen>
     <dimen name="error_view_elevation">8dp</dimen>
     <dimen name="error_view_padding">8dp</dimen>
+    <dimen name="credential_item_status_mark_size">24dp</dimen>
 
 </resources>

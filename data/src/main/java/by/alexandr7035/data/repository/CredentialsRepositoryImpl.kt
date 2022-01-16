@@ -3,6 +3,7 @@ package by.alexandr7035.data.repository
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringFormat
 import by.alexandr7035.affinidi_id.domain.model.credentials.Credential
+import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
@@ -26,9 +27,6 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
                 // TODO mapper
                 val domainCreds = data.map {
 
-                    Timber.debug("${it.issuanceDate}")
-                    Timber.debug("${it.expirationDate}")
-
                     val expirationDate = if (it.expirationDate == null) {
                         null
                     }
@@ -38,6 +36,17 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
 
                     val issuanceDate = it.issuanceDate.getUnixDateFromStringFormat(CREDENTIAL_DATE_FORMAT)
 
+                    val credentialStatus = if (expirationDate != null) {
+                        if (expirationDate < System.currentTimeMillis()) {
+                            CredentialStatus.EXPIRED
+                        } else {
+                            CredentialStatus.ACTIVE
+                        }
+                    }
+                    else {
+                        CredentialStatus.ACTIVE
+                    }
+
                     Credential(
                         id = it.id,
                         // Fist type will be "VerifiableCredential"
@@ -45,7 +54,8 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
                         expirationDate = expirationDate,
                         issuanceDate = issuanceDate,
                         holderDid = it.holder.holderDid,
-                        issuerDid = it.issuerDid
+                        issuerDid = it.issuerDid,
+                        credentialStatus = credentialStatus
                     )
                 }
 

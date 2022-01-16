@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
+import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
+import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +17,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class CredentialsListViewModel @Inject constructor(private val getCredentialsListUseCase: GetCredentialsListUseCase) : ViewModel() {
+class CredentialsListViewModel @Inject constructor(private val getCredentialsListUseCase: GetCredentialsListUseCase, private val resourceProvider: ResourceProvider) : ViewModel() {
 
     private val credentialsLiveData = MutableLiveData<CredentialListUiModel>()
 
@@ -28,11 +31,31 @@ class CredentialsListViewModel @Inject constructor(private val getCredentialsLis
                     // TODO mapper
                     val uiCredentials: List<CredentialItemUiModel> = res.credentials.map {
 
-                        val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:MM") ?: "-"
+                        val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:MM") ?: resourceProvider.getString(R.string.no_expiration)
+
+                        val credentialStatusText = when (it.credentialStatus) {
+                            CredentialStatus.ACTIVE -> {
+                                resourceProvider.getString(R.string.active)
+                            }
+                            CredentialStatus.EXPIRED -> {
+                                resourceProvider.getString(R.string.expired)
+                            }
+                        }
+
+                        val statusMarkColor = when (it.credentialStatus) {
+                            CredentialStatus.ACTIVE -> {
+                                resourceProvider.getColor(R.color.active_vc_mark)
+                            }
+                            CredentialStatus.EXPIRED -> {
+                                resourceProvider.getColor(R.color.inactive_vc_mark)
+                            }
+                        }
 
                         CredentialItemUiModel(
-                            expirationDate = "Expires: ${textExpirationDate}",
-                            credentialType = it.credentialType
+                            expirationDate = textExpirationDate,
+                            credentialType = it.credentialType,
+                            credentialStatus = credentialStatusText,
+                            statusMarkColor = statusMarkColor
                         )
                     }
 

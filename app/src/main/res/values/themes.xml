@@ -202,6 +202,7 @@
     </style>
 
     <style name="CredentialCardStyle">
+        <item name="android:minHeight">@dimen/credential_item_min_height</item>
         <item name="android:padding">@dimen/credential_item_padding</item>
         <item name="android:background">@drawable/background_credential_item</item>
         <item name="android:elevation">@dimen/credential_item_elevation</item>
@@ -215,8 +216,14 @@
 
     <style name="CredentialCardExpiration">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/gray_100</item>
+        <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="CredentialCardStatusLabel">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 
     <style name="ErrorViewTitle">
         <item name="android:textSize">@dimen/error_view_tile_text</item>
@@ -236,4 +243,5 @@
         <item name="android:background">@drawable/background_error_card</item>
         <item name="android:elevation">@dimen/error_view_elevation</item>
     </style>
+
 </resources>

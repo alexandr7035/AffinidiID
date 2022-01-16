@@ -12,4 +12,7 @@
     <color name="gray_500">#343434</color>
     <color name="gray_200">#898989</color>
     <color name="gray_300">#595959</color>
+
+    <color name="inactive_vc_mark">#EA5A5A</color>
+    <color name="active_vc_mark">#8ADF8C</color>
 </resources>
