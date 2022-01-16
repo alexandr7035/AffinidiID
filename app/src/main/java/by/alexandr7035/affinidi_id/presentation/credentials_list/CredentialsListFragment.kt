@@ -80,6 +80,11 @@ class CredentialsListFragment : Fragment() {
         binding.errorView.retryBtn.setOnClickListener {
             loadData()
         }
+
+        // TODO remove
+        binding.testVcBtn.setOnClickListener {
+            viewModel.testBuildUnsigned()
+        }
     }
 
     private fun loadData() {

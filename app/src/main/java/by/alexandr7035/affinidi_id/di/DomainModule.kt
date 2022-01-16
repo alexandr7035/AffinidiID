@@ -1,6 +1,7 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.*
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.BuildUnsignedVcObjectUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.*
 import dagger.Module
@@ -70,5 +71,10 @@ object DomainModule {
     @Provides
     fun provideGetCredentialsListUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialsListUseCase {
         return GetCredentialsListUseCase(credentialsRepository, authStateUseCase)
+    }
+
+    @Provides
+    fun provideBuildUnsignedVcObjectUseCase(credentialsRepository: CredentialsRepository): BuildUnsignedVcObjectUseCase {
+        return BuildUnsignedVcObjectUseCase(credentialsRepository)
     }
 }

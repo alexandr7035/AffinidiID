@@ -8,6 +8,10 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.credential_subject.EmailCredentialSubject
+import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.BuildCredentialType
+import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.BuildUnsignedVcReqModel
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.BuildUnsignedVcObjectUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +21,11 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class CredentialsListViewModel @Inject constructor(private val getCredentialsListUseCase: GetCredentialsListUseCase, private val resourceProvider: ResourceProvider) : ViewModel() {
+class CredentialsListViewModel @Inject constructor(
+    private val getCredentialsListUseCase: GetCredentialsListUseCase,
+    private val buildUnsignedVcObjectUseCase: BuildUnsignedVcObjectUseCase,
+    private val resourceProvider: ResourceProvider
+) : ViewModel() {
 
     private val credentialsLiveData = MutableLiveData<CredentialListUiModel>()
 
@@ -79,5 +87,20 @@ class CredentialsListViewModel @Inject constructor(private val getCredentialsLis
 
     fun getCredentialsLiveData(): LiveData<CredentialListUiModel> {
         return credentialsLiveData
+    }
+
+
+    fun testBuildUnsigned() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = buildUnsignedVcObjectUseCase.execute(
+                BuildUnsignedVcReqModel(
+                    buildCredentialType = BuildCredentialType.EmailVC(
+                        credentialSubject = EmailCredentialSubject(email = "testmail@mailto.plus")
+                    ),
+                    expiresAt = 0,
+                    holderDid = "did:elem:test"
+                )
+            )
+        }
     }
 }
