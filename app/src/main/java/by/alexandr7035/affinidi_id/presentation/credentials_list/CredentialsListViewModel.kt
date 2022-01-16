@@ -10,7 +10,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.credential_subject.EmailCredentialSubject
 import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.BuildCredentialType
-import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.BuildUnsignedVcReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.BuildUnsignedVcObjectUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
@@ -93,7 +93,7 @@ class CredentialsListViewModel @Inject constructor(
     fun testBuildUnsigned() {
         viewModelScope.launch(Dispatchers.IO) {
             val res = buildUnsignedVcObjectUseCase.execute(
-                BuildUnsignedVcReqModel(
+                IssueCredentialReqModel(
                     buildCredentialType = BuildCredentialType.EmailVC(
                         credentialSubject = EmailCredentialSubject(email = "testmail@mailto.plus")
                     ),

@@ -74,7 +74,7 @@ object DomainModule {
     }
 
     @Provides
-    fun provideBuildUnsignedVcObjectUseCase(credentialsRepository: CredentialsRepository): BuildUnsignedVcObjectUseCase {
-        return BuildUnsignedVcObjectUseCase(credentialsRepository)
+    fun provideBuildUnsignedVcObjectUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): BuildUnsignedVcObjectUseCase {
+        return BuildUnsignedVcObjectUseCase(credentialsRepository, authStateUseCase)
     }
 }

@@ -1,5 +1,7 @@
 package by.alexandr7035.data.network
 
+import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
+import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcReq
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcRes
@@ -15,4 +17,7 @@ interface CredentialsApiService {
 
     @POST("https://affinity-issuer.prod.affinity-project.org/api/v1/vc/build-unsigned")
     suspend fun buildUnsignedVCObject(@Body body: BuildUnsignedVcReq): Response<BuildUnsignedVcRes>
+
+    @POST("https://cloud-wallet-api.prod.affinity-project.org/api/v1/wallet/sign-credential")
+    suspend fun signVC(@Body body: SignVcReq, @Header("Authorization") accessToken: String): Response<SignVcRes>
 }

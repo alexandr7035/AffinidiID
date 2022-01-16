@@ -6,12 +6,14 @@ import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringF
 import by.alexandr7035.affinidi_id.domain.model.credentials.Credential
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.BuildUnsignedVcReqModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.BuildUnsignedVcResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.IssueCredentialReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.extensions.debug
+import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
+import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcReq
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcRes
@@ -85,40 +87,49 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
         }
     }
 
-    override suspend fun buildUnsignedVCObject(buildUnsignedVcReqModel: BuildUnsignedVcReqModel): BuildUnsignedVcResModel {
-
+    override suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel {
         try {
+            val unsignedVc = buildUnsignedVC(issueCredentialReqModel).unsignedCredential
 
-            val request = BuildUnsignedVcReq(
-                credentialSubject = buildUnsignedVcReqModel.buildCredentialType.credentialSubject,
-                expirationDate = buildUnsignedVcReqModel.expiresAt?.getStringDateFromLong(CREDENTIAL_DATE_FORMAT),
-                holderDid = buildUnsignedVcReqModel.holderDid,
-                jsonLdContextUrl = buildUnsignedVcReqModel.buildCredentialType.jsonLdContextUrl,
-                typeName = buildUnsignedVcReqModel.buildCredentialType.typeName
-            )
-
-            val res = apiService.buildUnsignedVCObject(request)
-
-            Timber.debug("build unsigned code ${res.code()}")
+            val res = apiService.signVC(SignVcReq(unsignedCredential = unsignedVc), accessToken = authState.accessToken ?: "")
 
             if (res.isSuccessful) {
-                val data = res.body() as BuildUnsignedVcRes
-                Timber.debug("request  ${request}")
-                Timber.debug("result  ${data}")
-                return BuildUnsignedVcResModel.Success()
-            } else {
-                return BuildUnsignedVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+                Timber.debug("SUCCESSFUL VC SIGN!")
+                Timber.debug("${res}")
+                return IssueCredentialResModel.Success()
+            }
+            else {
+                // TODO FIXME
+                return IssueCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
             }
         }
 
-        // Handled in ErrorInterceptor
         catch (appError: AppError) {
-            return BuildUnsignedVcResModel.Fail(appError.errorType)
+            return IssueCredentialResModel.Fail(appError.errorType)
         }
         // Unknown exception
         catch (e: Exception) {
             e.printStackTrace()
-            return BuildUnsignedVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+            return IssueCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
+        }
+    }
+
+    private suspend fun buildUnsignedVC(issueCredentialReqModel: IssueCredentialReqModel): BuildUnsignedVcRes {
+
+        val request = BuildUnsignedVcReq(
+            credentialSubject = issueCredentialReqModel.buildCredentialType.credentialSubject,
+            expirationDate = issueCredentialReqModel.expiresAt?.getStringDateFromLong(CREDENTIAL_DATE_FORMAT),
+            holderDid = issueCredentialReqModel.holderDid,
+            jsonLdContextUrl = issueCredentialReqModel.buildCredentialType.jsonLdContextUrl,
+            typeName = issueCredentialReqModel.buildCredentialType.typeName
+        )
+
+        val res = apiService.buildUnsignedVCObject(request)
+
+        if (res.isSuccessful) {
+            return res.body() as BuildUnsignedVcRes
+        } else {
+            throw AppError(ErrorType.UNKNOWN_ERROR)
         }
     }
 
