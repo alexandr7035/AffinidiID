@@ -67,5 +67,6 @@
     <string name="active">Active</string>
     <string name="expired">Expired</string>
     <string name="no_expiration">No expiration</string>
+    <string name="retry">Retry</string>
 
 </resources>

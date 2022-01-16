@@ -76,6 +76,10 @@ class CredentialsListFragment : Fragment() {
         })
 
         loadData()
+
+        binding.errorView.retryBtn.setOnClickListener {
+            loadData()
+        }
     }
 
     private fun loadData() {

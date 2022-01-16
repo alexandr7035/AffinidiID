@@ -251,10 +251,4 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="ErrorView">
-        <item name="android:padding">@dimen/error_view_padding</item>
-        <item name="android:background">@drawable/background_error_card</item>
-        <item name="android:elevation">@dimen/error_view_elevation</item>
-    </style>
-
 </resources>
