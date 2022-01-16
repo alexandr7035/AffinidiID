@@ -1,4 +1,4 @@
-package by.alexandr7035.data.model.credentials
+package by.alexandr7035.data.model.credentials.signed_vc
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package by.alexandr7035.data.model.credentials
+package by.alexandr7035.data.model.credentials.common
 
 import com.google.gson.annotations.SerializedName
 import org.json.JSONObject

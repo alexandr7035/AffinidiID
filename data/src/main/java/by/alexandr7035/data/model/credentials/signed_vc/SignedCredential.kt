@@ -1,8 +1,11 @@
-package by.alexandr7035.data.model.credentials
+package by.alexandr7035.data.model.credentials.signed_vc
 
+import by.alexandr7035.data.model.credentials.common.CredentialHolder
+import by.alexandr7035.data.model.credentials.common.CredentialSubject
+import by.alexandr7035.data.model.credentials.signed_vc.CredentialProof
 import com.google.gson.annotations.SerializedName
 
-data class CredentialRes(
+data class SignedCredential(
     @SerializedName("@context")
     val context: List<String>,
     @SerializedName("id")
