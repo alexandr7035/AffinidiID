@@ -31,6 +31,7 @@ class CredentialsAdapter: RecyclerView.Adapter<CredentialsAdapter.CredentialView
 
     inner class CredentialViewHolder(val binding: ViewCredentialItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CredentialItemUiModel) {
+            binding.credentialId.text = item.id
             binding.credentialTypeView.text = item.credentialType
             binding.credentialExpires.text = item.expirationDate
             binding.statusLabel.text = item.credentialStatus

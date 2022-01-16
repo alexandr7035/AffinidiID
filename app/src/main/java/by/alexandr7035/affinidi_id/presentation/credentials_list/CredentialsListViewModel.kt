@@ -52,6 +52,7 @@ class CredentialsListViewModel @Inject constructor(private val getCredentialsLis
                         }
 
                         CredentialItemUiModel(
+                            id = it.id,
                             expirationDate = textExpirationDate,
                             credentialType = it.credentialType,
                             credentialStatus = credentialStatusText,
