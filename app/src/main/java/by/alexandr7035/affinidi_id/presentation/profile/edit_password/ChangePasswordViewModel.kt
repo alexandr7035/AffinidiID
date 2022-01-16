@@ -7,7 +7,7 @@ import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidati
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordReqModel
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
-import by.alexandr7035.affinidi_id.domain.usecase.ChangePasswordUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.ChangePasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

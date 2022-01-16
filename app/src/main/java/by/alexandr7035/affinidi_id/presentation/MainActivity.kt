@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.ActivityMainBinding
@@ -35,8 +36,14 @@ class MainActivity : AppCompatActivity() {
 //        window.statusBarColor = Color.TRANSPARENT
 //        window.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.background_window))
 
+        // Setting Navigation Controller with the BottomNavigationView )
+        binding.bottomNavigationView.setupWithNavController(navController)
+
         // Primary destinations shown in bottom navigation
-        val bottomNavigationDestinations = listOf(R.id.profileFragment)
+        val bottomNavigationDestinations = listOf(
+            R.id.profileFragment,
+            R.id.credentialsListFragment
+        )
 
         // Hide bottom navigation for non-primary fragments
         navController.addOnDestinationChangedListener { _, destination, _ ->

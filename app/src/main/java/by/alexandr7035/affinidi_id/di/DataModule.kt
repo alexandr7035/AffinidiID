@@ -10,6 +10,7 @@ import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.data.network.ApiService
 import by.alexandr7035.data.helpers.DicebearAvatarsHelper
 import by.alexandr7035.data.helpers.DicebearAvatarsHelperImpl
+import by.alexandr7035.data.network.CredentialsApiService
 import by.alexandr7035.data.repository.*
 import by.alexandr7035.data.storage.ProfileStorage
 import by.alexandr7035.data.storage.ProfileStorageImpl
@@ -85,6 +86,12 @@ object DataModule {
 
     @Provides
     @Singleton
+    fun provideCredentialsApiService(retrofit: Retrofit): CredentialsApiService {
+        return retrofit.create(CredentialsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideLoginRepository(apiService: ApiService, secretsStorage: SecretsStorage): LoginRepository {
         return LoginRepositoryImpl(apiService, secretsStorage)
     }
@@ -111,5 +118,11 @@ object DataModule {
     @Singleton
     fun provideInputValidationHelper(): InputValidationHelper {
         return InputValidationHelperImpl(minPasswordLength = 8)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCredentialsRepository(credentialsApiService: CredentialsApiService): CredentialsRepository {
+        return CredentialsRepositoryImpl(credentialsApiService)
     }
 }

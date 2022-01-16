@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_person_filled" />
 
     <item
-        android:enabled="false"
+        android:id="@+id/credentialsListFragment"
         android:title="@string/your_credentials"
         android:icon="@drawable/ic_credential" />
 

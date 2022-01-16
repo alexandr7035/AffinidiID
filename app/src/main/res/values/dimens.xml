@@ -24,4 +24,19 @@
     <dimen name="primary_menu_item_padding_vertical">8dp</dimen>
     <dimen name="primary_menu_item_padding_horizontal">20dp</dimen>
     <dimen name="primary_menu_item_spacing">16dp</dimen>
+
+    <dimen name="default_under_toolbar_spacing">32dp</dimen>
+
+    <dimen name="credential_item_corners">16dp</dimen>
+    <dimen name="credential_item_padding">16dp</dimen>
+    <dimen name="credential_item_elevation">8dp</dimen>
+    <dimen name="credential_item_bottom_margin">16dp</dimen>
+
+    <dimen name="error_view_spacing">16dp</dimen>
+    <dimen name="error_view_tile_text">20sp</dimen>
+    <dimen name="error_view_text">18sp</dimen>
+    <dimen name="error_view_corners">16dp</dimen>
+    <dimen name="error_view_elevation">8dp</dimen>
+    <dimen name="error_view_padding">8dp</dimen>
+
 </resources>

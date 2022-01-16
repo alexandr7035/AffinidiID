@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.domain.usecase
+package by.alexandr7035.affinidi_id.domain.usecase.user
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
