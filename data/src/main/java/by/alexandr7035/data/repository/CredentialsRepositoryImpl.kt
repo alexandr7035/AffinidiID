@@ -11,13 +11,15 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCreden
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
-import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
+import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
+import by.alexandr7035.data.model.credentials.store_vc.StoreVCsReq
+import by.alexandr7035.data.model.credentials.store_vc.StoreVCsRes
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcReq
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcRes
+import by.alexandr7035.data.model.credentials.unsigned_vc.UnsignedCredential
 import by.alexandr7035.data.network.CredentialsApiService
-import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -86,24 +88,20 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
         }
     }
 
+
+    // 1) Build unsigned VC
+    // 2) Sign the VC
+    // 3) Store credential in the cloud wallet
+    // TODO give the user choice where to store in the future
     override suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel {
         try {
             val unsignedVc = buildUnsignedVC(issueCredentialReqModel).unsignedCredential
+            val signedVc = signCredential(unsignedVc, authState)
+            val storedVCsIDs = storeCredential(signedVc, authState)
 
-            val res = apiService.signVC(SignVcReq(unsignedCredential = unsignedVc), accessToken = authState.accessToken ?: "")
+            return IssueCredentialResModel.Success()
 
-            if (res.isSuccessful) {
-                Timber.debug("SUCCESSFUL VC SIGN!")
-                Timber.debug("${res}")
-                return IssueCredentialResModel.Success()
-            }
-            else {
-                // TODO FIXME
-                return IssueCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
-            }
-        }
-
-        catch (appError: AppError) {
+        } catch (appError: AppError) {
             return IssueCredentialResModel.Fail(appError.errorType)
         }
         // Unknown exception
@@ -126,8 +124,41 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
         val res = apiService.buildUnsignedVCObject(request)
 
         if (res.isSuccessful) {
+            // Successfully built unsigned VC
+            // Pass to sign
             return res.body() as BuildUnsignedVcRes
         } else {
+            throw AppError(ErrorType.UNKNOWN_ERROR)
+        }
+    }
+
+    private suspend fun signCredential(unsignedCredential: UnsignedCredential, authState: AuthStateModel): SignedCredential {
+        val res = apiService.signVC(SignVcReq(unsignedCredential = unsignedCredential), accessToken = authState.accessToken ?: "")
+
+        if (res.isSuccessful) {
+            // Successfully signed VC
+            // Pass to store in wallet
+            val data = res.body() as SignVcRes
+            return data.signedCredential
+        } else {
+            throw AppError(ErrorType.UNKNOWN_ERROR)
+        }
+    }
+
+    private suspend fun storeCredential(signedCredential: SignedCredential, authState: AuthStateModel): List<String> {
+        val res = apiService.storeVCs(
+            body = StoreVCsReq(
+                credentialsToStore = listOf(signedCredential),
+            ),
+            accessToken = authState.accessToken ?: ""
+        )
+
+        if (res.isSuccessful) {
+            val data = res.body() as StoreVCsRes
+            return data.storedVCIDs
+        }
+        else {
+            // FIXME
             throw AppError(ErrorType.UNKNOWN_ERROR)
         }
     }

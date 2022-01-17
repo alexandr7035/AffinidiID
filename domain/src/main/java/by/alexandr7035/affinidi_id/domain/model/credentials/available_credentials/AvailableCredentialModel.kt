@@ -4,5 +4,5 @@ data class AvailableCredentialModel(
     val typeName: String,
     val description: String,
     val issuer: String,
-    val vcType: AvailableVcTypes
+    val vcType: AvailableVcType
 )
