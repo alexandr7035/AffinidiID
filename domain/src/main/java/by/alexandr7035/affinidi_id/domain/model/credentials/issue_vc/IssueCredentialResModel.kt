@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc
+package by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 

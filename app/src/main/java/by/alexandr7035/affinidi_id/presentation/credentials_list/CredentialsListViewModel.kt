@@ -9,9 +9,9 @@ import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.credential_subject.EmailCredentialSubject
-import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.BuildCredentialType
-import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.IssueCredentialReqModel
-import by.alexandr7035.affinidi_id.domain.usecase.credentials.BuildUnsignedVcObjectUseCase
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.CredentialType
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CredentialsListViewModel @Inject constructor(
     private val getCredentialsListUseCase: GetCredentialsListUseCase,
-    private val buildUnsignedVcObjectUseCase: BuildUnsignedVcObjectUseCase,
+    private val issueCredentialUseCase: IssueCredentialUseCase,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
@@ -92,9 +92,9 @@ class CredentialsListViewModel @Inject constructor(
 
     fun testBuildUnsigned() {
         viewModelScope.launch(Dispatchers.IO) {
-            val res = buildUnsignedVcObjectUseCase.execute(
+            val res = issueCredentialUseCase.execute(
                 IssueCredentialReqModel(
-                    buildCredentialType = BuildCredentialType.EmailVC(
+                    credentialType = CredentialType.EmailVC(
                         credentialSubject = EmailCredentialSubject(email = "testmail@mailto.plus")
                     ),
                     expiresAt = 0,

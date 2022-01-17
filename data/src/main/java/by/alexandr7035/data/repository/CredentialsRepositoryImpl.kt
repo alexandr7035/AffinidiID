@@ -6,14 +6,13 @@ import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringF
 import by.alexandr7035.affinidi_id.domain.model.credentials.Credential
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.IssueCredentialReqModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.unsigned_vc.IssueCredentialResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
-import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcReq
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcRes
@@ -117,11 +116,11 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
     private suspend fun buildUnsignedVC(issueCredentialReqModel: IssueCredentialReqModel): BuildUnsignedVcRes {
 
         val request = BuildUnsignedVcReq(
-            credentialSubject = issueCredentialReqModel.buildCredentialType.credentialSubject,
+            credentialSubject = issueCredentialReqModel.credentialType.credentialSubject,
             expirationDate = issueCredentialReqModel.expiresAt?.getStringDateFromLong(CREDENTIAL_DATE_FORMAT),
             holderDid = issueCredentialReqModel.holderDid,
-            jsonLdContextUrl = issueCredentialReqModel.buildCredentialType.jsonLdContextUrl,
-            typeName = issueCredentialReqModel.buildCredentialType.typeName
+            jsonLdContextUrl = issueCredentialReqModel.credentialType.jsonLdContextUrl,
+            typeName = issueCredentialReqModel.credentialType.typeName
         )
 
         val res = apiService.buildUnsignedVCObject(request)
