@@ -68,5 +68,8 @@
     <string name="expired">Expired</string>
     <string name="no_expiration">No expiration</string>
     <string name="retry">Retry</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="issue_credentials">Issue credentials</string>
 
 </resources>

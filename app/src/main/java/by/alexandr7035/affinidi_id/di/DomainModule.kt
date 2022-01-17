@@ -1,6 +1,7 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.*
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetAvailableVcTypesUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.*
@@ -76,5 +77,10 @@ object DomainModule {
     @Provides
     fun provideIssueCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): IssueCredentialUseCase {
         return IssueCredentialUseCase(credentialsRepository, authStateUseCase)
+    }
+
+    @Provides
+    fun provideGetAvailableVcTypesUseCase(): GetAvailableVcTypesUseCase {
+        return GetAvailableVcTypesUseCase()
     }
 }

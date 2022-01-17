@@ -153,6 +153,15 @@
         android:id="@+id/credentialsListFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListFragment"
         android:label="fragment_credentials_list"
-        tools:layout="@layout/fragment_credentials_list" />
+        tools:layout="@layout/fragment_credentials_list" >
+        <action
+            android:id="@+id/action_credentialsListFragment_to_issueCredentialFragment"
+            app:destination="@id/issueCredentialFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/issueCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.issue_credential.IssueCredentialFragment"
+        android:label="fragment_issue_credential"
+        tools:layout="@layout/fragment_issue_credential" />
 
 </navigation>

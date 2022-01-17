@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialsListBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -82,8 +84,10 @@ class CredentialsListFragment : Fragment() {
         }
 
         // TODO remove
-        binding.testVcBtn.setOnClickListener {
-            viewModel.testBuildUnsigned()
+        binding.addCredentialBtn.setOnClickListener {
+//            viewModel.testBuildUnsigned()
+            findNavController().navigateSafe(CredentialsListFragmentDirections
+                .actionCredentialsListFragmentToIssueCredentialFragment())
         }
     }
 
