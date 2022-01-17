@@ -10,6 +10,8 @@ import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.data.network.ApiService
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelperImpl
+import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
+import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelperImpl
 import by.alexandr7035.data.network.CredentialsApiService
 import by.alexandr7035.data.repository.*
 import by.alexandr7035.data.storage.ProfileStorage
@@ -122,7 +124,13 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCredentialsRepository(credentialsApiService: CredentialsApiService): CredentialsRepository {
-        return CredentialsRepositoryImpl(credentialsApiService)
+    fun provideVCIssuanceHelper(credentialsApiService: CredentialsApiService): VCIssuanceHelper {
+        return VCIssuanceHelperImpl(credentialsApiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCredentialsRepository(credentialsApiService: CredentialsApiService, vcIssuanceHelper: VCIssuanceHelper): CredentialsRepository {
+        return CredentialsRepositoryImpl(credentialsApiService, vcIssuanceHelper)
     }
 }

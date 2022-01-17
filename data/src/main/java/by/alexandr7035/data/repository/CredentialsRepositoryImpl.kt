@@ -11,6 +11,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCreden
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
+import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
@@ -23,7 +24,10 @@ import by.alexandr7035.data.network.CredentialsApiService
 import java.lang.Exception
 import javax.inject.Inject
 
-class CredentialsRepositoryImpl @Inject constructor(private val apiService: CredentialsApiService) : CredentialsRepository {
+class CredentialsRepositoryImpl @Inject constructor(
+    private val apiService: CredentialsApiService,
+    private val vcIssuanceHelper: VCIssuanceHelper
+) : CredentialsRepository {
     override suspend fun getAllCredentials(authState: AuthStateModel): CredentialsListResModel {
 
         try {
@@ -95,9 +99,10 @@ class CredentialsRepositoryImpl @Inject constructor(private val apiService: Cred
     // TODO give the user choice where to store in the future
     override suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel {
         try {
-            val unsignedVc = buildUnsignedVC(issueCredentialReqModel).unsignedCredential
-            val signedVc = signCredential(unsignedVc, authState)
-            val storedVCsIDs = storeCredential(signedVc, authState)
+            val unsignedVc = vcIssuanceHelper.buildUnsignedVC(issueCredentialReqModel)
+            val signedVc = vcIssuanceHelper.signCredential(unsignedVc, authState)
+            // Store only 1 VC, so just get last ID from response
+            val storedVCsID = vcIssuanceHelper.storeCredentials(listOf(signedVc), authState).last()
 
             return IssueCredentialResModel.Success()
 
