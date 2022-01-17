@@ -5,7 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.domain.model.credentials.available_credentials.AvailableCredentialModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.available_credentials.AvailableVcType
+import by.alexandr7035.affinidi_id.domain.model.credentials.credential_subject.EmailCredentialSubject
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.CredentialType
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetAvailableVcTypesUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.GetProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,10 +20,15 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class IssueCredentialViewModel @Inject constructor(private val getAvailableVcTypesUseCase: GetAvailableVcTypesUseCase): ViewModel() {
+class IssueCredentialViewModel @Inject constructor(
+    private val getAvailableVcTypesUseCase: GetAvailableVcTypesUseCase,
+    private val issueCredentialUseCase: IssueCredentialUseCase,
+    private val getProfileUseCase: GetProfileUseCase
+): ViewModel() {
     private val availableVCsLiveData = MutableLiveData<List<AvailableCredentialModel>>()
+    private val issueCredentialLiveData = MutableLiveData<IssueCredentialResModel>()
 
-    fun load() {
+    fun loadAvailableVCs() {
         viewModelScope.launch(Dispatchers.IO) {
             val res = getAvailableVcTypesUseCase.execute()
 
@@ -26,7 +38,45 @@ class IssueCredentialViewModel @Inject constructor(private val getAvailableVcTyp
         }
     }
 
+    fun issueCredential(credentialType: AvailableVcType) {
+        val issueRequest = when (credentialType) {
+            AvailableVcType.EMAIL_CREDENTIAL -> {
+
+                val profile = getProfileUseCase.execute()
+
+                IssueCredentialReqModel(
+                    credentialType = CredentialType.EmailVC(
+                        credentialSubject = EmailCredentialSubject(
+                            // This is a email address
+                            profile.userName
+                        )
+                    ),
+                    holderDid = profile.userDid,
+                    expiresAt = System.currentTimeMillis() + EXPIRATION_DATE_OFFSET
+                )
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = issueCredentialUseCase.execute(issueRequest)
+
+            withContext(Dispatchers.Main) {
+                issueCredentialLiveData.value = res
+            }
+        }
+    }
+
     fun getAvailableVCsLiveData(): LiveData<List<AvailableCredentialModel>> {
         return availableVCsLiveData
+    }
+
+    fun getIssueCredentialLiveData(): LiveData<IssueCredentialResModel> {
+        return issueCredentialLiveData
+    }
+
+    companion object {
+        // 30 days
+        // TODO user's choice
+        private const val EXPIRATION_DATE_OFFSET = 24 * 60 * 60 * 30 * 1000L
     }
 }

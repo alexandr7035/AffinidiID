@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.affinidi_id.databinding.ViewAvailableCredentialBinding
 import by.alexandr7035.affinidi_id.domain.model.credentials.available_credentials.AvailableCredentialModel
 
-class AvailableCredentialsAdapter: RecyclerView.Adapter<AvailableCredentialsAdapter.ItemViewHolder>() {
+class AvailableCredentialsAdapter(private val credentialClickListener: CredentialClickListener): RecyclerView.Adapter<AvailableCredentialsAdapter.ItemViewHolder>() {
 
     private var items: List<AvailableCredentialModel> = emptyList()
 
@@ -35,6 +35,10 @@ class AvailableCredentialsAdapter: RecyclerView.Adapter<AvailableCredentialsAdap
             binding.credentialTypeView.text = item.typeName
             binding.credentialDescriptionView.text = item.description
             binding.issuerView.text = item.issuer
+
+            binding.root.setOnClickListener {
+                credentialClickListener.onClick(item.vcType)
+            }
         }
     }
 }
