@@ -1,6 +1,6 @@
 package by.alexandr7035.affinidi_id.domain.usecase.credentials
 
-import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.affinidi_id.domain.usecase.user.GetAuthStateUseCase
 import javax.inject.Inject

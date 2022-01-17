@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.FragmentIssueCredentialBinding
-import by.alexandr7035.affinidi_id.domain.model.credentials.available_credentials.AvailableVcType
+import by.alexandr7035.affinidi_id.domain.model.credentials.available_credential_types.AvailableVcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint

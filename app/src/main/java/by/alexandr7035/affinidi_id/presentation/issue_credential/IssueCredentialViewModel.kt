@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import by.alexandr7035.affinidi_id.domain.model.credentials.available_credentials.AvailableCredentialModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.available_credentials.AvailableVcType
-import by.alexandr7035.affinidi_id.domain.model.credentials.credential_subject.EmailCredentialSubject
+import by.alexandr7035.affinidi_id.domain.model.credentials.available_credential_types.AvailableCredentialTypeModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.available_credential_types.AvailableVcType
+import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.CredentialType
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
@@ -25,7 +25,7 @@ class IssueCredentialViewModel @Inject constructor(
     private val issueCredentialUseCase: IssueCredentialUseCase,
     private val getProfileUseCase: GetProfileUseCase
 ): ViewModel() {
-    private val availableVCsLiveData = MutableLiveData<List<AvailableCredentialModel>>()
+    private val availableVCsLiveData = MutableLiveData<List<AvailableCredentialTypeModel>>()
     private val issueCredentialLiveData = MutableLiveData<IssueCredentialResModel>()
 
     fun loadAvailableVCs() {
@@ -66,7 +66,7 @@ class IssueCredentialViewModel @Inject constructor(
         }
     }
 
-    fun getAvailableVCsLiveData(): LiveData<List<AvailableCredentialModel>> {
+    fun getAvailableVCsLiveData(): LiveData<List<AvailableCredentialTypeModel>> {
         return availableVCsLiveData
     }
 

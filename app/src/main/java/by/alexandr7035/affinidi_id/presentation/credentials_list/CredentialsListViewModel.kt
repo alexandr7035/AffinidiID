@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
-import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
-import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.credential_subject.EmailCredentialSubject
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.CredentialType
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase

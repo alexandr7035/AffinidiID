@@ -1,6 +1,6 @@
 package by.alexandr7035.data.model.credentials.unsigned_vc
 
-import by.alexandr7035.affinidi_id.domain.model.credentials.credential_subject.CredentialSubject
+import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.CredentialSubject
 import com.google.gson.annotations.SerializedName
 
 data class BuildUnsignedVcReq(

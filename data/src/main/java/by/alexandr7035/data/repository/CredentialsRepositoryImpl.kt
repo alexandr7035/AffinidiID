@@ -3,9 +3,9 @@ package by.alexandr7035.data.repository
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringFormat
-import by.alexandr7035.affinidi_id.domain.model.credentials.Credential
-import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialStatus
-import by.alexandr7035.affinidi_id.domain.model.credentials.CredentialsListResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel

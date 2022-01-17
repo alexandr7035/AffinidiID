@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.affinidi_id.databinding.ViewAvailableCredentialBinding
-import by.alexandr7035.affinidi_id.domain.model.credentials.available_credentials.AvailableCredentialModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.available_credential_types.AvailableCredentialTypeModel
 
 class AvailableCredentialsAdapter(private val credentialClickListener: CredentialClickListener): RecyclerView.Adapter<AvailableCredentialsAdapter.ItemViewHolder>() {
 
-    private var items: List<AvailableCredentialModel> = emptyList()
+    private var items: List<AvailableCredentialTypeModel> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<AvailableCredentialModel>) {
+    fun setItems(items: List<AvailableCredentialTypeModel>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -31,7 +31,7 @@ class AvailableCredentialsAdapter(private val credentialClickListener: Credentia
     }
 
     inner class ItemViewHolder(private val binding: ViewAvailableCredentialBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: AvailableCredentialModel) {
+        fun bind(item: AvailableCredentialTypeModel) {
             binding.credentialTypeView.text = item.typeName
             binding.credentialDescriptionView.text = item.description
             binding.issuerView.text = item.issuer

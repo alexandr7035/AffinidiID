@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.domain.model.credentials
+package by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 
