@@ -8,8 +8,8 @@ import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidati
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelperImpl
 import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.data.network.ApiService
-import by.alexandr7035.data.helpers.DicebearAvatarsHelper
-import by.alexandr7035.data.helpers.DicebearAvatarsHelperImpl
+import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
+import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelperImpl
 import by.alexandr7035.data.network.CredentialsApiService
 import by.alexandr7035.data.repository.*
 import by.alexandr7035.data.storage.ProfileStorage

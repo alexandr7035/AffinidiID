@@ -1,4 +1,4 @@
-package by.alexandr7035.data.helpers
+package by.alexandr7035.data.helpers.profile_avatars
 
 import by.alexandr7035.data.model.profile.DicebearImageType
 
