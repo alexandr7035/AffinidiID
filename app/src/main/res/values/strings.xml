@@ -74,5 +74,6 @@
 
     <string name="vc_type_email">Proof of E-mail address</string>
     <string name="vc_type_unknown">Unknown credential</string>
+    <string name="address">Address</string>
 
 </resources>

@@ -7,9 +7,11 @@ import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
+import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
+import by.alexandr7035.affinidi_id.presentation.credentials_list.vc_fields_recycler.VCFieldItem
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +37,9 @@ class CredentialsListViewModel @Inject constructor(
                     // TODO mapper
                     val uiCredentials: List<CredentialItemUiModel> = res.credentials.map {
 
-                        val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:mm") ?: resourceProvider.getString(R.string.no_expiration)
+                        val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:mm") ?: resourceProvider.getString(
+                            R.string.no_expiration
+                        )
 
                         val credentialStatusText = when (it.credentialStatus) {
                             CredentialStatus.ACTIVE -> {
@@ -64,14 +68,28 @@ class CredentialsListViewModel @Inject constructor(
                             }
                         }
 
+                        val vcFields = when (it.vcType) {
+                            VcType.EMAIL_CREDENTIAL -> {
+                                val vcSubject = it.credentialSubject as EmailCredentialSubject
+                                listOf(
+                                    VCFieldItem(
+                                        type = resourceProvider.getString(R.string.address),
+                                        value = vcSubject.email
+                                    )
+                                )
+                            }
+                            else -> {
+                                emptyList()
+                            }
+                        }
+
                         CredentialItemUiModel(
                             id = it.id,
                             expirationDate = textExpirationDate,
                             credentialTypeString = credentialType,
                             credentialStatus = credentialStatusText,
                             statusMarkColor = statusMarkColor,
-                            credentialSubject = it.credentialSubject,
-                            vcType = it.vcType
+                            vcFields = vcFields
                         )
                     }
 
