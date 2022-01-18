@@ -57,9 +57,11 @@ class CredentialsListFragment : Fragment() {
 
             when (it) {
                 is CredentialListUiModel.Success -> {
+                    binding.recycler.isVisible = true
                     adapter.setItems(it.credentials)
                 }
                 is CredentialListUiModel.Fail -> {
+                    binding.recycler.isVisible = false
                     binding.errorView.root.isVisible = true
 
                     when (it.errorType) {
