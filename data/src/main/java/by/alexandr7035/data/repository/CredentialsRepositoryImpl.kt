@@ -1,30 +1,16 @@
 package by.alexandr7035.data.repository
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
-import by.alexandr7035.affinidi_id.domain.core.extensions.getStringDateFromLong
-import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringFormat
-import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
-import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
-import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
-import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
-import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
-import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
-import by.alexandr7035.data.model.credentials.store_vc.StoreVCsReq
-import by.alexandr7035.data.model.credentials.store_vc.StoreVCsRes
-import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcReq
-import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcRes
-import by.alexandr7035.data.model.credentials.unsigned_vc.UnsignedCredential
 import by.alexandr7035.data.network.CredentialsApiService
-import timber.log.Timber
-import java.lang.Exception
 import javax.inject.Inject
 
 class CredentialsRepositoryImpl @Inject constructor(
@@ -77,12 +63,8 @@ class CredentialsRepositoryImpl @Inject constructor(
     override suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel {
         try {
             val unsignedVc = vcIssuanceHelper.buildUnsignedVC(issueCredentialReqModel)
-            Timber.debug("DEBUG_VC unsigned VC res ${unsignedVc}")
-
             val signedVc = vcIssuanceHelper.signCredential(unsignedVc, authState)
             // Store only 1 VC, so just get last ID from response
-
-            Timber.debug("signed VC test ${signedVc}")
             val storedVCsID = vcIssuanceHelper.storeCredentials(listOf(signedVc), authState).last()
 
             return IssueCredentialResModel.Success()
@@ -97,59 +79,4 @@ class CredentialsRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun buildUnsignedVC(issueCredentialReqModel: IssueCredentialReqModel): BuildUnsignedVcRes {
-
-        val request = BuildUnsignedVcReq(
-            credentialSubject = issueCredentialReqModel.credentialType.credentialSubject,
-            expirationDate = issueCredentialReqModel.expiresAt?.getStringDateFromLong(CREDENTIAL_DATE_FORMAT),
-            holderDid = issueCredentialReqModel.holderDid,
-            jsonLdContextUrl = issueCredentialReqModel.credentialType.jsonLdContextUrl,
-            typeName = issueCredentialReqModel.credentialType.typeName
-        )
-
-        val res = apiService.buildUnsignedVCObject(request)
-
-        if (res.isSuccessful) {
-            // Successfully built unsigned VC
-            // Pass to sign
-            return res.body() as BuildUnsignedVcRes
-        } else {
-            throw AppError(ErrorType.UNKNOWN_ERROR)
-        }
-    }
-
-    private suspend fun signCredential(unsignedCredential: UnsignedCredential, authState: AuthStateModel): SignedCredential {
-        val res = apiService.signVC(SignVcReq(unsignedCredential = unsignedCredential), accessToken = authState.accessToken ?: "")
-
-        if (res.isSuccessful) {
-            // Successfully signed VC
-            // Pass to store in wallet
-            val data = res.body() as SignVcRes
-            return data.signedCredential
-        } else {
-            throw AppError(ErrorType.UNKNOWN_ERROR)
-        }
-    }
-
-    private suspend fun storeCredential(signedCredential: SignedCredential, authState: AuthStateModel): List<String> {
-        val res = apiService.storeVCs(
-            body = StoreVCsReq(
-                credentialsToStore = listOf(signedCredential),
-            ),
-            accessToken = authState.accessToken ?: ""
-        )
-
-        if (res.isSuccessful) {
-            val data = res.body() as StoreVCsRes
-            return data.storedVCIDs
-        }
-        else {
-            // FIXME
-            throw AppError(ErrorType.UNKNOWN_ERROR)
-        }
-    }
-
-    companion object {
-        private const val CREDENTIAL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    }
 }
