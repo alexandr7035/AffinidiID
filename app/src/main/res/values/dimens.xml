@@ -47,4 +47,6 @@
     <dimen name="error_view_padding">8dp</dimen>
 
     <dimen name="available_credential_item_corners">16dp</dimen>
+    <dimen name="vc_field_value_margin">8dp</dimen>
+    <dimen name="vc_field_spacing">4dp</dimen>
 </resources>

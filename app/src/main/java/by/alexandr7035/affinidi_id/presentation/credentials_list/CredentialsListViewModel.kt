@@ -9,10 +9,6 @@ import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
-import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.CredentialType
-import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
-import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CredentialsListViewModel @Inject constructor(
     private val getCredentialsListUseCase: GetCredentialsListUseCase,
-    private val issueCredentialUseCase: IssueCredentialUseCase,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
@@ -72,9 +67,11 @@ class CredentialsListViewModel @Inject constructor(
                         CredentialItemUiModel(
                             id = it.id,
                             expirationDate = textExpirationDate,
-                            credentialType = credentialType,
+                            credentialTypeString = credentialType,
                             credentialStatus = credentialStatusText,
-                            statusMarkColor = statusMarkColor
+                            statusMarkColor = statusMarkColor,
+                            credentialSubject = it.credentialSubject,
+                            vcType = it.vcType
                         )
                     }
 
