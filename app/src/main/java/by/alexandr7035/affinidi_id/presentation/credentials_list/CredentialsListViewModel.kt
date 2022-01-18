@@ -40,7 +40,7 @@ class CredentialsListViewModel @Inject constructor(
                     // TODO mapper
                     val uiCredentials: List<CredentialItemUiModel> = res.credentials.map {
 
-                        val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:MM") ?: resourceProvider.getString(R.string.no_expiration)
+                        val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:mm") ?: resourceProvider.getString(R.string.no_expiration)
 
                         val credentialStatusText = when (it.credentialStatus) {
                             CredentialStatus.ACTIVE -> {
@@ -99,18 +99,4 @@ class CredentialsListViewModel @Inject constructor(
         return credentialsLiveData
     }
 
-
-    fun testBuildUnsigned() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val res = issueCredentialUseCase.execute(
-                IssueCredentialReqModel(
-                    credentialType = CredentialType.EmailVC(
-                        credentialSubject = EmailCredentialSubject(email = "testmail@mailto.plus")
-                    ),
-                    expiresAt = 0,
-                    holderDid = "did:elem:test"
-                )
-            )
-        }
-    }
 }
