@@ -11,6 +11,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCreden
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
+import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
@@ -22,6 +23,7 @@ import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcReq
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcRes
 import by.alexandr7035.data.model.credentials.unsigned_vc.UnsignedCredential
 import by.alexandr7035.data.network.CredentialsApiService
+import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -75,8 +77,12 @@ class CredentialsRepositoryImpl @Inject constructor(
     override suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel {
         try {
             val unsignedVc = vcIssuanceHelper.buildUnsignedVC(issueCredentialReqModel)
+            Timber.debug("DEBUG_VC unsigned VC res ${unsignedVc}")
+
             val signedVc = vcIssuanceHelper.signCredential(unsignedVc, authState)
             // Store only 1 VC, so just get last ID from response
+
+            Timber.debug("signed VC test ${signedVc}")
             val storedVCsID = vcIssuanceHelper.storeCredentials(listOf(signedVc), authState).last()
 
             return IssueCredentialResModel.Success()

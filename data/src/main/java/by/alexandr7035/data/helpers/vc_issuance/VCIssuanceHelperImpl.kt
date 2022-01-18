@@ -5,6 +5,7 @@ import by.alexandr7035.affinidi_id.domain.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.data.core.AppError
+import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
@@ -14,6 +15,7 @@ import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcReq
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcRes
 import by.alexandr7035.data.model.credentials.unsigned_vc.UnsignedCredential
 import by.alexandr7035.data.network.CredentialsApiService
+import timber.log.Timber
 import javax.inject.Inject
 
 class VCIssuanceHelperImpl @Inject constructor(private val credentialsApiService: CredentialsApiService) : VCIssuanceHelper {
@@ -26,6 +28,7 @@ class VCIssuanceHelperImpl @Inject constructor(private val credentialsApiService
             typeName = issueCredentialReqModel.credentialType.typeName
         )
 
+        Timber.debug("DEBUG_VC unsigned VC req ${request}")
         val res = credentialsApiService.buildUnsignedVCObject(request)
 
         if (res.isSuccessful) {

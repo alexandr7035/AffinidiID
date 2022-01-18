@@ -12,6 +12,6 @@ abstract class CredentialType {
     data class EmailVC(
         override val credentialSubject: EmailCredentialSubject,
         override val typeName: String = "EmailCredential",
-        override val jsonLdContextUrl: String = "https://schema.affinidi.com/EmailCredentialV1-1.jsonld"
+        override val jsonLdContextUrl: String = "https://schema.affinidi.com/EmailCredentialV1-0.jsonld"
     ) : CredentialType()
 }

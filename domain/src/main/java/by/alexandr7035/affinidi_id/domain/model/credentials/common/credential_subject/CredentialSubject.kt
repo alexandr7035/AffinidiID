@@ -1,3 +1,5 @@
 package by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject
 
-abstract class CredentialSubject()
+import java.io.Serializable
+
+abstract class CredentialSubject(): Serializable

@@ -1,7 +1,7 @@
 package by.alexandr7035.data.model.credentials.signed_vc
 
 import by.alexandr7035.data.model.credentials.common.CredentialHolder
-import by.alexandr7035.data.model.credentials.common.UndefinedCredentialSubject
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 
 data class SignedCredential(
@@ -14,7 +14,7 @@ data class SignedCredential(
     @SerializedName("holder")
     val holder: CredentialHolder,
     @SerializedName("credentialSubject")
-    val credentialSubject: UndefinedCredentialSubject,
+    val credentialSubject: JsonObject,
     @SerializedName("issuanceDate")
     val issuanceDate: String,
     @SerializedName("expirationDate")
