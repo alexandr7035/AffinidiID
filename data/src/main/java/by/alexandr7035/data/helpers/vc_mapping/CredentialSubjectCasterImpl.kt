@@ -4,11 +4,9 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_su
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.UnknownCredentialSubject
 import by.alexandr7035.data.extensions.debug
-import by.alexandr7035.data.model.credentials.common.UndefinedCredentialSubject
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import timber.log.Timber
-import java.lang.Exception
 import javax.inject.Inject
 
 class CredentialSubjectCasterImpl @Inject constructor(private val gson: Gson): CredentialSubjectCaster {
