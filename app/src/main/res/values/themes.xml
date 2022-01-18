@@ -214,6 +214,16 @@
         <item name="android:elevation">@dimen/credential_item_elevation</item>
     </style>
 
+    <style name="UnknownCredentialCardStyle" parent="CredentialCardStyle">
+        <item name="android:background">@drawable/background_uknown_credential_item</item>
+    </style>
+
+    <style name="UnknownCredentialCardExplanation">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
     <style name="CredentialCardTitle">
         <item name="android:lines">2</item>
         <item name="android:textSize">20sp</item>

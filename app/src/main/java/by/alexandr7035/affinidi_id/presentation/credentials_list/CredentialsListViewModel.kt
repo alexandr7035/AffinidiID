@@ -41,6 +41,9 @@ class CredentialsListViewModel @Inject constructor(
                             R.string.no_expiration
                         )
 
+                        // To use different viewtype in recycler
+                        val isUnknownVcType = it.vcType == VcType.UNKNOWN_CREDENTIAL
+
                         val credentialStatusText = when (it.credentialStatus) {
                             CredentialStatus.ACTIVE -> {
                                 resourceProvider.getString(R.string.active)
@@ -89,7 +92,8 @@ class CredentialsListViewModel @Inject constructor(
                             credentialTypeString = credentialType,
                             credentialStatus = credentialStatusText,
                             statusMarkColor = statusMarkColor,
-                            vcFields = vcFields
+                            vcFields = vcFields,
+                            isUnknownType = isUnknownVcType
                         )
                     }
 
