@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.domain.model.credentials.available_credential_types.AvailableCredentialTypeModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.available_credential_types.AvailableVcType
+import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.CredentialType
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
@@ -38,9 +38,9 @@ class IssueCredentialViewModel @Inject constructor(
         }
     }
 
-    fun issueCredential(credentialType: AvailableVcType) {
+    fun issueCredential(credentialType: VcType) {
         val issueRequest = when (credentialType) {
-            AvailableVcType.EMAIL_CREDENTIAL -> {
+            VcType.EMAIL_CREDENTIAL -> {
 
                 val profile = getProfileUseCase.execute()
 
@@ -54,6 +54,9 @@ class IssueCredentialViewModel @Inject constructor(
                     holderDid = profile.userDid,
                     expiresAt = System.currentTimeMillis() + EXPIRATION_DATE_OFFSET
                 )
+            }
+            else -> {
+                throw RuntimeException("Can't issue unknown credential")
             }
         }
 

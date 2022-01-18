@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
+import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
@@ -59,10 +60,19 @@ class CredentialsListViewModel @Inject constructor(
                             }
                         }
 
+                        val credentialType = when (it.vcType) {
+                            VcType.EMAIL_CREDENTIAL -> {
+                                resourceProvider.getString(R.string.vc_type_email)
+                            }
+                            else -> {
+                                resourceProvider.getString(R.string.vc_type_unknown)
+                            }
+                        }
+
                         CredentialItemUiModel(
                             id = it.id,
                             expirationDate = textExpirationDate,
-                            credentialType = it.credentialType,
+                            credentialType = credentialType,
                             credentialStatus = credentialStatusText,
                             statusMarkColor = statusMarkColor
                         )

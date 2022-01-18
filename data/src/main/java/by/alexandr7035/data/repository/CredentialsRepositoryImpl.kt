@@ -12,6 +12,7 @@ import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
+import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
@@ -26,7 +27,8 @@ import javax.inject.Inject
 
 class CredentialsRepositoryImpl @Inject constructor(
     private val apiService: CredentialsApiService,
-    private val vcIssuanceHelper: VCIssuanceHelper
+    private val vcIssuanceHelper: VCIssuanceHelper,
+    private val credentialMapper: SignedCredentialToDomainMapper
 ) : CredentialsRepository {
     override suspend fun getAllCredentials(authState: AuthStateModel): CredentialsListResModel {
 
@@ -36,37 +38,10 @@ class CredentialsRepositoryImpl @Inject constructor(
             if (res.isSuccessful) {
                 val data = res.body() as List<SignedCredential>
 
-                // TODO mapper
+                // Map to domain
+                // Credential type is detected in mapper
                 val domainCreds = data.map {
-
-                    val expirationDate = if (it.expirationDate == null) {
-                        null
-                    } else {
-                        it.expirationDate.getUnixDateFromStringFormat(CREDENTIAL_DATE_FORMAT)
-                    }
-
-                    val issuanceDate = it.issuanceDate.getUnixDateFromStringFormat(CREDENTIAL_DATE_FORMAT)
-
-                    val credentialStatus = if (expirationDate != null) {
-                        if (expirationDate < System.currentTimeMillis()) {
-                            CredentialStatus.EXPIRED
-                        } else {
-                            CredentialStatus.ACTIVE
-                        }
-                    } else {
-                        CredentialStatus.ACTIVE
-                    }
-
-                    Credential(
-                        id = it.id,
-                        // Fist type will be "VerifiableCredential"
-                        credentialType = it.type.last(),
-                        expirationDate = expirationDate,
-                        issuanceDate = issuanceDate,
-                        holderDid = it.holder.holderDid,
-                        issuerDid = it.issuerDid,
-                        credentialStatus = credentialStatus
-                    )
+                    credentialMapper.map(it)
                 }
 
                 return CredentialsListResModel.Success(domainCreds)

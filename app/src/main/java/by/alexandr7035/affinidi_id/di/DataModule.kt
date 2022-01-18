@@ -12,12 +12,17 @@ import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelperImpl
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelperImpl
+import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCaster
+import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCasterImpl
+import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
+import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import by.alexandr7035.data.network.CredentialsApiService
 import by.alexandr7035.data.repository.*
 import by.alexandr7035.data.storage.ProfileStorage
 import by.alexandr7035.data.storage.ProfileStorageImpl
 import by.alexandr7035.data.storage.SecretsStorage
 import by.alexandr7035.data.storage.SecretsStorageImpl
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -130,7 +135,26 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCredentialsRepository(credentialsApiService: CredentialsApiService, vcIssuanceHelper: VCIssuanceHelper): CredentialsRepository {
-        return CredentialsRepositoryImpl(credentialsApiService, vcIssuanceHelper)
+    fun provideCredentialsRepository(credentialsApiService: CredentialsApiService, vcIssuanceHelper: VCIssuanceHelper, credentialToDomainMapper: SignedCredentialToDomainMapper): CredentialsRepository {
+        return CredentialsRepositoryImpl(credentialsApiService, vcIssuanceHelper, credentialToDomainMapper)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideCredentialSubjectCaster(gson: Gson): CredentialSubjectCaster {
+        return CredentialSubjectCasterImpl(gson)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSignedCredentialToDomainMapper(credentialSubjectCaster: CredentialSubjectCaster): SignedCredentialToDomainMapper {
+        return SignedCredentialToDomainMapperImpl(credentialSubjectCaster)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return Gson()
     }
 }

@@ -5,6 +5,7 @@ import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetAvailableVcType
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.*
+import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -83,4 +84,5 @@ object DomainModule {
     fun provideGetAvailableVcTypesUseCase(): GetAvailableVcTypesUseCase {
         return GetAvailableVcTypesUseCase()
     }
+
 }
