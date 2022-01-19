@@ -182,6 +182,7 @@
     </style>
 
     <style name="TextViewExplanation">
+        <item name="android:textAlignment">center</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/gray_500</item>
     </style>
@@ -274,6 +275,11 @@
     <style name="ErrorViewText">
         <item name="android:textSize">@dimen/error_view_text</item>
         <item name="android:textColor">@color/gray_500</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="ErrorLabel" parent="AuthLabel">
+        <item name="android:textColor">@color/purple_300</item>
         <item name="android:textAlignment">center</item>
     </style>
 

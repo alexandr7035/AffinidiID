@@ -74,20 +74,20 @@
             app:popUpToInclusive="true" />
     </navigation>
 
-    <dialog
-        android:id="@+id/errorDialogFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.error_dialog.ErrorDialogFragment"
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.error_fragment.ErrorFragment"
         android:label="fragment_error_dialog"
-        tools:layout="@layout/fragment_error_dialog" >
+        tools:layout="@layout/fragment_error" >
         <argument
             android:name="title"
             app:argType="string" />
         <argument
             android:name="message"
             app:argType="string" />
-    </dialog>
+    </fragment>
 
-    <action android:id="@+id/action_global_errorDialogFragment" app:destination="@id/errorDialogFragment" />
+    <action android:id="@+id/action_global_errorFragment" app:destination="@id/errorFragment" />
 
 
     <navigation android:id="@+id/resetPasswordGraph"
