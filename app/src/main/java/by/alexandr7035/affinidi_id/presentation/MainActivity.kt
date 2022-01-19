@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
         // Primary destinations shown in bottom navigation
         val bottomNavigationDestinations = listOf(
             R.id.profileFragment,
-            R.id.credentialsListFragment
+            R.id.credentialsListFragment,
+            R.id.logoutFragment
         )
 
         // Hide bottom navigation for non-primary fragments
