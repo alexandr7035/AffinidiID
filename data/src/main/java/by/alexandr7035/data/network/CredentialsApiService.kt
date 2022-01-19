@@ -14,15 +14,21 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface CredentialsApiService {
-    @GET("api/v1/wallet/credentials")
+    @GET("${WALLET_API_BASE_URL}/api/v1/wallet/credentials")
     suspend fun getAllCredentials(@Header("Authorization") accessToken: String): Response<List<SignedCredential>>
 
-    @POST("https://affinity-issuer.prod.affinity-project.org/api/v1/vc/build-unsigned")
+    @POST("${ISSUER_API_BASE_URL}/api/v1/vc/build-unsigned")
     suspend fun buildUnsignedVCObject(@Body body: BuildUnsignedVcReq): Response<BuildUnsignedVcRes>
 
-    @POST("https://cloud-wallet-api.prod.affinity-project.org/api/v1/wallet/sign-credential")
+    @POST("${WALLET_API_BASE_URL}/api/v1/wallet/sign-credential")
     suspend fun signVC(@Body body: SignVcReq, @Header("Authorization") accessToken: String): Response<SignVcRes>
 
-    @POST("https://cloud-wallet-api.prod.affinity-project.org/api/v1/wallet/credentials")
+    @POST("${WALLET_API_BASE_URL}/api/v1/wallet/credentials")
     suspend fun storeVCs(@Body body: StoreVCsReq, @Header("Authorization") accessToken: String): Response<StoreVCsRes>
+
+    companion object {
+        // An annotation argument must be a compile-time constant
+        private const val WALLET_API_BASE_URL = "https://cloud-wallet-api.prod.affinity-project.org"
+        private const val ISSUER_API_BASE_URL = "https://affinity-issuer.prod.affinity-project.org"
+    }
 }

@@ -15,33 +15,38 @@ import retrofit2.http.POST
 
 interface UserApiService {
 
-    @POST("/api/v1/users/signup")
+    @POST("${WALLET_API_BASE_URL}/api/v1/users/signup")
     // Returns TOKEN for sign up confirmation
     suspend fun signUp(@Body body: SignUpRequest): Response<String>
 
-    @POST("/api/v1/users/signup/confirm")
+    @POST("${WALLET_API_BASE_URL}/api/v1/users/signup/confirm")
     suspend fun confirmSignUp(
         @Body body: ConfirmSignUpRequest
     ): Response<ConfirmSignUpResponse>
 
-    @POST("api/v1/users/login")
+    @POST("${WALLET_API_BASE_URL}/api/v1/users/login")
     suspend fun signIn(@Body body: SignInRequest): Response<SignInResponse>
 
-    @POST("api/v1/users/logout")
+    @POST("${WALLET_API_BASE_URL}/api/v1/users/logout")
     suspend fun logOut(@Header("Authorization") accessToken: String): Response<Unit>
 
     // This request doesn't return anything but sends OTP to user's email
-    @POST("api/v1/users/forgot-password")
+    @POST("${WALLET_API_BASE_URL}/api/v1/users/forgot-password")
     suspend fun initializePasswordReset(@Body body: InitializeResetPasswordRequest): Response<Unit>
 
     // This request doesn't return anything. 204 code for success
-    @POST("api/v1/users/forgot-password/confirm")
+    @POST("${WALLET_API_BASE_URL}/api/v1/users/forgot-password/confirm")
     suspend fun confirmPasswordReset(@Body body: ConfirmResetPasswordRequest): Response<Unit>
 
     // 204 for success
-    @POST("/api/v1/users/change-password")
+    @POST("${WALLET_API_BASE_URL}/api/v1/users/change-password")
     suspend fun changePassword(
         @Header("Authorization") accessToken: String,
         @Body body: ChangePasswordRequest
     ): Response<Unit>
+
+    companion object {
+        // An annotation argument must be a compile-time constant
+        private const val WALLET_API_BASE_URL = "https://cloud-wallet-api.prod.affinity-project.org"
+    }
 }
