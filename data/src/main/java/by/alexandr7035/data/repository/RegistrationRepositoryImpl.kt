@@ -6,14 +6,14 @@ import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseMode
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.repository.RegistrationRepository
-import by.alexandr7035.data.network.ApiService
+import by.alexandr7035.data.network.UserApiService
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.model.sign_up.*
 import by.alexandr7035.data.storage.SecretsStorage
 import javax.inject.Inject
 
 class RegistrationRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val apiService: UserApiService,
     private val secretsStorage: SecretsStorage
 ) : RegistrationRepository {
 

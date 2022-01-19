@@ -6,13 +6,13 @@ import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordRe
 import by.alexandr7035.affinidi_id.domain.model.reset_password.InitializePasswordResetRequestModel
 import by.alexandr7035.affinidi_id.domain.model.reset_password.InitializePasswordResetResponseModel
 import by.alexandr7035.affinidi_id.domain.repository.ResetPasswordRepository
-import by.alexandr7035.data.network.ApiService
+import by.alexandr7035.data.network.UserApiService
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.model.reset_password.ConfirmResetPasswordRequest
 import by.alexandr7035.data.model.reset_password.InitializeResetPasswordRequest
 import javax.inject.Inject
 
-class ResetPasswordRepositoryImpl @Inject constructor(private val apiService: ApiService) : ResetPasswordRepository {
+class ResetPasswordRepositoryImpl @Inject constructor(private val apiService: UserApiService) : ResetPasswordRepository {
     override suspend fun initializePasswordReset(initializePasswordResetRequestModel: InitializePasswordResetRequestModel): InitializePasswordResetResponseModel {
         try {
             val res = apiService.initializePasswordReset(InitializeResetPasswordRequest(initializePasswordResetRequestModel.userName))

@@ -7,7 +7,7 @@ import by.alexandr7035.data.network.ErrorInterceptor
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelperImpl
 import by.alexandr7035.affinidi_id.domain.repository.*
-import by.alexandr7035.data.network.ApiService
+import by.alexandr7035.data.network.UserApiService
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelperImpl
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
@@ -87,8 +87,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideUserApiService(retrofit: Retrofit): UserApiService {
+        return retrofit.create(UserApiService::class.java)
     }
 
     @Provides
@@ -99,26 +99,26 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(apiService: ApiService, secretsStorage: SecretsStorage): LoginRepository {
-        return LoginRepositoryImpl(apiService, secretsStorage)
+    fun provideLoginRepository(userApiService: UserApiService, secretsStorage: SecretsStorage): LoginRepository {
+        return LoginRepositoryImpl(userApiService, secretsStorage)
     }
 
     @Provides
     @Singleton
-    fun provideRegistrationRepository(apiService: ApiService, secretsStorage: SecretsStorage): RegistrationRepository {
-        return RegistrationRepositoryImpl(apiService, secretsStorage)
+    fun provideRegistrationRepository(userApiService: UserApiService, secretsStorage: SecretsStorage): RegistrationRepository {
+        return RegistrationRepositoryImpl(userApiService, secretsStorage)
     }
 
     @Provides
     @Singleton
-    fun provideResetPasswordRepository(apiService: ApiService): ResetPasswordRepository {
-        return ResetPasswordRepositoryImpl(apiService)
+    fun provideResetPasswordRepository(userApiService: UserApiService): ResetPasswordRepository {
+        return ResetPasswordRepositoryImpl(userApiService)
     }
 
     @Provides
     @Singleton
-    fun provideChangeProfileRepository(apiService: ApiService): ChangeProfileRepository {
-        return ChangeProfileRepositoryImpl(apiService)
+    fun provideChangeProfileRepository(userApiService: UserApiService): ChangeProfileRepository {
+        return ChangeProfileRepositoryImpl(userApiService)
     }
 
     @Provides
