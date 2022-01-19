@@ -79,5 +79,6 @@
     <string name="delete_vc_explanation">Sure to delete the VC from cloud wallet? If you haven\'t saved it somewhere, you will have to re-issue it.</string>
     <string name="delete_vc">Delete VC?</string>
     <string name="error_occurred">An error occurred</string>
+    <string name="eror_auth">Your access token has expired. Please, sign in again.</string>
 
 </resources>

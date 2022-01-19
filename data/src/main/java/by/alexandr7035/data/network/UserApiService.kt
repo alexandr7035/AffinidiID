@@ -10,6 +10,7 @@ import by.alexandr7035.data.model.sign_up.ConfirmSignUpResponse
 import by.alexandr7035.data.model.sign_up.SignUpRequest
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
@@ -44,6 +45,10 @@ interface UserApiService {
         @Header("Authorization") accessToken: String,
         @Body body: ChangePasswordRequest
     ): Response<Unit>
+
+
+    @GET("${WALLET_API_BASE_URL}/api/v1/users/get-did")
+    suspend fun getUserDID(@Header("Authorization") accessToken: String): Response<String>
 
     companion object {
         // An annotation argument must be a compile-time constant

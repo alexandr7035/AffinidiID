@@ -90,4 +90,9 @@ object DomainModule {
         return DeleteCredentialUseCase(credentialsRepository, getAuthStateUseCase)
     }
 
+    @Provides
+    fun provideAuthCheckUseCase(authCheckRepository: AuthCheckRepository, getAuthStateUseCase: GetAuthStateUseCase): AuthCheckUseCase {
+        return AuthCheckUseCase(authCheckRepository, getAuthStateUseCase)
+    }
+
 }

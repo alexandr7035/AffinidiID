@@ -4,12 +4,16 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.ActivityMainBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
 import by.alexandr7035.affinidi_id.presentation.login.LoginFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,12 +51,55 @@ class MainActivity : AppCompatActivity() {
 
         // Hide bottom navigation for non-primary fragments
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.bottomNavigationView.isGone = ! bottomNavigationDestinations.contains(destination.id)
+            binding.bottomNavigationView.isGone = !bottomNavigationDestinations.contains(destination.id)
         }
 
-        // Go to profile fragment if already authorized
-        if (viewModel.checkIfAuthorized()) {
-            navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
+
+        // Affinidi token expires in 1 hour
+        // So we should check for auth on start
+        // and if token expired show login fragment
+        //
+        // If no token just show login fragment
+        if (viewModel.checkIfPreviouslyAuthorized()) {
+            binding.progressView.root.isVisible = true
+            viewModel.statAuthCheck()
         }
+
+        viewModel.getAuthCheckLiveData().observe(this, { authCheckResult ->
+            binding.progressView.root.isVisible = false
+
+            when (authCheckResult) {
+                is AuthCheckResModel.Success -> {
+                    // Means token did not expired. Allow to go in the profile
+                    navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
+                }
+
+                // When fail, it depends.
+                is AuthCheckResModel.Fail -> {
+                    when (authCheckResult.errorType) {
+                        // That exactly means token has expired
+                        // Stay on login fragment and show messag
+                        ErrorType.AUTHORIZATION_ERROR -> {
+                            // TODO logics with saved password here
+                            showToast(getString(R.string.eror_auth))
+                        }
+
+                        // No connection with the internet
+                        // But we can let the user inside as some of his data is cached
+                        ErrorType.FAILED_CONNECTION -> {
+                            navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
+                        }
+
+                        // Unknown error. Show corresponding fragment
+                        else -> {
+                            navController.navigateSafe(LoginFragmentDirections.actionGlobalErrorFragment(
+                                getString(R.string.error_unknown_title),
+                                getString(R.string.error_unknown)
+                            ))
+                        }
+                    }
+                }
+            }
+        })
     }
 }

@@ -154,6 +154,12 @@ object DataModule {
 
     @Provides
     @Singleton
+    fun provideAuthCheckRepository(userApiService: UserApiService): AuthCheckRepository {
+        return AuthCheckRepositoryImpl(userApiService)
+    }
+
+    @Provides
+    @Singleton
     fun provideGson(): Gson {
         return Gson()
     }
