@@ -76,5 +76,7 @@
     <string name="vc_type_unknown">Unknown credential</string>
     <string name="unknown_vc_exmplanation">It seems this VC type is not supported by the app yet. But you can see verify it and see raw data.</string>
     <string name="address">Address</string>
+    <string name="delete_vc_explanation">Sure to delete the VC from cloud wallet? If you haven\'t saved it somewhere, you will have to re-issue it.</string>
+    <string name="delete_vc">Delete VC?</string>
 
 </resources>

@@ -50,9 +50,19 @@ class CredentialsAdapter: RecyclerView.Adapter<CredentialsAdapter.CredentialView
         notifyDataSetChanged()
     }
 
+    // FIXME not good
+    fun getItemByPosition(position: Int): CredentialItemUiModel {
+        return items[position]
+    }
+
     abstract class CredentialViewHolder(open val binding: ViewBinding): RecyclerView.ViewHolder(binding.root) {
 
         abstract fun bind(item: CredentialItemUiModel)
+
+        // FIXME not good
+        fun getViewHolderPosition(): Int {
+            return absoluteAdapterPosition
+        }
 
         class NormalVCViewHolder(override val binding: ViewCredentialItemBinding): CredentialViewHolder(binding) {
             override fun bind(item: CredentialItemUiModel) {

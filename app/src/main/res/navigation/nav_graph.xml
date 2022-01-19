@@ -157,11 +157,24 @@
         <action
             android:id="@+id/action_credentialsListFragment_to_issueCredentialFragment"
             app:destination="@id/issueCredentialFragment" />
+        <action
+            android:id="@+id/action_credentialsListFragment_to_deleteCredentialFragment"
+            app:destination="@id/deleteCredentialFragment" />
     </fragment>
     <fragment
         android:id="@+id/issueCredentialFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.issue_credential.IssueCredentialFragment"
         android:label="fragment_issue_credential"
         tools:layout="@layout/fragment_issue_credential" />
+
+    <dialog
+        android:id="@+id/deleteCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.delete_credential.DeleteCredentialFragment"
+        android:label="fragment_delete_credential"
+        tools:layout="@layout/fragment_delete_credential" >
+        <argument
+            android:name="deleteVcId"
+            app:argType="string" />
+    </dialog>
 
 </navigation>

@@ -1,11 +1,11 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.*
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.DeleteCredentialUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetAvailableVcTypesUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.*
-import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -83,6 +83,11 @@ object DomainModule {
     @Provides
     fun provideGetAvailableVcTypesUseCase(): GetAvailableVcTypesUseCase {
         return GetAvailableVcTypesUseCase()
+    }
+
+    @Provides
+    fun provideDeleteCredentialUseCase(credentialsRepository: CredentialsRepository): DeleteCredentialUseCase {
+        return DeleteCredentialUseCase(credentialsRepository)
     }
 
 }
