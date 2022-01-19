@@ -86,8 +86,8 @@ object DomainModule {
     }
 
     @Provides
-    fun provideDeleteCredentialUseCase(credentialsRepository: CredentialsRepository): DeleteCredentialUseCase {
-        return DeleteCredentialUseCase(credentialsRepository)
+    fun provideDeleteCredentialUseCase(credentialsRepository: CredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): DeleteCredentialUseCase {
+        return DeleteCredentialUseCase(credentialsRepository, getAuthStateUseCase)
     }
 
 }

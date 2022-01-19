@@ -1,6 +1,8 @@
 package by.alexandr7035.data.repository
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
@@ -60,7 +62,10 @@ class CredentialsRepositoryImpl @Inject constructor(
     // 2) Sign the VC
     // 3) Store credential in the cloud wallet
     // TODO give the user choice where to store in the future
-    override suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel {
+    override suspend fun issueCredential(
+        issueCredentialReqModel: IssueCredentialReqModel,
+        authState: AuthStateModel
+    ): IssueCredentialResModel {
         try {
             val unsignedVc = vcIssuanceHelper.buildUnsignedVC(issueCredentialReqModel)
             val signedVc = vcIssuanceHelper.signCredential(unsignedVc, authState)
@@ -76,6 +81,38 @@ class CredentialsRepositoryImpl @Inject constructor(
         catch (e: Exception) {
             e.printStackTrace()
             return IssueCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
+        }
+    }
+
+
+    override suspend fun deleteCredential(deleteVcReqModel: DeleteVcReqModel, authState: AuthStateModel): DeleteVcResModel {
+        try {
+            val res = apiService.deleteVc(
+                credentialId = deleteVcReqModel.credentialId,
+                accessToken = authState.accessToken ?: ""
+            )
+
+            return if (res.isSuccessful) {
+                DeleteVcResModel.Success()
+            } else {
+                when (res.code()) {
+                    // TODO review and fix 401
+                    401 -> {
+                        DeleteVcResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    }
+                    else -> {
+                        DeleteVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+                    }
+                }
+            }
+
+        } catch (appError: AppError) {
+            return DeleteVcResModel.Fail(appError.errorType)
+        }
+        // Unknown exception
+        catch (e: Exception) {
+            e.printStackTrace()
+            return DeleteVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
     }
 
