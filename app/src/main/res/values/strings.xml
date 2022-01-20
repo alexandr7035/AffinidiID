@@ -80,5 +80,6 @@
     <string name="delete_vc">Delete VC?</string>
     <string name="error_occurred">An error occurred</string>
     <string name="eror_auth">Your access token has expired. Please, sign in again.</string>
+    <string name="credential_info">Credential info</string>
 
 </resources>

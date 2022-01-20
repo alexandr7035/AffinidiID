@@ -212,6 +212,7 @@
         <item name="android:minHeight">@dimen/credential_item_min_height</item>
         <item name="android:padding">@dimen/credential_item_padding</item>
         <item name="android:background">@drawable/background_credential_item</item>
+        <item name="android:foreground">@drawable/foreground_credential_item</item>
         <item name="android:elevation">@dimen/credential_item_elevation</item>
     </style>
 

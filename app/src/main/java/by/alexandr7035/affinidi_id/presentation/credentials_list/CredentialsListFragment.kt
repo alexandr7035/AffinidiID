@@ -24,7 +24,7 @@ import timber.log.Timber
 
 
 @AndroidEntryPoint
-class CredentialsListFragment : Fragment() {
+class CredentialsListFragment : Fragment(), CredentialClickListener {
 
     private val binding by viewBinding(FragmentCredentialsListBinding::bind)
     private val viewModel by viewModels<CredentialsListViewModel>()
@@ -39,7 +39,7 @@ class CredentialsListFragment : Fragment() {
 
         Timber.debug("onViewCreated creds list")
 
-        val adapter = CredentialsAdapter()
+        val adapter = CredentialsAdapter(credentialClickListener = this)
         val layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.layoutManager = layoutManager
         binding.recycler.adapter = adapter
@@ -113,5 +113,10 @@ class CredentialsListFragment : Fragment() {
         binding.errorView.root.isVisible = false
         binding.progressView.root.isVisible = true
         viewModel.load()
+    }
+
+    override fun onCredentialClicked(credentialId: String) {
+        findNavController().navigateSafe(CredentialsListFragmentDirections
+            .actionCredentialsListFragmentToCredentialDetailsFragment(credentialId))
     }
 }

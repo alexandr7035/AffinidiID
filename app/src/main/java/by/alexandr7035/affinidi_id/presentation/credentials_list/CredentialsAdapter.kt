@@ -2,7 +2,6 @@ package by.alexandr7035.affinidi_id.presentation.credentials_list
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -10,7 +9,7 @@ import by.alexandr7035.affinidi_id.databinding.ViewCredentialItemBinding
 import by.alexandr7035.affinidi_id.databinding.ViewUnknownCredentialItemBinding
 import by.alexandr7035.affinidi_id.presentation.credentials_list.vc_fields_recycler.VCFieldsAdapter
 
-class CredentialsAdapter: RecyclerView.Adapter<CredentialsAdapter.CredentialViewHolder>() {
+class CredentialsAdapter(private val credentialClickListener: CredentialClickListener): RecyclerView.Adapter<CredentialsAdapter.CredentialViewHolder>() {
 
     private var items: List<CredentialItemUiModel> = emptyList()
 
@@ -27,11 +26,11 @@ class CredentialsAdapter: RecyclerView.Adapter<CredentialsAdapter.CredentialView
         return when (viewType) {
             NORMAL_CREDENTIAL -> {
                 val binding = ViewCredentialItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                CredentialViewHolder.NormalVCViewHolder(binding)
+                CredentialViewHolder.NormalVCViewHolder(binding, credentialClickListener)
             }
             else -> {
                 val binding = ViewUnknownCredentialItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                CredentialViewHolder.UnknownVCViewHolder(binding)
+                CredentialViewHolder.UnknownVCViewHolder(binding, credentialClickListener)
             }
         }
     }
@@ -64,7 +63,7 @@ class CredentialsAdapter: RecyclerView.Adapter<CredentialsAdapter.CredentialView
             return absoluteAdapterPosition
         }
 
-        class NormalVCViewHolder(override val binding: ViewCredentialItemBinding): CredentialViewHolder(binding) {
+        class NormalVCViewHolder(override val binding: ViewCredentialItemBinding, private val credentialClickListener: CredentialClickListener): CredentialViewHolder(binding) {
             override fun bind(item: CredentialItemUiModel) {
                 binding.credentialId.text = item.id
                 binding.credentialTypeView.text = item.credentialTypeString
@@ -72,16 +71,25 @@ class CredentialsAdapter: RecyclerView.Adapter<CredentialsAdapter.CredentialView
                 binding.statusLabel.text = item.credentialStatus
                 binding.statusMark.setColorFilter(item.statusMarkColor)
                 binding.fieldsRecycler.adapter = VCFieldsAdapter(item.vcFields)
+                binding.fieldsRecycler.suppressLayout(true)
+
+                binding.root.setOnClickListener {
+                    credentialClickListener.onCredentialClicked(item.id)
+                }
             }
         }
 
-        class UnknownVCViewHolder(override val binding: ViewUnknownCredentialItemBinding): CredentialViewHolder(binding) {
+        class UnknownVCViewHolder(override val binding: ViewUnknownCredentialItemBinding, private val credentialClickListener: CredentialClickListener): CredentialViewHolder(binding) {
             override fun bind(item: CredentialItemUiModel) {
                 binding.credentialId.text = item.id
                 binding.credentialTypeView.text = item.credentialTypeString
                 binding.credentialExpires.text = item.expirationDate
                 binding.statusLabel.text = item.credentialStatus
                 binding.statusMark.setColorFilter(item.statusMarkColor)
+
+                binding.root.setOnClickListener {
+                    credentialClickListener.onCredentialClicked(item.id)
+                }
             }
         }
     }
