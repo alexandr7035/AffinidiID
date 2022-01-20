@@ -18,10 +18,10 @@ import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import by.alexandr7035.data.network.CredentialsApiService
 import by.alexandr7035.data.repository.*
-import by.alexandr7035.data.storage.ProfileStorage
-import by.alexandr7035.data.storage.ProfileStorageImpl
-import by.alexandr7035.data.storage.SecretsStorage
-import by.alexandr7035.data.storage.SecretsStorageImpl
+import by.alexandr7035.data.local_storage.profile.ProfileStorage
+import by.alexandr7035.data.local_storage.profile.ProfileStorageImpl
+import by.alexandr7035.data.local_storage.secrets.SecretsStorage
+import by.alexandr7035.data.local_storage.secrets.SecretsStorageImpl
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

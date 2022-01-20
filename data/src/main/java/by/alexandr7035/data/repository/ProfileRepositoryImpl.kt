@@ -5,7 +5,7 @@ import by.alexandr7035.affinidi_id.domain.model.profile.UserProfile
 import by.alexandr7035.affinidi_id.domain.repository.ProfileRepository
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
 import by.alexandr7035.data.model.profile.DicebearImageType
-import by.alexandr7035.data.storage.ProfileStorage
+import by.alexandr7035.data.local_storage.profile.ProfileStorage
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(

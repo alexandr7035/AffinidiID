@@ -9,7 +9,7 @@ import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.model.sign_in.SignInRequest
 import by.alexandr7035.data.model.sign_in.SignInResponse
-import by.alexandr7035.data.storage.SecretsStorage
+import by.alexandr7035.data.local_storage.secrets.SecretsStorage
 import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
