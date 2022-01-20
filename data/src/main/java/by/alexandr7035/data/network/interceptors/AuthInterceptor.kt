@@ -1,4 +1,4 @@
-package by.alexandr7035.data.network
+package by.alexandr7035.data.network.interceptors
 
 import by.alexandr7035.data.BuildConfig
 import okhttp3.Interceptor

@@ -1,4 +1,4 @@
-package by.alexandr7035.data.network
+package by.alexandr7035.data.network.api
 
 import by.alexandr7035.data.model.profile.ChangePasswordRequest
 import by.alexandr7035.data.model.reset_password.ConfirmResetPasswordRequest
@@ -16,38 +16,38 @@ import retrofit2.http.POST
 
 interface UserApiService {
 
-    @POST("${WALLET_API_BASE_URL}/api/v1/users/signup")
+    @POST("$WALLET_API_BASE_URL/api/v1/users/signup")
     // Returns TOKEN for sign up confirmation
     suspend fun signUp(@Body body: SignUpRequest): Response<String>
 
-    @POST("${WALLET_API_BASE_URL}/api/v1/users/signup/confirm")
+    @POST("$WALLET_API_BASE_URL/api/v1/users/signup/confirm")
     suspend fun confirmSignUp(
         @Body body: ConfirmSignUpRequest
     ): Response<ConfirmSignUpResponse>
 
-    @POST("${WALLET_API_BASE_URL}/api/v1/users/login")
+    @POST("$WALLET_API_BASE_URL/api/v1/users/login")
     suspend fun signIn(@Body body: SignInRequest): Response<SignInResponse>
 
-    @POST("${WALLET_API_BASE_URL}/api/v1/users/logout")
+    @POST("$WALLET_API_BASE_URL/api/v1/users/logout")
     suspend fun logOut(@Header("Authorization") accessToken: String): Response<Unit>
 
     // This request doesn't return anything but sends OTP to user's email
-    @POST("${WALLET_API_BASE_URL}/api/v1/users/forgot-password")
+    @POST("$WALLET_API_BASE_URL/api/v1/users/forgot-password")
     suspend fun initializePasswordReset(@Body body: InitializeResetPasswordRequest): Response<Unit>
 
     // This request doesn't return anything. 204 code for success
-    @POST("${WALLET_API_BASE_URL}/api/v1/users/forgot-password/confirm")
+    @POST("$WALLET_API_BASE_URL/api/v1/users/forgot-password/confirm")
     suspend fun confirmPasswordReset(@Body body: ConfirmResetPasswordRequest): Response<Unit>
 
     // 204 for success
-    @POST("${WALLET_API_BASE_URL}/api/v1/users/change-password")
+    @POST("$WALLET_API_BASE_URL/api/v1/users/change-password")
     suspend fun changePassword(
         @Header("Authorization") accessToken: String,
         @Body body: ChangePasswordRequest
     ): Response<Unit>
 
 
-    @GET("${WALLET_API_BASE_URL}/api/v1/users/get-did")
+    @GET("$WALLET_API_BASE_URL/api/v1/users/get-did")
     suspend fun getUserDID(@Header("Authorization") accessToken: String): Response<String>
 
     companion object {

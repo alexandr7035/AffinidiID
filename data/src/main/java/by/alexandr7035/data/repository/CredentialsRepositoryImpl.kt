@@ -10,9 +10,8 @@ import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
-import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
-import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
-import by.alexandr7035.data.network.CredentialsApiService
+import by.alexandr7035.data.network.CredentialsCloudDataSource
+import by.alexandr7035.data.network.api.CredentialsApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -20,43 +19,12 @@ import javax.inject.Inject
 class CredentialsRepositoryImpl @Inject constructor(
     private val apiService: CredentialsApiService,
     private val vcIssuanceHelper: VCIssuanceHelper,
-    private val credentialMapper: SignedCredentialToDomainMapper
+    private val credentialsCloudDataSource: CredentialsCloudDataSource
 ) : CredentialsRepository {
+
     override suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel> {
-
-        try {
-            val res = apiService.getAllCredentials(authState.accessToken ?: "")
-
-            if (res.isSuccessful) {
-                val data = res.body() as List<SignedCredential>
-
-                // Map to domain
-                // Credential type is detected in mapper
-                val domainCreds = data.map {
-                    credentialMapper.map(it)
-                }
-
-                return flow { emit(CredentialsListResModel.Success(domainCreds)) }
-            } else {
-                return when (res.code()) {
-                    401 -> {
-                        flow { emit(CredentialsListResModel.Fail(ErrorType.AUTHORIZATION_ERROR)) }
-                    }
-                    else -> {
-                        flow { emit(CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)) }
-                    }
-                }
-            }
-        }
-        // Handled in ErrorInterceptor
-        catch (appError: AppError) {
-            return flow { emit(CredentialsListResModel.Fail(appError.errorType)) }
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            e.printStackTrace()
-            return flow { emit(CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)) }
-        }
+        val credentials = credentialsCloudDataSource.getCredentialsFromCloud(authState)
+        return flow { emit(credentials) }
     }
 
 
