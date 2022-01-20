@@ -6,9 +6,10 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.C
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
+import kotlinx.coroutines.flow.Flow
 
 interface CredentialsRepository {
-    suspend fun getAllCredentials(authState: AuthStateModel): CredentialsListResModel
+    suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel>
 
     suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel
 

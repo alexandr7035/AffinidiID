@@ -7,4 +7,6 @@ abstract class CredentialsListResModel {
     class Success(val credentials: List<Credential>): CredentialsListResModel()
 
     class Fail(val errorType: ErrorType): CredentialsListResModel()
+
+    class Loading(): CredentialsListResModel()
 }

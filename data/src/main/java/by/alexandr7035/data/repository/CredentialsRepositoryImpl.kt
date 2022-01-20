@@ -10,51 +10,53 @@ import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
-import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
-import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
-import by.alexandr7035.data.network.CredentialsApiService
+import by.alexandr7035.data.local_storage.credentials.CredentialsCacheDataSource
+import by.alexandr7035.data.network.CredentialsCloudDataSource
+import by.alexandr7035.data.network.api.CredentialsApiService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class CredentialsRepositoryImpl @Inject constructor(
     private val apiService: CredentialsApiService,
     private val vcIssuanceHelper: VCIssuanceHelper,
-    private val credentialMapper: SignedCredentialToDomainMapper
+    private val credentialsCloudDataSource: CredentialsCloudDataSource,
+    private val credentialsCacheDataSource: CredentialsCacheDataSource
 ) : CredentialsRepository {
-    override suspend fun getAllCredentials(authState: AuthStateModel): CredentialsListResModel {
 
-        try {
-            val res = apiService.getAllCredentials(authState.accessToken ?: "")
+    override suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel> {
 
-            if (res.isSuccessful) {
-                val data = res.body() as List<SignedCredential>
+        return flow {
+            // Cache is always success even if empty list
+            val cacheCredentials = credentialsCacheDataSource.getCredentialsFromCache() as CredentialsListResModel.Success
+            val cloudCredentials = credentialsCloudDataSource.getCredentialsFromCloud(authState)
 
-                // Map to domain
-                // Credential type is detected in mapper
-                val domainCreds = data.map {
-                    credentialMapper.map(it)
+            // Always try firstly return cache
+            // If empty show loading UI
+            if (cacheCredentials.credentials.isEmpty()) {
+                emit(CredentialsListResModel.Loading())
+            }
+            else {
+                emit(cacheCredentials)
+            }
+
+            // When cloud update fails return cache if not empty
+            // Otherwise return error
+            if (cloudCredentials is CredentialsListResModel.Fail) {
+                if (cacheCredentials.credentials.isNotEmpty()) {
+                    emit(cacheCredentials)
                 }
-
-                return CredentialsListResModel.Success(domainCreds)
-            } else {
-                return when (res.code()) {
-                    401 -> {
-                        CredentialsListResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
-                    }
-                    else -> {
-                        CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)
-                    }
+                else {
+                    emit(cloudCredentials)
                 }
             }
-        }
-        // Handled in ErrorInterceptor
-        catch (appError: AppError) {
-            return CredentialsListResModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            e.printStackTrace()
-            return CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)
-        }
+            // When success cloud update
+            else {
+                emit(cloudCredentials)
+            }
+        }.flowOn(Dispatchers.IO)
     }
 
 

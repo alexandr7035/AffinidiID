@@ -5,7 +5,7 @@ import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.AuthCheckRepository
 import by.alexandr7035.data.core.AppError
-import by.alexandr7035.data.network.UserApiService
+import by.alexandr7035.data.network.api.UserApiService
 import javax.inject.Inject
 
 class AuthCheckRepositoryImpl @Inject constructor(private val userApiService: UserApiService): AuthCheckRepository {

@@ -1,4 +1,4 @@
-package by.alexandr7035.data.storage
+package by.alexandr7035.data.local_storage.profile
 
 interface ProfileStorage {
     fun saveDid(userDid: String?)

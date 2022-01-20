@@ -5,7 +5,7 @@ import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordReqModel
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
 import by.alexandr7035.affinidi_id.domain.repository.ChangeProfileRepository
-import by.alexandr7035.data.network.UserApiService
+import by.alexandr7035.data.network.api.UserApiService
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.model.profile.ChangePasswordRequest
 import javax.inject.Inject

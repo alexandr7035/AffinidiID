@@ -1,4 +1,4 @@
-package by.alexandr7035.data.network
+package by.alexandr7035.data.network.api
 
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcReq
 import by.alexandr7035.data.model.credentials.signed_vc.SignVcRes
@@ -11,20 +11,20 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface CredentialsApiService {
-    @GET("${WALLET_API_BASE_URL}/api/v1/wallet/credentials")
+    @GET("$WALLET_API_BASE_URL/api/v1/wallet/credentials")
     suspend fun getAllCredentials(@Header("Authorization") accessToken: String): Response<List<SignedCredential>>
 
-    @POST("${ISSUER_API_BASE_URL}/api/v1/vc/build-unsigned")
+    @POST("$ISSUER_API_BASE_URL/api/v1/vc/build-unsigned")
     suspend fun buildUnsignedVCObject(@Body body: BuildUnsignedVcReq): Response<BuildUnsignedVcRes>
 
-    @POST("${WALLET_API_BASE_URL}/api/v1/wallet/sign-credential")
+    @POST("$WALLET_API_BASE_URL/api/v1/wallet/sign-credential")
     suspend fun signVC(@Body body: SignVcReq, @Header("Authorization") accessToken: String): Response<SignVcRes>
 
-    @POST("${WALLET_API_BASE_URL}/api/v1/wallet/credentials")
+    @POST("$WALLET_API_BASE_URL/api/v1/wallet/credentials")
     suspend fun storeVCs(@Body body: StoreVCsReq, @Header("Authorization") accessToken: String): Response<StoreVCsRes>
 
     // No model, 200 for success
-    @DELETE("${WALLET_API_BASE_URL}/api/v1/wallet/credentials/{id}")
+    @DELETE("$WALLET_API_BASE_URL/api/v1/wallet/credentials/{id}")
     suspend fun deleteVc(@Path("id") credentialId: String, @Header("Authorization") accessToken: String): Response<Unit>
 
     companion object {

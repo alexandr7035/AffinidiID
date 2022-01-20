@@ -14,7 +14,7 @@ import by.alexandr7035.data.model.credentials.store_vc.StoreVCsRes
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcReq
 import by.alexandr7035.data.model.credentials.unsigned_vc.BuildUnsignedVcRes
 import by.alexandr7035.data.model.credentials.unsigned_vc.UnsignedCredential
-import by.alexandr7035.data.network.CredentialsApiService
+import by.alexandr7035.data.network.api.CredentialsApiService
 import timber.log.Timber
 import javax.inject.Inject
 

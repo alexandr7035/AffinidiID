@@ -1,4 +1,4 @@
-package by.alexandr7035.data.storage
+package by.alexandr7035.data.local_storage.secrets
 
 import android.content.Context
 import javax.inject.Inject
