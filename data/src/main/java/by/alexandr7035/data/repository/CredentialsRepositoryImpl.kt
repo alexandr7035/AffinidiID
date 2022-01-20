@@ -13,6 +13,8 @@ import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
 import by.alexandr7035.data.network.CredentialsApiService
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CredentialsRepositoryImpl @Inject constructor(
@@ -20,7 +22,7 @@ class CredentialsRepositoryImpl @Inject constructor(
     private val vcIssuanceHelper: VCIssuanceHelper,
     private val credentialMapper: SignedCredentialToDomainMapper
 ) : CredentialsRepository {
-    override suspend fun getAllCredentials(authState: AuthStateModel): CredentialsListResModel {
+    override suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel> {
 
         try {
             val res = apiService.getAllCredentials(authState.accessToken ?: "")
@@ -34,26 +36,26 @@ class CredentialsRepositoryImpl @Inject constructor(
                     credentialMapper.map(it)
                 }
 
-                return CredentialsListResModel.Success(domainCreds)
+                return flow { emit(CredentialsListResModel.Success(domainCreds)) }
             } else {
                 return when (res.code()) {
                     401 -> {
-                        CredentialsListResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                        flow { emit(CredentialsListResModel.Fail(ErrorType.AUTHORIZATION_ERROR)) }
                     }
                     else -> {
-                        CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)
+                        flow { emit(CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)) }
                     }
                 }
             }
         }
         // Handled in ErrorInterceptor
         catch (appError: AppError) {
-            return CredentialsListResModel.Fail(appError.errorType)
+            return flow { emit(CredentialsListResModel.Fail(appError.errorType)) }
         }
         // Unknown exception
         catch (e: Exception) {
             e.printStackTrace()
-            return CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)
+            return flow { emit(CredentialsListResModel.Fail(ErrorType.UNKNOWN_ERROR)) }
         }
     }
 

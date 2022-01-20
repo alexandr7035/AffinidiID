@@ -15,6 +15,7 @@ import by.alexandr7035.affinidi_id.presentation.credentials_list.vc_fields_recyc
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -29,87 +30,89 @@ class CredentialsListViewModel @Inject constructor(
 
     fun load() {
         viewModelScope.launch(Dispatchers.IO) {
-            val res = getCredentialsListUseCase.execute()
+            getCredentialsListUseCase.execute().collect { res ->
 
-            val credentialListUiModel: CredentialListUiModel = when (res) {
-                is CredentialsListResModel.Success -> {
+                val credentialListUiModel: CredentialListUiModel = when (res) {
+                    is CredentialsListResModel.Success -> {
 
-                    // TODO mapper
-                    val uiCredentials: List<CredentialItemUiModel> = res.credentials.map {
+                        // TODO mapper
+                        val uiCredentials: List<CredentialItemUiModel> = res.credentials.map {
 
-                        val textExpirationDate = it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:mm") ?: resourceProvider.getString(
-                            R.string.no_expiration
-                        )
-
-                        // To use different viewtype in recycler
-                        val isUnknownVcType = it.vcType == VcType.UNKNOWN_CREDENTIAL
-
-                        val credentialStatusText = when (it.credentialStatus) {
-                            CredentialStatus.ACTIVE -> {
-                                resourceProvider.getString(R.string.active)
-                            }
-                            CredentialStatus.EXPIRED -> {
-                                resourceProvider.getString(R.string.expired)
-                            }
-                        }
-
-                        val statusMarkColor = when (it.credentialStatus) {
-                            CredentialStatus.ACTIVE -> {
-                                resourceProvider.getColor(R.color.active_vc_mark)
-                            }
-                            CredentialStatus.EXPIRED -> {
-                                resourceProvider.getColor(R.color.inactive_vc_mark)
-                            }
-                        }
-
-                        val credentialType = when (it.vcType) {
-                            VcType.EMAIL_CREDENTIAL -> {
-                                resourceProvider.getString(R.string.vc_type_email)
-                            }
-                            else -> {
-                                resourceProvider.getString(R.string.vc_type_unknown)
-                            }
-                        }
-
-                        val vcFields = when (it.vcType) {
-                            VcType.EMAIL_CREDENTIAL -> {
-                                val vcSubject = it.credentialSubject as EmailCredentialSubject
-                                listOf(
-                                    VCFieldItem(
-                                        type = resourceProvider.getString(R.string.address),
-                                        value = vcSubject.email
-                                    )
+                            val textExpirationDate =
+                                it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:mm") ?: resourceProvider.getString(
+                                    R.string.no_expiration
                                 )
+
+                            // To use different viewtype in recycler
+                            val isUnknownVcType = it.vcType == VcType.UNKNOWN_CREDENTIAL
+
+                            val credentialStatusText = when (it.credentialStatus) {
+                                CredentialStatus.ACTIVE -> {
+                                    resourceProvider.getString(R.string.active)
+                                }
+                                CredentialStatus.EXPIRED -> {
+                                    resourceProvider.getString(R.string.expired)
+                                }
                             }
-                            else -> {
-                                emptyList()
+
+                            val statusMarkColor = when (it.credentialStatus) {
+                                CredentialStatus.ACTIVE -> {
+                                    resourceProvider.getColor(R.color.active_vc_mark)
+                                }
+                                CredentialStatus.EXPIRED -> {
+                                    resourceProvider.getColor(R.color.inactive_vc_mark)
+                                }
                             }
+
+                            val credentialType = when (it.vcType) {
+                                VcType.EMAIL_CREDENTIAL -> {
+                                    resourceProvider.getString(R.string.vc_type_email)
+                                }
+                                else -> {
+                                    resourceProvider.getString(R.string.vc_type_unknown)
+                                }
+                            }
+
+                            val vcFields = when (it.vcType) {
+                                VcType.EMAIL_CREDENTIAL -> {
+                                    val vcSubject = it.credentialSubject as EmailCredentialSubject
+                                    listOf(
+                                        VCFieldItem(
+                                            type = resourceProvider.getString(R.string.address),
+                                            value = vcSubject.email
+                                        )
+                                    )
+                                }
+                                else -> {
+                                    emptyList()
+                                }
+                            }
+
+                            CredentialItemUiModel(
+                                id = it.id,
+                                expirationDate = textExpirationDate,
+                                credentialTypeString = credentialType,
+                                credentialStatus = credentialStatusText,
+                                statusMarkColor = statusMarkColor,
+                                vcFields = vcFields,
+                                isUnknownType = isUnknownVcType
+                            )
                         }
 
-                        CredentialItemUiModel(
-                            id = it.id,
-                            expirationDate = textExpirationDate,
-                            credentialTypeString = credentialType,
-                            credentialStatus = credentialStatusText,
-                            statusMarkColor = statusMarkColor,
-                            vcFields = vcFields,
-                            isUnknownType = isUnknownVcType
-                        )
+                        CredentialListUiModel.Success(uiCredentials)
                     }
 
-                    CredentialListUiModel.Success(uiCredentials)
+                    is CredentialsListResModel.Fail -> {
+                        CredentialListUiModel.Fail(res.errorType)
+                    }
+                    else -> {
+                        throw RuntimeException("Unknown UI model type")
+                    }
                 }
 
-                is CredentialsListResModel.Fail -> {
-                    CredentialListUiModel.Fail(res.errorType)
+                withContext(Dispatchers.Main) {
+                    credentialsLiveData.value = credentialListUiModel
                 }
-                else -> {
-                    throw RuntimeException("Unknown UI model type")
-                }
-            }
-
-            withContext(Dispatchers.Main) {
-                credentialsLiveData.value = credentialListUiModel
             }
         }
     }
