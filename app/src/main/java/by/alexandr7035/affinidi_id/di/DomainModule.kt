@@ -1,10 +1,7 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.*
-import by.alexandr7035.affinidi_id.domain.usecase.credentials.DeleteCredentialUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetAvailableVcTypesUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.credentials.IssueCredentialUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.*
 import by.alexandr7035.affinidi_id.domain.usecase.user.*
 import dagger.Module
 import dagger.Provides
@@ -93,6 +90,11 @@ object DomainModule {
     @Provides
     fun provideAuthCheckUseCase(authCheckRepository: AuthCheckRepository, getAuthStateUseCase: GetAuthStateUseCase): AuthCheckUseCase {
         return AuthCheckUseCase(authCheckRepository, getAuthStateUseCase)
+    }
+
+    @Provides
+    fun provideGetCredentialDetailsUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialDetailsUseCase {
+        return GetCredentialDetailsUseCase(credentialsRepository, authStateUseCase)
     }
 
 }

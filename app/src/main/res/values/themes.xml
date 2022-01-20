@@ -307,4 +307,16 @@
         <item name="android:textColor">@color/gray_500</item>
     </style>
 
+    <style name="CredentialDetailsFieldType">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="CredentialDetailFieldValue">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+
 </resources>

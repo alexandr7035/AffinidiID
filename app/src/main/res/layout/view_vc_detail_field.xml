@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="@dimen/vc_field_spacing"
+    app:layout_goneMarginBottom="8dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/CredentialDetailsFieldType"
+        android:id="@+id/typeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="First name"/>
+
+    <TextView
+        android:id="@+id/valueView"
+        style="@style/CredentialDetailFieldValue"
+        android:layout_marginStart="@dimen/vc_field_value_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Name"/>
+
+</LinearLayout>

@@ -81,5 +81,10 @@
     <string name="error_occurred">An error occurred</string>
     <string name="eror_auth">Your access token has expired. Please, sign in again.</string>
     <string name="credential_info">Credential info</string>
+    <string name="credential_id">Credential ID</string>
+    <string name="holder_did">Holder DID</string>
+    <string name="issuer_did">Issuer DID</string>
+    <string name="expiration_date">Expiration date</string>
+    <string name="issuance_date">Issuance date</string>
 
 </resources>

@@ -49,4 +49,6 @@
     <dimen name="available_credential_item_corners">16dp</dimen>
     <dimen name="vc_field_value_margin">8dp</dimen>
     <dimen name="vc_field_spacing">4dp</dimen>
+
+    <dimen name="vc_details_spacing_size">24dp</dimen>
 </resources>
