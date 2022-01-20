@@ -72,8 +72,14 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
 
         viewModel.getCredentialsLiveData().observe(viewLifecycleOwner, {
             binding.progressView.root.isVisible = false
+            Timber.debug("UPDATE LIST")
 
             when (it) {
+                is CredentialListUiModel.Loading -> {
+                    Timber.debug("catch loading")
+                    binding.progressView.root.isVisible = true
+                }
+
                 is CredentialListUiModel.Success -> {
                     binding.recycler.isVisible = true
                     adapter.setItems(it.credentials)
@@ -111,7 +117,6 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
 
     private fun loadData() {
         binding.errorView.root.isVisible = false
-        binding.progressView.root.isVisible = true
         viewModel.load()
     }
 

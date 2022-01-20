@@ -2,6 +2,7 @@ package by.alexandr7035.affinidi_id.di
 
 import android.app.Application
 import android.content.Context
+import androidx.room.Room
 import by.alexandr7035.data.network.interceptors.AuthInterceptor
 import by.alexandr7035.data.network.interceptors.ErrorInterceptor
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
@@ -16,6 +17,10 @@ import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCaster
 import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCasterImpl
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
+import by.alexandr7035.data.local_storage.CacheDatabase
+import by.alexandr7035.data.local_storage.credentials.CredentialsCacheDataSource
+import by.alexandr7035.data.local_storage.credentials.CredentialsCacheDataSourceImpl
+import by.alexandr7035.data.local_storage.credentials.CredentialsDAO
 import by.alexandr7035.data.network.api.CredentialsApiService
 import by.alexandr7035.data.repository.*
 import by.alexandr7035.data.local_storage.profile.ProfileStorage
@@ -143,8 +148,19 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCredentialsRepository(credentialsApiService: CredentialsApiService, vcIssuanceHelper: VCIssuanceHelper, credentialsCloudDataSource: CredentialsCloudDataSource): CredentialsRepository {
-        return CredentialsRepositoryImpl(credentialsApiService, vcIssuanceHelper, credentialsCloudDataSource)
+    fun provideCredentialsCacheDataSource(credentialsDAO: CredentialsDAO): CredentialsCacheDataSource {
+        return CredentialsCacheDataSourceImpl(credentialsDAO)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCredentialsRepository(
+        credentialsApiService: CredentialsApiService,
+        vcIssuanceHelper: VCIssuanceHelper,
+        credentialsCloudDataSource: CredentialsCloudDataSource,
+        credentialsCacheDataSource: CredentialsCacheDataSource
+    ): CredentialsRepository {
+        return CredentialsRepositoryImpl(credentialsApiService, vcIssuanceHelper, credentialsCloudDataSource, credentialsCacheDataSource)
     }
 
 
@@ -170,5 +186,20 @@ object DataModule {
     @Singleton
     fun provideGson(): Gson {
         return Gson()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCredentialsDAO(database: CacheDatabase): CredentialsDAO {
+        return database.getCredentialsDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): CacheDatabase {
+        return Room
+            .databaseBuilder(context, CacheDatabase::class.java, "cache.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

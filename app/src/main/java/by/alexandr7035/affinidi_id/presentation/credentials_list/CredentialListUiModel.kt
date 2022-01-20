@@ -6,4 +6,6 @@ abstract class CredentialListUiModel {
     class Success(val credentials: List<CredentialItemUiModel>): CredentialListUiModel()
 
     class Fail(val errorType: ErrorType): CredentialListUiModel()
+
+    class Loading(): CredentialListUiModel()
 }

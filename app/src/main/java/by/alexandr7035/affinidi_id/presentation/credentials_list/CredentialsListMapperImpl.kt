@@ -85,6 +85,11 @@ class CredentialsListMapperImpl @Inject constructor(private val resourceProvider
             is CredentialsListResModel.Fail -> {
                 CredentialListUiModel.Fail(domainCredentials.errorType)
             }
+
+            is CredentialsListResModel.Loading -> {
+                CredentialListUiModel.Loading()
+            }
+
             else -> {
                 throw RuntimeException("Unknown model type")
             }
