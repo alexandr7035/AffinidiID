@@ -4,4 +4,8 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.C
 
 interface CredentialsCacheDataSource {
     suspend fun getCredentialsFromCache(): CredentialsListResModel
+
+    suspend fun saveCredentialsToCache(credentials: CredentialsListResModel)
+
+    suspend fun clearCredentialsCache()
 }

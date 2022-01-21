@@ -30,6 +30,9 @@ class CredentialSubjectCasterImpl @Inject constructor(private val gson: Gson): C
         }
     }
 
+    override fun credentialSubjectToJson(credentialSubject: CredentialSubject): String {
+        return gson.toJson(credentialSubject, CredentialSubject::class.java)
+    }
 
     // Specify all the supported VC types here
     companion object {

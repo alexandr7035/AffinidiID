@@ -6,4 +6,6 @@ import com.google.gson.JsonObject
 
 interface CredentialSubjectCaster {
     fun castToCredentialSubject(credentialType: String, credentialSubject: JsonObject): CredentialSubject
+
+    fun credentialSubjectToJson(credentialSubject: CredentialSubject): String
 }

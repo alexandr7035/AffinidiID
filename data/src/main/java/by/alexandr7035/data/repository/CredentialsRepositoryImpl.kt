@@ -9,6 +9,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.C
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
+import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
 import by.alexandr7035.data.local_storage.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.network.CredentialsCloudDataSource
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import javax.inject.Inject
 
 class CredentialsRepositoryImpl @Inject constructor(
@@ -31,7 +33,6 @@ class CredentialsRepositoryImpl @Inject constructor(
         return flow {
             // Cache is always success even if empty list
             val cacheCredentials = credentialsCacheDataSource.getCredentialsFromCache() as CredentialsListResModel.Success
-            val cloudCredentials = credentialsCloudDataSource.getCredentialsFromCloud(authState)
 
             // Always try firstly return cache
             // If empty show loading UI
@@ -41,6 +42,9 @@ class CredentialsRepositoryImpl @Inject constructor(
             else {
                 emit(cacheCredentials)
             }
+
+            // Load from cloud
+            val cloudCredentials = credentialsCloudDataSource.getCredentialsFromCloud(authState)
 
             // When cloud update fails return cache if not empty
             // Otherwise return error
@@ -52,8 +56,10 @@ class CredentialsRepositoryImpl @Inject constructor(
                     emit(cloudCredentials)
                 }
             }
-            // When success cloud update
+            // When success cloud update also save to cache
             else {
+                credentialsCacheDataSource.clearCredentialsCache()
+                credentialsCacheDataSource.saveCredentialsToCache(cloudCredentials)
                 emit(cloudCredentials)
             }
         }.flowOn(Dispatchers.IO)

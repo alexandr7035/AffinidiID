@@ -3,12 +3,9 @@ package by.alexandr7035.affinidi_id.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import by.alexandr7035.data.network.interceptors.AuthInterceptor
-import by.alexandr7035.data.network.interceptors.ErrorInterceptor
+import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelperImpl
-import by.alexandr7035.affinidi_id.domain.repository.*
-import by.alexandr7035.data.network.api.UserApiService
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelperImpl
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
@@ -21,14 +18,17 @@ import by.alexandr7035.data.local_storage.CacheDatabase
 import by.alexandr7035.data.local_storage.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.local_storage.credentials.CredentialsCacheDataSourceImpl
 import by.alexandr7035.data.local_storage.credentials.CredentialsDAO
-import by.alexandr7035.data.network.api.CredentialsApiService
-import by.alexandr7035.data.repository.*
 import by.alexandr7035.data.local_storage.profile.ProfileStorage
 import by.alexandr7035.data.local_storage.profile.ProfileStorageImpl
 import by.alexandr7035.data.local_storage.secrets.SecretsStorage
 import by.alexandr7035.data.local_storage.secrets.SecretsStorageImpl
 import by.alexandr7035.data.network.CredentialsCloudDataSource
 import by.alexandr7035.data.network.CredentialsCloudDataSourceImpl
+import by.alexandr7035.data.network.api.CredentialsApiService
+import by.alexandr7035.data.network.api.UserApiService
+import by.alexandr7035.data.network.interceptors.AuthInterceptor
+import by.alexandr7035.data.network.interceptors.ErrorInterceptor
+import by.alexandr7035.data.repository.*
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -148,8 +148,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCredentialsCacheDataSource(credentialsDAO: CredentialsDAO): CredentialsCacheDataSource {
-        return CredentialsCacheDataSourceImpl(credentialsDAO)
+    fun provideCredentialsCacheDataSource(credentialsDAO: CredentialsDAO, credentialSubjectCaster: CredentialSubjectCaster): CredentialsCacheDataSource {
+        return CredentialsCacheDataSourceImpl(credentialsDAO, credentialSubjectCaster)
     }
 
     @Provides
