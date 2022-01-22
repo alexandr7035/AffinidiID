@@ -11,5 +11,6 @@ data class Credential(
     val issuerDid: String,
     val issuanceDate: Long,
     val expirationDate: Long?,
-    val credentialStatus: CredentialStatus
+    val credentialStatus: CredentialStatus,
+    val credentialProof: CredentialProof
 )

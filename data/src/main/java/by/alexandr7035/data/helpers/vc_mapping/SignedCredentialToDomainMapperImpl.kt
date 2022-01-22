@@ -4,6 +4,7 @@ import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringF
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialProof
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.data.model.SignedCredential
 import javax.inject.Inject
@@ -47,6 +48,15 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(private val credent
             }
         }
 
+        // Domain credential proof
+        val proof = CredentialProof(
+            type = signedCredential.proof.type,
+            creationDate = signedCredential.proof.creationDate,
+            verificationMethod = signedCredential.proof.verificationMethod,
+            proofPurpose = signedCredential.proof.proofPurpose,
+            jws = signedCredential.proof.jws
+        )
+
         return Credential(
             id = signedCredential.id,
             vcType = vcType,
@@ -55,7 +65,8 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(private val credent
             holderDid = signedCredential.holder.holderDid,
             issuerDid = signedCredential.issuerDid,
             credentialStatus = credentialStatus,
-            credentialSubject = domainCredentialSubject
+            credentialSubject = domainCredentialSubject,
+            credentialProof = proof
         )
     }
 
