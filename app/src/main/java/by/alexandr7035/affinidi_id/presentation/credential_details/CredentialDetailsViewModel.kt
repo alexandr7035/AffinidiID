@@ -34,6 +34,9 @@ class CredentialDetailsViewModel @Inject constructor(
                 val fieldsList = when (res) {
                     is GetCredentialByIdResModel.Success -> {
 
+                        // Cut DID after ";" (initial state, etc.)
+                        val formattedIssuerDid = res.credential.issuerDid.split(";").first()
+
                         listOf(
                             CredentialDataItem.Spacing(),
 
@@ -43,7 +46,7 @@ class CredentialDetailsViewModel @Inject constructor(
                             ),
                             CredentialDataItem.Field(
                                 name = resourceProvider.getString(R.string.issuer_did),
-                                value = res.credential.issuerDid
+                                value = formattedIssuerDid
                             ),
                             CredentialDataItem.Spacing(),
 
