@@ -10,5 +10,6 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.C
 data class CredentialEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val credentialId: String,
     val rawVc: String
 )

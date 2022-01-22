@@ -45,8 +45,7 @@ class CredentialsRepositoryImpl @Inject constructor(
             // If empty show loading UI
             if (cacheCredentials.signedCredentials.isEmpty()) {
                 emit(CredentialsListResModel.Loading())
-            }
-            else {
+            } else {
                 emit(CredentialsListResModel.Success(credentials = domainCache))
             }
 
@@ -59,13 +58,12 @@ class CredentialsRepositoryImpl @Inject constructor(
 
                 if (domainCache.isNotEmpty()) {
                     emit(CredentialsListResModel.Success(credentials = domainCache))
-                }
-                else {
+                } else {
                     emit(CredentialsListResModel.Fail(errorType = cloudCredentials.errorType))
                 }
             }
             // When success cloud update also save to cache
-            else if (cloudCredentials is DataCredentialsList.Success){
+            else if (cloudCredentials is DataCredentialsList.Success) {
                 credentialsCacheDataSource.clearCredentialsCache()
                 credentialsCacheDataSource.saveCredentialsToCache(cloudCredentials)
 
@@ -139,18 +137,41 @@ class CredentialsRepositoryImpl @Inject constructor(
 
     override suspend fun getCredentialById(getCredentialByIdReqModel: GetCredentialByIdReqModel, authState: AuthStateModel): Flow<GetCredentialByIdResModel> {
         return flow {
-            // TODO cache
+            // Show loading first
             emit(GetCredentialByIdResModel.Loading)
 
-            val cloudCredential = credentialsCloudDataSource.getCredentialByIdFromCloud(authState = authState, getCredentialByIdReq = getCredentialByIdReqModel)
+            // Try to get VC from cache firstly
+            // Presume that always success (as credentials list is always updated before)
+            val cacheCredential =
+                credentialsCacheDataSource.getCredentialByIdFromCache(getCredentialByIdReqModel.credentialId) as DataGetCredentialById.Success
+            val domainCachedVC = mapper.map(cacheCredential.credential)
+            emit(GetCredentialByIdResModel.Success(credential = domainCachedVC))
+
+            // Next try to update status from cloud
+            val cloudCredential = credentialsCloudDataSource.getCredentialByIdFromCloud(
+                authState = authState,
+                getCredentialByIdReq = getCredentialByIdReqModel
+            )
 
             when (cloudCredential) {
+                // When success, emit state and update in the db
                 is DataGetCredentialById.Success -> {
-                    val domainCredential = mapper.map(cloudCredential.credential)
-                    emit(GetCredentialByIdResModel.Success(domainCredential))
+                    val domainCloud = mapper.map(cloudCredential.credential)
+                    // TODO update in the db
+                    emit(GetCredentialByIdResModel.Success(domainCloud))
                 }
+                // When failed to get from network
                 is DataGetCredentialById.Fail -> {
-                    emit(GetCredentialByIdResModel.Fail(cloudCredential.errorType))
+                    // TODO handle credential not found (if was deleted in cloud)
+                    when (cloudCredential.errorType) {
+                        // When failed connection, return from cache
+                        ErrorType.FAILED_CONNECTION -> {
+                            emit(GetCredentialByIdResModel.Success(credential = domainCachedVC))
+                        }
+                        else -> {
+                            emit(GetCredentialByIdResModel.Fail(cloudCredential.errorType))
+                        }
+                    }
                 }
             }
         }

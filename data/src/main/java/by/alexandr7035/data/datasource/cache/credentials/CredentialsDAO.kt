@@ -10,6 +10,9 @@ interface CredentialsDAO {
     @Query("SELECT * FROM credentials")
     suspend fun getCredentials(): List<CredentialEntity>
 
+    @Query("SELECT * FROM credentials WHERE credentialId = (:credentialId)")
+    suspend fun getCredentialById(credentialId: String): CredentialEntity
+
     @Insert
     suspend fun saveCredentials(credentials: List<CredentialEntity>)
 
