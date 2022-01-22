@@ -11,10 +11,10 @@ import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
-import by.alexandr7035.data.local_storage.credentials.CredentialsCacheDataSource
+import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.model.DataCredentialsList
-import by.alexandr7035.data.network.CredentialsCloudDataSource
-import by.alexandr7035.data.network.api.CredentialsApiService
+import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
+import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
