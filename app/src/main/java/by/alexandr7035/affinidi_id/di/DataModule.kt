@@ -148,8 +148,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCredentialsCacheDataSource(credentialsDAO: CredentialsDAO, credentialSubjectCaster: CredentialSubjectCaster): CredentialsCacheDataSource {
-        return CredentialsCacheDataSourceImpl(credentialsDAO, credentialSubjectCaster)
+    fun provideCredentialsCacheDataSource(credentialsDAO: CredentialsDAO, gson: Gson): CredentialsCacheDataSource {
+        return CredentialsCacheDataSourceImpl(credentialsDAO, gson)
     }
 
     @Provides

@@ -10,12 +10,5 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.C
 data class CredentialEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val credentialId: String,
-    val vcType: VcType,
-    val credentialSubject: String,
-    val holderDid: String,
-    val issuerDid: String,
-    val issuanceDate: Long,
-    val expirationDate: Long?,
-    val credentialStatus: CredentialStatus
+    val rawVc: String
 )

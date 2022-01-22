@@ -1,16 +1,14 @@
 package by.alexandr7035.data.local_storage.credentials
 
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
-import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
-import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
-import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCaster
 import by.alexandr7035.data.model.DataCredentialsList
+import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
+import com.google.gson.Gson
 import javax.inject.Inject
 
 class CredentialsCacheDataSourceImpl @Inject constructor(
     private val credentialsDAO: CredentialsDAO,
-    private val credentialSubjectCaster: CredentialSubjectCaster,
-    ): CredentialsCacheDataSource {
+    private val gson: Gson
+) : CredentialsCacheDataSource {
     override suspend fun getCredentialsFromCache(): DataCredentialsList {
 
 //        val cachedCredentials = credentialsDAO.getCredentials().map {
@@ -32,23 +30,15 @@ class CredentialsCacheDataSourceImpl @Inject constructor(
     }
 
     override suspend fun saveCredentialsToCache(credentials: DataCredentialsList) {
+
         if (credentials is DataCredentialsList.Success) {
-//            val credentialsToSave = credentials.signedCredentials.map {
-//                CredentialEntity(
-//                    credentialId = it.id,
-//                    vcType = it.vcType,
-//                    holderDid = it.holderDid,
-//                    issuerDid = it.issuerDid,
-//                    credentialSubject = credentialSubjectCaster.credentialSubjectToJson(it.credentialSubject),
-//                    issuanceDate = it.issuanceDate,
-//                    expirationDate = it.expirationDate,
-//                    credentialStatus = it.credentialStatus
-//                )
-//            }
+            // Save raw JSONs to DB
+            val rawVCs = credentials.signedCredentials.map { signedVc ->
+                val json = gson.toJson(signedVc, SignedCredential::class.java)
+                CredentialEntity(rawVc = json)
+            }
 
-            val credentialsToSave = emptyList<CredentialEntity>()
-
-            credentialsDAO.saveCredentials(credentialsToSave)
+            credentialsDAO.saveCredentials(rawVCs)
         }
     }
 
