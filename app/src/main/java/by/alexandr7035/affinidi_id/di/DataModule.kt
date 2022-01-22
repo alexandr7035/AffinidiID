@@ -142,8 +142,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCredentialsCloudDataSource(credentialsApiService: CredentialsApiService, credentialToDomainMapper: SignedCredentialToDomainMapper): CredentialsCloudDataSource {
-        return CredentialsCloudDataSourceImpl(credentialsApiService, credentialToDomainMapper)
+    fun provideCredentialsCloudDataSource(credentialsApiService: CredentialsApiService): CredentialsCloudDataSource {
+        return CredentialsCloudDataSourceImpl(credentialsApiService)
     }
 
     @Provides

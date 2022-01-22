@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
@@ -20,6 +21,7 @@ class CredentialDetailsFragment : Fragment() {
 
     private val binding by viewBinding(FragmentCredentialDetailsBinding::bind)
     private val viewModel by viewModels<CredentialDetailsViewModel>()
+    private val safeArgs by navArgs<CredentialDetailsFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -43,11 +45,12 @@ class CredentialDetailsFragment : Fragment() {
             adapter.setItems(credentialFields)
         })
 
-        load()
+        // Load data
+        load(safeArgs.credentialId)
     }
 
-    private fun load() {
+    private fun load(credentialId: String) {
         binding.progressView.progressView.isVisible = true
-        viewModel.load()
+        viewModel.load(credentialId)
     }
 }

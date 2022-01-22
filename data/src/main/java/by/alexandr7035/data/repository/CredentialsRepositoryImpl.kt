@@ -6,6 +6,8 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcRe
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
@@ -15,6 +17,7 @@ import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSou
 import by.alexandr7035.data.model.DataCredentialsList
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
+import by.alexandr7035.data.model.DataGetCredentialById
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -131,6 +134,25 @@ class CredentialsRepositoryImpl @Inject constructor(
         catch (e: Exception) {
             e.printStackTrace()
             return DeleteVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+        }
+    }
+
+    override suspend fun getCredentialById(getCredentialByIdReqModel: GetCredentialByIdReqModel, authState: AuthStateModel): Flow<GetCredentialByIdResModel> {
+        return flow {
+            // TODO cache
+            emit(GetCredentialByIdResModel.Loading)
+
+            val cloudCredential = credentialsCloudDataSource.getCredentialByIdFromCloud(authState = authState, getCredentialByIdReq = getCredentialByIdReqModel)
+
+            when (cloudCredential) {
+                is DataGetCredentialById.Success -> {
+                    val domainCredential = mapper.map(cloudCredential.credential)
+                    emit(GetCredentialByIdResModel.Success(domainCredential))
+                }
+                is DataGetCredentialById.Fail -> {
+                    emit(GetCredentialByIdResModel.Fail(cloudCredential.errorType))
+                }
+            }
         }
     }
 
