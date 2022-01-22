@@ -158,9 +158,10 @@ object DataModule {
         credentialsApiService: CredentialsApiService,
         vcIssuanceHelper: VCIssuanceHelper,
         credentialsCloudDataSource: CredentialsCloudDataSource,
-        credentialsCacheDataSource: CredentialsCacheDataSource
+        credentialsCacheDataSource: CredentialsCacheDataSource,
+        credentialToDomainMapper: SignedCredentialToDomainMapper
     ): CredentialsRepository {
-        return CredentialsRepositoryImpl(credentialsApiService, vcIssuanceHelper, credentialsCloudDataSource, credentialsCacheDataSource)
+        return CredentialsRepositoryImpl(credentialsApiService, vcIssuanceHelper, credentialsCloudDataSource, credentialsCacheDataSource, credentialToDomainMapper)
     }
 
 
