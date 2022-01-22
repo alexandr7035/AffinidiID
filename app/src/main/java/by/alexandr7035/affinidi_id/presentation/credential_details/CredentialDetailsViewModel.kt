@@ -64,6 +64,9 @@ class CredentialDetailsViewModel @Inject constructor(
                             )
                         )
                     }
+                    is GetCredentialByIdResModel.Loading -> {
+                        listOf(CredentialDataItem.Loading())
+                    }
 
                     // FIXME loading and error
                     else -> {
