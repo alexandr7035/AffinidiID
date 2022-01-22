@@ -7,26 +7,15 @@ import javax.inject.Inject
 
 class CredentialsCacheDataSourceImpl @Inject constructor(
     private val credentialsDAO: CredentialsDAO,
-    private val gson: Gson
+    private val gson: Gson,
 ) : CredentialsCacheDataSource {
     override suspend fun getCredentialsFromCache(): DataCredentialsList {
+        // Map raw to signed credential
+        val signedCredentials = credentialsDAO.getCredentials().map { dbVc ->
+            gson.fromJson(dbVc.rawVc, SignedCredential::class.java)
+        }
 
-//        val cachedCredentials = credentialsDAO.getCredentials().map {
-//            // Return domain
-//            Credential(
-//                id = it.credentialId,
-//                vcType = it.vcType,
-//                holderDid = it.holderDid,
-//                issuerDid = it.issuerDid,
-//                // FIXME
-//                credentialSubject = EmailCredentialSubject("fixme@emil.com"),
-//                issuanceDate = it.issuanceDate,
-//                expirationDate = it.expirationDate,
-//                credentialStatus = it.credentialStatus
-//            )
-//        }
-
-        return DataCredentialsList.Success(signedCredentials = emptyList())
+        return DataCredentialsList.Success(signedCredentials = signedCredentials)
     }
 
     override suspend fun saveCredentialsToCache(credentials: DataCredentialsList) {
