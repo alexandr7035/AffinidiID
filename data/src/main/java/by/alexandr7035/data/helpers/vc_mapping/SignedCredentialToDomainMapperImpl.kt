@@ -3,16 +3,22 @@ package by.alexandr7035.data.helpers.vc_mapping
 import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringFormat
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.UnknownCredentialSubject
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
-import by.alexandr7035.data.model.credentials.signed_vc.SignedCredential
+import by.alexandr7035.data.model.SignedCredential
 import javax.inject.Inject
 
 // Cast credentials received from wallet to available domain types
 // TODO implement unknown credential type
 class SignedCredentialToDomainMapperImpl @Inject constructor(private val credentialSubjectCaster: CredentialSubjectCaster): SignedCredentialToDomainMapper {
     override fun map(signedCredential: SignedCredential): Credential {
+//
+//        val gson  = GsonBuilder().setPrettyPrinting().create()
+//        val json = gson.toJson(signedCredential, SignedCredential::class.java)
+//        Timber.debug("RAW VC $json")
+//
+//        val signedNew = gson.fromJson(json, SignedCredential::class.java)
+//        Timber.debug("RAW VC ${signedNew}")
 
         val expirationDate = signedCredential.expirationDate?.getUnixDateFromStringFormat(CREDENTIAL_DATE_FORMAT)
         val issuanceDate = signedCredential.issuanceDate.getUnixDateFromStringFormat(CREDENTIAL_DATE_FORMAT)

@@ -6,10 +6,10 @@ import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseMode
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.repository.RegistrationRepository
-import by.alexandr7035.data.network.api.UserApiService
+import by.alexandr7035.data.datasource.cloud.api.UserApiService
 import by.alexandr7035.data.core.AppError
-import by.alexandr7035.data.model.sign_up.*
-import by.alexandr7035.data.local_storage.secrets.SecretsStorage
+import by.alexandr7035.data.model.network.sign_up.*
+import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
 import javax.inject.Inject
 
 class RegistrationRepositoryImpl @Inject constructor(
