@@ -97,4 +97,9 @@ object DomainModule {
         return GetCredentialByIdUseCase(credentialsRepository, authStateUseCase)
     }
 
+    @Provides
+    fun provideVerifyCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): VerifyCredentialUseCase {
+        return VerifyCredentialUseCase(credentialsRepository, authStateUseCase)
+    }
+
 }

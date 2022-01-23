@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
+import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -77,12 +79,24 @@ class CredentialDetailsFragment : Fragment() {
             true
         }
 
-        // Load data
+        // Load credential data
         load(safeArgs.credentialId)
+
+        binding.verifyBtn.setOnClickListener {
+            viewModel.verifyCredential("")
+        }
+
+        viewModel.getVerificationLiveData().observe(viewLifecycleOwner, { verificationResult ->
+            binding.root.showSnackBar(
+                message = verificationResult.messageText,
+                snackBarLength = Snackbar.LENGTH_LONG,
+                isPositive = verificationResult.isValid
+            )
+        })
     }
 
     private fun load(credentialId: String) {
         binding.progressView.progressView.isVisible = true
-        viewModel.load(credentialId)
+        viewModel.loadCredential(credentialId)
     }
 }

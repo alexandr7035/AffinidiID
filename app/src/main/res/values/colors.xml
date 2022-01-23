@@ -15,4 +15,8 @@
 
     <color name="inactive_vc_mark">#EA5A5A</color>
     <color name="active_vc_mark">#8ADF8C</color>
+
+    <!-- TODO attrs to use with dark theme -->
+    <color name="snackbar_positive">#71E486</color>
+    <color name="snackbar_negative">#D96666</color>
 </resources>

@@ -8,7 +8,9 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcReqModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,11 +22,14 @@ import javax.inject.Inject
 @HiltViewModel
 class CredentialDetailsViewModel @Inject constructor(
     private val getCredentialByIdUseCase: GetCredentialByIdUseCase,
+    private val verifyCredentialUseCase: VerifyCredentialUseCase,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
-    private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
 
-    fun load(credentialId: String) {
+    private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
+    private val verificationLiveData = MutableLiveData<VerificationModelUi>()
+
+    fun loadCredential(credentialId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             // Get credential
             getCredentialByIdUseCase.execute(
@@ -84,8 +89,41 @@ class CredentialDetailsViewModel @Inject constructor(
         }
     }
 
+    fun verifyCredential(rawVc: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = verifyCredentialUseCase.execute(
+                VerifyVcReqModel(
+                    rawVc = rawVc
+                )
+            )
+
+            val uiVerificationModel = when (res.isValid) {
+                true -> {
+                    VerificationModelUi(
+                        isValid = res.isValid,
+                        messageText = resourceProvider.getString(R.string.vc_is_valid),
+                    )
+                }
+                false -> {
+                    VerificationModelUi(
+                        isValid = res.isValid,
+                        messageText = resourceProvider.getString(R.string.vc_is_not_valid),
+                    )
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                verificationLiveData.value = uiVerificationModel
+            }
+        }
+    }
+
     fun getCredentialLiveData(): LiveData<CredentialDetailsUiModel> {
         return credentialLiveData
+    }
+
+    fun getVerificationLiveData(): LiveData<VerificationModelUi> {
+        return verificationLiveData
     }
 
     companion object {
