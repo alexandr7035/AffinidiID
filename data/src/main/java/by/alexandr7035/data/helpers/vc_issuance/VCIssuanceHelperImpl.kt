@@ -26,7 +26,7 @@ class VCIssuanceHelperImpl @Inject constructor(
     override suspend fun buildUnsignedVC(issueCredentialReqModel: IssueCredentialReqModel): UnsignedCredential {
 
         val credentialSubject = credentialSubjectCaster.getCredentialSubjectFromCredentialSubjectData(
-            credentialType = issueCredentialReqModel.credentialType.typeName,
+            credentialContextUrl = issueCredentialReqModel.credentialType.jsonLdContextUrl,
             credentialSubjectData = issueCredentialReqModel.credentialType.credentialSubjectData
         )
 

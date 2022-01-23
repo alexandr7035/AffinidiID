@@ -10,7 +10,6 @@ import by.alexandr7035.data.model.SignedCredential
 import javax.inject.Inject
 
 // Cast credentials received from wallet to available domain types
-// TODO implement unknown credential type
 class SignedCredentialToDomainMapperImpl @Inject constructor(private val credentialSubjectCaster: CredentialSubjectCaster): SignedCredentialToDomainMapper {
     override fun map(signedCredential: SignedCredential): Credential {
 
@@ -27,10 +26,11 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(private val credent
             CredentialStatus.ACTIVE
         }
 
-        // Fist type will always be "VerifiableCredential"
-        // Get last type
-        val credentialType = signedCredential.type.last()
-        val domainCredentialSubjectData = credentialSubjectCaster.castToCredentialSubjectData(credentialType, signedCredential.credentialSubject)
+        // Fist type will ALWAYS be "https://www.w3.org/2018/credentials/v1"
+        // according to W3C spec
+        // Get last context url to detect VC type
+        val credentialContextUrl = signedCredential.context.last()
+        val domainCredentialSubjectData = credentialSubjectCaster.castToCredentialSubjectData(credentialContextUrl, signedCredential.credentialSubject)
 
         val vcType = when (domainCredentialSubjectData) {
             is EmailCredentialSubjectData -> {
