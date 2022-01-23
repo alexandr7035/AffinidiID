@@ -1,6 +1,5 @@
 package by.alexandr7035.data.model
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 
 data class SignedCredential(
@@ -13,7 +12,7 @@ data class SignedCredential(
     @SerializedName("holder")
     val holder: CredentialHolder,
     @SerializedName("credentialSubject")
-    val credentialSubject: JsonObject,
+    val credentialSubject: CredentialSubject,
     @SerializedName("issuanceDate")
     val issuanceDate: String,
     @SerializedName("expirationDate")

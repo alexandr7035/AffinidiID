@@ -3,7 +3,7 @@ package by.alexandr7035.affinidi_id.presentation.credentials_list
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
+import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.presentation.credentials_list.vc_fields_recycler.VCFieldItem
@@ -55,7 +55,7 @@ class CredentialsListMapperImpl @Inject constructor(private val resourceProvider
 
                     val vcFields = when (it.vcType) {
                         VcType.EMAIL_CREDENTIAL -> {
-                            val vcSubject = it.credentialSubject as EmailCredentialSubject
+                            val vcSubject = it.credentialSubjectData as EmailCredentialSubjectData
                             listOf(
                                 VCFieldItem(
                                     type = resourceProvider.getString(R.string.address),

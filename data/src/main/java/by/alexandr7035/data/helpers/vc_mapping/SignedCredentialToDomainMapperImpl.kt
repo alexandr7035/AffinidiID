@@ -2,7 +2,7 @@ package by.alexandr7035.data.helpers.vc_mapping
 
 import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringFormat
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubject
+import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialProof
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
@@ -13,13 +13,6 @@ import javax.inject.Inject
 // TODO implement unknown credential type
 class SignedCredentialToDomainMapperImpl @Inject constructor(private val credentialSubjectCaster: CredentialSubjectCaster): SignedCredentialToDomainMapper {
     override fun map(signedCredential: SignedCredential): Credential {
-//
-//        val gson  = GsonBuilder().setPrettyPrinting().create()
-//        val json = gson.toJson(signedCredential, SignedCredential::class.java)
-//        Timber.debug("RAW VC $json")
-//
-//        val signedNew = gson.fromJson(json, SignedCredential::class.java)
-//        Timber.debug("RAW VC ${signedNew}")
 
         val expirationDate = signedCredential.expirationDate?.getUnixDateFromStringFormat(CREDENTIAL_DATE_FORMAT)
         val issuanceDate = signedCredential.issuanceDate.getUnixDateFromStringFormat(CREDENTIAL_DATE_FORMAT)
@@ -37,10 +30,10 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(private val credent
         // Fist type will always be "VerifiableCredential"
         // Get last type
         val credentialType = signedCredential.type.last()
-        val domainCredentialSubject = credentialSubjectCaster.castToCredentialSubject(credentialType, signedCredential.credentialSubject)
+        val domainCredentialSubjectData = credentialSubjectCaster.castToCredentialSubjectData(credentialType, signedCredential.credentialSubject)
 
-        val vcType = when (domainCredentialSubject) {
-            is EmailCredentialSubject -> {
+        val vcType = when (domainCredentialSubjectData) {
+            is EmailCredentialSubjectData -> {
                 VcType.EMAIL_CREDENTIAL
             }
             else -> {
@@ -65,7 +58,7 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(private val credent
             holderDid = signedCredential.holder.holderDid,
             issuerDid = signedCredential.issuerDid,
             credentialStatus = credentialStatus,
-            credentialSubject = domainCredentialSubject,
+            credentialSubjectData = domainCredentialSubjectData,
             credentialProof = proof
         )
     }

@@ -1,5 +1,3 @@
 package by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject
 
-import java.io.Serializable
-
-abstract class CredentialSubject(): Serializable
+class UnknownCredentialSubjectData: CredentialSubjectData()

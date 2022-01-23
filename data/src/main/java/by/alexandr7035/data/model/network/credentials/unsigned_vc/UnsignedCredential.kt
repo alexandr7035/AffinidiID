@@ -1,7 +1,7 @@
 package by.alexandr7035.data.model.network.credentials.unsigned_vc
 
 import by.alexandr7035.data.model.CredentialHolder
-import com.google.gson.JsonObject
+import by.alexandr7035.data.model.CredentialSubject
 import com.google.gson.annotations.SerializedName
 
 data class UnsignedCredential(
@@ -17,7 +17,7 @@ data class UnsignedCredential(
     // required domain CredentialSubject model
     // depending on credentialType
     @SerializedName("credentialSubject")
-    val credentialSubject: JsonObject,
+    val credentialSubject: CredentialSubject,
     @SerializedName("issuanceDate")
     val issuanceDate: String,
     @SerializedName("expirationDate")

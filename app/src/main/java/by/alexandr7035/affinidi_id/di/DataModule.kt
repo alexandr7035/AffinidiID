@@ -136,8 +136,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideVCIssuanceHelper(credentialsApiService: CredentialsApiService): VCIssuanceHelper {
-        return VCIssuanceHelperImpl(credentialsApiService)
+    fun provideVCIssuanceHelper(credentialsApiService: CredentialsApiService, credentialSubjectCaster: CredentialSubjectCaster): VCIssuanceHelper {
+        return VCIssuanceHelperImpl(credentialsApiService, credentialSubjectCaster)
     }
 
     @Provides
