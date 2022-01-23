@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,10 +40,28 @@ class CredentialDetailsFragment : Fragment() {
         binding.recycler.adapter = adapter
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.getCredentialLiveData().observe(viewLifecycleOwner, { credentialFields ->
+        viewModel.getCredentialLiveData().observe(viewLifecycleOwner, { credentialData ->
             binding.progressView.root.isVisible = false
 
-            adapter.setItems(credentialFields)
+            when (credentialData) {
+                is CredentialDetailsUiModel.Success -> {
+                    adapter.setItems(credentialData.detailsItems)
+                }
+
+                is CredentialDetailsUiModel.Loading -> {
+                    binding.progressView.root.isVisible = true
+                }
+
+                is CredentialDetailsUiModel.Fail -> {
+                    // Show unknown error always
+                    // Connection error is unlikely to be thrown as credential is already cached
+                    showErrorDialog(
+                        getString(R.string.error_unknown_title),
+                        getString(R.string.error_unknown)
+                    )
+                }
+            }
+
         })
 
         // Load data

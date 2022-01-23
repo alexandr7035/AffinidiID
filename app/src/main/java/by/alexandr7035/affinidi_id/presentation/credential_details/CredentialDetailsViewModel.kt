@@ -22,7 +22,7 @@ class CredentialDetailsViewModel @Inject constructor(
     private val getCredentialByIdUseCase: GetCredentialByIdUseCase,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
-    private val credentialLiveData = MutableLiveData<List<CredentialDataItem>>()
+    private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
 
     fun load(credentialId: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -37,7 +37,7 @@ class CredentialDetailsViewModel @Inject constructor(
                         // Cut DID after ";" (initial state, etc.)
                         val formattedIssuerDid = res.credential.issuerDid.split(";").first()
 
-                        listOf(
+                        val dataItems = listOf(
                             CredentialDataItem.Spacing(),
 
                             CredentialDataItem.Field(
@@ -48,7 +48,6 @@ class CredentialDetailsViewModel @Inject constructor(
                                 name = resourceProvider.getString(R.string.issuer_did),
                                 value = formattedIssuerDid
                             ),
-                            CredentialDataItem.Spacing(),
 
                             CredentialDataItem.Field(
                                 name = resourceProvider.getString(R.string.holder_did),
@@ -66,14 +65,15 @@ class CredentialDetailsViewModel @Inject constructor(
                                     ?: resourceProvider.getString(R.string.no_expiration)
                             )
                         )
+
+                        CredentialDetailsUiModel.Success(detailsItems = dataItems)
                     }
                     is GetCredentialByIdResModel.Loading -> {
-                        listOf(CredentialDataItem.Loading())
+                        CredentialDetailsUiModel.Loading
                     }
 
-                    // FIXME loading and error
-                    else -> {
-                        emptyList()
+                    is GetCredentialByIdResModel.Fail -> {
+                        CredentialDetailsUiModel.Fail(res.errorType)
                     }
                 }
 
@@ -84,7 +84,7 @@ class CredentialDetailsViewModel @Inject constructor(
         }
     }
 
-    fun getCredentialLiveData(): LiveData<List<CredentialDataItem>> {
+    fun getCredentialLiveData(): LiveData<CredentialDetailsUiModel> {
         return credentialLiveData
     }
 

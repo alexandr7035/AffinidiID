@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import by.alexandr7035.affinidi_id.databinding.LayoutProgressViewBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailFieldBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailSpacingBinding
 
@@ -27,9 +26,6 @@ class CredentialDataAdapter(): RecyclerView.Adapter<CredentialDataAdapter.DataIt
             is CredentialDataItem.Spacing -> {
                 SPACING_ITEM_TYPE
             }
-            is CredentialDataItem.Loading -> {
-                LOADING_ITEM_TYPE
-            }
             else -> {
                 throw RuntimeException("VC details: unknown viewType")
             }
@@ -41,10 +37,6 @@ class CredentialDataAdapter(): RecyclerView.Adapter<CredentialDataAdapter.DataIt
             FIELD_ITEM_TYPE -> {
                 val binding = ViewVcDetailFieldBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 DataItemViewHolder.FieldViewHolder(binding)
-            }
-            LOADING_ITEM_TYPE -> {
-                val binding = LayoutProgressViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                DataItemViewHolder.LoadingViewHolder(binding)
             }
             else -> {
                 val binding = ViewVcDetailSpacingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -78,17 +70,10 @@ class CredentialDataAdapter(): RecyclerView.Adapter<CredentialDataAdapter.DataIt
 
             }
         }
-
-        class LoadingViewHolder(override val binding: LayoutProgressViewBinding): DataItemViewHolder(binding) {
-            override fun bind(dataItem: CredentialDataItem) {
-
-            }
-        }
     }
 
     companion object {
         private const val FIELD_ITEM_TYPE = 1
         private const val SPACING_ITEM_TYPE = 2
-        private const val LOADING_ITEM_TYPE = 3
     }
 }

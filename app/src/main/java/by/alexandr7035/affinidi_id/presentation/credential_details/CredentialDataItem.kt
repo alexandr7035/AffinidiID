@@ -9,8 +9,4 @@ abstract class CredentialDataItem {
     ): CredentialDataItem()
 
     class Spacing(): CredentialDataItem()
-
-    class Fail(): CredentialDataItem()
-
-    class Loading(): CredentialDataItem()
 }
