@@ -5,6 +5,8 @@ import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsList
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapperImpl
+import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
+import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapperImpl
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProviderImpl
 import dagger.Module
@@ -23,8 +25,17 @@ object PresentationModule {
     }
 
     @Provides
-    fun provideCredentialsListMapper(resourceProvider: ResourceProvider, credentialStatusMapper: CredentialStatusMapper): CredentialsListMapper {
-        return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper)
+    fun provideCredentialsListMapper(
+        resourceProvider: ResourceProvider,
+        credentialStatusMapper: CredentialStatusMapper,
+        credentialTypeMapper: CredentialTypeMapper
+    ): CredentialsListMapper {
+        return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper, credentialTypeMapper)
+    }
+
+    @Provides
+    fun provideCredentialTypeMapper(resourceProvider: ResourceProvider): CredentialTypeMapper {
+        return CredentialTypeMapperImpl(resourceProvider)
     }
 
     @Provides

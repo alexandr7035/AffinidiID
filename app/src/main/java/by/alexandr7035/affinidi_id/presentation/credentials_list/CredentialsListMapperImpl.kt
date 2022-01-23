@@ -4,16 +4,17 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
-import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.presentation.credentials_list.vc_fields_recycler.VCFieldItem
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
+import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import javax.inject.Inject
 
 class CredentialsListMapperImpl @Inject constructor(
     private val resourceProvider: ResourceProvider,
-    private val credentialStatusMapper: CredentialStatusMapper
+    private val credentialStatusMapper: CredentialStatusMapper,
+    private val credentialTypeMapper: CredentialTypeMapper
 ) : CredentialsListMapper {
 
     override fun map(domainCredentials: CredentialsListResModel): CredentialListUiModel {
@@ -23,24 +24,16 @@ class CredentialsListMapperImpl @Inject constructor(
                 val uiCredentials: List<CredentialItemUiModel> = domainCredentials.credentials.map {
 
                     val textExpirationDate =
-                        it.expirationDate?.getStringDateFromLong("dd.MM.YYYY HH:mm") ?: resourceProvider.getString(
+                        it.expirationDate?.getStringDateFromLong(CARD_EXPIRATION_DATE_FORMAT) ?: resourceProvider.getString(
                             R.string.no_expiration
                         )
 
                     // To use different viewtype in recycler
                     val isUnknownVcType = it.vcType == VcType.UNKNOWN_CREDENTIAL
 
-                    // To show different labels and colors fof VC statuses
+                    // Map domain fields to UI
                     val credentialStatus = credentialStatusMapper.map(it.credentialStatus)
-
-                    val credentialType = when (it.vcType) {
-                        VcType.EMAIL_CREDENTIAL -> {
-                            resourceProvider.getString(R.string.vc_type_email)
-                        }
-                        else -> {
-                            resourceProvider.getString(R.string.vc_type_unknown)
-                        }
-                    }
+                    val credentialType = credentialTypeMapper.map(vcType = it.vcType)
 
                     val vcFields = when (it.vcType) {
                         VcType.EMAIL_CREDENTIAL -> {
@@ -82,5 +75,9 @@ class CredentialsListMapperImpl @Inject constructor(
                 throw RuntimeException("Unknown model type")
             }
         }
+    }
+
+    companion object {
+        private const val CARD_EXPIRATION_DATE_FORMAT = "dd.MM.YYYY HH:mm"
     }
 }
