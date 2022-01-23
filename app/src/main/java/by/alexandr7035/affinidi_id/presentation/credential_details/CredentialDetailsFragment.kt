@@ -14,6 +14,7 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
+import by.alexandr7035.affinidi_id.core.extensions.vibrate
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -101,6 +102,9 @@ class CredentialDetailsFragment : Fragment() {
                         snackBarLength = Snackbar.LENGTH_LONG,
                         isPositive = verificationResult.isValid
                     )
+
+                    // TODO int resource
+                    requireContext().vibrate(vibrationTimeMills = 200)
                 }
 
                 is VerificationModelUi.Fail -> {
