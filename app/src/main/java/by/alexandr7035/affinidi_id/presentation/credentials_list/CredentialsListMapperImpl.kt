@@ -7,10 +7,14 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_su
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.presentation.credentials_list.vc_fields_recycler.VCFieldItem
+import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import javax.inject.Inject
 
-class CredentialsListMapperImpl @Inject constructor(private val resourceProvider: ResourceProvider): CredentialsListMapper {
+class CredentialsListMapperImpl @Inject constructor(
+    private val resourceProvider: ResourceProvider,
+    private val credentialStatusMapper: CredentialStatusMapper
+) : CredentialsListMapper {
 
     override fun map(domainCredentials: CredentialsListResModel): CredentialListUiModel {
         return when (domainCredentials) {
@@ -26,23 +30,8 @@ class CredentialsListMapperImpl @Inject constructor(private val resourceProvider
                     // To use different viewtype in recycler
                     val isUnknownVcType = it.vcType == VcType.UNKNOWN_CREDENTIAL
 
-                    val credentialStatusText = when (it.credentialStatus) {
-                        CredentialStatus.ACTIVE -> {
-                            resourceProvider.getString(R.string.active)
-                        }
-                        CredentialStatus.EXPIRED -> {
-                            resourceProvider.getString(R.string.expired)
-                        }
-                    }
-
-                    val statusMarkColor = when (it.credentialStatus) {
-                        CredentialStatus.ACTIVE -> {
-                            resourceProvider.getColor(R.color.active_vc_mark)
-                        }
-                        CredentialStatus.EXPIRED -> {
-                            resourceProvider.getColor(R.color.inactive_vc_mark)
-                        }
-                    }
+                    // To show different labels and colors fof VC statuses
+                    val credentialStatus = credentialStatusMapper.map(it.credentialStatus)
 
                     val credentialType = when (it.vcType) {
                         VcType.EMAIL_CREDENTIAL -> {
@@ -72,8 +61,7 @@ class CredentialsListMapperImpl @Inject constructor(private val resourceProvider
                         id = it.id,
                         expirationDate = textExpirationDate,
                         credentialTypeString = credentialType,
-                        credentialStatus = credentialStatusText,
-                        statusMarkColor = statusMarkColor,
+                        credentialStatus = credentialStatus,
                         vcFields = vcFields,
                         isUnknownType = isUnknownVcType
                     )

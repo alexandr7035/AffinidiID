@@ -68,8 +68,8 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
                 binding.credentialId.text = item.id
                 binding.credentialTypeView.text = item.credentialTypeString
                 binding.credentialExpires.text = item.expirationDate
-                binding.statusLabel.text = item.credentialStatus
-                binding.statusMark.setColorFilter(item.statusMarkColor)
+                binding.statusLabel.text = item.credentialStatus.status
+                binding.statusMark.setColorFilter(item.credentialStatus.statusColor)
                 binding.fieldsRecycler.adapter = VCFieldsAdapter(item.vcFields)
                 binding.fieldsRecycler.suppressLayout(true)
 
@@ -84,8 +84,8 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
                 binding.credentialId.text = item.id
                 binding.credentialTypeView.text = item.credentialTypeString
                 binding.credentialExpires.text = item.expirationDate
-                binding.statusLabel.text = item.credentialStatus
-                binding.statusMark.setColorFilter(item.statusMarkColor)
+                binding.statusLabel.text = item.credentialStatus.status
+                binding.statusMark.setColorFilter(item.credentialStatus.statusColor)
 
                 binding.root.setOnClickListener {
                     credentialClickListener.onCredentialClicked(item.id)
