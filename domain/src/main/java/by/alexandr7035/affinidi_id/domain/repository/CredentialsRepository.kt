@@ -7,6 +7,8 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCreden
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +20,6 @@ interface CredentialsRepository {
     suspend fun deleteCredential(deleteVcReqModel: DeleteVcReqModel, authState: AuthStateModel): DeleteVcResModel
 
     suspend fun getCredentialById(getCredentialByIdReqModel: GetCredentialByIdReqModel, authState: AuthStateModel): Flow<GetCredentialByIdResModel>
+
+    suspend fun verifyCredential(verifyVcReqModel: VerifyVcReqModel): VerifyVcResModel
 }

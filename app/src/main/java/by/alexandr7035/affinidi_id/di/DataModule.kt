@@ -159,9 +159,17 @@ object DataModule {
         vcIssuanceHelper: VCIssuanceHelper,
         credentialsCloudDataSource: CredentialsCloudDataSource,
         credentialsCacheDataSource: CredentialsCacheDataSource,
-        credentialToDomainMapper: SignedCredentialToDomainMapper
+        credentialToDomainMapper: SignedCredentialToDomainMapper,
+        gson: Gson
     ): CredentialsRepository {
-        return CredentialsRepositoryImpl(credentialsApiService, vcIssuanceHelper, credentialsCloudDataSource, credentialsCacheDataSource, credentialToDomainMapper)
+        return CredentialsRepositoryImpl(
+            credentialsApiService,
+            vcIssuanceHelper,
+            credentialsCloudDataSource,
+            credentialsCacheDataSource,
+            credentialToDomainMapper,
+            gson
+        )
     }
 
 
@@ -173,8 +181,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideSignedCredentialToDomainMapper(credentialSubjectCaster: CredentialSubjectCaster): SignedCredentialToDomainMapper {
-        return SignedCredentialToDomainMapperImpl(credentialSubjectCaster)
+    fun provideSignedCredentialToDomainMapper(credentialSubjectCaster: CredentialSubjectCaster, gson: Gson): SignedCredentialToDomainMapper {
+        return SignedCredentialToDomainMapperImpl(credentialSubjectCaster, gson)
     }
 
     @Provides

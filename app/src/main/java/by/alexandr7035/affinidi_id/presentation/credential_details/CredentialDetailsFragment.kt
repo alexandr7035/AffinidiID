@@ -15,6 +15,7 @@ import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +49,13 @@ class CredentialDetailsFragment : Fragment() {
 
             when (credentialData) {
                 is CredentialDetailsUiModel.Success -> {
+                    // Set fields list
                     adapter.setItems(credentialData.detailsItems)
+
+                    binding.verifyBtn.setOnClickListener {
+                        binding.progressView.root.isVisible = true
+                        viewModel.verifyCredential(credentialData.rawVcData)
+                    }
                 }
 
                 is CredentialDetailsUiModel.Loading -> {
@@ -70,9 +77,11 @@ class CredentialDetailsFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.delete_item -> {
-                    findNavController().navigateSafe(CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
-                        safeArgs.credentialId
-                    ))
+                    findNavController().navigateSafe(
+                        CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
+                            safeArgs.credentialId
+                        )
+                    )
                 }
             }
 
@@ -82,16 +91,35 @@ class CredentialDetailsFragment : Fragment() {
         // Load credential data
         load(safeArgs.credentialId)
 
-        binding.verifyBtn.setOnClickListener {
-            viewModel.verifyCredential("")
-        }
-
         viewModel.getVerificationLiveData().observe(viewLifecycleOwner, { verificationResult ->
-            binding.root.showSnackBar(
-                message = verificationResult.messageText,
-                snackBarLength = Snackbar.LENGTH_LONG,
-                isPositive = verificationResult.isValid
-            )
+            binding.progressView.root.isVisible = false
+
+            when (verificationResult) {
+                is VerificationModelUi.Success -> {
+                    binding.root.showSnackBar(
+                        message = verificationResult.messageText,
+                        snackBarLength = Snackbar.LENGTH_LONG,
+                        isPositive = verificationResult.isValid
+                    )
+                }
+
+                is VerificationModelUi.Fail -> {
+                    when (verificationResult.errorType) {
+                        ErrorType.FAILED_CONNECTION -> {
+                            showErrorDialog(
+                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_failed_connection)
+                            )
+                        }
+                        else -> {
+                            showErrorDialog(
+                                getString(R.string.error_unknown_title),
+                                getString(R.string.error_unknown)
+                            )
+                        }
+                    }
+                }
+            }
         })
     }
 

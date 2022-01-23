@@ -8,6 +8,8 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCreden
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
 import by.alexandr7035.data.core.AppError
@@ -18,6 +20,10 @@ import by.alexandr7035.data.model.DataCredentialsList
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import by.alexandr7035.data.model.DataGetCredentialById
+import by.alexandr7035.data.model.network.verify_vcs.VerifyVCsReq
+import by.alexandr7035.data.model.network.verify_vcs.VerifyVCsRes
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,7 +35,9 @@ class CredentialsRepositoryImpl @Inject constructor(
     private val vcIssuanceHelper: VCIssuanceHelper,
     private val credentialsCloudDataSource: CredentialsCloudDataSource,
     private val credentialsCacheDataSource: CredentialsCacheDataSource,
-    private val mapper: SignedCredentialToDomainMapper
+    private val mapper: SignedCredentialToDomainMapper,
+    // TODO move out
+    private val gson: Gson
 ) : CredentialsRepository {
 
     override suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel> {
@@ -135,7 +143,10 @@ class CredentialsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCredentialById(getCredentialByIdReqModel: GetCredentialByIdReqModel, authState: AuthStateModel): Flow<GetCredentialByIdResModel> {
+    override suspend fun getCredentialById(
+        getCredentialByIdReqModel: GetCredentialByIdReqModel,
+        authState: AuthStateModel
+    ): Flow<GetCredentialByIdResModel> {
         return flow {
             // Show loading first
             emit(GetCredentialByIdResModel.Loading)
@@ -174,6 +185,34 @@ class CredentialsRepositoryImpl @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    override suspend fun verifyCredential(verifyVcReqModel: VerifyVcReqModel): VerifyVcResModel {
+        try {
+            // Convert to json
+            val json = gson.fromJson(verifyVcReqModel.rawVc, JsonObject::class.java)
+
+            val res = apiService.verifyVCs(
+                // Verify single VC
+                VerifyVCsReq(credentials = listOf(json))
+            )
+
+            if (res.isSuccessful) {
+                val data = res.body() as VerifyVCsRes
+                return VerifyVcResModel.Success(isValid = data.isValid)
+            } else {
+                // This request returns 200 always but handle error just in case
+                return VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+            }
+
+        } catch (appError: AppError) {
+            return VerifyVcResModel.Fail(appError.errorType)
+        }
+        // Unknown exception
+        catch (e: Exception) {
+            e.printStackTrace()
+            return VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
     }
 

@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
+import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
@@ -27,7 +29,7 @@ class CredentialDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
-    private val verificationLiveData = MutableLiveData<VerificationModelUi>()
+    private val verificationLiveData = SingleLiveEvent<VerificationModelUi>()
 
     fun loadCredential(credentialId: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -71,7 +73,12 @@ class CredentialDetailsViewModel @Inject constructor(
                             )
                         )
 
-                        CredentialDetailsUiModel.Success(detailsItems = dataItems, credentialId = res.credential.id)
+                        CredentialDetailsUiModel.Success(
+                            detailsItems = dataItems,
+                            credentialId = res.credential.id,
+                            rawVcData = res.credential.rawVCData
+                        )
+
                     }
                     is GetCredentialByIdResModel.Loading -> {
                         CredentialDetailsUiModel.Loading
@@ -97,23 +104,34 @@ class CredentialDetailsViewModel @Inject constructor(
                 )
             )
 
-            val uiVerificationModel = when (res.isValid) {
-                true -> {
-                    VerificationModelUi(
-                        isValid = res.isValid,
-                        messageText = resourceProvider.getString(R.string.vc_is_valid),
-                    )
+            val verificationUiModel = when (res) {
+                is VerifyVcResModel.Success -> {
+                    val uiVerificationModel = when (res.isValid) {
+                        true -> {
+                            VerificationModelUi.Success(
+                                isValid = res.isValid,
+                                messageText = resourceProvider.getString(R.string.vc_is_valid),
+                            )
+                        }
+                        false -> {
+                            VerificationModelUi.Success(
+                                isValid = res.isValid,
+                                messageText = resourceProvider.getString(R.string.vc_is_not_valid),
+                            )
+                        }
+                    }
+
+                    uiVerificationModel
                 }
-                false -> {
-                    VerificationModelUi(
-                        isValid = res.isValid,
-                        messageText = resourceProvider.getString(R.string.vc_is_not_valid),
-                    )
+
+                is VerifyVcResModel.Fail -> {
+                    VerificationModelUi.Fail(errorType = res.errorType)
                 }
             }
 
+
             withContext(Dispatchers.Main) {
-                verificationLiveData.value = uiVerificationModel
+                verificationLiveData.value = verificationUiModel
             }
         }
     }
