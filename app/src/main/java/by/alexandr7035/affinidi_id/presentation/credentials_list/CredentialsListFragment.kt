@@ -1,18 +1,16 @@
 package by.alexandr7035.affinidi_id.presentation.credentials_list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
@@ -53,22 +51,6 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
             decoration.setDrawable(it)
         }
         binding.recycler.addItemDecoration(decoration)
-
-        // Swipe credential to delete
-        val swipeHandler = object: SwipeToDeleteCallback(requireContext()) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
-
-                findNavController().navigateSafe(CredentialsListFragmentDirections
-                    .actionCredentialsListFragmentToDeleteCredentialFragment(
-                        // FIXME not good
-                        // Use interface
-                        adapter.getItemByPosition((viewHolder as CredentialsAdapter.CredentialViewHolder).getViewHolderPosition()).id
-                    ))
-            }
-        }
-        val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(binding.recycler)
 
         viewModel.getCredentialsLiveData().observe(viewLifecycleOwner, {
             binding.progressView.root.isVisible = false

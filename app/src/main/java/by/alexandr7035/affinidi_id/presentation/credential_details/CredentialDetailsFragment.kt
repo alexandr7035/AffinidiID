@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -63,6 +64,18 @@ class CredentialDetailsFragment : Fragment() {
             }
 
         })
+
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.delete_item -> {
+                    findNavController().navigateSafe(CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
+                        safeArgs.credentialId
+                    ))
+                }
+            }
+
+            true
+        }
 
         // Load data
         load(safeArgs.credentialId)

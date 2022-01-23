@@ -66,7 +66,7 @@ class CredentialDetailsViewModel @Inject constructor(
                             )
                         )
 
-                        CredentialDetailsUiModel.Success(detailsItems = dataItems)
+                        CredentialDetailsUiModel.Success(detailsItems = dataItems, credentialId = res.credential.id)
                     }
                     is GetCredentialByIdResModel.Loading -> {
                         CredentialDetailsUiModel.Loading

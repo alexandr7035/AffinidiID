@@ -158,9 +158,6 @@
             android:id="@+id/action_credentialsListFragment_to_issueCredentialFragment"
             app:destination="@id/issueCredentialFragment" />
         <action
-            android:id="@+id/action_credentialsListFragment_to_deleteCredentialFragment"
-            app:destination="@id/deleteCredentialFragment" />
-        <action
             android:id="@+id/action_credentialsListFragment_to_credentialDetailsFragment"
             app:destination="@id/credentialDetailsFragment" />
     </fragment>
@@ -178,6 +175,11 @@
         <argument
             android:name="deleteVcId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_deleteCredentialFragment_to_credentialsListFragment"
+            app:destination="@id/credentialsListFragment"
+            app:popUpTo="@id/credentialsListFragment"
+            app:popUpToInclusive="true" />
     </dialog>
     <fragment
         android:id="@+id/credentialDetailsFragment"
@@ -187,6 +189,9 @@
         <argument
             android:name="credentialId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_credentialDetailsFragment_to_deleteCredentialFragment"
+            app:destination="@id/deleteCredentialFragment" />
     </fragment>
 
 </navigation>

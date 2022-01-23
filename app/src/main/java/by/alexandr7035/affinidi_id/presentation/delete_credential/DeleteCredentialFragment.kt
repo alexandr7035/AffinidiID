@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.databinding.FragmentDeleteCredentialBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
@@ -37,7 +38,8 @@ class DeleteCredentialFragment : BottomSheetDialogFragment() {
 
             when (result) {
                 is DeleteVcResModel.Success -> {
-                    findNavController().navigateUp()
+                    findNavController().navigateSafe(DeleteCredentialFragmentDirections
+                        .actionDeleteCredentialFragmentToCredentialsListFragment())
                 }
                 is DeleteVcResModel.Fail -> {
                     when (result.errorType) {
