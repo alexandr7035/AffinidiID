@@ -41,7 +41,9 @@ class ProfileFragment : Fragment() {
 
         viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
             binding.userNameView.text = profile.userName
-            binding.userDidView.text = profile.userDid
+            // TODO profile ui model
+            val formattedDid = profile.userDid.split(";").first()
+            binding.userDidView.text = formattedDid
 
             binding.profileImageView.load(
                 uri = profile.imageUrl,
