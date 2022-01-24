@@ -13,7 +13,7 @@
 <!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
         <item name="android:statusBarColor">@color/purple_500</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/gray_10</item>
         <item name="android:navigationBarColor">@color/black</item>
 
         <item name="toolbarNavigationButtonStyle">@style/ToolbarNavIconStyle</item>
@@ -127,13 +127,6 @@
         <item name="itemIconTint">@color/color_bottom_nav_icon</item>
         <item name="itemTextColor">@color/color_bottom_nav_icon</item>
         <item name="android:background">@drawable/background_bottom_navigation</item>
-    </style>
-
-    <style name="Toolbar">
-        <item name="background">@android:color/transparent</item>
-        <item name="titleTextColor">@color/gray_500</item>
-        <item name="contentInsetStart">@dimen/default_fragment_margin</item>
-        <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
     </style>
 
     <style name="FloatingActionButtonStyle">

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="auth_form_horizontal_margin">30dp</dimen>
-    <dimen name="primary_card_padding">16dp</dimen>
+    <dimen name="primary_card_padding">12dp</dimen>
     <dimen name="auth_field_corner_radius">12dp</dimen>
 
     <dimen name="primary_button_corner_radius">12dp</dimen>
     <dimen name="primary_button_height">48dp</dimen>
     <dimen name="primary_button_text_size">16sp</dimen>
-    <dimen name="primary_card_elevation">4dp</dimen>
 
     <dimen name="text_button_height">36dp</dimen>
     <dimen name="text_button_corner_radius">12dp</dimen>
@@ -56,4 +55,10 @@
     <dimen name="snackbar_padding_horizontal">20dp</dimen>
     <dimen name="snackbar_text">18sp</dimen>
     <dimen name="snackbar_margin">16dp</dimen>
+
+    <dimen name="primary_card_corners">16dp</dimen>
+    <dimen name="primary_card_title_spacing">8dp</dimen>
+    <dimen name="primary_card_elevation">12dp</dimen>
+
+    <dimen name="copy_btn_size">32dp</dimen>
 </resources>

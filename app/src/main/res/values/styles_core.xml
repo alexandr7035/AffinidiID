@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PrimaryCard">
+        <item name="android:padding">@dimen/primary_card_padding</item>
+        <item name="android:background">@drawable/bg_primary_card</item>
+        <item name="android:elevation">@dimen/primary_card_elevation</item>
+    </style>
+
+    <style name="PrimaryCardTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PrimaryCardText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="background">@android:color/transparent</item>
+        <item name="titleTextColor">@color/gray_500</item>
+        <item name="contentInsetStart">@dimen/default_fragment_margin</item>
+        <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
+    </style>
+</resources>
