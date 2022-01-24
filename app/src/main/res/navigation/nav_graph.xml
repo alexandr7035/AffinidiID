@@ -192,6 +192,19 @@
         <action
             android:id="@+id/action_credentialDetailsFragment_to_deleteCredentialFragment"
             app:destination="@id/deleteCredentialFragment" />
+        <action
+            android:id="@+id/action_credentialDetailsFragment_to_credentialRawFragment"
+            app:destination="@id/credentialRawFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/credentialRawFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.credential_raw.CredentialRawFragment"
+        android:label="CredentialRawFragment"
+        tools:layout="@layout/fragment_credential_raw">
+        <argument
+            android:name="rawCredential"
+            app:argType="string" />
     </fragment>
 
 </navigation>

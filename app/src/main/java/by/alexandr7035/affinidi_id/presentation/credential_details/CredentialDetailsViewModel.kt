@@ -14,6 +14,9 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcRe
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -73,10 +76,14 @@ class CredentialDetailsViewModel @Inject constructor(
                             )
                         )
 
+                        val gson = GsonBuilder().setPrettyPrinting().create()
+                        val json = gson.fromJson(res.credential.rawVCData, JsonObject::class.java)
+                        val prettyFormattedVC = gson.toJson(json, JsonObject::class.java)
+
                         CredentialDetailsUiModel.Success(
                             detailsItems = dataItems,
                             credentialId = res.credential.id,
-                            rawVcData = res.credential.rawVCData
+                            rawVcDataPrettyFormatted = prettyFormattedVC
                         )
 
                     }

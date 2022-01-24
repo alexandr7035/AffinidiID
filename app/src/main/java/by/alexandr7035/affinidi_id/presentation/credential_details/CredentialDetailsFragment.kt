@@ -55,8 +55,32 @@ class CredentialDetailsFragment : Fragment() {
 
                     binding.verifyBtn.setOnClickListener {
                         binding.progressView.root.isVisible = true
-                        viewModel.verifyCredential(credentialData.rawVcData)
+                        viewModel.verifyCredential(credentialData.rawVcDataPrettyFormatted)
                     }
+
+                    binding.toolbar.setOnMenuItemClickListener {
+                        when (it.itemId) {
+                            R.id.delete_item -> {
+                                // Dialog to delete VC
+                                findNavController().navigateSafe(
+                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
+                                        safeArgs.credentialId
+                                    )
+                                )
+                            }
+
+                            R.id.view_item -> {
+                                findNavController().navigateSafe(
+                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToCredentialRawFragment(
+                                        credentialData.rawVcDataPrettyFormatted
+                                    )
+                                )
+                            }
+                        }
+
+                        true
+                    }
+
                 }
 
                 is CredentialDetailsUiModel.Loading -> {
@@ -75,19 +99,6 @@ class CredentialDetailsFragment : Fragment() {
 
         })
 
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.delete_item -> {
-                    findNavController().navigateSafe(
-                        CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
-                            safeArgs.credentialId
-                        )
-                    )
-                }
-            }
-
-            true
-        }
 
         // Load credential data
         load(safeArgs.credentialId)
