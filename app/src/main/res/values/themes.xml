@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.AffinidiID" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimaryVariant">@color/blue_600</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/purple_500</item>
@@ -121,12 +121,6 @@
     <style name="DidField" parent="CopiabledField">
         <item name="android:maxLines">7</item>
         <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="BottomNavigationStyle">
-        <item name="itemIconTint">@color/color_bottom_nav_icon</item>
-        <item name="itemTextColor">@color/color_bottom_nav_icon</item>
-        <item name="android:background">@drawable/background_bottom_navigation</item>
     </style>
 
     <style name="FloatingActionButtonStyle">
