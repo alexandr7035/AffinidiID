@@ -90,5 +90,6 @@
     <string name="vc_is_valid">VC is valid</string>
     <string name="vc_is_not_valid">VC is NOT valid</string>
     <string name="view_json">View JSON</string>
+    <string name="credential_metadata">Credential metadata</string>
 
 </resources>

@@ -48,7 +48,6 @@ class CredentialDetailsViewModel @Inject constructor(
                         val formattedIssuerDid = res.credential.issuerDid.split(";").first()
 
                         val dataItems = listOf(
-                            CredentialDataItem.Spacing(),
 
                             CredentialDataItem.Field(
                                 name = resourceProvider.getString(R.string.credential_id),
