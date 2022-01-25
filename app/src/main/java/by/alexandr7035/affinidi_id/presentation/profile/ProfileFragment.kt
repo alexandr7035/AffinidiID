@@ -67,16 +67,5 @@ class ProfileFragment : Fragment() {
             Toast.makeText(requireContext(), clipLabel, Toast.LENGTH_LONG).show()
         }
 
-        binding.toolbar.setOnMenuItemClickListener {
-
-            when (it.itemId) {
-                R.id.logoutItem -> {
-                    findNavController().navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLogoutFragment())
-                }
-            }
-
-            true
-        }
-
     }
 }
