@@ -10,11 +10,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.ActivityMainBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
 import by.alexandr7035.affinidi_id.presentation.login.LoginFragmentDirections
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                         // Stay on login fragment and show messag
                         ErrorType.AUTHORIZATION_ERROR -> {
                             // TODO logics with saved password here
-                            showToast(getString(R.string.eror_auth))
+                            binding.root.showSnackBar(getString(R.string.eror_auth), isPositive = false, Snackbar.LENGTH_LONG)
                         }
 
                         // No connection with the internet
