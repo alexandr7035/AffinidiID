@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Elevation to show the view on the top of views with elevation
+        Clickable to prevent clicks on views below -->
+    <style name="ProgressFrameLayout">
+        <item name="android:background">@color/white_transp_50</item>
+        <item name="android:elevation">@dimen/primary_card_elevation</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+    <style name="ProgressBar">
+        <item name="android:indeterminateTint">?attr/colorSecondary</item>
+        <item name="android:layout_width">@dimen/progress_bar_size</item>
+        <item name="android:layout_height">56dp</item>
+    </style>
+</resources>

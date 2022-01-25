@@ -60,22 +60,6 @@
         <item name="android:textColor">@color/gray_500</item>
     </style>
 
-    <!--    Elevation to show the view on the top of views with elevation
-            Clickable to prevent clicks on views below -->
-    <style name="ProgressFrameLayout">
-        <item name="android:background">#70FFFFFF</item>
-        <item name="android:elevation">@dimen/primary_card_elevation</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">false</item>
-    </style>
-
-    <style name="ProgressBar">
-        <item name="android:indeterminateTint">@color/purple_500</item>
-        <item name="android:layout_width">56dp</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:padding">@dimen/primary_card_elevation</item>
-    </style>
-
     <style name="CardHeaderText">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>

@@ -65,5 +65,6 @@
     <dimen name="profile_image_small_size">36dp</dimen>
     <dimen name="profile_image_large_size">120dp</dimen>
     <dimen name="profile_image_large_bg_padding">12dp</dimen>
+    <dimen name="progress_bar_size">56dp</dimen>
 
 </resources>
