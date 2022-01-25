@@ -49,11 +49,6 @@ class ProfileFragment : Fragment() {
                 uri = profile.imageUrl,
                 imageLoader = imageLoader
             )
-
-            binding.profileImageView.setOnClickListener {
-                findNavController().navigateSafe(ProfileFragmentDirections
-                    .actionProfileFragmentToMainMenuFragment())
-            }
         })
 
         viewModel.init()

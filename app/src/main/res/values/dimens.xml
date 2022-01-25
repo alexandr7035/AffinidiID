@@ -61,4 +61,9 @@
     <dimen name="primary_card_elevation">12dp</dimen>
 
     <dimen name="copy_btn_size">32dp</dimen>
+
+    <dimen name="profile_image_small_size">36dp</dimen>
+    <dimen name="profile_image_large_size">120dp</dimen>
+    <dimen name="profile_image_large_bg_padding">12dp</dimen>
+
 </resources>

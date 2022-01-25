@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/ToolbarWithBackNav"
+        style="@style/Toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:title="@string/menu"
@@ -18,10 +18,9 @@
 
     <ImageView
         android:id="@+id/profileImageView"
+        style="@style/ProfileImageLarge"
         android:contentDescription="@string/cd_profile_image"
         android:layout_marginTop="@dimen/default_fragment_margin"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +30,9 @@
         android:id="@+id/recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:overScrollMode="never"
+        tools:listitem="@layout/view_primary_menu_item"
+        tools:itemCount="3"
         android:layout_marginTop="@dimen/default_fragment_margin"
         android:padding="@dimen/default_fragment_margin"
         app:layout_constraintBottom_toTopOf="@id/appVersionView"

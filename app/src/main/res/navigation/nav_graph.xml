@@ -31,9 +31,6 @@
         <action
             android:id="@+id/action_profileFragment_to_logoutFragment"
             app:destination="@id/logoutFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_mainMenuFragment"
-            app:destination="@id/mainMenuFragment" />
     </fragment>
 
     <dialog
