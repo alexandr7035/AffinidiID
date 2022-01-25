@@ -82,8 +82,8 @@
     <string name="eror_auth">Your access token has expired. Please, sign in again.</string>
     <string name="credential_info">Credential info</string>
     <string name="credential_id">Credential ID</string>
-    <string name="holder_did">Holder DID</string>
-    <string name="issuer_did">Issuer DID</string>
+    <string name="holder">Holder</string>
+    <string name="issuer">Issuer</string>
     <string name="expiration_date">Expiration date</string>
     <string name="issuance_date">Issuance date</string>
     <string name="verify">Verify</string>
@@ -91,5 +91,11 @@
     <string name="vc_is_not_valid">VC is NOT valid</string>
     <string name="view_json">View JSON</string>
     <string name="credential_metadata">Credential metadata</string>
+    <string name="created">Create</string>
+    <string name="type">Type</string>
+    <string name="proof_purpose">Proof purpose</string>
+    <string name="verification_method">Verification method</string>
+    <string name="jws">JWS</string>
+    <string name="credential_proof">Credential Proof</string>
 
 </resources>

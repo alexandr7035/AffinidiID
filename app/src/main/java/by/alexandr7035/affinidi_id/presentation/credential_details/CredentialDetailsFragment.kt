@@ -41,17 +41,26 @@ class CredentialDetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val adapter = CredentialDataAdapter()
-        binding.recycler.adapter = adapter
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        val metadataAdapter = CredentialDataAdapter()
+        binding.metadataRecycler.adapter = metadataAdapter
+        binding.metadataRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        val proofAdapter = CredentialDataAdapter()
+        binding.proofRecycler.adapter = proofAdapter
+        binding.proofRecycler.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.getCredentialLiveData().observe(viewLifecycleOwner, { credentialData ->
             binding.progressView.root.isVisible = false
 
             when (credentialData) {
                 is CredentialDetailsUiModel.Success -> {
-                    // Set fields list
-                    adapter.setItems(credentialData.detailsItems)
+                    // Set fields to cards
+                    metadataAdapter.setItems(credentialData.metadataItems)
+                    proofAdapter.setItems(credentialData.proofItems)
+
+                    binding.credentialType.text = credentialData.credentialType
+                    binding.statusMark.setColorFilter(credentialData.credentialStatus.statusColor)
+                    binding.statusLabel.text = credentialData.credentialStatus.status
 
                     binding.verifyBtn.setOnClickListener {
                         binding.progressView.root.isVisible = true
