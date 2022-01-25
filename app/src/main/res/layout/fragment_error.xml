@@ -24,7 +24,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_fragment_margin"
-        android:layout_marginTop="524dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/closeBtn"
@@ -34,14 +33,14 @@
 
         <TextView
             android:id="@+id/errorTitle"
-            style="@style/ErrorAuthLabel"
+            style="@style/ErrorLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error_user_not_found" />
 
         <TextView
             android:id="@+id/errorMessage"
-            style="@style/TextViewExplanation"
+            style="@style/ErrorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
