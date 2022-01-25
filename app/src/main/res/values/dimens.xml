@@ -67,4 +67,8 @@
     <dimen name="profile_image_large_bg_padding">12dp</dimen>
     <dimen name="progress_bar_size">56dp</dimen>
 
+    <dimen name="input_form_label_text">20sp</dimen>
+    <dimen name="input_field_text">18sp</dimen>
+    <dimen name="input_field_padding_vertical">12dp</dimen>
+
 </resources>

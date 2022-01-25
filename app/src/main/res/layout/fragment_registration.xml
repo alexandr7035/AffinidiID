@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/signUpLabel"
-            style="@style/AuthLabel"
+            style="@style/InputFormLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userNameField"
-            style="@style/AuthFieldLayoutStyle"
+            style="@style/InputFieldLayout"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userNameEditText"
-                style="@style/AuthFieldEditTextStyle"
+                style="@style/InputFieldEditText"
                 android:inputType="textWebEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -59,7 +59,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordSetField"
-            style="@style/AuthFieldPasswordLayoutStyle"
+            style="@style/PasswordInputFieldLayout"
             android:layout_marginTop="8dp"
             android:hint="@string/set_password"
             android:layout_width="match_parent"
@@ -70,7 +70,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordSetEditText"
-                style="@style/AuthFieldEditTextStyle"
+                style="@style/InputFieldEditText"
                 android:inputType="textWebPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -79,7 +79,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordConfirmField"
-            style="@style/AuthFieldPasswordLayoutStyle"
+            style="@style/PasswordInputFieldLayout"
             android:layout_marginTop="4dp"
             android:hint="@string/confirm_password"
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordConfirmEditText"
-                style="@style/AuthFieldEditTextStyle"
+                style="@style/InputFieldEditText"
                 android:inputType="textWebPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

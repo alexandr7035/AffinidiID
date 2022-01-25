@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/confirmSignUpLabel"
-            style="@style/AuthLabel"
+            style="@style/InputFormLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirmationCodeField"
-            style="@style/AuthFieldLayoutStyle"
+            style="@style/InputFieldLayout"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmationCodeEditText"
-                style="@style/AuthFieldEditTextStyle"
+                style="@style/InputFieldEditText"
                 android:inputType="textWebEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
