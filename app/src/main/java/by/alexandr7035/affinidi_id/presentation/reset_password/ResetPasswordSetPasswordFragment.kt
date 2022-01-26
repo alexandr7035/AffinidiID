@@ -45,10 +45,7 @@ class ResetPasswordSetPasswordFragment : Fragment() {
         }
 
         binding.continueBtn.setOnClickListener {
-            binding.progressView.root.isVisible = true
-
             if (chekIfFormIsValid()) {
-                binding.progressView.root.isVisible = false
 
                 findNavController().navigateSafe(
                     ResetPasswordSetPasswordFragmentDirections
