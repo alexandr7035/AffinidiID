@@ -41,17 +41,14 @@ class ProfileFragment : Fragment() {
 
         viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
             binding.userNameView.text = profile.userName
-            binding.userDidView.text = profile.userDid
+            // TODO profile ui model
+            val formattedDid = profile.userDid.split(";").first()
+            binding.userDidView.text = formattedDid
 
             binding.profileImageView.load(
                 uri = profile.imageUrl,
                 imageLoader = imageLoader
             )
-
-            binding.profileImageView.setOnClickListener {
-                findNavController().navigateSafe(ProfileFragmentDirections
-                    .actionProfileFragmentToMainMenuFragment())
-            }
         })
 
         viewModel.init()
@@ -68,17 +65,6 @@ class ProfileFragment : Fragment() {
             binding.userDidView.copyToClipboard(clipLabel)
 
             Toast.makeText(requireContext(), clipLabel, Toast.LENGTH_LONG).show()
-        }
-
-        binding.toolbar.setOnMenuItemClickListener {
-
-            when (it.itemId) {
-                R.id.logoutItem -> {
-                    findNavController().navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLogoutFragment())
-                }
-            }
-
-            true
         }
 
     }

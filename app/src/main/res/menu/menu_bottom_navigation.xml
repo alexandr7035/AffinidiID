@@ -10,8 +10,8 @@
         android:icon="@drawable/ic_credential" />
 
     <item
-        android:enabled="false"
-        android:title="@string/contacts"
-        android:icon="@drawable/ic_contacts" />
+        android:id="@+id/mainMenuFragment"
+        android:title="@string/menu"
+        android:icon="@drawable/ic_menu" />
 
 </menu>

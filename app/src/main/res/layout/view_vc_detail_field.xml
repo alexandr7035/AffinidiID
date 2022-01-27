@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="@dimen/vc_field_spacing"
-    app:layout_goneMarginBottom="8dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
-        style="@style/CredentialDetailsFieldType"
+        style="@style/CredentialFieldType"
         android:id="@+id/typeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,14 +15,9 @@
 
     <TextView
         android:id="@+id/valueView"
-        style="@style/CredentialDetailFieldValue"
+        style="@style/CredentialFieldValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Name"/>
-
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_marginTop="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>

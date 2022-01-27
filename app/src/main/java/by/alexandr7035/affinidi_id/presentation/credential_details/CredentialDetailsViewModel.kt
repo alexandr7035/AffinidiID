@@ -13,8 +13,9 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcRe
 import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
+import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
+import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +29,9 @@ import javax.inject.Inject
 class CredentialDetailsViewModel @Inject constructor(
     private val getCredentialByIdUseCase: GetCredentialByIdUseCase,
     private val verifyCredentialUseCase: VerifyCredentialUseCase,
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val credentialStatusMapper: CredentialStatusMapper,
+    private val credentialTypeMapper: CredentialTypeMapper,
 ) : ViewModel() {
 
     private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
@@ -46,21 +49,22 @@ class CredentialDetailsViewModel @Inject constructor(
 
                         // Cut DID after ";" (initial state, etc.)
                         val formattedIssuerDid = res.credential.issuerDid.split(";").first()
+                        val credentialStatusUi = credentialStatusMapper.map(res.credential.credentialStatus)
+                        val credentialType = credentialTypeMapper.map(res.credential.vcType)
 
                         val dataItems = listOf(
-                            CredentialDataItem.Spacing(),
 
                             CredentialDataItem.Field(
                                 name = resourceProvider.getString(R.string.credential_id),
                                 value = res.credential.id
                             ),
                             CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.issuer_did),
+                                name = resourceProvider.getString(R.string.issuer),
                                 value = formattedIssuerDid
                             ),
 
                             CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.holder_did),
+                                name = resourceProvider.getString(R.string.holder),
                                 value = res.credential.holderDid
                             ),
 
@@ -80,10 +84,40 @@ class CredentialDetailsViewModel @Inject constructor(
                         val json = gson.fromJson(res.credential.rawVCData, JsonObject::class.java)
                         val prettyFormattedVC = gson.toJson(json, JsonObject::class.java)
 
+                        val credentialProofItems = listOf(
+                            CredentialDataItem.Field(
+                                name = resourceProvider.getString(R.string.created),
+                                value = res.credential.credentialProof.creationDate,
+                            ),
+
+                            CredentialDataItem.Field(
+                                name = resourceProvider.getString(R.string.type),
+                                value = res.credential.credentialProof.type,
+                            ),
+
+                            CredentialDataItem.Field(
+                                name = resourceProvider.getString(R.string.proof_purpose),
+                                value = res.credential.credentialProof.proofPurpose,
+                            ),
+
+                            CredentialDataItem.Field(
+                                name = resourceProvider.getString(R.string.verification_method),
+                                value = res.credential.credentialProof.verificationMethod,
+                            ),
+
+                            CredentialDataItem.Field(
+                                name = resourceProvider.getString(R.string.jws),
+                                value = res.credential.credentialProof.jws,
+                            ),
+                        )
+
                         CredentialDetailsUiModel.Success(
-                            detailsItems = dataItems,
+                            metadataItems = dataItems,
+                            credentialType = credentialType,
                             credentialId = res.credential.id,
-                            rawVcDataPrettyFormatted = prettyFormattedVC
+                            rawVcDataPrettyFormatted = prettyFormattedVC,
+                            proofItems = credentialProofItems,
+                            credentialStatus = credentialStatusUi
                         )
 
                     }

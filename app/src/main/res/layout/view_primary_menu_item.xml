@@ -4,6 +4,7 @@
     android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:layout_marginBottom="@dimen/primary_menu_item_spacing"
     xmlns:tools="http://schemas.android.com/tools"
     tools:text="Change username"
     android:focusable="true">

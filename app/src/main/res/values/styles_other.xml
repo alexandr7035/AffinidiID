@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ProfileImageSmall">
+        <item name="android:layout_width">@dimen/profile_image_small_size</item>
+        <item name="android:layout_height">@dimen/profile_image_small_size</item>
+        <item name="android:background">@drawable/bg_circle</item>
+        <item name="civ_border_width">1dp</item>
+        <item name="civ_border_color">@color/gray_500</item>
+    </style>
+
+    <style name="ProfileImageLarge">
+        <item name="android:layout_width">@dimen/profile_image_large_size</item>
+        <item name="android:layout_height">@dimen/profile_image_large_size</item>
+        <item name="android:background">@drawable/bg_primary_card</item>
+        <item name="android:padding">@dimen/profile_image_large_bg_padding</item>
+    </style>
+</resources>

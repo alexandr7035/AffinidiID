@@ -27,14 +27,7 @@
         android:id="@+id/profileFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_logoutFragment"
-            app:destination="@id/logoutFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_mainMenuFragment"
-            app:destination="@id/mainMenuFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
 
     <dialog
         android:id="@+id/logoutFragment"
@@ -47,6 +40,7 @@
             app:popUpTo="@id/nav_graph.xml"
             app:popUpToInclusive="true" />
     </dialog>
+
     <navigation android:id="@+id/signUpGraph"
         app:startDestination="@id/registrationFragment">
         <fragment
@@ -141,6 +135,9 @@
         <action
             android:id="@+id/action_mainMenuFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_logoutFragment"
+            app:destination="@id/logoutFragment" />
     </fragment>
 
     <fragment
