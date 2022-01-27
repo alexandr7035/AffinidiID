@@ -115,7 +115,7 @@ class LoginFragment : Fragment() {
                 findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToSignUpGraph())
             },
             isBold = true,
-            spannableColor = ContextCompat.getColor(requireContext(), R.color.white)
+            spannableColor = ContextCompat.getColor(requireContext(), R.color.gray_500)
         )
 
         binding.goToSignUpBtn.apply {

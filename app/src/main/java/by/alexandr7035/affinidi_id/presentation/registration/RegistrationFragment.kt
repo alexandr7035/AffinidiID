@@ -117,7 +117,7 @@ class RegistrationFragment : Fragment() {
                 findNavController().navigateUp()
             },
             isBold = true,
-            spannableColor = ContextCompat.getColor(requireContext(), R.color.white)
+            spannableColor = ContextCompat.getColor(requireContext(), R.color.gray_500)
         )
 
         binding.goToSignInBtn.apply {
