@@ -97,5 +97,7 @@
     <string name="verification_method">Verification method</string>
     <string name="jws">JWS</string>
     <string name="credential_proof">Credential Proof</string>
+    <string name="affinidi_id">AffinidiID</string>
+    <string name="logo_explanation">An unofficial VC wallet built with Affinidi API for learning purpose</string>
 
 </resources>

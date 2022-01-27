@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="SnackBarStyle">
+        <item name="android:layout_margin">@dimen/snackbar_margin</item>
+    </style>
+
+    <style name="SnackBarTextStyle">
+        <item name="android:textSize">@dimen/snackbar_text</item>
+        <item name="android:paddingStart">@dimen/snackbar_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/snackbar_padding_horizontal</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="LogoText">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LogoDescriptionText">
+        <item name="android:paddingStart">32dp</item>
+        <item name="android:paddingEnd">32dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LogoCover">
+        <item name="android:background">@drawable/bg_gradient_primary</item>
+    </style>
+
     <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">@dimen/primary_button_corner_radius</item>
         <item name="android:height">@dimen/primary_button_height</item>

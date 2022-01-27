@@ -53,7 +53,7 @@
 
     <dimen name="snackbar_corners">30dp</dimen>
     <dimen name="snackbar_padding_horizontal">20dp</dimen>
-    <dimen name="snackbar_text">18sp</dimen>
+    <dimen name="snackbar_text">16sp</dimen>
     <dimen name="snackbar_margin">16dp</dimen>
 
     <dimen name="primary_card_corners">16dp</dimen>

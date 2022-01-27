@@ -72,20 +72,6 @@
         <item name="navigationIconTint">@color/gray_500</item>
     </style>
 
-    <style name="ToolbarWhiteText">
-        <item name="background">@android:color/transparent</item>
-        <item name="titleTextColor">@color/white</item>
-        <item name="contentInsetStart">@dimen/default_fragment_margin</item>
-        <item name="titleTextAppearance">@style/ToolbarTextAppearanceWhiteText</item>
-    </style>
-
-    <style name="ToolbarWithBackNavWhiteText" parent="ToolbarWhiteText">
-        <item name="background">@android:color/transparent</item>
-        <item name="contentInsetStartWithNavigation">0dp</item>
-        <item name="navigationIcon">?attr/actionModeCloseDrawable</item>
-        <item name="navigationIconTint">@color/white</item>
-    </style>
-
     <style name="ToolbarNavIconStyle" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">@color/gray_500</item>
     </style>
@@ -180,17 +166,6 @@
     <style name="CredentialDetailFieldValue">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/gray_500</item>
-    </style>
-
-    <style name="SnackBarStyle">
-        <item name="android:layout_margin">@dimen/snackbar_margin</item>
-    </style>
-
-    <style name="SnackBarTextStyle">
-        <item name="android:textSize">@dimen/snackbar_text</item>
-        <item name="android:paddingStart">@dimen/snackbar_padding_horizontal</item>
-        <item name="android:paddingEnd">@dimen/snackbar_padding_horizontal</item>
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="JSONScrollViewStyle">
