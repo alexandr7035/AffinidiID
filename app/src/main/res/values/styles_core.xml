@@ -67,6 +67,7 @@
         <item name="android:textColor">@color/gray_500</item>
     </style>
 
+    <!-- Toolbar styles   -->
     <style name="Toolbar">
         <item name="background">@android:color/transparent</item>
         <item name="titleTextColor">@color/gray_500</item>
@@ -74,6 +75,24 @@
         <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
     </style>
 
+    <style name="ToolbarWithBackNav" parent="Toolbar">
+        <item name="background">@android:color/transparent</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="navigationIcon">?attr/actionModeCloseDrawable</item>
+        <item name="navigationIconTint">@color/gray_500</item>
+    </style>
+
+    <style name="ToolbarNavIconStyle" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="tint">@color/gray_500</item>
+    </style>
+
+    <style name="ToolbarTextAppearance">
+        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Bottom navigation -->
     <style name="BottomNavigationStyle">
         <item name="itemIconTint">@color/color_bottom_nav_icon</item>
         <item name="itemTextColor">@color/color_bottom_nav_icon</item>

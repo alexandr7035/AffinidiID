@@ -65,29 +65,6 @@
         <item name="rippleColor">@color/black_transp_10</item>
     </style>
 
-    <style name="ToolbarWithBackNav" parent="Toolbar">
-        <item name="background">@android:color/transparent</item>
-        <item name="contentInsetStartWithNavigation">0dp</item>
-        <item name="navigationIcon">?attr/actionModeCloseDrawable</item>
-        <item name="navigationIconTint">@color/gray_500</item>
-    </style>
-
-    <style name="ToolbarNavIconStyle" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="tint">@color/gray_500</item>
-    </style>
-
-    <style name="ToolbarTextAppearance">
-        <item name="android:textColor">@color/gray_500</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="ToolbarTextAppearanceWhiteText">
-        <item name="android:textColor">@color/gray_500</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="goToSignUpText">
         <item name="android:textColor">@color/gray_500</item>
         <item name="android:textSize">16sp</item>
