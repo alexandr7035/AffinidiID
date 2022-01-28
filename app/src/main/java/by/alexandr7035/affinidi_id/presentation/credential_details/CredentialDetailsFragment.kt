@@ -77,14 +77,6 @@ class CredentialDetailsFragment : Fragment() {
                                     )
                                 )
                             }
-
-                            R.id.view_item -> {
-                                findNavController().navigateSafe(
-                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToCredentialRawFragment(
-                                        credentialData.rawVcDataPrettyFormatted
-                                    )
-                                )
-                            }
                         }
 
                         true
