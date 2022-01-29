@@ -14,8 +14,9 @@ class IssueCredentialUseCase @Inject constructor(
 ) {
     suspend fun execute(issueCredentialReqModel: IssueCredentialReqModel): IssueCredentialResModel {
 
-        return if (checkIfHaveCredentialUseCase.execute()) {
-            // If already have credential
+        val checkForCredential = checkIfHaveCredentialUseCase.execute()
+
+        return if (checkForCredential.haveCredential) {
             IssueCredentialResModel.Fail(ErrorType.ALREADY_HAVE_CREDENTIAL)
         } else {
             // Issue a new one
