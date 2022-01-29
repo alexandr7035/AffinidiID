@@ -7,8 +7,8 @@ import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidati
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
 import by.alexandr7035.affinidi_id.domain.model.profile.SaveProfileModel
-import by.alexandr7035.affinidi_id.domain.usecase.SaveProfileUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.SignInWithEmailUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.SaveProfileUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.SignInWithEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

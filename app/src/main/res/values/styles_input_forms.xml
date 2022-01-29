@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="InputFormLabel">
+        <item name="android:textSize">@dimen/input_form_label_text</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="InputFieldEditText">
+        <item name="android:textSize">@dimen/input_field_text</item>
+        <item name="android:paddingTop">@dimen/input_field_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/input_field_padding_vertical</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="InputFieldLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">@dimen/auth_field_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/auth_field_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/auth_field_corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/auth_field_corner_radius</item>
+    </style>
+
+    <style name="PasswordInputFieldLayout" parent="InputFieldLayout">
+        <item name="passwordToggleEnabled">true</item>
+    </style>
+
+</resources>

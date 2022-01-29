@@ -34,10 +34,6 @@ class MainMenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
-
         val menuItems = listOf(
             MenuItemModel(
                 title = getString(R.string.change_password),
@@ -83,5 +79,16 @@ class MainMenuFragment : Fragment() {
                 imageLoader = imageLoader
             )
         })
+
+        binding.toolbar.setOnMenuItemClickListener {
+
+            when (it.itemId) {
+                R.id.logoutItem -> {
+                    findNavController().navigateSafe(MainMenuFragmentDirections.actionMainMenuFragmentToLogoutFragment())
+                }
+            }
+
+            true
+        }
     }
 }

@@ -5,12 +5,12 @@ import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordReqModel
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
 import by.alexandr7035.affinidi_id.domain.repository.ChangeProfileRepository
-import by.alexandr7035.data.network.ApiService
+import by.alexandr7035.data.datasource.cloud.api.UserApiService
 import by.alexandr7035.data.core.AppError
-import by.alexandr7035.data.model.profile.ChangePasswordRequest
+import by.alexandr7035.data.model.network.profile.ChangePasswordRequest
 import javax.inject.Inject
 
-class ChangeProfileRepositoryImpl @Inject constructor(private val apiService: ApiService): ChangeProfileRepository {
+class ChangeProfileRepositoryImpl @Inject constructor(private val apiService: UserApiService): ChangeProfileRepository {
     override suspend fun changePassword(changePasswordReqModel: ChangePasswordReqModel, authStateModel: AuthStateModel): ChangePasswordResModel {
         try {
             val res = apiService.changePassword(
@@ -22,7 +22,7 @@ class ChangeProfileRepositoryImpl @Inject constructor(private val apiService: Ap
             )
 
             return if (res.isSuccessful) {
-                ChangePasswordResModel.Success()
+                ChangePasswordResModel.Success
             } else {
                 when (res.code()) {
                     400 -> {

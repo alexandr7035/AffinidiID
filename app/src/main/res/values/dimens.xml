@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="auth_form_horizontal_margin">30dp</dimen>
-    <dimen name="primary_card_padding">16dp</dimen>
+    <dimen name="primary_card_padding">12dp</dimen>
     <dimen name="auth_field_corner_radius">12dp</dimen>
 
     <dimen name="primary_button_corner_radius">12dp</dimen>
-    <dimen name="primary_button_height">48dp</dimen>
+    <dimen name="primary_button_height">56dp</dimen>
     <dimen name="primary_button_text_size">16sp</dimen>
-    <dimen name="primary_card_elevation">4dp</dimen>
 
     <dimen name="text_button_height">36dp</dimen>
     <dimen name="text_button_corner_radius">12dp</dimen>
@@ -15,13 +14,53 @@
     <dimen name="default_fragment_margin">16dp</dimen>
     <dimen name="default_card_padding">16dp</dimen>
 
-    <dimen name="copied_field_corners">8dp</dimen>
-    <dimen name="copied_field_padding">4dp</dimen>
-    <dimen name="bottom_nav_corner">16dp</dimen>
+    <dimen name="bottom_nav_corner">24dp</dimen>
     <dimen name="bottom_dialog_corner_radius">16dp</dimen>
 
     <dimen name="primary_menu_item_corners">16dp</dimen>
     <dimen name="primary_menu_item_padding_vertical">8dp</dimen>
     <dimen name="primary_menu_item_padding_horizontal">20dp</dimen>
     <dimen name="primary_menu_item_spacing">16dp</dimen>
+
+    <dimen name="credential_item_min_height">200dp</dimen>
+    <dimen name="credential_item_corners">16dp</dimen>
+    <dimen name="credential_item_padding">16dp</dimen>
+    <dimen name="credential_item_elevation">8dp</dimen>
+    <dimen name="credential_item_bottom_margin">16dp</dimen>
+    <dimen name="credential_item_status_mark_size">24dp</dimen>
+
+    <dimen name="credential_item_id_padding_vertical">4dp</dimen>
+    <dimen name="credential_item_id_padding_horizontal">8dp</dimen>
+    <dimen name="credential_item_id_corners">12dp</dimen>
+
+    <dimen name="error_view_spacing">16dp</dimen>
+    <dimen name="error_view_tile_text">20sp</dimen>
+    <dimen name="error_view_text">18sp</dimen>
+
+    <dimen name="available_credential_item_corners">16dp</dimen>
+    <dimen name="vc_field_value_margin">8dp</dimen>
+    <dimen name="vc_field_spacing">4dp</dimen>
+
+    <dimen name="vc_details_spacing_size">24dp</dimen>
+
+    <dimen name="snackbar_corners">30dp</dimen>
+    <dimen name="snackbar_padding_horizontal">20dp</dimen>
+    <dimen name="snackbar_text">16sp</dimen>
+    <dimen name="snackbar_margin">16dp</dimen>
+
+    <dimen name="primary_card_corners">16dp</dimen>
+    <dimen name="primary_card_title_spacing">8dp</dimen>
+    <dimen name="primary_card_elevation">12dp</dimen>
+
+    <dimen name="copy_btn_size">32dp</dimen>
+
+    <dimen name="profile_image_small_size">36dp</dimen>
+    <dimen name="profile_image_large_size">120dp</dimen>
+    <dimen name="profile_image_large_bg_padding">12dp</dimen>
+    <dimen name="progress_bar_size">56dp</dimen>
+
+    <dimen name="input_form_label_text">20sp</dimen>
+    <dimen name="input_field_text">18sp</dimen>
+    <dimen name="input_field_padding_vertical">12dp</dimen>
+
 </resources>

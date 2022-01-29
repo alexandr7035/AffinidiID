@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal|center_vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/errorTitle"
+        style="@style/ErrorViewTitle"
+        tools:text="@string/error_unknown_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/errorText"
+        style="@style/ErrorViewText"
+        android:layout_marginTop="@dimen/error_view_spacing"
+        tools:text="@string/error_unknown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/retryBtn"
+        android:layout_marginTop="4dp"
+        style="@style/PrimaryButton"
+        android:text="@string/retry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

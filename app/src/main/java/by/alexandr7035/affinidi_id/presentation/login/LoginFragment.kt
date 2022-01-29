@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
             binding.passwordField.clearError()
 
             if (chekIfFormIsValid()) {
-                binding.loginProgressView.isVisible = true
+                binding.progressView.root.isVisible = true
 
                 val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
                 val password = binding.passwordEditText.text.toString()
@@ -69,7 +69,7 @@ class LoginFragment : Fragment() {
 
         viewModel.signInLiveData.observe(viewLifecycleOwner, { response ->
 
-            binding.loginProgressView.isVisible = false
+            binding.progressView.root.isVisible = false
 
             when (response) {
 
@@ -115,7 +115,7 @@ class LoginFragment : Fragment() {
                 findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToSignUpGraph())
             },
             isBold = true,
-            spannableColor = ContextCompat.getColor(requireContext(), R.color.white)
+            spannableColor = ContextCompat.getColor(requireContext(), R.color.gray_500)
         )
 
         binding.goToSignUpBtn.apply {

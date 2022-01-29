@@ -1,7 +1,8 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.*
-import by.alexandr7035.affinidi_id.domain.usecase.*
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.*
+import by.alexandr7035.affinidi_id.domain.usecase.user.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -64,5 +65,45 @@ object DomainModule {
     @Provides
     fun provideChangePasswordUseCase(changeProfileRepository: ChangeProfileRepository, getAuthStateUseCase: GetAuthStateUseCase): ChangePasswordUseCase {
         return ChangePasswordUseCase(changeProfileRepository, getAuthStateUseCase)
+    }
+
+    @Provides
+    fun provideGetCredentialsListUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialsListUseCase {
+        return GetCredentialsListUseCase(credentialsRepository, authStateUseCase)
+    }
+
+    @Provides
+    fun provideIssueCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase, checkIfHaveCredentialUseCase: CheckIfHaveCredentialUseCase): IssueCredentialUseCase {
+        return IssueCredentialUseCase(credentialsRepository, authStateUseCase, checkIfHaveCredentialUseCase)
+    }
+
+    @Provides
+    fun provideGetAvailableVcTypesUseCase(): GetAvailableVcTypesUseCase {
+        return GetAvailableVcTypesUseCase()
+    }
+
+    @Provides
+    fun provideDeleteCredentialUseCase(credentialsRepository: CredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): DeleteCredentialUseCase {
+        return DeleteCredentialUseCase(credentialsRepository, getAuthStateUseCase)
+    }
+
+    @Provides
+    fun provideAuthCheckUseCase(authCheckRepository: AuthCheckRepository, getAuthStateUseCase: GetAuthStateUseCase): AuthCheckUseCase {
+        return AuthCheckUseCase(authCheckRepository, getAuthStateUseCase)
+    }
+
+    @Provides
+    fun provideGetCredentialByIdUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialByIdUseCase {
+        return GetCredentialByIdUseCase(credentialsRepository, authStateUseCase)
+    }
+
+    @Provides
+    fun provideVerifyCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): VerifyCredentialUseCase {
+        return VerifyCredentialUseCase(credentialsRepository)
+    }
+
+    @Provides
+    fun provideCheckIfHaveCredentialUseCase(credentialsRepository: CredentialsRepository): CheckIfHaveCredentialUseCase {
+        return CheckIfHaveCredentialUseCase(credentialsRepository)
     }
 }

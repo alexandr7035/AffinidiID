@@ -7,5 +7,5 @@ import by.alexandr7035.affinidi_id.presentation.registration.RegistrationFragmen
 fun Fragment.showErrorDialog(title: String, message: String) {
     findNavController().navigateSafe(
         RegistrationFragmentDirections
-            .actionGlobalErrorDialogFragment(title, message))
+            .actionGlobalErrorFragment(title, message))
 }

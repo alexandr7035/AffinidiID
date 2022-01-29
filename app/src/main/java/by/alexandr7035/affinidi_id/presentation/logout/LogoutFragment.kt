@@ -33,7 +33,7 @@ class LogoutFragment : BottomSheetDialogFragment() {
 
         viewModel.logOutLiveData.observe(viewLifecycleOwner, { logout ->
 
-            binding.progressView.isVisible = false
+            binding.progressView.root.isVisible = false
 
             when (logout) {
                 is LogOutModel.Success -> {
@@ -60,7 +60,7 @@ class LogoutFragment : BottomSheetDialogFragment() {
         })
 
         binding.logoutBtn.setOnClickListener {
-            binding.progressView.isVisible = true
+            binding.progressView.root.isVisible = true
             viewModel.logOut()
         }
     }

@@ -4,21 +4,21 @@ import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
 import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
 import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
-import by.alexandr7035.data.network.ApiService
+import by.alexandr7035.data.datasource.cloud.api.UserApiService
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.extensions.debug
-import by.alexandr7035.data.model.sign_in.SignInRequest
-import by.alexandr7035.data.model.sign_in.SignInResponse
-import by.alexandr7035.data.storage.SecretsStorage
+import by.alexandr7035.data.model.network.sign_in.SignInRequest
+import by.alexandr7035.data.model.network.sign_in.SignInResponse
+import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
 import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(private val apiService: ApiService, private val secretsStorage: SecretsStorage): LoginRepository {
+class LoginRepositoryImpl @Inject constructor(private val userApiService: UserApiService, private val secretsStorage: SecretsStorage): LoginRepository {
     override suspend fun signIn(userName: String, password: String): SignInModel {
 
         try {
-            val res = apiService.signIn(SignInRequest(userName, password))
+            val res = userApiService.signIn(SignInRequest(userName, password))
             if (res.isSuccessful) {
                 val data = res.body() as SignInResponse
 
@@ -56,11 +56,11 @@ class LoginRepositoryImpl @Inject constructor(private val apiService: ApiService
 
     override suspend fun logOut(accessToken: String): LogOutModel {
         try {
-            val res = apiService.logOut(accessToken)
+            val res = userApiService.logOut(accessToken)
 
             if (res.isSuccessful) {
                 secretsStorage.saveAccessToken(null)
-                return LogOutModel.Success()
+                return LogOutModel.Success
             }
             else {
                 return when (res.code()) {

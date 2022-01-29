@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient_window"
     tools:context=".presentation.registration.RegistrationFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        style="@style/ToolbarWithBackNavWhiteText"
+        style="@style/ToolbarWithBackNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +29,7 @@
 
         <TextView
             android:id="@+id/signUpLabel"
-            style="@style/AuthLabel"
+            style="@style/InputFormLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +38,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userNameField"
-            style="@style/AuthFieldLayoutStyle"
+            style="@style/InputFieldLayout"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +49,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userNameEditText"
-                style="@style/AuthFieldEditTextStyle"
+                style="@style/InputFieldEditText"
                 android:inputType="textWebEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -59,7 +58,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordSetField"
-            style="@style/AuthFieldPasswordLayoutStyle"
+            style="@style/PasswordInputFieldLayout"
             android:layout_marginTop="8dp"
             android:hint="@string/set_password"
             android:layout_width="match_parent"
@@ -70,7 +69,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordSetEditText"
-                style="@style/AuthFieldEditTextStyle"
+                style="@style/InputFieldEditText"
                 android:inputType="textWebPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -79,7 +78,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordConfirmField"
-            style="@style/AuthFieldPasswordLayoutStyle"
+            style="@style/PasswordInputFieldLayout"
             android:layout_marginTop="4dp"
             android:hint="@string/confirm_password"
             android:layout_width="match_parent"
@@ -90,7 +89,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordConfirmEditText"
-                style="@style/AuthFieldEditTextStyle"
+                style="@style/InputFieldEditText"
                 android:inputType="textWebPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -121,25 +120,16 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Already have an account? Sign in" />
 
-    <FrameLayout
-        android:id="@+id/loginProgressView"
-        style="@style/ProgressFrameLayout"
+    <include
+        android:id="@+id/progressView"
+        layout="@layout/layout_progress_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="gone"
-        tools:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:indeterminateTint="@color/purple_500" />
-
-    </FrameLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,7 +36,7 @@ class RegistrationConfirmationFragment : BottomSheetDialogFragment() {
         binding.confirmBtn.setOnClickListener {
 
             if (chekIfFormIsValid()) {
-                binding.progressView.isVisible = true
+                binding.progressView.root.isVisible = true
 
                 viewModel.confirmSignUp(
                     confirmationCode = binding.confirmationCodeEditText.text.toString(),

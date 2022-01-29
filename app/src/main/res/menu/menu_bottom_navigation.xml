@@ -5,13 +5,13 @@
         android:icon="@drawable/ic_person_filled" />
 
     <item
-        android:enabled="false"
+        android:id="@+id/credentialsListFragment"
         android:title="@string/your_credentials"
         android:icon="@drawable/ic_credential" />
 
     <item
-        android:enabled="false"
-        android:title="@string/contacts"
-        android:icon="@drawable/ic_contacts" />
+        android:id="@+id/mainMenuFragment"
+        android:title="@string/menu"
+        android:icon="@drawable/ic_menu" />
 
 </menu>

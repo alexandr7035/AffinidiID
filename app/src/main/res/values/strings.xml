@@ -30,8 +30,8 @@
     <string name="profile">Profile</string>
     <string name="your_did">Your DID</string>
     <string name="your_username">Your username</string>
-    <string name="your_did_copied">Your DID has been copied!</string>
-    <string name="your_username_copied">Your username has been copied!</string>
+    <string name="your_did_copied">Your DID has been copied.</string>
+    <string name="your_username_copied">Your username has been copied.</string>
     <string name="your_credentials">Your credentials</string>
     <string name="contacts">Contacts</string>
     <string name="your_affinidi_id">Your Affinidi ID</string>
@@ -55,7 +55,7 @@
     <string name="continue_text">Continue</string>
     <string name="set_new_password">Set new password</string>
     <string name="confirm_password_reset">Confirm new password</string>
-    <string name="password_changed_successfully">Your password has been successfully changed. Try to sign in.</string>
+    <string name="password_changed_successfully">Your password has been successfully changed.</string>
 
     <string name="reset_password_stage_1">1/3 Specify username</string>
     <string name="reset_password_stage_2">2/3 Set new password</string>
@@ -63,6 +63,40 @@
 
     <string name="change_password">Change password</string>
     <string name="error_wrong_current_password">Wrong current password</string>
-    <string name="successful_password_change">Password changed successfully</string>
+    <string name="active">Active</string>
+    <string name="expired">Expired</string>
+    <string name="no_expiration">No expiration</string>
+    <string name="retry">Retry</string>
+    <string name="issue_credentials">Issue credentials</string>
+
+    <string name="vc_type_email">Proof of E-mail address</string>
+    <string name="vc_type_unknown">Unknown credential</string>
+    <string name="unknown_vc_exmplanation">It seems this VC type is not supported by the app yet. But you can see verify it and see raw data.</string>
+    <string name="address">Address</string>
+    <string name="delete_vc_explanation">Sure to delete the VC from cloud wallet? If you haven\'t saved it somewhere, you will have to re-issue it.</string>
+    <string name="delete_vc">Delete VC?</string>
+    <string name="error_occurred">An error occurred</string>
+    <string name="eror_auth">Your access token has expired. Please, sign in again.</string>
+    <string name="credential_info">Credential info</string>
+    <string name="credential_id">Credential ID</string>
+    <string name="holder">Holder</string>
+    <string name="issuer">Issuer</string>
+    <string name="expiration_date">Expiration date</string>
+    <string name="issuance_date">Issuance date</string>
+    <string name="verify">Verify</string>
+    <string name="vc_is_valid">VC is valid</string>
+    <string name="vc_is_not_valid">VC is NOT valid</string>
+    <string name="view_json">View JSON</string>
+    <string name="credential_metadata">Credential metadata</string>
+    <string name="created">Create</string>
+    <string name="type">Type</string>
+    <string name="proof_purpose">Proof purpose</string>
+    <string name="verification_method">Verification method</string>
+    <string name="jws">JWS</string>
+    <string name="credential_proof">Credential Proof</string>
+    <string name="affinidi_id">AffinidiID</string>
+    <string name="vc_issuance_successful">A new VC has been issued! Check the credentials list.</string>
+    <string name="already_have_credential">You already have this credential in the wallet.</string>
+    <string name="no_credentials_stub_text">You have no credentials in the wallet. Click + to issue your first one!</string>
 
 </resources>

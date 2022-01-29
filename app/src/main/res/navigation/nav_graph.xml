@@ -27,14 +27,7 @@
         android:id="@+id/profileFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_logoutFragment"
-            app:destination="@id/logoutFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_mainMenuFragment"
-            app:destination="@id/mainMenuFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
 
     <dialog
         android:id="@+id/logoutFragment"
@@ -47,6 +40,7 @@
             app:popUpTo="@id/nav_graph.xml"
             app:popUpToInclusive="true" />
     </dialog>
+
     <navigation android:id="@+id/signUpGraph"
         app:startDestination="@id/registrationFragment">
         <fragment
@@ -74,20 +68,20 @@
             app:popUpToInclusive="true" />
     </navigation>
 
-    <dialog
-        android:id="@+id/errorDialogFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.error_dialog.ErrorDialogFragment"
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.error_fragment.ErrorFragment"
         android:label="fragment_error_dialog"
-        tools:layout="@layout/fragment_error_dialog" >
+        tools:layout="@layout/fragment_error" >
         <argument
             android:name="title"
             app:argType="string" />
         <argument
             android:name="message"
             app:argType="string" />
-    </dialog>
+    </fragment>
 
-    <action android:id="@+id/action_global_errorDialogFragment" app:destination="@id/errorDialogFragment" />
+    <action android:id="@+id/action_global_errorFragment" app:destination="@id/errorFragment" />
 
 
     <navigation android:id="@+id/resetPasswordGraph"
@@ -141,6 +135,9 @@
         <action
             android:id="@+id/action_mainMenuFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_logoutFragment"
+            app:destination="@id/logoutFragment" />
     </fragment>
 
     <fragment
@@ -148,5 +145,63 @@
         android:name="by.alexandr7035.affinidi_id.presentation.profile.edit_password.ChangePasswordFragment"
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_change_password"/>
+
+    <fragment
+        android:id="@+id/credentialsListFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListFragment"
+        android:label="fragment_credentials_list"
+        tools:layout="@layout/fragment_credentials_list" >
+        <action
+            android:id="@+id/action_credentialsListFragment_to_issueCredentialFragment"
+            app:destination="@id/issueCredentialFragment" />
+        <action
+            android:id="@+id/action_credentialsListFragment_to_credentialDetailsFragment"
+            app:destination="@id/credentialDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/issueCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.issue_credential.IssueCredentialFragment"
+        android:label="fragment_issue_credential"
+        tools:layout="@layout/fragment_issue_credential" />
+
+    <dialog
+        android:id="@+id/deleteCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.delete_credential.DeleteCredentialFragment"
+        android:label="fragment_delete_credential"
+        tools:layout="@layout/fragment_delete_credential" >
+        <argument
+            android:name="deleteVcId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_deleteCredentialFragment_to_credentialsListFragment"
+            app:destination="@id/credentialsListFragment"
+            app:popUpTo="@id/credentialsListFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <fragment
+        android:id="@+id/credentialDetailsFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDetailsFragment"
+        android:label="fragment_credential_details"
+        tools:layout="@layout/fragment_credential_details" >
+        <argument
+            android:name="credentialId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_credentialDetailsFragment_to_deleteCredentialFragment"
+            app:destination="@id/deleteCredentialFragment" />
+        <action
+            android:id="@+id/action_credentialDetailsFragment_to_credentialRawFragment"
+            app:destination="@id/credentialRawFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/credentialRawFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.credential_raw.CredentialRawFragment"
+        android:label="CredentialRawFragment"
+        tools:layout="@layout/fragment_credential_raw">
+        <argument
+            android:name="rawCredential"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

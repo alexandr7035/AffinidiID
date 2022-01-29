@@ -47,7 +47,7 @@ class ResetPasswordSetUsernameFragment : Fragment() {
 
         binding.continueBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                binding.progressView.isVisible = true
+                binding.progressView.root.isVisible = true
 
                 val userName = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
                 viewModel.initializePasswordReset(userName)
@@ -55,7 +55,7 @@ class ResetPasswordSetUsernameFragment : Fragment() {
         }
 
         viewModel.initializePasswordResetLiveData.observe(viewLifecycleOwner, { result ->
-            binding.progressView.isVisible = false
+            binding.progressView.root.isVisible = false
 
             when (result) {
                 is InitializePasswordResetResponseModel.Success -> {

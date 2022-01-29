@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
-import by.alexandr7035.affinidi_id.domain.usecase.LogOutUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.user.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

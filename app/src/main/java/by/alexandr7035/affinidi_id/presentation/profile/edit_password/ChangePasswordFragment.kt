@@ -1,23 +1,25 @@
 package by.alexandr7035.affinidi_id.presentation.profile.edit_password
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
-import by.alexandr7035.affinidi_id.core.extensions.showToast
-import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.databinding.FragmentChangePasswordBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
+import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -54,7 +56,7 @@ class ChangePasswordFragment : Fragment() {
 
         binding.confirmBtn.setOnClickListener {
             if (chekIfFormIsValid()) {
-                binding.progressView.isVisible = true
+                binding.progressView.root.isVisible = true
 
                 viewModel.changePassword(
                     oldPassword = binding.oldPasswordEditText.text.toString(),
@@ -64,12 +66,15 @@ class ChangePasswordFragment : Fragment() {
         }
 
         viewModel.changePasswordLiveData.observe(viewLifecycleOwner, { result ->
-            binding.progressView.isVisible = false
+            binding.progressView.root.isVisible = false
 
             when (result) {
                 is ChangePasswordResModel.Success -> {
-                    // TODO dialog
-                    requireContext().showToast(getString(R.string.successful_password_change))
+                    binding.root.showSnackBar(
+                        message = getString(R.string.password_changed_successfully),
+                        snackBarMode = SnackBarMode.Neutral,
+                        snackBarLength = Snackbar.LENGTH_SHORT
+                    )
                 }
                 is ChangePasswordResModel.Fail -> {
                     when (result.errorType) {

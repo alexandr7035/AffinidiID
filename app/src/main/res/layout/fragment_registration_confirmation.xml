@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/confirmSignUpLabel"
-            style="@style/AuthLabel"
+            style="@style/InputFormLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirmationCodeField"
-            style="@style/AuthFieldLayoutStyle"
+            style="@style/InputFieldLayout"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmationCodeEditText"
-                style="@style/AuthFieldEditTextStyle"
+                style="@style/InputFieldEditText"
                 android:inputType="textWebEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -68,25 +68,16 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
+    <include
         android:id="@+id/progressView"
-        style="@style/ProgressFrameLayout"
+        layout="@layout/layout_progress_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="gone"
-        tools:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:indeterminateTint="@color/purple_500" />
-
-    </FrameLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
