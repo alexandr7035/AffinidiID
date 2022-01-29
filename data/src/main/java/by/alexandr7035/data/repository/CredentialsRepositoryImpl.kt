@@ -1,6 +1,8 @@
 package by.alexandr7035.data.repository
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.credentials.check_if_have_vc.CheckIfHaveVcReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.check_if_have_vc.CheckIfHaveVcResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
@@ -186,6 +188,14 @@ class CredentialsRepositoryImpl @Inject constructor(
             e.printStackTrace()
             return VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
+    }
+
+    override suspend fun checkIfHaveCredentialInCache(checkIfHaveVcReqModel: CheckIfHaveVcReqModel): CheckIfHaveVcResModel {
+        val haveCredential = credentialsCacheDataSource.checkIfHaveCredentialInCache(
+            credentialContextUrl = checkIfHaveVcReqModel.vcContextUrl
+        )
+
+        return CheckIfHaveVcResModel(haveCredential = haveCredential)
     }
 
 }

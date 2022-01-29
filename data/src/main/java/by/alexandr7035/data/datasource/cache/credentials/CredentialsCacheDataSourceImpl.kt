@@ -32,7 +32,12 @@ class CredentialsCacheDataSourceImpl @Inject constructor(
             // Save raw JSONs to DB
             val rawVCs = credentials.signedCredentials.map { signedVc ->
                 val json = mapSignedVcToRaw(signedVc)
-                CredentialEntity(rawVc = json, credentialId = signedVc.id)
+
+                CredentialEntity(
+                    credentialId = signedVc.id,
+                    credentialContextUrl = signedVc.context.last(),
+                    rawVc = json,
+                )
             }
 
             credentialsDAO.saveCredentials(rawVCs)
@@ -41,6 +46,11 @@ class CredentialsCacheDataSourceImpl @Inject constructor(
 
     override suspend fun clearCredentialsCache() {
         credentialsDAO.deleteCredentials()
+    }
+
+    override suspend fun checkIfHaveCredentialInCache(credentialContextUrl: String): Boolean {
+        val cache = credentialsDAO.getCredentialsWithContext(credentialContextUrl)
+        return cache.isNotEmpty()
     }
 
     private fun mapRawVCtoSignedVc(rawVc: String): SignedCredential {

@@ -1,5 +1,7 @@
 package by.alexandr7035.affinidi_id.domain.repository
 
+import by.alexandr7035.affinidi_id.domain.model.credentials.check_if_have_vc.CheckIfHaveVcReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.check_if_have_vc.CheckIfHaveVcResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
@@ -22,4 +24,6 @@ interface CredentialsRepository {
     suspend fun getCredentialById(getCredentialByIdReqModel: GetCredentialByIdReqModel, authState: AuthStateModel): Flow<GetCredentialByIdResModel>
 
     suspend fun verifyCredential(verifyVcReqModel: VerifyVcReqModel): VerifyVcResModel
+
+    suspend fun checkIfHaveCredentialInCache(checkIfHaveVcReqModel: CheckIfHaveVcReqModel): CheckIfHaveVcResModel
 }

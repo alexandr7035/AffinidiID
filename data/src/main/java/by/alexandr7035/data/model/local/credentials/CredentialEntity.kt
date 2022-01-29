@@ -8,5 +8,7 @@ data class CredentialEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val credentialId: String,
+    // Identifies type of the credential
+    val credentialContextUrl: String,
     val rawVc: String
 )
