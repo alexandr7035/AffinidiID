@@ -101,7 +101,7 @@ class CredentialsRepositoryImpl @Inject constructor(
             // Store only 1 VC, so just get last ID from response
             val storedVCsID = vcIssuanceHelper.storeCredentials(listOf(signedVc), authState).last()
 
-            return IssueCredentialResModel.Success()
+            return IssueCredentialResModel.Success
 
         } catch (appError: AppError) {
             return IssueCredentialResModel.Fail(appError.errorType)
@@ -122,7 +122,7 @@ class CredentialsRepositoryImpl @Inject constructor(
             )
 
             return if (res.isSuccessful) {
-                DeleteVcResModel.Success()
+                DeleteVcResModel.Success
             } else {
                 when (res.code()) {
                     // TODO review and fix 401

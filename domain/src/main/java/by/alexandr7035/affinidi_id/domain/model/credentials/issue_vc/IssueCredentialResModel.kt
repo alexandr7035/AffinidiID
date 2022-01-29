@@ -3,8 +3,8 @@ package by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 
 
-abstract class IssueCredentialResModel {
-    class Success : IssueCredentialResModel()
+sealed class IssueCredentialResModel {
+    object Success : IssueCredentialResModel()
 
     class Fail(val errorType: ErrorType): IssueCredentialResModel()
 }

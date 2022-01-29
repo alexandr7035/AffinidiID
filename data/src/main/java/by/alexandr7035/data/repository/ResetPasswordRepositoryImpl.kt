@@ -50,7 +50,7 @@ class ResetPasswordRepositoryImpl @Inject constructor(private val apiService: Us
             )
 
             return if (res.isSuccessful) {
-                ConfirmPasswordResetResponseModel.Success()
+                ConfirmPasswordResetResponseModel.Success
             } else {
                 when (res.code()) {
                     400 -> ConfirmPasswordResetResponseModel.Fail(ErrorType.WRONG_CONFIRMATION_CODE)

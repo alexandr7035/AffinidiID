@@ -22,7 +22,7 @@ class ChangeProfileRepositoryImpl @Inject constructor(private val apiService: Us
             )
 
             return if (res.isSuccessful) {
-                ChangePasswordResModel.Success()
+                ChangePasswordResModel.Success
             } else {
                 when (res.code()) {
                     400 -> {

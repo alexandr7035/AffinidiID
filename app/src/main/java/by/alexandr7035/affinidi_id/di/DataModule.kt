@@ -1,19 +1,10 @@
 package by.alexandr7035.affinidi_id.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelperImpl
-import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
-import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelperImpl
-import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
-import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelperImpl
-import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCaster
-import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCasterImpl
-import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
-import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import by.alexandr7035.data.datasource.cache.CacheDatabase
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSourceImpl
@@ -28,6 +19,14 @@ import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import by.alexandr7035.data.datasource.cloud.api.UserApiService
 import by.alexandr7035.data.datasource.cloud.interceptors.AuthInterceptor
 import by.alexandr7035.data.datasource.cloud.interceptors.ErrorInterceptor
+import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
+import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelperImpl
+import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
+import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelperImpl
+import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCaster
+import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCasterImpl
+import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
+import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import by.alexandr7035.data.repository.*
 import com.google.gson.Gson
 import dagger.Module

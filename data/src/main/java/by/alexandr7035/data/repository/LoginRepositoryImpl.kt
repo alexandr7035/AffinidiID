@@ -60,7 +60,7 @@ class LoginRepositoryImpl @Inject constructor(private val userApiService: UserAp
 
             if (res.isSuccessful) {
                 secretsStorage.saveAccessToken(null)
-                return LogOutModel.Success()
+                return LogOutModel.Success
             }
             else {
                 return when (res.code()) {

@@ -14,7 +14,7 @@ class AuthCheckRepositoryImpl @Inject constructor(private val userApiService: Us
             val res = userApiService.getUserDID(authStateModel.accessToken ?: "")
 
             return if (res.isSuccessful) {
-                AuthCheckResModel.Success()
+                AuthCheckResModel.Success
             }
             else {
                 when (res.code()) {

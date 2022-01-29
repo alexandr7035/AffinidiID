@@ -23,7 +23,7 @@ class LogOutUseCase @Inject constructor(
                     // Means authorization token already not actual
                     // Just clear token and login and return success logout
                     loginRepository.saveAccessToken(null)
-                    return LogOutModel.Success()
+                    return LogOutModel.Success
                 }
             }
         }
