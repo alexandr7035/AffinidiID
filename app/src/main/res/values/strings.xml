@@ -100,5 +100,6 @@
     <string name="affinidi_id">AffinidiID</string>
     <string name="logo_explanation">An unofficial VC wallet built with Affinidi API for learning purpose</string>
     <string name="vc_issuance_successful">A new VC has been issued! Check the credentials list.</string>
+    <string name="already_have_credential">You already have this credential in the wallet.</string>
 
 </resources>

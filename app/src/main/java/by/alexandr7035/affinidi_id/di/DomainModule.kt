@@ -73,8 +73,8 @@ object DomainModule {
     }
 
     @Provides
-    fun provideIssueCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): IssueCredentialUseCase {
-        return IssueCredentialUseCase(credentialsRepository, authStateUseCase)
+    fun provideIssueCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase, checkIfHaveCredentialUseCase: CheckIfHaveCredentialUseCase): IssueCredentialUseCase {
+        return IssueCredentialUseCase(credentialsRepository, authStateUseCase, checkIfHaveCredentialUseCase)
     }
 
     @Provides
@@ -102,4 +102,8 @@ object DomainModule {
         return VerifyCredentialUseCase(credentialsRepository, authStateUseCase)
     }
 
+    @Provides
+    fun provideCheckIfHaveCredentialUseCase(): CheckIfHaveCredentialUseCase {
+        return CheckIfHaveCredentialUseCase()
+    }
 }

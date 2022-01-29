@@ -1,20 +1,21 @@
 package by.alexandr7035.affinidi_id.presentation.issue_credential
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
-import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.FragmentIssueCredentialBinding
+import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
@@ -75,7 +76,29 @@ class IssueCredentialFragment : Fragment(), CredentialClickListener {
                     )
                 }
                 is IssueCredentialResModel.Fail -> {
-                    requireContext().showToast(result.errorType.name)
+                    when (result.errorType) {
+                        ErrorType.FAILED_CONNECTION -> {
+                            showErrorDialog(
+                                getString(R.string.error_failed_connection_title),
+                                getString(R.string.error_failed_connection)
+                            )
+                        }
+                        ErrorType.ALREADY_HAVE_CREDENTIAL -> {
+                            binding.root.showSnackBar(
+                                message = getString(R.string.already_have_credential),
+                                snackBarMode = SnackBarMode.Negative,
+                                snackBarLength = Snackbar.LENGTH_SHORT
+                            )
+                        }
+
+                        else -> {
+                            showErrorDialog(
+                                getString(R.string.error_unknown_title),
+                                getString(R.string.error_unknown)
+                            )
+                        }
+                    }
+
                 }
             }
         })
