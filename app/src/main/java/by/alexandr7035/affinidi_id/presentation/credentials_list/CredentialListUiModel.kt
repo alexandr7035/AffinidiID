@@ -7,5 +7,7 @@ sealed class CredentialListUiModel {
 
     class Fail(val errorUi: DetailedErrorUi): CredentialListUiModel()
 
+    object NoCredentials : CredentialListUiModel()
+
     object Loading : CredentialListUiModel()
 }

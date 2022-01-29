@@ -62,7 +62,12 @@ class CredentialsListMapperImpl @Inject constructor(
                     )
                 }
 
-                CredentialListUiModel.Success(uiCredentials)
+                if (uiCredentials.isEmpty()) {
+                    CredentialListUiModel.NoCredentials
+                }
+                else {
+                    CredentialListUiModel.Success(uiCredentials)
+                }
             }
 
             is CredentialsListResModel.Fail -> {

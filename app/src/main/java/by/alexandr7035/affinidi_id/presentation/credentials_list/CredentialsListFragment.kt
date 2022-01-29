@@ -52,12 +52,14 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
         binding.recycler.addItemDecoration(decoration)
 
         viewModel.getCredentialsLiveData().observe(viewLifecycleOwner, {
+            // Hide all before state update
             binding.progressView.root.isVisible = false
-            Timber.debug("UPDATE LIST")
+            binding.recycler.isVisible = false
+            binding.noCredentialsStub.root.isVisible = false
+            binding.errorView.root.isVisible = false
 
             when (it) {
                 is CredentialListUiModel.Loading -> {
-                    Timber.debug("catch loading")
                     binding.progressView.root.isVisible = true
                 }
 
@@ -65,8 +67,12 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
                     binding.recycler.isVisible = true
                     adapter.setItems(it.credentials)
                 }
+
+                is CredentialListUiModel.NoCredentials -> {
+                    binding.noCredentialsStub.root.isVisible = true
+                }
+
                 is CredentialListUiModel.Fail -> {
-                    binding.recycler.isVisible = false
                     binding.errorView.root.isVisible = true
 
                     binding.errorView.errorTitle.text = it.errorUi.title
