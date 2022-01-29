@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
 import by.alexandr7035.affinidi_id.domain.model.credentials.available_credential_types.AvailableCredentialTypeModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
@@ -26,7 +27,7 @@ class IssueCredentialViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase
 ): ViewModel() {
     private val availableVCsLiveData = MutableLiveData<List<AvailableCredentialTypeModel>>()
-    private val issueCredentialLiveData = MutableLiveData<IssueCredentialResModel>()
+    private val issueCredentialLiveData = SingleLiveEvent<IssueCredentialResModel>()
 
     fun loadAvailableVCs() {
         viewModelScope.launch(Dispatchers.IO) {
