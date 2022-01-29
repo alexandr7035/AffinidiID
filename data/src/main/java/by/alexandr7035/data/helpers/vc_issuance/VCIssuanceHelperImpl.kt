@@ -40,7 +40,7 @@ class VCIssuanceHelperImpl @Inject constructor(
             typeName = issueCredentialReqModel.credentialType.typeName
         )
 
-        Timber.debug("DEBUG_VC unsigned VC req ${request}")
+        Timber.debug("DEBUG_VC unsigned VC req $request")
         val res = credentialsApiService.buildUnsignedVCObject(request)
 
         if (res.isSuccessful) {

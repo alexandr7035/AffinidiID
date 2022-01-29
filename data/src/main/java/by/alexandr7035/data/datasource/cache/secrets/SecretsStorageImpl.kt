@@ -4,7 +4,7 @@ import android.content.Context
 import javax.inject.Inject
 
 // TODO refactor implementation
-class SecretsStorageImpl @Inject constructor(private val applicationContext: Context): SecretsStorage {
+class SecretsStorageImpl @Inject constructor(applicationContext: Context): SecretsStorage {
 
     private val prefs = applicationContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 

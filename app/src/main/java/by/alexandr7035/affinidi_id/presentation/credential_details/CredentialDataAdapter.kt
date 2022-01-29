@@ -8,7 +8,7 @@ import androidx.viewbinding.ViewBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailFieldBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailSpacingBinding
 
-class CredentialDataAdapter(): RecyclerView.Adapter<CredentialDataAdapter.DataItemViewHolder>() {
+class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataItemViewHolder>() {
 
     private var items: List<CredentialDataItem> = emptyList()
 

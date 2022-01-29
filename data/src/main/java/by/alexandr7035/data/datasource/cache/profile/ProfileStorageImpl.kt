@@ -1,14 +1,13 @@
 package by.alexandr7035.data.datasource.cache.profile
 
-import android.app.Application
 import android.content.Context
 import by.alexandr7035.data.extensions.debug
 import timber.log.Timber
 import javax.inject.Inject
 
-class ProfileStorageImpl @Inject constructor(private val application: Application): ProfileStorage {
+class ProfileStorageImpl @Inject constructor(applicationContext: Context): ProfileStorage {
 
-    private val prefs = application.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+    private val prefs = applicationContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     override fun saveDid(userDid: String?) {
         prefs.edit().putString(USER_DID_STR, userDid).apply()

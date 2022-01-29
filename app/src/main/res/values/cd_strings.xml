@@ -3,4 +3,6 @@
     <string name="cd_profile_image">This is an auto-generated profile image</string>
     <string name="cd_copy_username">A button to copy username</string>
     <string name="cd_copy_did">A button to copy DID</string>
+    <string name="cd_credential_status_mark">This is a colorized mark indicating credential status</string>
+    <string name="cd_add_credential_button">This is a plus button to add a new credential in the wallet</string>
 </resources>

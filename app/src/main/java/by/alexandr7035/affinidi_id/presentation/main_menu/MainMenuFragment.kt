@@ -14,7 +14,6 @@ import by.alexandr7035.affinidi_id.BuildConfig
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentMainMenuBinding
-import by.alexandr7035.affinidi_id.presentation.profile.ProfileFragmentDirections
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader
 import coil.decode.SvgDecoder

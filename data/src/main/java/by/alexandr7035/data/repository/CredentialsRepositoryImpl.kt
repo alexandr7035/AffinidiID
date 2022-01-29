@@ -172,12 +172,12 @@ class CredentialsRepositoryImpl @Inject constructor(
                 VerifyVCsReq(credentials = listOf(json))
             )
 
-            if (res.isSuccessful) {
+            return if (res.isSuccessful) {
                 val data = res.body() as VerifyVCsRes
-                return VerifyVcResModel.Success(isValid = data.isValid)
+                VerifyVcResModel.Success(isValid = data.isValid)
             } else {
                 // This request returns 200 always but handle error just in case
-                return VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+                VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
             }
 
         } catch (appError: AppError) {

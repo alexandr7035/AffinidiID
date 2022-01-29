@@ -63,13 +63,10 @@
 
     <string name="change_password">Change password</string>
     <string name="error_wrong_current_password">Wrong current password</string>
-    <string name="successful_password_change">Password changed successfully</string>
     <string name="active">Active</string>
     <string name="expired">Expired</string>
     <string name="no_expiration">No expiration</string>
     <string name="retry">Retry</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="issue_credentials">Issue credentials</string>
 
     <string name="vc_type_email">Proof of E-mail address</string>
@@ -98,7 +95,6 @@
     <string name="jws">JWS</string>
     <string name="credential_proof">Credential Proof</string>
     <string name="affinidi_id">AffinidiID</string>
-    <string name="logo_explanation">An unofficial VC wallet built with Affinidi API for learning purpose</string>
     <string name="vc_issuance_successful">A new VC has been issued! Check the credentials list.</string>
     <string name="already_have_credential">You already have this credential in the wallet.</string>
     <string name="no_credentials_stub_text">You have no credentials in the wallet. Click + to issue your first one!</string>

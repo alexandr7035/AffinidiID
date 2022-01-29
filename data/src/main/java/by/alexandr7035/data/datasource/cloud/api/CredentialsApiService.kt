@@ -16,9 +16,6 @@ interface CredentialsApiService {
     @GET("$WALLET_API_BASE_URL/api/v1/wallet/credentials")
     suspend fun getAllCredentials(@Header("Authorization") accessToken: String): Response<List<SignedCredential>>
 
-    @GET("$WALLET_API_BASE_URL/api/v1/wallet/credentials/{id}")
-    suspend fun getCredentialById(@Header("Authorization") accessToken: String, @Path("id") credentialId: String): Response<SignedCredential>
-
     @POST("$ISSUER_API_BASE_URL/api/v1/vc/build-unsigned")
     suspend fun buildUnsignedVCObject(@Body body: BuildUnsignedVcReq): Response<BuildUnsignedVcRes>
 

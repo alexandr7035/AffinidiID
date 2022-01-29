@@ -99,7 +99,7 @@ object DomainModule {
 
     @Provides
     fun provideVerifyCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): VerifyCredentialUseCase {
-        return VerifyCredentialUseCase(credentialsRepository, authStateUseCase)
+        return VerifyCredentialUseCase(credentialsRepository)
     }
 
     @Provides

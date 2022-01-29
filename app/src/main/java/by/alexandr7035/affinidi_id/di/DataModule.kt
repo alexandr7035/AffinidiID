@@ -76,8 +76,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideAuthDataStorage(application: Application): ProfileStorage {
-        return ProfileStorageImpl(application)
+    fun provideAuthDataStorage(@ApplicationContext context: Context): ProfileStorage {
+        return ProfileStorageImpl(context)
     }
 
     @Provides

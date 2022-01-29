@@ -111,7 +111,7 @@
 
         <ImageView
             android:id="@+id/copyUserDidBtn"
-            android:contentDescription="@string/cd_copy_username"
+            android:contentDescription="@string/cd_copy_did"
             android:clickable="true"
             android:focusable="true"
             android:background="?android:attr/actionBarItemBackground"
