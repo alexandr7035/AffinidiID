@@ -5,13 +5,20 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.widget.Toast
+import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
 
 fun Context.showToast(message: String, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, message, duration).show()
 }
 
+fun Context.vibrate(vibrationMode: VibrationMode) {
+    // Time mills for modes
+    val vibrationTimeMills = when (vibrationMode) {
+        VibrationMode.SHORT -> 200
+        VibrationMode.MEDIUM -> 500
+        VibrationMode.LONG -> 1000
+    }.toLong()
 
-fun Context.vibrate(vibrationTimeMills: Long) {
     val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         this.getSystemService(Context.VIBRATOR_MANAGER_SERVICE)
     } else {

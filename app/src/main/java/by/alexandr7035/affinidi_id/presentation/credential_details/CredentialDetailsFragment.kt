@@ -17,6 +17,7 @@ import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.core.extensions.vibrate
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -116,8 +117,7 @@ class CredentialDetailsFragment : Fragment() {
                         snackBarMode = verificationResult.validationResultSnackBarMode
                     )
 
-                    // TODO int resource
-                    requireContext().vibrate(vibrationTimeMills = 200)
+                    requireContext().vibrate(VibrationMode.SHORT)
                 }
 
                 is VerificationModelUi.Fail -> {
