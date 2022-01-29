@@ -5,6 +5,7 @@ import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
+import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
 import by.alexandr7035.affinidi_id.presentation.credentials_list.vc_fields_recycler.VCFieldItem
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
@@ -14,7 +15,8 @@ import javax.inject.Inject
 class CredentialsListMapperImpl @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val credentialStatusMapper: CredentialStatusMapper,
-    private val credentialTypeMapper: CredentialTypeMapper
+    private val credentialTypeMapper: CredentialTypeMapper,
+    private val errorTypeMapper: ErrorTypeMapper
 ) : CredentialsListMapper {
 
     override fun map(domainCredentials: CredentialsListResModel): CredentialListUiModel {
@@ -64,15 +66,11 @@ class CredentialsListMapperImpl @Inject constructor(
             }
 
             is CredentialsListResModel.Fail -> {
-                CredentialListUiModel.Fail(domainCredentials.errorType)
+                CredentialListUiModel.Fail(errorUi = errorTypeMapper.map(errorType = domainCredentials.errorType))
             }
 
             is CredentialsListResModel.Loading -> {
-                CredentialListUiModel.Loading()
-            }
-
-            else -> {
-                throw RuntimeException("Unknown model type")
+                CredentialListUiModel.Loading
             }
         }
     }

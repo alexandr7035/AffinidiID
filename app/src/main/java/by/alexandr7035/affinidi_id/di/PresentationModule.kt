@@ -1,6 +1,8 @@
 package by.alexandr7035.affinidi_id.di
 
 import android.content.Context
+import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
+import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapperImpl
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
@@ -28,9 +30,10 @@ object PresentationModule {
     fun provideCredentialsListMapper(
         resourceProvider: ResourceProvider,
         credentialStatusMapper: CredentialStatusMapper,
-        credentialTypeMapper: CredentialTypeMapper
+        credentialTypeMapper: CredentialTypeMapper,
+        errorTypeMapper: ErrorTypeMapper
     ): CredentialsListMapper {
-        return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper, credentialTypeMapper)
+        return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper, credentialTypeMapper, errorTypeMapper)
     }
 
     @Provides
@@ -41,5 +44,10 @@ object PresentationModule {
     @Provides
     fun provideCredentialStatusMapper(resourceProvider: ResourceProvider): CredentialStatusMapper {
         return CredentialStatusMapperImpl(resourceProvider)
+    }
+
+    @Provides
+    fun provideErrorTypeMapper(resourceProvider: ResourceProvider): ErrorTypeMapper {
+        return ErrorTypeMapperImpl(resourceProvider)
     }
 }

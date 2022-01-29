@@ -1,11 +1,11 @@
 package by.alexandr7035.affinidi_id.presentation.credentials_list
 
-import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.presentation.common.errors.DetailedErrorUi
 
-abstract class CredentialListUiModel {
+sealed class CredentialListUiModel {
     class Success(val credentials: List<CredentialItemUiModel>): CredentialListUiModel()
 
-    class Fail(val errorType: ErrorType): CredentialListUiModel()
+    class Fail(val errorUi: DetailedErrorUi): CredentialListUiModel()
 
-    class Loading(): CredentialListUiModel()
+    object Loading : CredentialListUiModel()
 }

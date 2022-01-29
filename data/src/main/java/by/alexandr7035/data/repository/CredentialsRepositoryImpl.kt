@@ -52,7 +52,7 @@ class CredentialsRepositoryImpl @Inject constructor(
             // Always try firstly return cache
             // If empty show loading UI
             if (cacheCredentials.signedCredentials.isEmpty()) {
-                emit(CredentialsListResModel.Loading())
+                emit(CredentialsListResModel.Loading)
             } else {
                 emit(CredentialsListResModel.Success(credentials = domainCache))
             }
