@@ -12,12 +12,15 @@ import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
+import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentChangePasswordBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -68,8 +71,11 @@ class ChangePasswordFragment : Fragment() {
 
             when (result) {
                 is ChangePasswordResModel.Success -> {
-                    // TODO dialog
-                    requireContext().showToast(getString(R.string.successful_password_change))
+                    binding.root.showSnackBar(
+                        message = getString(R.string.password_changed_successfully),
+                        snackBarMode = SnackBarMode.Neutral,
+                        snackBarLength = Snackbar.LENGTH_SHORT
+                    )
                 }
                 is ChangePasswordResModel.Fail -> {
                     when (result.errorType) {

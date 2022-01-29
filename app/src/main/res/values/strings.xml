@@ -30,8 +30,8 @@
     <string name="profile">Profile</string>
     <string name="your_did">Your DID</string>
     <string name="your_username">Your username</string>
-    <string name="your_did_copied">Your DID has been copied!</string>
-    <string name="your_username_copied">Your username has been copied!</string>
+    <string name="your_did_copied">Your DID has been copied.</string>
+    <string name="your_username_copied">Your username has been copied.</string>
     <string name="your_credentials">Your credentials</string>
     <string name="contacts">Contacts</string>
     <string name="your_affinidi_id">Your Affinidi ID</string>
@@ -55,7 +55,7 @@
     <string name="continue_text">Continue</string>
     <string name="set_new_password">Set new password</string>
     <string name="confirm_password_reset">Confirm new password</string>
-    <string name="password_changed_successfully">Your password has been successfully changed. Try to sign in.</string>
+    <string name="password_changed_successfully">Your password has been successfully changed.</string>
 
     <string name="reset_password_stage_1">1/3 Specify username</string>
     <string name="reset_password_stage_2">2/3 Set new password</string>
@@ -99,5 +99,6 @@
     <string name="credential_proof">Credential Proof</string>
     <string name="affinidi_id">AffinidiID</string>
     <string name="logo_explanation">An unofficial VC wallet built with Affinidi API for learning purpose</string>
+    <string name="vc_issuance_successful">A new VC has been issued! Check the credentials list.</string>
 
 </resources>

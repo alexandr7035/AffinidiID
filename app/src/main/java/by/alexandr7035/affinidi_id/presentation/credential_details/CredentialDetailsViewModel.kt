@@ -13,6 +13,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcRe
 import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
@@ -150,13 +151,13 @@ class CredentialDetailsViewModel @Inject constructor(
                     val uiVerificationModel = when (res.isValid) {
                         true -> {
                             VerificationModelUi.Success(
-                                isValid = res.isValid,
+                                validationResultSnackBarMode = SnackBarMode.Positive,
                                 messageText = resourceProvider.getString(R.string.vc_is_valid),
                             )
                         }
                         false -> {
                             VerificationModelUi.Success(
-                                isValid = res.isValid,
+                                validationResultSnackBarMode = SnackBarMode.Negative,
                                 messageText = resourceProvider.getString(R.string.vc_is_not_valid),
                             )
                         }

@@ -11,15 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.clearError
-import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
-import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
-import by.alexandr7035.affinidi_id.core.extensions.showToast
+import by.alexandr7035.affinidi_id.core.extensions.*
 import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordConfirmationBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordResetResponseModel
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,8 +63,11 @@ class ResetPasswordConfirmationFragment : Fragment() {
                     findNavController().navigateSafe(ResetPasswordConfirmationFragmentDirections
                         .actionGlobalLoginFragment())
 
-                    // TODO show success dialog
-                    requireContext().showToast(getString(R.string.password_changed_successfully))
+                    binding.root.showSnackBar(
+                        message = getString(R.string.password_changed_successfully),
+                        snackBarMode = SnackBarMode.Neutral,
+                        snackBarLength = Snackbar.LENGTH_SHORT
+                    )
                 }
 
                 is ConfirmPasswordResetResponseModel.Fail -> {

@@ -12,11 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.FragmentIssueCredentialBinding
 import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -63,10 +66,13 @@ class IssueCredentialFragment : Fragment(), CredentialClickListener {
         viewModel.getIssueCredentialLiveData().observe(viewLifecycleOwner, { result ->
             binding.progressView.root.isVisible = false
 
-            // TODO normal message
             when (result) {
                 is IssueCredentialResModel.Success -> {
-                    requireContext().showToast("Issue is successfull")
+                    binding.root.showSnackBar(
+                        message = getString(R.string.vc_issuance_successful),
+                        snackBarMode = SnackBarMode.Neutral,
+                        snackBarLength = Snackbar.LENGTH_SHORT
+                    )
                 }
                 is IssueCredentialResModel.Fail -> {
                     requireContext().showToast(result.errorType.name)

@@ -15,6 +15,7 @@ import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.ActivityMainBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.login.LoginFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,11 +82,14 @@ class MainActivity : AppCompatActivity() {
                 // When fail, it depends.
                 is AuthCheckResModel.Fail -> {
                     when (authCheckResult.errorType) {
-                        // That exactly means token has expired
-                        // Stay on login fragment and show messag
+                        // That means token has expired
+                        // Stay on login fragment and show message
                         ErrorType.AUTHORIZATION_ERROR -> {
-                            // TODO logics with saved password here
-                            binding.root.showSnackBar(getString(R.string.eror_auth), isPositive = false, Snackbar.LENGTH_LONG)
+                            binding.root.showSnackBar(
+                                getString(R.string.eror_auth),
+                                SnackBarMode.Negative,
+                                Snackbar.LENGTH_LONG
+                            )
                         }
 
                         // No connection with the internet

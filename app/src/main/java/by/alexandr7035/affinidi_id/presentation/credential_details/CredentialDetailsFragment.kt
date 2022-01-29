@@ -109,10 +109,11 @@ class CredentialDetailsFragment : Fragment() {
 
             when (verificationResult) {
                 is VerificationModelUi.Success -> {
+
                     binding.root.showSnackBar(
                         message = verificationResult.messageText,
                         snackBarLength = Snackbar.LENGTH_LONG,
-                        isPositive = verificationResult.isValid
+                        snackBarMode = verificationResult.validationResultSnackBarMode
                     )
 
                     // TODO int resource

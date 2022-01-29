@@ -11,11 +11,14 @@ import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.copyToClipboard
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.databinding.FragmentProfileBinding
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,14 +60,14 @@ class ProfileFragment : Fragment() {
             val clipLabel = getString(R.string.your_username_copied)
             binding.userNameView.copyToClipboard(clipLabel)
 
-            Toast.makeText(requireContext(), clipLabel, Toast.LENGTH_LONG).show()
+            binding.root.showSnackBar(clipLabel, SnackBarMode.Neutral, Snackbar.LENGTH_SHORT)
         }
 
         binding.copyUserDidBtn.setOnClickListener {
             val clipLabel = getString(R.string.your_did_copied)
             binding.userDidView.copyToClipboard(clipLabel)
 
-            Toast.makeText(requireContext(), clipLabel, Toast.LENGTH_LONG).show()
+            binding.root.showSnackBar(clipLabel, SnackBarMode.Neutral, Snackbar.LENGTH_SHORT)
         }
 
     }

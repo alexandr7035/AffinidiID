@@ -30,4 +30,5 @@
     <!-- TODO attrs to use with dark theme -->
     <color name="snackbar_positive">#71E486</color>
     <color name="snackbar_negative">#D96666</color>
+    <color name="snackbar_neutral">?attr/colorSecondary</color>
 </resources>
