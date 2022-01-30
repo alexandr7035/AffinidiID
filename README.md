@@ -66,5 +66,5 @@ The last version covers the following use cases:
 ### Schemas
 
 <p align="left">
-<img src="doc/vc_models_schema.webp" width="90%"/>
+<img src="doc/vc_models_schema.webp" width="100%"/>
 </p>
