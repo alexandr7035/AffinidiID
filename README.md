@@ -50,7 +50,7 @@ The last version covers the following use cases:
 
 ## Technical details
 
-### Overveiew
+### Overview
 
 - Attempts to use clean architecture approach. Presentation / data / domain layers each in a separate module.
 - Single activity approach and [Navigation component](https://developer.android.com/guide/navigation) (with SafeArgs) to navigate across fragments.
