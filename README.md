@@ -5,6 +5,8 @@
 * [Used APIs](#used-apis)
 * [Implemented use cases](#implemented-use-cases)
 * [Technical details](#technical-details)
+   * [Overveiew](#overveiew)
+   * [Schemas](#schemas)
 
 
 ## Description
@@ -47,6 +49,9 @@ The last version covers the following use cases:
 "Edit username" feature was deleted due to API issue. The original name becomes lost immediately after OTP is sent (without confirmation).
 
 ## Technical details
+
+### Overveiew
+
 - Attempts to use clean architecture approach. Presentation / data / domain layers each in a separate module.
 - Single activity approach and [Navigation component](https://developer.android.com/guide/navigation) (with SafeArgs) to navigate across fragments.
 - Kotlin coroutines for asynchronous operations.
@@ -57,3 +62,9 @@ The last version covers the following use cases:
 - [Room](https://developer.android.com/jetpack/androidx/releases/room) for credentials caching.
 - [Timber](https://github.com/JakeWharton/timber) for logging.
 - [CircleImageView](https://github.com/hdodenhof/CircleImageView) for rounded images, [Coil](https://github.com/coil-kt/coil) to load SVG images into ImageView.
+
+### Schemas
+
+<p align="left">
+<img src="doc/vc_models_schema.webp" width="90%"/>
+</p>
