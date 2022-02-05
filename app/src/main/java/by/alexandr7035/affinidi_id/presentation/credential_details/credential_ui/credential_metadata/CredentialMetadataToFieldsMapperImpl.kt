@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details.credential_metadata
+package by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_metadata
 
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.domain.core.extensions.getStringDateFromLong

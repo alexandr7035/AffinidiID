@@ -3,12 +3,14 @@ package by.alexandr7035.affinidi_id.di
 import android.content.Context
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_metadata.CredentialMetadataToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_metadata.CredentialMetadataToFieldsMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_proof.CredentialProofToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_proof.CredentialProofToFieldsMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject.CredentialSubjectToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject.CredentialSubjectToFieldsMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.CredentialToDetailsModelMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.CredentialToDetailsModelMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_metadata.CredentialMetadataToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_metadata.CredentialMetadataToFieldsMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_proof.CredentialProofToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_proof.CredentialProofToFieldsMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject.CredentialSubjectToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject.CredentialSubjectToFieldsMapperImpl
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
@@ -40,6 +42,17 @@ object PresentationModule {
         errorTypeMapper: ErrorTypeMapper
     ): CredentialsListMapper {
         return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper, credentialTypeMapper, errorTypeMapper)
+    }
+
+    @Provides
+    fun provideCredentialToDetailsModelMapper(
+        statusMapper: CredentialStatusMapper,
+        typeMapper: CredentialTypeMapper,
+        credentialSubjectMapper: CredentialSubjectToFieldsMapper,
+        metadataMapper: CredentialMetadataToFieldsMapper,
+        proofMapper: CredentialProofToFieldsMapper
+    ): CredentialToDetailsModelMapper {
+        return CredentialToDetailsModelMapperImpl(statusMapper, typeMapper, credentialSubjectMapper, metadataMapper, proofMapper)
     }
 
     @Provides

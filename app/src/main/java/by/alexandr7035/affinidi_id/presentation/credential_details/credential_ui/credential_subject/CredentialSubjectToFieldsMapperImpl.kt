@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject
+package by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject
 
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataItem
