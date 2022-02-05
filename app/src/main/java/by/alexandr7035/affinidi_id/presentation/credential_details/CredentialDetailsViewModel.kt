@@ -90,16 +90,11 @@ class CredentialDetailsViewModel @Inject constructor(
 
                         // DEBUG
                         // FIXME remove
-                        val testJsonString = "{\"email\":\"clean_ref@mailto.plus\", \"name\":\"Name\"}"
-                        val jsonObject = gson.fromJson(testJsonString, JsonObject::class.java)
+//                        val testJsonString = "{\"email\":\"clean_ref@mailto.plus\", \"name\":\"Name\"}"
 
-                        val credentialSubjectItems = try {
-                             credentialSubjectToFieldsMapper.map(json)
-                        }
-                        catch (e: Exception) {
-                            e.printStackTrace()
-                            emptyList()
-                        }
+                        // TODO handle errors inside
+                        val jsonObject = gson.fromJson(res.credential.credentialSubjectData, JsonObject::class.java)
+                        val credentialSubjectItems = credentialSubjectToFieldsMapper.map(jsonObject)
 
                         val credentialProofItems = listOf(
                             CredentialDataItem.Field(

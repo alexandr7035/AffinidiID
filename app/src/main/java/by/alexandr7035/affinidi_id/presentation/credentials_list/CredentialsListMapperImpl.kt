@@ -37,27 +37,27 @@ class CredentialsListMapperImpl @Inject constructor(
                     val credentialStatus = credentialStatusMapper.map(it.credentialStatus)
                     val credentialType = credentialTypeMapper.map(vcType = it.vcType)
 
-                    val vcFields = when (it.vcType) {
-                        VcType.EMAIL_CREDENTIAL -> {
-                            val vcSubject = it.credentialSubjectData as EmailCredentialSubjectData
-                            listOf(
-                                VCFieldItem(
-                                    type = resourceProvider.getString(R.string.address),
-                                    value = vcSubject.email
-                                )
-                            )
-                        }
-                        else -> {
-                            emptyList()
-                        }
-                    }
+//                    val vcFields = when (it.vcType) {
+//                        VcType.EMAIL_CREDENTIAL -> {
+//                            val vcSubject = it.credentialSubjectData as EmailCredentialSubjectData
+//                            listOf(
+//                                VCFieldItem(
+//                                    type = resourceProvider.getString(R.string.address),
+//                                    value = vcSubject.email
+//                                )
+//                            )
+//                        }
+//                        else -> {
+//                            emptyList()
+//                        }
+//                    }
 
                     CredentialItemUiModel(
                         id = it.id,
                         expirationDate = textExpirationDate,
                         credentialTypeString = credentialType,
                         credentialStatus = credentialStatus,
-                        vcFields = vcFields,
+                        vcFields = emptyList(),// TODO delete
                         isUnknownType = isUnknownVcType
                     )
                 }

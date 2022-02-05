@@ -9,6 +9,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.C
 import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.model.SignedCredential
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -47,6 +48,8 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
             }
         }
 
+        val credentialSubjectString = gson.toJson(signedCredential.credentialSubject.data, JsonObject::class.java)
+
         // Prepare raw VC
         val rawVc = gson.toJson(signedCredential, SignedCredential::class.java)
         Timber.debug("RAW VC DATA $rawVc")
@@ -68,7 +71,7 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
             holderDid = signedCredential.holder.holderDid,
             issuerDid = signedCredential.issuerDid,
             credentialStatus = credentialStatus,
-            credentialSubjectData = domainCredentialSubjectData,
+            credentialSubjectData = credentialSubjectString,
             credentialProof = proof,
             rawVCData = rawVc
         )
