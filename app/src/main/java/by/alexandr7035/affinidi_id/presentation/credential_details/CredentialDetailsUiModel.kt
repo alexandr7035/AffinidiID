@@ -8,6 +8,7 @@ sealed class CredentialDetailsUiModel {
         val credentialId: String,
         val credentialType: String,
         val rawVcDataPrettyFormatted: String,
+        val credentialSubjectItems: List<CredentialDataItem>,
         val metadataItems: List<CredentialDataItem>,
         val proofItems: List<CredentialDataItem>,
         val credentialStatus: CredentialStatusUi

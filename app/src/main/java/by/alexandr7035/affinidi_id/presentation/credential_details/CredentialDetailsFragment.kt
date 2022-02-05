@@ -42,6 +42,10 @@ class CredentialDetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        val credentialSubjectAdapter = CredentialDataAdapter()
+        binding.credentialSubjectRecycler.adapter = credentialSubjectAdapter
+        binding.credentialSubjectRecycler.layoutManager = LinearLayoutManager(requireContext())
+
         val metadataAdapter = CredentialDataAdapter()
         binding.metadataRecycler.adapter = metadataAdapter
         binding.metadataRecycler.layoutManager = LinearLayoutManager(requireContext())
@@ -56,6 +60,7 @@ class CredentialDetailsFragment : Fragment() {
             when (credentialData) {
                 is CredentialDetailsUiModel.Success -> {
                     // Set fields to cards
+                    credentialSubjectAdapter.setItems(credentialData.credentialSubjectItems)
                     metadataAdapter.setItems(credentialData.metadataItems)
                     proofAdapter.setItems(credentialData.proofItems)
 

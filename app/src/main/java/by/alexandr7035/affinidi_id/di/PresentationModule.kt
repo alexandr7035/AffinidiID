@@ -3,6 +3,8 @@ package by.alexandr7035.affinidi_id.di
 import android.content.Context
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject.CredentialSubjectToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject.CredentialSubjectToFieldsMapperImpl
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
@@ -44,6 +46,11 @@ object PresentationModule {
     @Provides
     fun provideCredentialStatusMapper(resourceProvider: ResourceProvider): CredentialStatusMapper {
         return CredentialStatusMapperImpl(resourceProvider)
+    }
+
+    @Provides
+    fun provideCredentialSubjectToFieldsMapper(): CredentialSubjectToFieldsMapper {
+        return CredentialSubjectToFieldsMapperImpl()
     }
 
     @Provides

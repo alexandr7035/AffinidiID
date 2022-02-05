@@ -14,6 +14,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcRe
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject.CredentialSubjectToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
@@ -33,6 +34,7 @@ class CredentialDetailsViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val credentialStatusMapper: CredentialStatusMapper,
     private val credentialTypeMapper: CredentialTypeMapper,
+    private val credentialSubjectToFieldsMapper: CredentialSubjectToFieldsMapper
 ) : ViewModel() {
 
     private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
@@ -85,6 +87,12 @@ class CredentialDetailsViewModel @Inject constructor(
                         val json = gson.fromJson(res.credential.rawVCData, JsonObject::class.java)
                         val prettyFormattedVC = gson.toJson(json, JsonObject::class.java)
 
+                        // DEBUG
+                        // FIXME remove
+                        val testJsonString = "{\"email\":\"clean_ref@mailto.plus\", \"name\":\"Name\"}"
+                        val jsonObject = gson.fromJson(testJsonString, JsonObject::class.java)
+                        val credentialSubjectItems = credentialSubjectToFieldsMapper.map(jsonObject)
+
                         val credentialProofItems = listOf(
                             CredentialDataItem.Field(
                                 name = resourceProvider.getString(R.string.created),
@@ -114,6 +122,7 @@ class CredentialDetailsViewModel @Inject constructor(
 
                         CredentialDetailsUiModel.Success(
                             metadataItems = dataItems,
+                            credentialSubjectItems = credentialSubjectItems,
                             credentialType = credentialType,
                             credentialId = res.credential.id,
                             rawVcDataPrettyFormatted = prettyFormattedVC,
