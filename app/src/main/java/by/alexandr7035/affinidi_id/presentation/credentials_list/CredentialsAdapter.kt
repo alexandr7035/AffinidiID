@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import by.alexandr7035.affinidi_id.databinding.ViewCredentialItemBinding
 import by.alexandr7035.affinidi_id.databinding.ViewUnknownCredentialItemBinding
-import by.alexandr7035.affinidi_id.presentation.credentials_list.vc_fields_recycler.VCFieldsAdapter
 
 class CredentialsAdapter(private val credentialClickListener: CredentialClickListener): RecyclerView.Adapter<CredentialsAdapter.CredentialViewHolder>() {
 
@@ -60,8 +59,6 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
                 binding.credentialExpires.text = item.expirationDate
                 binding.statusLabel.text = item.credentialStatus.status
                 binding.statusMark.setColorFilter(item.credentialStatus.statusColor)
-                binding.fieldsRecycler.adapter = VCFieldsAdapter(item.vcFields)
-                binding.fieldsRecycler.suppressLayout(true)
 
                 binding.root.setOnClickListener {
                     credentialClickListener.onCredentialClicked(item.id)
