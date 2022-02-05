@@ -25,6 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -91,7 +92,14 @@ class CredentialDetailsViewModel @Inject constructor(
                         // FIXME remove
                         val testJsonString = "{\"email\":\"clean_ref@mailto.plus\", \"name\":\"Name\"}"
                         val jsonObject = gson.fromJson(testJsonString, JsonObject::class.java)
-                        val credentialSubjectItems = credentialSubjectToFieldsMapper.map(jsonObject)
+
+                        val credentialSubjectItems = try {
+                             credentialSubjectToFieldsMapper.map(json)
+                        }
+                        catch (e: Exception) {
+                            e.printStackTrace()
+                            emptyList()
+                        }
 
                         val credentialProofItems = listOf(
                             CredentialDataItem.Field(

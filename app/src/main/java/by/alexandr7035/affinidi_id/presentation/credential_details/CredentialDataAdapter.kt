@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailFieldBinding
-import by.alexandr7035.affinidi_id.databinding.ViewVcDetailSpacingBinding
+import by.alexandr7035.affinidi_id.databinding.ViewVcDetailTitleOnlyBinding
 
 class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataItemViewHolder>() {
 
@@ -23,11 +23,9 @@ class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataIte
             is CredentialDataItem.Field -> {
                 FIELD_ITEM_TYPE
             }
-            is CredentialDataItem.Spacing -> {
-                SPACING_ITEM_TYPE
-            }
-            else -> {
-                throw RuntimeException("VC details: unknown viewType")
+
+            is CredentialDataItem.TitleOnly -> {
+                TITLE_ITEM_TYPE
             }
         }
     }
@@ -38,14 +36,25 @@ class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataIte
                 val binding = ViewVcDetailFieldBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 DataItemViewHolder.FieldViewHolder(binding)
             }
+
+            TITLE_ITEM_TYPE -> {
+                val binding = ViewVcDetailTitleOnlyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                DataItemViewHolder.TitleOnlyViewHolder(binding)
+            }
+
             else -> {
-                val binding = ViewVcDetailSpacingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                DataItemViewHolder.SpacingViewHolder(binding)
+                throw NotImplementedError("viewType $viewType is not implemented")
             }
         }
     }
 
     override fun onBindViewHolder(holder: DataItemViewHolder, position: Int) {
+        val dataItem = items[position]
+
+        val holderParams = holder.itemView.layoutParams as RecyclerView.LayoutParams
+        holderParams.marginStart = dataItem.offsetLevel * OFFSET_IN_PIXELS
+        holder.itemView.layoutParams = holderParams
+
         holder.bind(items[position])
     }
 
@@ -65,15 +74,19 @@ class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataIte
             }
         }
 
-        class SpacingViewHolder(override val binding: ViewVcDetailSpacingBinding): DataItemViewHolder(binding) {
+        class TitleOnlyViewHolder(override val binding: ViewVcDetailTitleOnlyBinding): DataItemViewHolder(binding) {
             override fun bind(dataItem: CredentialDataItem) {
-
+                val item = dataItem as CredentialDataItem.TitleOnly
+                binding.typeView.text = item.name
             }
         }
+
     }
 
     companion object {
         private const val FIELD_ITEM_TYPE = 1
-        private const val SPACING_ITEM_TYPE = 2
+        private const val TITLE_ITEM_TYPE = 2
+
+        private const val OFFSET_IN_PIXELS = 56
     }
 }

@@ -4,5 +4,5 @@ import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDat
 import com.google.gson.JsonObject
 
 interface CredentialSubjectToFieldsMapper {
-    fun map(jsonObject: JsonObject): List<CredentialDataItem>
+    fun map(jsonObject: JsonObject, offsetLevel: Int = 0): List<CredentialDataItem>
 }
