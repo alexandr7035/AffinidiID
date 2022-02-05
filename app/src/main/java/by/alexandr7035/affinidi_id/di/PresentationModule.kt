@@ -3,6 +3,10 @@ package by.alexandr7035.affinidi_id.di
 import android.content.Context
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_metadata.CredentialMetadataToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_metadata.CredentialMetadataToFieldsMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_proof.CredentialProofToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_proof.CredentialProofToFieldsMapperImpl
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject.CredentialSubjectToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject.CredentialSubjectToFieldsMapperImpl
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
@@ -51,6 +55,16 @@ object PresentationModule {
     @Provides
     fun provideCredentialSubjectToFieldsMapper(): CredentialSubjectToFieldsMapper {
         return CredentialSubjectToFieldsMapperImpl()
+    }
+
+    @Provides
+    fun provideCredentialMetadataToFieldsMapper(resourceProvider: ResourceProvider): CredentialMetadataToFieldsMapper {
+        return CredentialMetadataToFieldsMapperImpl(resourceProvider)
+    }
+
+    @Provides
+    fun provideCredentialProofToFieldsMapper(resourceProvider: ResourceProvider): CredentialProofToFieldsMapper {
+        return CredentialProofToFieldsMapperImpl(resourceProvider)
     }
 
     @Provides

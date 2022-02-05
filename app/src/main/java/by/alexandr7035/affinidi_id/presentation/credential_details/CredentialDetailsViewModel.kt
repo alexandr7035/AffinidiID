@@ -14,6 +14,8 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcRe
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_metadata.CredentialMetadataToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.credential_proof.CredentialProofToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_subject.CredentialSubjectToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
@@ -35,7 +37,9 @@ class CredentialDetailsViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val credentialStatusMapper: CredentialStatusMapper,
     private val credentialTypeMapper: CredentialTypeMapper,
-    private val credentialSubjectToFieldsMapper: CredentialSubjectToFieldsMapper
+    private val credentialSubjectToFieldsMapper: CredentialSubjectToFieldsMapper,
+    private val credentialMetadataToFieldsMapper: CredentialMetadataToFieldsMapper,
+    private val credentialProofToFieldsMapper: CredentialProofToFieldsMapper
 ) : ViewModel() {
 
     private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
@@ -51,80 +55,25 @@ class CredentialDetailsViewModel @Inject constructor(
                 val fieldsList = when (res) {
                     is GetCredentialByIdResModel.Success -> {
 
-                        // Cut DID after ";" (initial state, etc.)
-                        val formattedIssuerDid = res.credential.issuerDid.split(";").first()
                         val credentialStatusUi = credentialStatusMapper.map(res.credential.credentialStatus)
                         val credentialType = credentialTypeMapper.map(res.credential.vcType)
 
-                        val dataItems = listOf(
-
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.credential_id),
-                                value = res.credential.id
-                            ),
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.issuer),
-                                value = formattedIssuerDid
-                            ),
-
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.holder),
-                                value = res.credential.holderDid
-                            ),
-
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.issuance_date),
-                                value = res.credential.issuanceDate.getStringDateFromLong(DATE_FORMAT)
-                            ),
-
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.expiration_date),
-                                value = res.credential.expirationDate?.getStringDateFromLong(DATE_FORMAT)
-                                    ?: resourceProvider.getString(R.string.no_expiration)
-                            )
-                        )
-
-                        val gson = GsonBuilder().setPrettyPrinting().create()
-                        val json = gson.fromJson(res.credential.rawVCData, JsonObject::class.java)
-                        val prettyFormattedVC = gson.toJson(json, JsonObject::class.java)
-
-                        // DEBUG
-                        // FIXME remove
-//                        val testJsonString = "{\"email\":\"clean_ref@mailto.plus\", \"name\":\"Name\"}"
+                        val metadataItems = credentialMetadataToFieldsMapper.map(res.credential)
+                        val credentialProofItems = credentialProofToFieldsMapper.map(res.credential)
 
                         // TODO handle errors inside
+                        val gson = GsonBuilder().setPrettyPrinting().create()
+
                         val jsonObject = gson.fromJson(res.credential.credentialSubjectData, JsonObject::class.java)
                         val credentialSubjectItems = credentialSubjectToFieldsMapper.map(jsonObject)
 
-                        val credentialProofItems = listOf(
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.created),
-                                value = res.credential.credentialProof.creationDate,
-                            ),
 
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.type),
-                                value = res.credential.credentialProof.type,
-                            ),
+                        val json = gson.fromJson(res.credential.rawVCData, JsonObject::class.java)
+                        val prettyFormattedVC = gson.toJson(json, JsonObject::class.java)
 
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.proof_purpose),
-                                value = res.credential.credentialProof.proofPurpose,
-                            ),
-
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.verification_method),
-                                value = res.credential.credentialProof.verificationMethod,
-                            ),
-
-                            CredentialDataItem.Field(
-                                name = resourceProvider.getString(R.string.jws),
-                                value = res.credential.credentialProof.jws,
-                            ),
-                        )
 
                         CredentialDetailsUiModel.Success(
-                            metadataItems = dataItems,
+                            metadataItems = metadataItems,
                             credentialSubjectItems = credentialSubjectItems,
                             credentialType = credentialType,
                             credentialId = res.credential.id,
@@ -196,9 +145,5 @@ class CredentialDetailsViewModel @Inject constructor(
 
     fun getVerificationLiveData(): LiveData<VerificationModelUi> {
         return verificationLiveData
-    }
-
-    companion object {
-        private const val DATE_FORMAT = "dd MMM yyyy HH:mm:SS"
     }
 }
