@@ -100,4 +100,7 @@
     <string name="no_credentials_stub_text">You have no credentials in the wallet. Click + to issue your first one!</string>
     <string name="credential_data">Credential data</string>
 
+    <string name="share_vc">Share VC</string>
+    <string name="qr_code_explanation">Show this QR code to the Verifier so that he can verify the credential.</string>
+
 </resources>

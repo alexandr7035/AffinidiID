@@ -62,5 +62,6 @@
     <dimen name="input_form_label_text">20sp</dimen>
     <dimen name="input_field_text">18sp</dimen>
     <dimen name="input_field_padding_vertical">12dp</dimen>
+    <dimen name="qr_code_image_size">160dp</dimen>
 
 </resources>
