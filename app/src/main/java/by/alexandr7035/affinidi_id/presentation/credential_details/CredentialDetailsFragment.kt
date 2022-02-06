@@ -75,7 +75,7 @@ class CredentialDetailsFragment : Fragment() {
 
                     binding.toolbar.setOnMenuItemClickListener {
                         when (it.itemId) {
-                            R.id.delete_item -> {
+                            R.id.item_delete -> {
                                 // Dialog to delete VC
                                 findNavController().navigateSafe(
                                     CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
@@ -83,6 +83,14 @@ class CredentialDetailsFragment : Fragment() {
                                     )
                                 )
                             }
+
+                            R.id.item_share -> {
+                                // Share VC dialog
+                                findNavController().navigateSafe(CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToShareCredentialFragment(
+                                    safeArgs.credentialId
+                                ))
+                            }
+
                         }
 
                         true

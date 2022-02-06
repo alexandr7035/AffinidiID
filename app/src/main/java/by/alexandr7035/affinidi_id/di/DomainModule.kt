@@ -108,7 +108,7 @@ object DomainModule {
     }
 
     @Provides
-    fun provideShareCredentialUseCase(credentialsRepository: CredentialsRepository): ShareCredentialUseCase {
-        return ShareCredentialUseCase(credentialsRepository)
+    fun provideShareCredentialUseCase(credentialsRepository: CredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): ShareCredentialUseCase {
+        return ShareCredentialUseCase(credentialsRepository, getAuthStateUseCase)
     }
 }

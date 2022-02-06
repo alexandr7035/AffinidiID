@@ -189,13 +189,17 @@ class CredentialsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun shareCredential(shareVcReq: ShareCredentialReqModel): ShareCredentialResModel {
+    override suspend fun shareCredential(shareVcReq: ShareCredentialReqModel, authState: AuthStateModel): ShareCredentialResModel {
         try {
-            val res = apiService.shareVC(credentialId = shareVcReq.credentialId)
+            val res = apiService.shareVC(credentialId = shareVcReq.credentialId, accessToken = authState.accessToken ?: "")
 
             return if (res.isSuccessful) {
                 val data = res.body() as ShareVcRes
-                ShareCredentialResModel.Success(data.qrCode)
+
+                // Cut to only base64 value
+                val base64 = data.qrCode.replace("data:image/png;base64,", "")
+
+                ShareCredentialResModel.Success(base64QrCode = base64)
             } else {
                 when (res.code()) {
                     401 -> ShareCredentialResModel.Fail(ErrorType.AUTHORIZATION_ERROR)

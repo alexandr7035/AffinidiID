@@ -192,6 +192,9 @@
         <action
             android:id="@+id/action_credentialDetailsFragment_to_credentialRawFragment"
             app:destination="@id/credentialRawFragment" />
+        <action
+            android:id="@+id/action_credentialDetailsFragment_to_shareCredentialFragment"
+            app:destination="@id/shareCredentialFragment" />
     </fragment>
 
     <fragment
@@ -203,5 +206,14 @@
             android:name="rawCredential"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/shareCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.share_credential.ShareCredentialFragment"
+        android:label="fragment_share_credential"
+        tools:layout="@layout/fragment_share_credential" >
+        <argument
+            android:name="credentialId"
+            app:argType="string" />
+    </dialog>
 
 </navigation>
