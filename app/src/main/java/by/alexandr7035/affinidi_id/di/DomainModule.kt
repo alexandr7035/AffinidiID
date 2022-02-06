@@ -106,4 +106,9 @@ object DomainModule {
     fun provideCheckIfHaveCredentialUseCase(credentialsRepository: CredentialsRepository): CheckIfHaveCredentialUseCase {
         return CheckIfHaveCredentialUseCase(credentialsRepository)
     }
+
+    @Provides
+    fun provideShareCredentialUseCase(credentialsRepository: CredentialsRepository): ShareCredentialUseCase {
+        return ShareCredentialUseCase(credentialsRepository)
+    }
 }

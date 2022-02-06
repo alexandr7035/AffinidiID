@@ -7,6 +7,8 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcRe
 import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.share.ShareCredentialReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.share.ShareCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
@@ -22,6 +24,7 @@ import by.alexandr7035.data.model.DataCredentialsList
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import by.alexandr7035.data.model.DataGetCredentialById
+import by.alexandr7035.data.model.network.credentials.share_vc.ShareVcRes
 import by.alexandr7035.data.model.network.verify_vcs.VerifyVCsReq
 import by.alexandr7035.data.model.network.verify_vcs.VerifyVCsRes
 import com.google.gson.Gson
@@ -126,12 +129,8 @@ class CredentialsRepositoryImpl @Inject constructor(
             } else {
                 when (res.code()) {
                     // TODO review and fix 401
-                    401 -> {
-                        DeleteVcResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
-                    }
-                    else -> {
-                        DeleteVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
-                    }
+                    401 -> DeleteVcResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    else -> DeleteVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
 
@@ -187,6 +186,29 @@ class CredentialsRepositoryImpl @Inject constructor(
         catch (e: Exception) {
             e.printStackTrace()
             return VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+        }
+    }
+
+    override suspend fun shareCredential(shareVcReq: ShareCredentialReqModel): ShareCredentialResModel {
+        try {
+            val res = apiService.shareVC(credentialId = shareVcReq.credentialId)
+
+            return if (res.isSuccessful) {
+                val data = res.body() as ShareVcRes
+                ShareCredentialResModel.Success(data.qrCode)
+            } else {
+                when (res.code()) {
+                    401 -> ShareCredentialResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    else -> ShareCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
+                }
+            }
+        } catch (appError: AppError) {
+            return ShareCredentialResModel.Fail(appError.errorType)
+        }
+        // Unknown exception
+        catch (e: Exception) {
+            e.printStackTrace()
+            return ShareCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
     }
 

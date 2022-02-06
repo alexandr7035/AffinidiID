@@ -3,6 +3,7 @@ package by.alexandr7035.data.datasource.cloud.api
 import by.alexandr7035.data.model.network.credentials.signed_vc.SignVcReq
 import by.alexandr7035.data.model.network.credentials.signed_vc.SignVcRes
 import by.alexandr7035.data.model.SignedCredential
+import by.alexandr7035.data.model.network.credentials.share_vc.ShareVcRes
 import by.alexandr7035.data.model.network.credentials.store_vc.StoreVCsReq
 import by.alexandr7035.data.model.network.credentials.store_vc.StoreVCsRes
 import by.alexandr7035.data.model.network.credentials.unsigned_vc.BuildUnsignedVcReq
@@ -32,6 +33,9 @@ interface CredentialsApiService {
     // Returns true if all the VCs are valid, false if at least one is not
     @POST("$VERIFIER_API_BASE_URL/api/v1/verifier/verify-vcs")
     suspend fun verifyVCs(@Body body: VerifyVCsReq): Response<VerifyVCsRes>
+
+    @POST("$WALLET_API_BASE_URL/api/v1/wallet/credentials/{id}/share")
+    suspend fun shareVC(@Path("id") credentialId: String): Response<ShareVcRes>
 
     companion object {
         // An annotation argument must be a compile-time constant
