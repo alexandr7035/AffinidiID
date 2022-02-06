@@ -16,7 +16,7 @@ import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.databinding.FragmentIssueCredentialBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssuingCredentialType
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -107,8 +107,8 @@ class IssueCredentialFragment : Fragment(), CredentialClickListener {
 
     // Handle credential issuance request here
     // TODO confirmation
-    override fun onClick(availableVcType: VcType) {
+    override fun onClick(availableIssuingCredentialType: IssuingCredentialType) {
         binding.progressView.root.isVisible = true
-        viewModel.issueCredential(availableVcType)
+        viewModel.issueCredential(availableIssuingCredentialType)
     }
 }

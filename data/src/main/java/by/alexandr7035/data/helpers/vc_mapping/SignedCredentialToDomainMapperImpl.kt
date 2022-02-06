@@ -1,8 +1,6 @@
 package by.alexandr7035.data.helpers.vc_mapping
 
 import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringFormat
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialProof
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus

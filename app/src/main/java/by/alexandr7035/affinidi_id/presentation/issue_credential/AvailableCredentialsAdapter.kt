@@ -37,7 +37,7 @@ class AvailableCredentialsAdapter(private val credentialClickListener: Credentia
             binding.issuerView.text = item.issuer
 
             binding.root.setOnClickListener {
-                credentialClickListener.onClick(item.vcType)
+                credentialClickListener.onClick(item.issuingCredentialType)
             }
         }
     }

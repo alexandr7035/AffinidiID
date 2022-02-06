@@ -1,8 +1,7 @@
 package by.alexandr7035.data.helpers.vc_mapping
 
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.CredentialSubjectData
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.UnknownCredentialSubjectData
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.credential_subject.CredentialSubjectData
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.credential_subject.EmailCredentialSubjectData
 import by.alexandr7035.data.model.CredentialSubject
 import com.google.gson.Gson
 import com.google.gson.JsonObject
