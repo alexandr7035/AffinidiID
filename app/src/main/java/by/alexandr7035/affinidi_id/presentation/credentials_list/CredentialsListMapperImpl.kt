@@ -2,18 +2,15 @@ package by.alexandr7035.affinidi_id.presentation.credentials_list
 
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
-import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import javax.inject.Inject
 
 class CredentialsListMapperImpl @Inject constructor(
     private val resourceProvider: ResourceProvider,
     private val credentialStatusMapper: CredentialStatusMapper,
-    private val credentialTypeMapper: CredentialTypeMapper,
     private val errorTypeMapper: ErrorTypeMapper
 ) : CredentialsListMapper {
 
@@ -28,19 +25,14 @@ class CredentialsListMapperImpl @Inject constructor(
                             R.string.no_expiration
                         )
 
-                    // To use different viewtype in recycler
-                    val isUnknownVcType = it.vcType == VcType.UNKNOWN_CREDENTIAL
-
                     // Map domain fields to UI
                     val credentialStatus = credentialStatusMapper.map(it.credentialStatus)
-                    val credentialType = credentialTypeMapper.map(vcType = it.vcType)
 
                     CredentialItemUiModel(
                         id = it.id,
                         expirationDate = textExpirationDate,
-                        credentialTypeString = credentialType,
+                        credentialTypeString = it.vcType,
                         credentialStatus = credentialStatus,
-                        isUnknownType = isUnknownVcType
                     )
                 }
 

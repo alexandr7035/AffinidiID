@@ -6,14 +6,12 @@ import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_proof.CredentialProofToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject.CredentialSubjectToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
-import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import javax.inject.Inject
 
 class CredentialToDetailsModelMapperImpl @Inject constructor(
     private val credentialStatusMapper: CredentialStatusMapper,
-    private val credentialTypeMapper: CredentialTypeMapper,
     private val credentialSubjectToFieldsMapper: CredentialSubjectToFieldsMapper,
     private val credentialMetadataToFieldsMapper: CredentialMetadataToFieldsMapper,
     private val credentialProofToFieldsMapper: CredentialProofToFieldsMapper
@@ -21,7 +19,7 @@ class CredentialToDetailsModelMapperImpl @Inject constructor(
     override fun map(credential: Credential): CredentialDetailsUiModel.Success {
 
         val credentialStatusUi = credentialStatusMapper.map(credential.credentialStatus)
-        val credentialType = credentialTypeMapper.map(credential.vcType)
+//        val credentialType = credentialTypeMapper.map(credential.vcType)
 
         val metadataItems = credentialMetadataToFieldsMapper.map(credential)
         val credentialProofItems = credentialProofToFieldsMapper.map(credential)
@@ -40,7 +38,7 @@ class CredentialToDetailsModelMapperImpl @Inject constructor(
         return CredentialDetailsUiModel.Success(
             metadataItems = metadataItems,
             credentialSubjectItems = credentialSubjectItems,
-            credentialType = credentialType,
+            credentialType = credential.vcType,
             credentialId = credential.id,
             rawVcDataPrettyFormatted = prettyFormattedVC,
             proofItems = credentialProofItems,

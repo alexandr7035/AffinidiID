@@ -180,8 +180,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideSignedCredentialToDomainMapper(credentialSubjectCaster: CredentialSubjectCaster, gson: Gson): SignedCredentialToDomainMapper {
-        return SignedCredentialToDomainMapperImpl(credentialSubjectCaster, gson)
+    fun provideSignedCredentialToDomainMapper(gson: Gson): SignedCredentialToDomainMapper {
+        return SignedCredentialToDomainMapperImpl(gson)
     }
 
     @Provides

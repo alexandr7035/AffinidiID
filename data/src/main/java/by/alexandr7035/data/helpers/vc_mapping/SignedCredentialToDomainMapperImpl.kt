@@ -15,7 +15,6 @@ import javax.inject.Inject
 
 // Cast credentials received from wallet to available domain types
 class SignedCredentialToDomainMapperImpl @Inject constructor(
-    private val credentialSubjectCaster: CredentialSubjectCaster,
     private val gson: Gson
 ): SignedCredentialToDomainMapper {
     override fun map(signedCredential: SignedCredential): Credential {
@@ -31,21 +30,6 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
             }
         } else {
             CredentialStatus.ACTIVE
-        }
-
-        // Fist type will ALWAYS be "https://www.w3.org/2018/credentials/v1"
-        // according to W3C spec
-        // Get last context url to detect VC type
-        val credentialContextUrl = signedCredential.context.last()
-        val domainCredentialSubjectData = credentialSubjectCaster.castToCredentialSubjectData(credentialContextUrl, signedCredential.credentialSubject)
-
-        val vcType = when (domainCredentialSubjectData) {
-            is EmailCredentialSubjectData -> {
-                VcType.EMAIL_CREDENTIAL
-            }
-            else -> {
-                VcType.UNKNOWN_CREDENTIAL
-            }
         }
 
         val credentialSubjectString = gson.toJson(signedCredential.credentialSubject.data, JsonObject::class.java)
@@ -65,7 +49,7 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
 
         return Credential(
             id = signedCredential.id,
-            vcType = vcType,
+            vcType = signedCredential.type.last(),
             expirationDate = expirationDate,
             issuanceDate = issuanceDate,
             holderDid = signedCredential.holder.holderDid,

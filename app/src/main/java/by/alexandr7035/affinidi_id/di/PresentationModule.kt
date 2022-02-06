@@ -15,8 +15,6 @@ import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsList
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapperImpl
-import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapper
-import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialTypeMapperImpl
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProviderImpl
 import dagger.Module
@@ -38,27 +36,21 @@ object PresentationModule {
     fun provideCredentialsListMapper(
         resourceProvider: ResourceProvider,
         credentialStatusMapper: CredentialStatusMapper,
-        credentialTypeMapper: CredentialTypeMapper,
         errorTypeMapper: ErrorTypeMapper
     ): CredentialsListMapper {
-        return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper, credentialTypeMapper, errorTypeMapper)
+        return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper, errorTypeMapper)
     }
 
     @Provides
     fun provideCredentialToDetailsModelMapper(
         statusMapper: CredentialStatusMapper,
-        typeMapper: CredentialTypeMapper,
         credentialSubjectMapper: CredentialSubjectToFieldsMapper,
         metadataMapper: CredentialMetadataToFieldsMapper,
         proofMapper: CredentialProofToFieldsMapper
     ): CredentialToDetailsModelMapper {
-        return CredentialToDetailsModelMapperImpl(statusMapper, typeMapper, credentialSubjectMapper, metadataMapper, proofMapper)
+        return CredentialToDetailsModelMapperImpl(statusMapper, credentialSubjectMapper, metadataMapper, proofMapper)
     }
 
-    @Provides
-    fun provideCredentialTypeMapper(resourceProvider: ResourceProvider): CredentialTypeMapper {
-        return CredentialTypeMapperImpl(resourceProvider)
-    }
 
     @Provides
     fun provideCredentialStatusMapper(resourceProvider: ResourceProvider): CredentialStatusMapper {
