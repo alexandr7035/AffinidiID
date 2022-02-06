@@ -3,8 +3,8 @@ package by.alexandr7035.affinidi_id.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
-import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
-import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
 import by.alexandr7035.affinidi_id.domain.model.profile.SaveProfileModel
 import by.alexandr7035.affinidi_id.domain.usecase.user.SaveProfileUseCase

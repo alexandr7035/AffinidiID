@@ -1,7 +1,7 @@
 package by.alexandr7035.affinidi_id.presentation.credential_details
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
-import by.alexandr7035.affinidi_id.presentation.common.CredentialStatusUi
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialStatusUi
 
 sealed class CredentialDetailsUiModel {
     data class Success(

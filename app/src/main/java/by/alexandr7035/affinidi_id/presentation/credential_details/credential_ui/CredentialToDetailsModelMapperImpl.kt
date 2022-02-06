@@ -5,7 +5,7 @@ import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDet
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_metadata.CredentialMetadataToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_proof.CredentialProofToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject.CredentialSubjectToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.helpers.mappers.CredentialStatusMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialStatusMapper
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import javax.inject.Inject

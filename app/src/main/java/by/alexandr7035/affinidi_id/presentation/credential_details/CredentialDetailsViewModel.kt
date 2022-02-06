@@ -14,7 +14,7 @@ import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdU
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.CredentialToDetailsModelMapper
-import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
+import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect

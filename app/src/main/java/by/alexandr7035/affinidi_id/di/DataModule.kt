@@ -3,8 +3,8 @@ package by.alexandr7035.affinidi_id.di
 import android.content.Context
 import androidx.room.Room
 import by.alexandr7035.affinidi_id.domain.repository.*
-import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelper
-import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationHelperImpl
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelperImpl
 import by.alexandr7035.data.datasource.cache.CacheDatabase
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSourceImpl

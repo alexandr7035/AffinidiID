@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.*
-import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordConfirmationBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.reset_password.ConfirmPasswordResetResponseModel

@@ -3,7 +3,7 @@ package by.alexandr7035.affinidi_id.presentation.credential_details.credential_u
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
 import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataItem
-import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
+import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import javax.inject.Inject
 
 class CredentialProofToFieldsMapperImpl @Inject constructor(private val resourceProvider: ResourceProvider) : CredentialProofToFieldsMapper {

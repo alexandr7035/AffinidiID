@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.helpers.validation
+package by.alexandr7035.affinidi_id.presentation.common.validation
 
 interface InputValidationHelper {
     fun validateUserName(userName: String): InputValidationResult

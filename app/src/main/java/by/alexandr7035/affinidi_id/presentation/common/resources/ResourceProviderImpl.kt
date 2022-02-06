@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.helpers.resources
+package by.alexandr7035.affinidi_id.presentation.common.resources
 
 import android.content.Context
 import androidx.core.content.ContextCompat

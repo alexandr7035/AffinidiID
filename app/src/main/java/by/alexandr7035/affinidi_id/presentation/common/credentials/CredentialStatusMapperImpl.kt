@@ -1,9 +1,8 @@
-package by.alexandr7035.affinidi_id.presentation.helpers.mappers
+package by.alexandr7035.affinidi_id.presentation.common.credentials
 
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
-import by.alexandr7035.affinidi_id.presentation.common.CredentialStatusUi
-import by.alexandr7035.affinidi_id.presentation.helpers.resources.ResourceProvider
+import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import javax.inject.Inject
 
 class CredentialStatusMapperImpl @Inject constructor(private val resourceProvider: ResourceProvider) : CredentialStatusMapper {

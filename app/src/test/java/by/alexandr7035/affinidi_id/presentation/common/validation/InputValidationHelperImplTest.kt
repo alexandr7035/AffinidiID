@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.helpers.validation
+package by.alexandr7035.affinidi_id.presentation.common.validation
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
