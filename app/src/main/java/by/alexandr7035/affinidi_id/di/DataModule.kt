@@ -191,6 +191,11 @@ object DataModule {
     }
 
     @Provides
+    fun provideVerificationRepository(credentialsApiService: CredentialsApiService, signedCredentialToDomainMapper: SignedCredentialToDomainMapper): VerificationRepository {
+        return VerificationRepositoryImpl(credentialsApiService, signedCredentialToDomainMapper)
+    }
+
+    @Provides
     @Singleton
     fun provideGson(): Gson {
         return Gson()
