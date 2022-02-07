@@ -4,18 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcReqModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
-import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
-import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
+import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -27,7 +25,7 @@ import javax.inject.Inject
 class CredentialDetailsViewModel @Inject constructor(
     private val getCredentialByIdUseCase: GetCredentialByIdUseCase,
     private val verifyCredentialUseCase: VerifyCredentialUseCase,
-    private val resourceProvider: ResourceProvider,
+    private val verificationResultToUiMapper: VerificationResultToUiMapper,
     private val credentialToDetailsModelMapper: CredentialToDetailsModelMapper,
 ) : ViewModel() {
 
@@ -69,43 +67,14 @@ class CredentialDetailsViewModel @Inject constructor(
                 )
             )
 
-            val verificationUiModel = when (res) {
-                is VerifyVcResModel.Success -> {
-                    val uiVerificationModel = when (res.isValid) {
-                        true -> {
-                            VerificationModelUi.Success(
-                                validationResultSnackBarMode = SnackBarMode.Positive,
-                                messageText = resourceProvider.getString(R.string.vc_is_valid),
-                            )
-                        }
-                        false -> {
-                            VerificationModelUi.Success(
-                                validationResultSnackBarMode = SnackBarMode.Negative,
-                                messageText = resourceProvider.getString(R.string.vc_is_not_valid),
-                            )
-                        }
-                    }
-
-                    uiVerificationModel
-                }
-
-                is VerifyVcResModel.Fail -> {
-                    VerificationModelUi.Fail(errorType = res.errorType)
-                }
-            }
-
-
             withContext(Dispatchers.Main) {
-                verificationLiveData.value = verificationUiModel
+                // Map domain result to ui model for verification snackbar
+                verificationLiveData.value = verificationResultToUiMapper.map(res)
             }
         }
     }
 
-    fun getCredentialLiveData(): LiveData<CredentialDetailsUiModel> {
-        return credentialLiveData
-    }
+    fun getCredentialLiveData(): LiveData<CredentialDetailsUiModel> = credentialLiveData
 
-    fun getVerificationLiveData(): LiveData<VerificationModelUi> {
-        return verificationLiveData
-    }
+    fun getVerificationLiveData(): LiveData<VerificationModelUi> = verificationLiveData
 }

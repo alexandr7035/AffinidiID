@@ -15,6 +15,8 @@ import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsList
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProviderImpl
 import dagger.Module
@@ -75,5 +77,10 @@ object PresentationModule {
     @Provides
     fun provideErrorTypeMapper(resourceProvider: ResourceProvider): ErrorTypeMapper {
         return ErrorTypeMapperImpl(resourceProvider)
+    }
+
+    @Provides
+    fun provideVerificationResultToUiMapper(resourceProvider: ResourceProvider): VerificationResultToUiMapper {
+        return VerificationResultToUiMapperImpl(resourceProvider)
     }
 }
