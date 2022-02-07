@@ -9,8 +9,9 @@ import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
-import by.alexandr7035.affinidi_id.core.extensions.showToast
+import by.alexandr7035.affinidi_id.core.extensions.vibrate
 import by.alexandr7035.affinidi_id.databinding.FragmentScanCredentialQrCodeBinding
+import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
 import by.kirich1409.viewbindingdelegate.viewBinding
 import timber.log.Timber
 
@@ -31,9 +32,8 @@ class ScanCredentialQrCodeFragment : Fragment() {
 
         binding.qrCodeView.decodeSingle { scanResult ->
             Timber.debug("barcode result $scanResult")
-            requireContext().showToast("${scanResult.text}")
             binding.qrCodeView.pause()
-//            requireContext().vibrate(VibrationMode.SHORT)
+            requireContext().vibrate(VibrationMode.SHORT)
 
             findNavController().navigateSafe(ScanCredentialQrCodeFragmentDirections.actionScanCredentialQrCodeFragmentToScannedCredentialFragment(
                 scanResult.text
