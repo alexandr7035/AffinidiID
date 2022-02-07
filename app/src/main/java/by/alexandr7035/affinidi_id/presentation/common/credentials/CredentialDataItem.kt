@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details
+package by.alexandr7035.affinidi_id.presentation.common.credentials
 
 sealed class CredentialDataItem {
 

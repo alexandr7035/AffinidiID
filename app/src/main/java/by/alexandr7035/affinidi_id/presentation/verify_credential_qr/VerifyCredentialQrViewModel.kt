@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.domain.model.credentials.get_from_qr_code.ObtainVcFromQrCodeReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.get_from_qr_code.ObtainVcFromQrCodeResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.ObtainCredentialWithQrCodeUseCase
-import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDetailsUiModel
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.CredentialToDetailsModelMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

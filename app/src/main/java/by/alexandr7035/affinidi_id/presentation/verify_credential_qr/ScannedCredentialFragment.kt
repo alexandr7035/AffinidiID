@@ -14,7 +14,7 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.FragmentScannedCredentialBinding
 import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataAdapter
-import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDetailsUiModel
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

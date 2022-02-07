@@ -18,6 +18,7 @@ import by.alexandr7035.affinidi_id.core.extensions.vibrate
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
