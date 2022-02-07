@@ -111,4 +111,9 @@ object DomainModule {
     fun provideShareCredentialUseCase(credentialsRepository: CredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): ShareCredentialUseCase {
         return ShareCredentialUseCase(credentialsRepository, getAuthStateUseCase)
     }
+
+    @Provides
+    fun provideObtainCredentialWithQrCode(verificationRepository: VerificationRepository): ObtainCredentialWithQrCodeUseCase {
+        return ObtainCredentialWithQrCodeUseCase(verificationRepository)
+    }
 }
