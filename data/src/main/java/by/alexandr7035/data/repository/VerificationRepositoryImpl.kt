@@ -23,18 +23,16 @@ class VerificationRepositoryImpl @Inject constructor(
                 val domainVc = mapper.map(signedVc)
                 ObtainVcFromQrCodeResModel.Success(credential = domainVc)
             } else {
-                // FIXME
-                ObtainVcFromQrCodeResModel.Fail(ErrorType.UNKNOWN_ERROR)
+                ObtainVcFromQrCodeResModel.Fail(ErrorType.CREDENTIAL_QR_SCAN_ERROR)
             }
         }
-        // Handled in ErrorInterceptor
         catch (appError: AppError) {
-            return ObtainVcFromQrCodeResModel.Fail(appError.errorType)
+            return ObtainVcFromQrCodeResModel.Fail(ErrorType.CREDENTIAL_QR_SCAN_ERROR)
         }
         // Unknown exception
         catch (e: Exception) {
             e.printStackTrace()
-            return ObtainVcFromQrCodeResModel.Fail(ErrorType.UNKNOWN_ERROR)
+            return ObtainVcFromQrCodeResModel.Fail(ErrorType.CREDENTIAL_QR_SCAN_ERROR)
         }
     }
 }
