@@ -17,6 +17,10 @@ import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_st
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsHelper
+import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsHelperImpl
+import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsPreferences
+import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsPreferencesImpl
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProviderImpl
 import dagger.Module
@@ -24,6 +28,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -32,6 +37,16 @@ object PresentationModule {
     @Provides
     fun provideResourceProvider(@ApplicationContext context: Context): ResourceProvider {
         return ResourceProviderImpl(context)
+    }
+
+    @Provides
+    fun providePermissionsPreferences(@ApplicationContext context: Context): PermissionsPreferences {
+        return PermissionsPreferencesImpl(context)
+    }
+
+    @Provides
+    fun providePermissionsHelper(permissionsPreferences: PermissionsPreferences): PermissionsHelper {
+        return PermissionsHelperImpl(permissionsPreferences)
     }
 
     @Provides
