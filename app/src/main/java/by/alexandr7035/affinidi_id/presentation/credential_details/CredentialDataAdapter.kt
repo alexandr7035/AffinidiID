@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailFieldBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailTitleOnlyBinding
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDataItem
 
 class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataItemViewHolder>() {
 

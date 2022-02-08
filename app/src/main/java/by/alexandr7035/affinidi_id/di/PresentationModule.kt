@@ -3,18 +3,20 @@ package by.alexandr7035.affinidi_id.di
 import android.content.Context
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.CredentialToDetailsModelMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.CredentialToDetailsModelMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_metadata.CredentialMetadataToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_metadata.CredentialMetadataToFieldsMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_proof.CredentialProofToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_proof.CredentialProofToFieldsMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject.CredentialSubjectToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject.CredentialSubjectToFieldsMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata.CredentialMetadataToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata.CredentialMetadataToFieldsMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_proof.CredentialProofToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_proof.CredentialProofToFieldsMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject.CredentialSubjectToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject.CredentialSubjectToFieldsMapperImpl
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialStatusMapper
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialStatusMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProviderImpl
 import dagger.Module
@@ -75,5 +77,10 @@ object PresentationModule {
     @Provides
     fun provideErrorTypeMapper(resourceProvider: ResourceProvider): ErrorTypeMapper {
         return ErrorTypeMapperImpl(resourceProvider)
+    }
+
+    @Provides
+    fun provideVerificationResultToUiMapper(resourceProvider: ResourceProvider): VerificationResultToUiMapper {
+        return VerificationResultToUiMapperImpl(resourceProvider)
     }
 }

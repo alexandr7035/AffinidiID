@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details
+package by.alexandr7035.affinidi_id.presentation.verify_credential_qr
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,30 +11,30 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
+import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.core.extensions.vibrate
-import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
+import by.alexandr7035.affinidi_id.databinding.FragmentScannedCredentialBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
+import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataAdapter
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class CredentialDetailsFragment : Fragment() {
+class ScannedCredentialFragment : Fragment() {
 
-    private val binding by viewBinding(FragmentCredentialDetailsBinding::bind)
-    private val viewModel by viewModels<CredentialDetailsViewModel>()
-    private val safeArgs by navArgs<CredentialDetailsFragmentArgs>()
+    private val viewModel by viewModels<VerifyCredentialQrViewModel>()
+    private val safeArgs by navArgs<ScannedCredentialFragmentArgs>()
+    private val binding by viewBinding(FragmentScannedCredentialBinding::bind)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_credential_details, container, false)
+        return inflater.inflate(R.layout.fragment_scanned_credential, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,6 +61,8 @@ class CredentialDetailsFragment : Fragment() {
 
             when (credentialData) {
                 is CredentialDetailsUiModel.Success -> {
+                    binding.dataContainer.isVisible = true
+
                     // Set fields to cards
                     credentialSubjectAdapter.setItems(credentialData.credentialSubjectItems)
                     metadataAdapter.setItems(credentialData.metadataItems)
@@ -74,53 +76,13 @@ class CredentialDetailsFragment : Fragment() {
                         binding.progressView.root.isVisible = true
                         viewModel.verifyCredential(credentialData.rawVcDataPrettyFormatted)
                     }
-
-                    binding.toolbar.setOnMenuItemClickListener {
-                        when (it.itemId) {
-                            R.id.item_delete -> {
-                                // Dialog to delete VC
-                                findNavController().navigateSafe(
-                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
-                                        safeArgs.credentialId
-                                    )
-                                )
-                            }
-
-                            R.id.item_share -> {
-                                // Share VC dialog
-                                findNavController().navigateSafe(
-                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToShareCredentialFragment(
-                                        safeArgs.credentialId
-                                    )
-                                )
-                            }
-
-                        }
-
-                        true
-                    }
-
-                }
-
-                is CredentialDetailsUiModel.Loading -> {
-                    binding.progressView.root.isVisible = true
                 }
 
                 is CredentialDetailsUiModel.Fail -> {
-                    // Show unknown error always
-                    // Connection error is unlikely to be thrown as credential is already cached
-                    showErrorDialog(
-                        getString(R.string.error_unknown_title),
-                        getString(R.string.error_unknown)
-                    )
+                    requireContext().showToast("error ${credentialData.errorType.name}")
                 }
             }
-
         })
-
-
-        // Load credential data
-        load(safeArgs.credentialId)
 
         viewModel.getVerificationLiveData().observe(viewLifecycleOwner, { verificationResult ->
             binding.progressView.root.isVisible = false
@@ -155,10 +117,9 @@ class CredentialDetailsFragment : Fragment() {
                 }
             }
         })
-    }
 
-    private fun load(credentialId: String) {
-        binding.progressView.progressView.isVisible = true
-        viewModel.loadCredential(credentialId)
+        // Load credential from QR code
+        binding.progressView.root.isVisible = true
+        viewModel.obtainCredential(safeArgs.qrLink)
     }
 }

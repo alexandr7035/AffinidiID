@@ -1,7 +1,7 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject
+package by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject
 
 import by.alexandr7035.affinidi_id.core.extensions.debug
-import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataItem
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDataItem
 import com.google.gson.JsonObject
 import timber.log.Timber
 

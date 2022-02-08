@@ -1,11 +1,10 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui
+package by.alexandr7035.affinidi_id.presentation.common.credentials
 
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
-import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDetailsUiModel
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_metadata.CredentialMetadataToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_proof.CredentialProofToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_subject.CredentialSubjectToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialStatusMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata.CredentialMetadataToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_proof.CredentialProofToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject.CredentialSubjectToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapper
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import javax.inject.Inject

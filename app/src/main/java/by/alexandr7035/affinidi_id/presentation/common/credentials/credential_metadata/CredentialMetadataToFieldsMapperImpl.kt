@@ -1,13 +1,14 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details.credential_ui.credential_metadata
+package by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata
 
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.domain.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
-import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataItem
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDataItem
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import javax.inject.Inject
 
-class CredentialMetadataToFieldsMapperImpl @Inject constructor(private val resourceProvider: ResourceProvider): CredentialMetadataToFieldsMapper {
+class CredentialMetadataToFieldsMapperImpl @Inject constructor(private val resourceProvider: ResourceProvider):
+    CredentialMetadataToFieldsMapper {
     override fun map(credential: Credential): List<CredentialDataItem> {
 
         // Cut DID after ";" (delete initial state, etc.)

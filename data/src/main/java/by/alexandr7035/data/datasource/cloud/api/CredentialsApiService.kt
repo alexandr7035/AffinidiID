@@ -37,6 +37,9 @@ interface CredentialsApiService {
     @POST("$WALLET_API_BASE_URL/api/v1/wallet/credentials/{id}/share")
     suspend fun shareVC(@Path("id") credentialId: String, @Header("Authorization") accessToken: String): Response<ShareVcRes>
 
+    @GET
+    suspend fun obtainVCFromQRCodeUrl(@Url credentialUrl: String): Response<SignedCredential>
+
     companion object {
         // An annotation argument must be a compile-time constant
         private const val WALLET_API_BASE_URL = "https://cloud-wallet-api.prod.affinity-project.org"

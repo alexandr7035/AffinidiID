@@ -102,5 +102,7 @@
 
     <string name="share_vc">Share VC</string>
     <string name="qr_code_explanation">Show this QR code to the Verifier so that he can verify the credential.</string>
+    <string name="credentials">Credentials</string>
+    <string name="scanned_credential">Scanned credential</string>
 
 </resources>
