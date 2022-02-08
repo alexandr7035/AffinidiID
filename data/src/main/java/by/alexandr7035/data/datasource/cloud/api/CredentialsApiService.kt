@@ -8,8 +8,8 @@ import by.alexandr7035.data.model.network.credentials.store_vc.StoreVCsReq
 import by.alexandr7035.data.model.network.credentials.store_vc.StoreVCsRes
 import by.alexandr7035.data.model.network.credentials.unsigned_vc.BuildUnsignedVcReq
 import by.alexandr7035.data.model.network.credentials.unsigned_vc.BuildUnsignedVcRes
-import by.alexandr7035.data.model.network.verify_vcs.VerifyVCsReq
-import by.alexandr7035.data.model.network.verify_vcs.VerifyVCsRes
+import by.alexandr7035.data.model.network.credentials.verify_vcs.VerifyVCsReq
+import by.alexandr7035.data.model.network.credentials.verify_vcs.VerifyVCsRes
 import retrofit2.Response
 import retrofit2.http.*
 

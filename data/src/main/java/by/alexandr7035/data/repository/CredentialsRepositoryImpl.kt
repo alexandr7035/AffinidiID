@@ -25,8 +25,8 @@ import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import by.alexandr7035.data.model.DataGetCredentialById
 import by.alexandr7035.data.model.network.credentials.share_vc.ShareVcRes
-import by.alexandr7035.data.model.network.verify_vcs.VerifyVCsReq
-import by.alexandr7035.data.model.network.verify_vcs.VerifyVCsRes
+import by.alexandr7035.data.model.network.credentials.verify_vcs.VerifyVCsReq
+import by.alexandr7035.data.model.network.credentials.verify_vcs.VerifyVCsRes
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers

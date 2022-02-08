@@ -1,4 +1,4 @@
-package by.alexandr7035.data.model.network.verify_vcs
+package by.alexandr7035.data.model.network.credentials.verify_vcs
 
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
