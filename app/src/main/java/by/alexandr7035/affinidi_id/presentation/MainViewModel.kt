@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(
         return getAuthStateUseCase.execute().isAuthorized
     }
 
-    fun statAuthCheck() {
+    fun startAuthCheck() {
         viewModelScope.launch(Dispatchers.IO) {
             val res = authCheckUseCase.execute()
 
