@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
-import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
 import by.alexandr7035.affinidi_id.domain.usecase.user.AuthCheckUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.GetAuthStateUseCase
@@ -31,9 +30,7 @@ class MainViewModel @Inject constructor(
             val res = authCheckUseCase.execute()
 
             withContext(Dispatchers.Main) {
-//                authCheckLiveData.value = res
-                // FIXME debug
-                authCheckLiveData.value = AuthCheckResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                authCheckLiveData.value = res
             }
         }
     }

@@ -55,6 +55,8 @@ class LoginRepositoryImpl @Inject constructor(private val userApiService: UserAp
     }
 
     override suspend fun logOut(accessToken: String): LogOutModel {
+        Timber.debug("AUTH_CHECK logout called")
+
         try {
             val res = userApiService.logOut(accessToken)
 

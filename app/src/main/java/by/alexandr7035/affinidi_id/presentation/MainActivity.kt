@@ -61,15 +61,14 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigationView.isGone = !bottomNavigationDestinations.contains(destination.id)
         }
 
-        // navigateSafe method allow us not think about current
-        // It will be changed only if we at login fragment (on app started)
+        // navigateSafe method allow us not check current destination
         viewModel.getAuthCheckLiveData().observe(this, { authCheckResult ->
             binding.progressView.root.isVisible = false
 
             when (authCheckResult) {
                 is AuthCheckResModel.Success -> {
                     Timber.debug("AUTH_CHECK success")
-                    // Means token did not expired. Allow to go in the profile
+                    // Means token did not expired
                     navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
                 }
 
@@ -77,36 +76,34 @@ class MainActivity : AppCompatActivity() {
                 is AuthCheckResModel.Fail -> {
                     when (authCheckResult.errorType) {
                         // That means token has expired
-                        // Stay on login fragment and show message
+                        // Stay on login fragment and show error message
                         ErrorType.AUTHORIZATION_ERROR -> {
+                            Timber.debug("AUTH_CHECK expired")
+                            binding.root.showSnackBar(
+                                getString(R.string.eror_auth),
+                                SnackBarMode.Negative,
+                                Snackbar.LENGTH_LONG
+                            )
 
-                            if (navController.currentDestination?.id != R.id.loginFragment) {
-
-                                Timber.debug("AUTH_CHECK expired")
-                                binding.root.showSnackBar(
-                                    getString(R.string.eror_auth),
-                                    SnackBarMode.Negative,
-                                    Snackbar.LENGTH_LONG
-                                )
-
-                                // Go to login fragment (if not here)
-                                navController.navigateSafe(MainActivityDirections.actionGlobalLoginFragment())
-                            }
+                            // Go to login fragment (if not here)
+                            navController.navigateSafe(MainActivityDirections.actionGlobalLoginFragment())
                         }
 
                         // No connection with the internet
                         // But we can let the user inside as some of his data is cached
                         ErrorType.FAILED_CONNECTION -> {
-                            Timber.debug("AUTH_CHECK connection")
+                            Timber.debug("AUTH_CHECK connection error")
                             navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
                         }
 
                         // Unknown error. Show corresponding fragment
                         else -> {
-                            navController.navigateSafe(LoginFragmentDirections.actionGlobalErrorFragment(
-                                getString(R.string.error_unknown_title),
-                                getString(R.string.error_unknown)
-                            ))
+                            navController.navigateSafe(
+                                LoginFragmentDirections.actionGlobalErrorFragment(
+                                    getString(R.string.error_unknown_title),
+                                    getString(R.string.error_unknown)
+                                )
+                            )
                         }
                     }
                 }
@@ -117,21 +114,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
         Timber.debug("AUTH_CHECK activity onResume")
 
-//        if (navController.currentDestination?.id != R.id.loginFragment) {
-
-            // Affinidi token expires in 1 hour
-            // So we should check for auth on start
-            // and if token expired show login fragment
-            //
-            // If no token just show login fragment
-            if (viewModel.checkIfPreviouslyAuthorized()) {
-                Timber.debug("AUTH_CHECK start")
-                binding.progressView.root.isVisible = true
-                viewModel.startAuthCheck()
-            }
+        // Affinidi token expires in 1 hour
+        // So we should check for auth on start
+        // and if token expired show login fragment (or stay if already there)
+        if (viewModel.checkIfPreviouslyAuthorized()) {
+            Timber.debug("AUTH_CHECK start")
+            binding.progressView.root.isVisible = true
+            viewModel.startAuthCheck()
         }
-//    }
+    }
 }

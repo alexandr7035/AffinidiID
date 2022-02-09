@@ -3,7 +3,6 @@ package by.alexandr7035.affinidi_id.domain.usecase.user
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
 import by.alexandr7035.affinidi_id.domain.repository.AuthCheckRepository
-import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
 import javax.inject.Inject
 
 // Ass accessToken expires fastly we need to check for auth on app started
@@ -17,6 +16,7 @@ class AuthCheckUseCase @Inject constructor(
         val authState = getAuthStateUseCase.execute()
 
         val authCheckResult = authCheckRepository.makeCheckRequest(authState)
+//        val authCheckResult= AuthCheckResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
 
         if (authCheckResult is AuthCheckResModel.Fail) {
             if (authCheckResult.errorType == ErrorType.AUTHORIZATION_ERROR) {
