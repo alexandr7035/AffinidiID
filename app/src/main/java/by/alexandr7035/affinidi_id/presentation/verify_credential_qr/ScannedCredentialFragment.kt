@@ -17,6 +17,7 @@ import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.core.extensions.vibrate
 import by.alexandr7035.affinidi_id.databinding.FragmentScannedCredentialBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
 import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataAdapter
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
@@ -79,7 +80,12 @@ class ScannedCredentialFragment : Fragment() {
                 }
 
                 is CredentialDetailsUiModel.Fail -> {
-                    requireContext().showToast("error ${credentialData.errorType.name}")
+                    binding.root.showSnackBar(
+                        getString(R.string.credential_scan_error),
+                        SnackBarMode.Negative,
+                        Snackbar.LENGTH_LONG
+                    )
+                    findNavController().navigateUp()
                 }
             }
         })
