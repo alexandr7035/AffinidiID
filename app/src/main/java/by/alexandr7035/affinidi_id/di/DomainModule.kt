@@ -88,8 +88,8 @@ object DomainModule {
     }
 
     @Provides
-    fun provideAuthCheckUseCase(authCheckRepository: AuthCheckRepository, getAuthStateUseCase: GetAuthStateUseCase): AuthCheckUseCase {
-        return AuthCheckUseCase(authCheckRepository, getAuthStateUseCase)
+    fun provideAuthCheckUseCase(authCheckRepository: AuthCheckRepository, getAuthStateUseCase: GetAuthStateUseCase, logOutUseCase: LogOutUseCase): AuthCheckUseCase {
+        return AuthCheckUseCase(authCheckRepository, getAuthStateUseCase, logOutUseCase)
     }
 
     @Provides
