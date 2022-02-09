@@ -233,5 +233,15 @@
             android:name="qrLink"
             app:argType="string" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="by.alexandr7035.affinidi_id.presentation.MainActivity"
+        android:label="MainActivity" />
+
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/nav_graph.xml"
+        app:popUpToInclusive="true" />
 
 </navigation>
