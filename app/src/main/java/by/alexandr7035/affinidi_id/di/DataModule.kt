@@ -13,6 +13,8 @@ import by.alexandr7035.data.datasource.cache.profile.ProfileStorage
 import by.alexandr7035.data.datasource.cache.profile.ProfileStorageImpl
 import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
 import by.alexandr7035.data.datasource.cache.secrets.SecretsStorageImpl
+import by.alexandr7035.data.datasource.cloud.ApiCallHelper
+import by.alexandr7035.data.datasource.cloud.ApiCallHelperImpl
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSourceImpl
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
@@ -65,6 +67,12 @@ object DataModule {
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiCallHelper(): ApiCallHelper {
+        return ApiCallHelperImpl()
     }
 
     @Provides
@@ -141,8 +149,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCredentialsCloudDataSource(credentialsApiService: CredentialsApiService): CredentialsCloudDataSource {
-        return CredentialsCloudDataSourceImpl(credentialsApiService)
+    fun provideCredentialsCloudDataSource(credentialsApiService: CredentialsApiService, apiCallHelper: ApiCallHelper): CredentialsCloudDataSource {
+        return CredentialsCloudDataSourceImpl(credentialsApiService, apiCallHelper)
     }
 
     @Provides
