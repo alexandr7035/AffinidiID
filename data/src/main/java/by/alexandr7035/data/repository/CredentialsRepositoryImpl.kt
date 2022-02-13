@@ -44,8 +44,6 @@ class CredentialsRepositoryImpl @Inject constructor(
     private val credentialsCloudDataSource: CredentialsCloudDataSource,
     private val credentialsCacheDataSource: CredentialsCacheDataSource,
     private val mapper: SignedCredentialToDomainMapper,
-    // TODO move out
-    private val gson: Gson
 ) : CredentialsRepository {
 
     override suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel> {
@@ -155,28 +153,6 @@ class CredentialsRepositoryImpl @Inject constructor(
                 }
             }
             is ApiCallWrapper.Fail -> DeleteVcResModel.Fail(res.errorType)
-        }
-    }
-
-
-    override suspend fun verifyCredential(verifyVcReqModel: VerifyVcReqModel): VerifyVcResModel {
-        // Convert to json
-        // TODO review
-        val json = gson.fromJson(verifyVcReqModel.rawVc, JsonObject::class.java)
-
-        val res = apiCallHelper.executeCall {
-            // Verify single VC
-            apiService.verifyVCs(VerifyVCsReq(credentials = listOf(json)))
-        }
-
-        return when (res) {
-            is ApiCallWrapper.Success -> VerifyVcResModel.Success(isValid = res.data.isValid)
-            is ApiCallWrapper.HttpError -> {
-                // This request returns 200 always
-                // but handle error just in case for bad requests
-                VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
-            }
-            is ApiCallWrapper.Fail -> VerifyVcResModel.Fail(res.errorType)
         }
     }
 

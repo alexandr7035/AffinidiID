@@ -25,8 +25,6 @@ interface CredentialsRepository {
 
     suspend fun getCredentialById(getCredentialByIdReqModel: GetCredentialByIdReqModel, authState: AuthStateModel): Flow<GetCredentialByIdResModel>
 
-    suspend fun verifyCredential(verifyVcReqModel: VerifyVcReqModel): VerifyVcResModel
-
     suspend fun shareCredential(shareVcReq: ShareCredentialReqModel, authState: AuthStateModel): ShareCredentialResModel
 
     suspend fun checkIfHaveCredentialInCache(checkIfHaveVcReqModel: CheckIfHaveVcReqModel): CheckIfHaveVcResModel

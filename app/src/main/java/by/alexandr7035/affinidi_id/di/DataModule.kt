@@ -141,8 +141,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideChangeProfileRepository(userApiService: UserApiService): ChangeProfileRepository {
-        return ChangeProfileRepositoryImpl(userApiService)
+    fun provideChangeProfileRepository(userApiService: UserApiService, apiCallHelper: ApiCallHelper): ChangeProfileRepository {
+        return ChangeProfileRepositoryImpl(userApiService, apiCallHelper)
     }
 
     @Provides
@@ -184,7 +184,6 @@ object DataModule {
         credentialsCloudDataSource: CredentialsCloudDataSource,
         credentialsCacheDataSource: CredentialsCacheDataSource,
         credentialToDomainMapper: SignedCredentialToDomainMapper,
-        gson: Gson
     ): CredentialsRepository {
         return CredentialsRepositoryImpl(
             credentialsApiService,
@@ -193,7 +192,6 @@ object DataModule {
             credentialsCloudDataSource,
             credentialsCacheDataSource,
             credentialToDomainMapper,
-            gson
         )
     }
 
@@ -212,17 +210,18 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideAuthCheckRepository(userApiService: UserApiService): AuthCheckRepository {
-        return AuthCheckRepositoryImpl(userApiService)
+    fun provideAuthCheckRepository(userApiService: UserApiService, apiCallHelper: ApiCallHelper): AuthCheckRepository {
+        return AuthCheckRepositoryImpl(userApiService, apiCallHelper)
     }
 
     @Provides
     fun provideVerificationRepository(
         credentialsApiService: CredentialsApiService,
         apiCallHelper: ApiCallHelper,
-        signedCredentialToDomainMapper: SignedCredentialToDomainMapper
+        signedCredentialToDomainMapper: SignedCredentialToDomainMapper,
+        gson: Gson
     ): VerificationRepository {
-        return VerificationRepositoryImpl(credentialsApiService, apiCallHelper, signedCredentialToDomainMapper)
+        return VerificationRepositoryImpl(credentialsApiService, apiCallHelper, signedCredentialToDomainMapper, gson)
     }
 
     @Provides
