@@ -21,7 +21,7 @@ class CredentialToDetailsModelMapperImpl @Inject constructor(
 //        val credentialType = credentialTypeMapper.map(credential.vcType)
 
         val metadataItems = credentialMetadataToFieldsMapper.map(credential)
-        val credentialProofItems = credentialProofToFieldsMapper.map(credential)
+        val credentialProofItems = credentialProofToFieldsMapper.map(credential.credentialProof)
 
         // FIXME domain abstraction
         val gson = GsonBuilder().setPrettyPrinting().create()

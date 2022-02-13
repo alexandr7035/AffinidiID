@@ -4,11 +4,9 @@ import by.alexandr7035.affinidi_id.domain.core.extensions.getUnixDateFromStringF
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialProof
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
-import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.model.SignedCredential
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import timber.log.Timber
 import javax.inject.Inject
 
 // Cast credentials received from wallet to available domain types
@@ -34,12 +32,15 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
 
         // Prepare raw VC
         val rawVc = gson.toJson(signedCredential, SignedCredential::class.java)
-        Timber.debug("RAW VC DATA $rawVc")
+
+        // Formatted proof creation date
+        val formattedProofDate = signedCredential.proof.creationDate
+            .getUnixDateFromStringFormat(CREDENTIAL_PROOF_DATE_FORMAT)
 
         // Domain credential proof
         val proof = CredentialProof(
             type = signedCredential.proof.type,
-            creationDate = signedCredential.proof.creationDate,
+            creationDate = formattedProofDate,
             verificationMethod = signedCredential.proof.verificationMethod,
             proofPurpose = signedCredential.proof.proofPurpose,
             jws = signedCredential.proof.jws
@@ -61,5 +62,6 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
 
     companion object {
         private const val CREDENTIAL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        private const val CREDENTIAL_PROOF_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     }
 }
