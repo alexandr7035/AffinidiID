@@ -5,13 +5,17 @@ import by.alexandr7035.data.core.AppError
 import retrofit2.Response
 
 class ApiCallHelperImpl : ApiCallHelper {
-    override suspend fun <T> executeCall(apiCall: suspend() -> Response<T>): ApiCallWrapper {
+    override suspend fun <T> executeCall(apiCall: suspend () -> Response<T>): ApiCallWrapper<T> {
         try {
             val result = apiCall.invoke()
 
             return if (result.isSuccessful) {
-                val data = result.body()
-                ApiCallWrapper.Success(data)
+                if (result.body() != null) {
+                    ApiCallWrapper.Success(result.body()!!)
+                } else {
+                    // FIXME
+                    ApiCallWrapper.Fail(ErrorType.UNKNOWN_ERROR)
+                }
             } else {
                 ApiCallWrapper.HttpError(result.code())
             }

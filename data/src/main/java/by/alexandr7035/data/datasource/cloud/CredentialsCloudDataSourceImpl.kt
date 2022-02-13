@@ -4,7 +4,6 @@ import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import by.alexandr7035.data.model.DataCredentialsList
-import by.alexandr7035.data.model.SignedCredential
 import javax.inject.Inject
 
 class CredentialsCloudDataSourceImpl @Inject constructor(
@@ -19,9 +18,8 @@ class CredentialsCloudDataSourceImpl @Inject constructor(
         }
 
         return when (res) {
-            is ApiCallWrapper.Success<*> -> {
-                val credentials = res.data as List<SignedCredential>
-                DataCredentialsList.Success(credentials)
+            is ApiCallWrapper.Success -> {
+                DataCredentialsList.Success(res.data)
             }
             is ApiCallWrapper.Fail -> DataCredentialsList.Fail(res.errorType)
             is ApiCallWrapper.HttpError -> {
