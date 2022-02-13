@@ -13,7 +13,8 @@ class ApiCallHelperImpl : ApiCallHelper {
                 if (result.body() != null) {
                     ApiCallWrapper.Success(result.body()!!)
                 } else {
-                    // FIXME
+                    // For normal responses (204 code) Null bodies are converted
+                    // to json in NullBodyHandlerInterceptor
                     ApiCallWrapper.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             } else {
