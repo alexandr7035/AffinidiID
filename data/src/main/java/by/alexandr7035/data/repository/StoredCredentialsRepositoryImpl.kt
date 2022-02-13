@@ -5,19 +5,13 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.check_if_have_vc.Che
 import by.alexandr7035.affinidi_id.domain.model.credentials.check_if_have_vc.CheckIfHaveVcResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.delete_vc.DeleteVcResModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.share.ShareCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.share.ShareCredentialResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcReqModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcResModel
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
-import by.alexandr7035.affinidi_id.domain.repository.CredentialsRepository
-import by.alexandr7035.data.core.AppError
-import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
+import by.alexandr7035.affinidi_id.domain.repository.StoredCredentialsRepository
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
@@ -26,24 +20,19 @@ import by.alexandr7035.data.model.DataCredentialsList
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import by.alexandr7035.data.model.DataGetCredentialById
-import by.alexandr7035.data.model.network.credentials.share_vc.ShareVcRes
-import by.alexandr7035.data.model.network.credentials.verify_vcs.VerifyVCsReq
-import by.alexandr7035.data.model.network.credentials.verify_vcs.VerifyVCsRes
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class CredentialsRepositoryImpl @Inject constructor(
+class StoredCredentialsRepositoryImpl @Inject constructor(
     private val apiService: CredentialsApiService,
     private val apiCallHelper: ApiCallHelper,
     private val credentialsCloudDataSource: CredentialsCloudDataSource,
     private val credentialsCacheDataSource: CredentialsCacheDataSource,
     private val mapper: SignedCredentialToDomainMapper,
-) : CredentialsRepository {
+) : StoredCredentialsRepository {
 
     override suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel> {
 

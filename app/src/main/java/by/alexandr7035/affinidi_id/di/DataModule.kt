@@ -183,8 +183,8 @@ object DataModule {
         credentialsCloudDataSource: CredentialsCloudDataSource,
         credentialsCacheDataSource: CredentialsCacheDataSource,
         credentialToDomainMapper: SignedCredentialToDomainMapper,
-    ): CredentialsRepository {
-        return CredentialsRepositoryImpl(
+    ): StoredCredentialsRepository {
+        return StoredCredentialsRepositoryImpl(
             credentialsApiService,
             apiCallHelper,
             credentialsCloudDataSource,

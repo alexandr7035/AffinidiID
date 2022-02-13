@@ -16,7 +16,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcRe
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import kotlinx.coroutines.flow.Flow
 
-interface CredentialsRepository {
+interface StoredCredentialsRepository {
     suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel>
 
     suspend fun deleteCredential(deleteVcReqModel: DeleteVcReqModel, authState: AuthStateModel): DeleteVcResModel
