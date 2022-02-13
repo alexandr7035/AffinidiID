@@ -21,6 +21,7 @@ import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import by.alexandr7035.data.datasource.cloud.api.UserApiService
 import by.alexandr7035.data.datasource.cloud.interceptors.AuthInterceptor
 import by.alexandr7035.data.datasource.cloud.interceptors.ErrorInterceptor
+import by.alexandr7035.data.datasource.cloud.interceptors.NullBodyHandlerInterceptor
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelperImpl
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
@@ -49,9 +50,10 @@ object DataModule {
     @Provides
     @Singleton
     fun provideHttpClient(): OkHttpClient {
-        return  OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor())
             .addInterceptor(ErrorInterceptor())
+            .addInterceptor(NullBodyHandlerInterceptor())
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
@@ -113,20 +115,28 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(userApiService: UserApiService, secretsStorage: SecretsStorage): LoginRepository {
-        return LoginRepositoryImpl(userApiService, secretsStorage)
+    fun provideLoginRepository(
+        userApiService: UserApiService,
+        apiCallHelper: ApiCallHelper,
+        secretsStorage: SecretsStorage
+    ): LoginRepository {
+        return LoginRepositoryImpl(userApiService, apiCallHelper, secretsStorage)
     }
 
     @Provides
     @Singleton
-    fun provideRegistrationRepository(userApiService: UserApiService, secretsStorage: SecretsStorage): RegistrationRepository {
-        return RegistrationRepositoryImpl(userApiService, secretsStorage)
+    fun provideRegistrationRepository(
+        userApiService: UserApiService,
+        apiCallHelper: ApiCallHelper,
+        secretsStorage: SecretsStorage
+    ): RegistrationRepository {
+        return RegistrationRepositoryImpl(userApiService, apiCallHelper, secretsStorage)
     }
 
     @Provides
     @Singleton
-    fun provideResetPasswordRepository(userApiService: UserApiService): ResetPasswordRepository {
-        return ResetPasswordRepositoryImpl(userApiService)
+    fun provideResetPasswordRepository(userApiService: UserApiService, apiCallHelper: ApiCallHelper): ResetPasswordRepository {
+        return ResetPasswordRepositoryImpl(userApiService, apiCallHelper)
     }
 
     @Provides
@@ -143,13 +153,19 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideVCIssuanceHelper(credentialsApiService: CredentialsApiService, credentialSubjectCaster: CredentialSubjectCaster): VCIssuanceHelper {
+    fun provideVCIssuanceHelper(
+        credentialsApiService: CredentialsApiService,
+        credentialSubjectCaster: CredentialSubjectCaster
+    ): VCIssuanceHelper {
         return VCIssuanceHelperImpl(credentialsApiService, credentialSubjectCaster)
     }
 
     @Provides
     @Singleton
-    fun provideCredentialsCloudDataSource(credentialsApiService: CredentialsApiService, apiCallHelper: ApiCallHelper): CredentialsCloudDataSource {
+    fun provideCredentialsCloudDataSource(
+        credentialsApiService: CredentialsApiService,
+        apiCallHelper: ApiCallHelper
+    ): CredentialsCloudDataSource {
         return CredentialsCloudDataSourceImpl(credentialsApiService, apiCallHelper)
     }
 
@@ -199,7 +215,10 @@ object DataModule {
     }
 
     @Provides
-    fun provideVerificationRepository(credentialsApiService: CredentialsApiService, signedCredentialToDomainMapper: SignedCredentialToDomainMapper): VerificationRepository {
+    fun provideVerificationRepository(
+        credentialsApiService: CredentialsApiService,
+        signedCredentialToDomainMapper: SignedCredentialToDomainMapper
+    ): VerificationRepository {
         return VerificationRepositoryImpl(credentialsApiService, signedCredentialToDomainMapper)
     }
 
