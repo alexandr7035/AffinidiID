@@ -180,7 +180,6 @@ object DataModule {
     fun provideCredentialsRepository(
         credentialsApiService: CredentialsApiService,
         apiCallHelper: ApiCallHelper,
-        vcIssuanceHelper: VCIssuanceHelper,
         credentialsCloudDataSource: CredentialsCloudDataSource,
         credentialsCacheDataSource: CredentialsCacheDataSource,
         credentialToDomainMapper: SignedCredentialToDomainMapper,
@@ -188,7 +187,6 @@ object DataModule {
         return CredentialsRepositoryImpl(
             credentialsApiService,
             apiCallHelper,
-            vcIssuanceHelper,
             credentialsCloudDataSource,
             credentialsCacheDataSource,
             credentialToDomainMapper,
@@ -215,6 +213,13 @@ object DataModule {
     }
 
     @Provides
+    @Singleton
+    fun provideIssueCredentialsRepository(vcIssuanceHelper: VCIssuanceHelper): IssueCredentialsRepository {
+        return IssueCredentialsRepositoryImpl(vcIssuanceHelper)
+    }
+
+    @Provides
+    @Singleton
     fun provideVerificationRepository(
         credentialsApiService: CredentialsApiService,
         apiCallHelper: ApiCallHelper,

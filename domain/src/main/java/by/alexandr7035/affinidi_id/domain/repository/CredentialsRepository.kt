@@ -19,8 +19,6 @@ import kotlinx.coroutines.flow.Flow
 interface CredentialsRepository {
     suspend fun getAllCredentials(authState: AuthStateModel): Flow<CredentialsListResModel>
 
-    suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel
-
     suspend fun deleteCredential(deleteVcReqModel: DeleteVcReqModel, authState: AuthStateModel): DeleteVcResModel
 
     suspend fun getCredentialById(getCredentialByIdReqModel: GetCredentialByIdReqModel, authState: AuthStateModel): Flow<GetCredentialByIdResModel>

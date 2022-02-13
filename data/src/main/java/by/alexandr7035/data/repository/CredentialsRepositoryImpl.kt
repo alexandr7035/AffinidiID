@@ -40,7 +40,6 @@ import javax.inject.Inject
 class CredentialsRepositoryImpl @Inject constructor(
     private val apiService: CredentialsApiService,
     private val apiCallHelper: ApiCallHelper,
-    private val vcIssuanceHelper: VCIssuanceHelper,
     private val credentialsCloudDataSource: CredentialsCloudDataSource,
     private val credentialsCacheDataSource: CredentialsCacheDataSource,
     private val mapper: SignedCredentialToDomainMapper,
@@ -107,32 +106,6 @@ class CredentialsRepositoryImpl @Inject constructor(
         }
     }
 
-
-    // 1) Build unsigned VC
-    // 2) Sign the VC
-    // 3) Store credential in the cloud wallet
-    // TODO give the user choice where to store in the future
-    override suspend fun issueCredential(
-        issueCredentialReqModel: IssueCredentialReqModel,
-        authState: AuthStateModel
-    ): IssueCredentialResModel {
-        try {
-            val unsignedVc = vcIssuanceHelper.buildUnsignedVC(issueCredentialReqModel)
-            val signedVc = vcIssuanceHelper.signCredential(unsignedVc, authState)
-            // Store only 1 VC, so just get last ID from response
-            val storedVCsID = vcIssuanceHelper.storeCredentials(listOf(signedVc), authState).last()
-
-            return IssueCredentialResModel.Success
-
-        } catch (appError: AppError) {
-            return IssueCredentialResModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            e.printStackTrace()
-            return IssueCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
-        }
-    }
 
     override suspend fun deleteCredential(deleteVcReqModel: DeleteVcReqModel, authState: AuthStateModel): DeleteVcResModel {
 
