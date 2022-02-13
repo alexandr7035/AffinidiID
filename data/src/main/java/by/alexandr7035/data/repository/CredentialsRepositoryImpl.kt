@@ -20,6 +20,8 @@ import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
+import by.alexandr7035.data.datasource.cloud.ApiCallHelper
+import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
 import by.alexandr7035.data.model.DataCredentialsList
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
@@ -37,6 +39,7 @@ import javax.inject.Inject
 
 class CredentialsRepositoryImpl @Inject constructor(
     private val apiService: CredentialsApiService,
+    private val apiCallHelper: ApiCallHelper,
     private val vcIssuanceHelper: VCIssuanceHelper,
     private val credentialsCloudDataSource: CredentialsCloudDataSource,
     private val credentialsCacheDataSource: CredentialsCacheDataSource,
@@ -89,6 +92,23 @@ class CredentialsRepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    override suspend fun getCredentialById(
+        getCredentialByIdReqModel: GetCredentialByIdReqModel,
+        authState: AuthStateModel
+    ): Flow<GetCredentialByIdResModel> {
+        return flow {
+            // Show loading first
+            emit(GetCredentialByIdResModel.Loading)
+
+            // Try to get VC from cache firstly
+            // Presume that always success (as credentials list is always updated before)
+            val cacheCredential =
+                credentialsCacheDataSource.getCredentialByIdFromCache(getCredentialByIdReqModel.credentialId) as DataGetCredentialById.Success
+            val domainCachedVC = mapper.map(cacheCredential.credential)
+            emit(GetCredentialByIdResModel.Success(credential = domainCachedVC))
+        }
+    }
+
 
     // 1) Build unsigned VC
     // 2) Sign the VC
@@ -116,103 +136,73 @@ class CredentialsRepositoryImpl @Inject constructor(
         }
     }
 
-
     override suspend fun deleteCredential(deleteVcReqModel: DeleteVcReqModel, authState: AuthStateModel): DeleteVcResModel {
-        try {
-            val res = apiService.deleteVc(
+
+        val res = apiCallHelper.executeCall {
+            apiService.deleteVc(
                 credentialId = deleteVcReqModel.credentialId,
                 accessToken = authState.accessToken ?: ""
             )
+        }
 
-            return if (res.isSuccessful) {
-                DeleteVcResModel.Success
-            } else {
-                when (res.code()) {
+        return when (res) {
+            is ApiCallWrapper.Success -> DeleteVcResModel.Success
+            is ApiCallWrapper.HttpError -> {
+                when (res.resultCode) {
                     // TODO review and fix 401
                     401 -> DeleteVcResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
                     else -> DeleteVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
-
-        } catch (appError: AppError) {
-            return DeleteVcResModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            e.printStackTrace()
-            return DeleteVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+            is ApiCallWrapper.Fail -> DeleteVcResModel.Fail(res.errorType)
         }
     }
 
-    override suspend fun getCredentialById(
-        getCredentialByIdReqModel: GetCredentialByIdReqModel,
-        authState: AuthStateModel
-    ): Flow<GetCredentialByIdResModel> {
-        return flow {
-            // Show loading first
-            emit(GetCredentialByIdResModel.Loading)
-
-            // Try to get VC from cache firstly
-            // Presume that always success (as credentials list is always updated before)
-            val cacheCredential =
-                credentialsCacheDataSource.getCredentialByIdFromCache(getCredentialByIdReqModel.credentialId) as DataGetCredentialById.Success
-            val domainCachedVC = mapper.map(cacheCredential.credential)
-            emit(GetCredentialByIdResModel.Success(credential = domainCachedVC))
-        }
-    }
 
     override suspend fun verifyCredential(verifyVcReqModel: VerifyVcReqModel): VerifyVcResModel {
-        try {
-            // Convert to json
-            val json = gson.fromJson(verifyVcReqModel.rawVc, JsonObject::class.java)
+        // Convert to json
+        // TODO review
+        val json = gson.fromJson(verifyVcReqModel.rawVc, JsonObject::class.java)
 
-            val res = apiService.verifyVCs(
-                // Verify single VC
-                VerifyVCsReq(credentials = listOf(json))
-            )
+        val res = apiCallHelper.executeCall {
+            // Verify single VC
+            apiService.verifyVCs(VerifyVCsReq(credentials = listOf(json)))
+        }
 
-            return if (res.isSuccessful) {
-                val data = res.body() as VerifyVCsRes
-                VerifyVcResModel.Success(isValid = data.isValid)
-            } else {
-                // This request returns 200 always but handle error just in case
+        return when (res) {
+            is ApiCallWrapper.Success -> VerifyVcResModel.Success(isValid = res.data.isValid)
+            is ApiCallWrapper.HttpError -> {
+                // This request returns 200 always
+                // but handle error just in case for bad requests
                 VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
             }
-
-        } catch (appError: AppError) {
-            return VerifyVcResModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            e.printStackTrace()
-            return VerifyVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
+            is ApiCallWrapper.Fail -> VerifyVcResModel.Fail(res.errorType)
         }
     }
 
+
     override suspend fun shareCredential(shareVcReq: ShareCredentialReqModel, authState: AuthStateModel): ShareCredentialResModel {
-        try {
-            val res = apiService.shareVC(credentialId = shareVcReq.credentialId, accessToken = authState.accessToken ?: "")
 
-            return if (res.isSuccessful) {
-                val data = res.body() as ShareVcRes
+        val res = apiCallHelper.executeCall {
+            apiService.shareVC(
+                credentialId = shareVcReq.credentialId,
+                accessToken = authState.accessToken ?: ""
+            )
+        }
 
+       return when (res) {
+            is ApiCallWrapper.Success -> {
                 // Cut to only base64 value
-                val base64 = data.qrCode.replace("data:image/png;base64,", "")
-
+                val base64 = res.data.qrCode.replace("data:image/png;base64,", "")
                 ShareCredentialResModel.Success(base64QrCode = base64)
-            } else {
-                when (res.code()) {
+            }
+            is ApiCallWrapper.HttpError -> {
+                when (res.resultCode) {
                     401 -> ShareCredentialResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
                     else -> ShareCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
-        } catch (appError: AppError) {
-            return ShareCredentialResModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            e.printStackTrace()
-            return ShareCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
+            is ApiCallWrapper.Fail -> ShareCredentialResModel.Fail(res.errorType)
         }
     }
 

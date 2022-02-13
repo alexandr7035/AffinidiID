@@ -6,89 +6,77 @@ import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseMode
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.repository.RegistrationRepository
-import by.alexandr7035.data.datasource.cloud.api.UserApiService
-import by.alexandr7035.data.core.AppError
-import by.alexandr7035.data.model.network.sign_up.*
 import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
+import by.alexandr7035.data.datasource.cloud.ApiCallHelper
+import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
+import by.alexandr7035.data.datasource.cloud.api.UserApiService
+import by.alexandr7035.data.model.network.sign_up.ConfirmSignUpRequest
+import by.alexandr7035.data.model.network.sign_up.SignUpMessageParams
+import by.alexandr7035.data.model.network.sign_up.SignUpOptions
+import by.alexandr7035.data.model.network.sign_up.SignUpRequest
 import javax.inject.Inject
 
 class RegistrationRepositoryImpl @Inject constructor(
     private val apiService: UserApiService,
+    private val apiCallHelper: ApiCallHelper,
     private val secretsStorage: SecretsStorage
 ) : RegistrationRepository {
 
     override suspend fun signUp(signUpRequestModel: SignUpRequestModel): SignUpResponseModel {
-        try {
-            val res = apiService.signUp(
-                SignUpRequest(
-                    userName = signUpRequestModel.userName,
-                    password = signUpRequestModel.password,
-                    // Use with default params
-                    signUpOptions = SignUpOptions(),
-                    signUpMessageParams = SignUpMessageParams()
-                )
-            )
+        val signUpRequest = SignUpRequest(
+            userName = signUpRequestModel.userName,
+            password = signUpRequestModel.password,
+            // Use with default params
+            signUpOptions = SignUpOptions(),
+            signUpMessageParams = SignUpMessageParams()
+        )
 
-            return if (res.isSuccessful) {
-                // Get token for signup confirmation and return
-                SignUpResponseModel.Success(res.body() as String)
-            } else {
-                when (res.code()) {
-                    409 -> {
-                        SignUpResponseModel.Fail(ErrorType.USER_ALREADY_EXISTS)
-                    }
-                    else -> {
-                        SignUpResponseModel.Fail(ErrorType.UNKNOWN_ERROR)
-                    }
+        val res = apiCallHelper.executeCall {
+            apiService.signUp(signUpRequest)
+        }
+
+        return when (res) {
+            is ApiCallWrapper.Success -> {
+                SignUpResponseModel.Success(res.data)
+            }
+
+            is ApiCallWrapper.HttpError -> {
+                when (res.resultCode) {
+                    409 -> SignUpResponseModel.Fail(ErrorType.USER_ALREADY_EXISTS)
+                    else -> SignUpResponseModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
-        }
-        // Handled in ErrorInterceptor
-        catch (appError: AppError) {
-            return SignUpResponseModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            e.printStackTrace()
-            return SignUpResponseModel.Fail(ErrorType.UNKNOWN_ERROR)
+            is ApiCallWrapper.Fail -> SignUpResponseModel.Fail(res.errorType)
         }
     }
 
+
     override suspend fun confirmSignUp(confirmSignUpRequestModel: ConfirmSignUpRequestModel): ConfirmSignUpResponseModel {
-        try {
-            val res = apiService.confirmSignUp(ConfirmSignUpRequest(
-                    token = confirmSignUpRequestModel.confirmationToken,
-                    confirmationCode = confirmSignUpRequestModel.confirmationCode
+
+        val requestBody = ConfirmSignUpRequest(
+            token = confirmSignUpRequestModel.confirmationToken,
+            confirmationCode = confirmSignUpRequestModel.confirmationCode
+        )
+
+        val res = apiCallHelper.executeCall {
+            apiService.confirmSignUp(requestBody)
+        }
+
+        return when (res) {
+            is ApiCallWrapper.Success -> {
+                secretsStorage.saveAccessToken(res.data.accessToken)
+                ConfirmSignUpResponseModel.Success(
+                    accessToken = res.data.accessToken,
+                    userDid = res.data.userDid
                 )
-            )
-
-            if (res.isSuccessful) {
-                val data = res.body() as ConfirmSignUpResponse
-
-                secretsStorage.saveAccessToken(data.accessToken)
-
-                return ConfirmSignUpResponseModel.Success(
-                    accessToken = data.accessToken,
-                    userDid = data.userDid
-                )
-            } else {
-                return when (res.code()) {
-                    400 -> {
-                        ConfirmSignUpResponseModel.Fail(ErrorType.WRONG_CONFIRMATION_CODE)
-                    }
-                    else -> {
-                        ConfirmSignUpResponseModel.Fail(ErrorType.UNKNOWN_ERROR)
-                    }
+            }
+            is ApiCallWrapper.HttpError -> {
+                when (res.resultCode) {
+                    400 -> ConfirmSignUpResponseModel.Fail(ErrorType.WRONG_CONFIRMATION_CODE)
+                    else -> ConfirmSignUpResponseModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
-        }
-        // Handled in ErrorInterceptor
-        catch (appError: AppError) {
-            return ConfirmSignUpResponseModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            return ConfirmSignUpResponseModel.Fail(ErrorType.UNKNOWN_ERROR)
+            is ApiCallWrapper.Fail -> ConfirmSignUpResponseModel.Fail(res.errorType)
         }
     }
 }

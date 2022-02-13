@@ -4,88 +4,58 @@ import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
 import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
 import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
-import by.alexandr7035.data.datasource.cloud.api.UserApiService
-import by.alexandr7035.data.core.AppError
-import by.alexandr7035.data.extensions.debug
-import by.alexandr7035.data.model.network.sign_in.SignInRequest
-import by.alexandr7035.data.model.network.sign_in.SignInResponse
 import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
-import timber.log.Timber
-import java.lang.Exception
+import by.alexandr7035.data.datasource.cloud.ApiCallHelper
+import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
+import by.alexandr7035.data.datasource.cloud.api.UserApiService
+import by.alexandr7035.data.model.network.sign_in.SignInRequest
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(private val userApiService: UserApiService, private val secretsStorage: SecretsStorage): LoginRepository {
+class LoginRepositoryImpl @Inject constructor(
+    private val userApiService: UserApiService,
+    private val apiCallHelper: ApiCallHelper,
+    private val secretsStorage: SecretsStorage
+) : LoginRepository {
+
     override suspend fun signIn(userName: String, password: String): SignInModel {
 
-        try {
-            val res = userApiService.signIn(SignInRequest(userName, password))
-            if (res.isSuccessful) {
-                val data = res.body() as SignInResponse
+        val res = apiCallHelper.executeCall {
+            userApiService.signIn(SignInRequest(userName, password))
+        }
 
-                secretsStorage.saveAccessToken(data.accessToken)
-
-                return SignInModel.Success(
-                    userDid = data.userDid,
-                    userName = userName
-                )
+        return when (res) {
+            is ApiCallWrapper.Success -> {
+                secretsStorage.saveAccessToken(res.data.accessToken)
+                return SignInModel.Success(userDid = res.data.userDid, userName = userName)
             }
-            else {
-                return when (res.code()) {
-                    400 -> {
-                        SignInModel.Fail(ErrorType.WRONG_USERNAME_OR_PASSWORD)
-                    }
-                    404 -> {
-                        SignInModel.Fail(ErrorType.USER_DOES_NOT_EXIST)
-                    }
-                    // Unknown fail code
-                    else -> {
-                        SignInModel.Fail(ErrorType.UNKNOWN_ERROR)
-                    }
+            is ApiCallWrapper.Fail -> SignInModel.Fail(res.errorType)
+            is ApiCallWrapper.HttpError -> {
+                when (res.resultCode) {
+                    400 -> SignInModel.Fail(ErrorType.WRONG_USERNAME_OR_PASSWORD)
+                    404 -> SignInModel.Fail(ErrorType.USER_DOES_NOT_EXIST)
+                    else -> SignInModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
-        }
-        // Handled in ErrorInterceptor
-        catch (appError: AppError) {
-            return SignInModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            return SignInModel.Fail(ErrorType.UNKNOWN_ERROR)
         }
     }
 
     override suspend fun logOut(accessToken: String): LogOutModel {
-        Timber.debug("AUTH_CHECK logout called")
+        val res = apiCallHelper.executeCall {
+            userApiService.logOut(accessToken)
+        }
 
-        try {
-            val res = userApiService.logOut(accessToken)
-
-            if (res.isSuccessful) {
+        return when (res) {
+            is ApiCallWrapper.Success -> {
                 secretsStorage.saveAccessToken(null)
-                return LogOutModel.Success
+                LogOutModel.Success
             }
-            else {
-                return when (res.code()) {
-                    401 -> {
-                        return LogOutModel.Fail(ErrorType.AUTHORIZATION_ERROR)
-                    }
-                    else -> {
-                        LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
-                    }
+            is ApiCallWrapper.HttpError -> {
+                when (res.resultCode) {
+                    401 -> LogOutModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    else -> LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
-        }
-        // Handled in ErrorInterceptor
-        catch (appError: AppError) {
-            appError.printStackTrace()
-            Timber.debug("ERRORTYPE ${appError.errorType.name}")
-            return LogOutModel.Fail(appError.errorType)
-        }
-        // Unknown exception
-        catch (e: Exception) {
-            Timber.debug("LOGOUT FAILED other exception $e")
-            e.printStackTrace()
-            return LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
+            is ApiCallWrapper.Fail -> LogOutModel.Fail(res.errorType)
         }
     }
 
@@ -96,5 +66,4 @@ class LoginRepositoryImpl @Inject constructor(private val userApiService: UserAp
     override fun getAccessToken(): String? {
         return secretsStorage.getAccessToken()
     }
-
 }
