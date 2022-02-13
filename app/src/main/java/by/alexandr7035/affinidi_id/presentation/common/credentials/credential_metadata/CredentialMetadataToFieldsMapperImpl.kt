@@ -43,6 +43,6 @@ class CredentialMetadataToFieldsMapperImpl @Inject constructor(private val resou
     }
 
     companion object {
-        private const val DATE_FORMAT = "dd MMM yyyy HH:mm:SS"
+        private const val DATE_FORMAT = "dd MMM yyyy HH:mm:ss"
     }
 }
