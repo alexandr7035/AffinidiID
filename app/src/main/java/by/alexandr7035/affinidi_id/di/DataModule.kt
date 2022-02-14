@@ -118,9 +118,10 @@ object DataModule {
     fun provideLoginRepository(
         userApiService: UserApiService,
         apiCallHelper: ApiCallHelper,
-        secretsStorage: SecretsStorage
+        secretsStorage: SecretsStorage,
+        credentialsCacheDataSource: CredentialsCacheDataSource
     ): LoginRepository {
-        return LoginRepositoryImpl(userApiService, apiCallHelper, secretsStorage)
+        return LoginRepositoryImpl(userApiService, apiCallHelper, secretsStorage, credentialsCacheDataSource)
     }
 
     @Provides
