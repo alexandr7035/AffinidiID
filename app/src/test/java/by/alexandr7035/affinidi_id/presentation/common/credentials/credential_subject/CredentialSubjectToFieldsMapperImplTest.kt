@@ -1,10 +1,13 @@
 package by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject
 
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDataItem
+import com.google.gson.JsonArray
+import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Test
+
 
 class CredentialSubjectToFieldsMapperImplTest {
 
@@ -46,6 +49,48 @@ class CredentialSubjectToFieldsMapperImplTest {
             CredentialDataItem.Field(name = "name", value = "Name", offsetLevel = 0),
             CredentialDataItem.TitleOnly(name = "contacts", offsetLevel = 0),
             CredentialDataItem.Field(name = "telegramId", value = "12345", offsetLevel = 1)
+        )
+
+        assertEquals(uiFieldsObjectExpected, uiFieldsObjectActual)
+    }
+
+
+    // Case is unlikely to happen but need to handle properly
+    @Test
+    fun test_credential_subject_with_json_array() {
+        val arrayObject = JsonArray().apply {
+            add("element1")
+            add("element2")
+        }
+
+        val jsonObject = JsonObject().apply {
+            add("name", JsonPrimitive("Name"))
+            add("array", arrayObject)
+        }
+
+        val uiFieldsObjectActual = mapper.map(jsonObject)
+
+        val uiFieldsObjectExpected = listOf(
+            CredentialDataItem.Field(name = "name", value = "Name", offsetLevel = 0),
+            CredentialDataItem.Field(name = "array", value = "[\"element1\",\"element2\"]", offsetLevel = 0),
+        )
+
+        assertEquals(uiFieldsObjectExpected, uiFieldsObjectActual)
+    }
+
+
+    // Case is unlikely to happen but need to handle properly
+    @Test
+    fun test_credential_subject_with_nulls() {
+
+        val jsonObject = JsonObject().apply {
+            add("name", JsonNull.INSTANCE)
+        }
+
+        val uiFieldsObjectActual = mapper.map(jsonObject)
+
+        val uiFieldsObjectExpected = listOf(
+            CredentialDataItem.Field(name = "name", value = "null", offsetLevel = 0),
         )
 
         assertEquals(uiFieldsObjectExpected, uiFieldsObjectActual)

@@ -1,10 +1,10 @@
 package by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject
 
-import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDataItem
 import com.google.gson.JsonObject
-import timber.log.Timber
 
+
+// See also unit tests which also may explain clearly how VC data is converted to ui models
 class CredentialSubjectToFieldsMapperImpl: CredentialSubjectToFieldsMapper {
     override fun map(jsonObject: JsonObject, offsetLevel: Int): List<CredentialDataItem> {
         val fields = ArrayList<CredentialDataItem>()
@@ -31,18 +31,16 @@ class CredentialSubjectToFieldsMapperImpl: CredentialSubjectToFieldsMapper {
                     val nestedFields = map(value.asJsonObject, offsetLevel = increasedOffset)
                     fields.addAll(nestedFields)
                 }
-                // JsonArray / Null values
-                // Just stringify, todo find a better solution
-                else -> {
-//                    fields.add(CredentialDataItem.Field(name = key, value = value.asString))
+                value.isJsonArray -> {
+                    // JsonArray.asString raises exception when contains more than 1 element
+                    // So use toString()
+                    fields.add(CredentialDataItem.Field(name = key, value = value.toString()))
+                }
+                // Null values and other unexpected cases. Just stringify
+                value.isJsonNull -> {
+                    fields.add(CredentialDataItem.Field(name = key, value = value.toString()))
                 }
             }
-        }
-
-        Timber.debug("DEBUG_JSON $fields")
-
-        fields.forEach {
-            Timber.debug("DEBUG_JSON_OFFSET ${it.offsetLevel}")
         }
 
         return fields
