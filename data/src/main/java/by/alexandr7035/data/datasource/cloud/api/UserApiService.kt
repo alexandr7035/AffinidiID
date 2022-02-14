@@ -1,5 +1,6 @@
 package by.alexandr7035.data.datasource.cloud.api
 
+import by.alexandr7035.data.model.network.EmptyResponse
 import by.alexandr7035.data.model.network.profile.ChangePasswordRequest
 import by.alexandr7035.data.model.network.reset_password.ConfirmResetPasswordRequest
 import by.alexandr7035.data.model.network.reset_password.InitializeResetPasswordRequest
@@ -29,22 +30,22 @@ interface UserApiService {
     suspend fun signIn(@Body body: SignInRequest): Response<SignInResponse>
 
     @POST("$WALLET_API_BASE_URL/api/v1/users/logout")
-    suspend fun logOut(@Header("Authorization") accessToken: String): Response<Unit>
+    suspend fun logOut(@Header("Authorization") accessToken: String): Response<EmptyResponse>
 
     // This request doesn't return anything but sends OTP to user's email
     @POST("$WALLET_API_BASE_URL/api/v1/users/forgot-password")
-    suspend fun initializePasswordReset(@Body body: InitializeResetPasswordRequest): Response<Unit>
+    suspend fun initializePasswordReset(@Body body: InitializeResetPasswordRequest): Response<EmptyResponse>
 
     // This request doesn't return anything. 204 code for success
     @POST("$WALLET_API_BASE_URL/api/v1/users/forgot-password/confirm")
-    suspend fun confirmPasswordReset(@Body body: ConfirmResetPasswordRequest): Response<Unit>
+    suspend fun confirmPasswordReset(@Body body: ConfirmResetPasswordRequest): Response<EmptyResponse>
 
     // 204 for success
     @POST("$WALLET_API_BASE_URL/api/v1/users/change-password")
     suspend fun changePassword(
         @Header("Authorization") accessToken: String,
         @Body body: ChangePasswordRequest
-    ): Response<Unit>
+    ): Response<EmptyResponse>
 
 
     @GET("$WALLET_API_BASE_URL/api/v1/users/get-did")

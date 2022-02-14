@@ -1,8 +1,7 @@
 package by.alexandr7035.data.helpers.vc_mapping
 
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.CredentialSubjectData
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.UnknownCredentialSubjectData
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.credential_subject.CredentialSubjectData
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.credential_subject.EmailCredentialSubjectData
 import by.alexandr7035.data.model.CredentialSubject
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -10,20 +9,6 @@ import java.lang.RuntimeException
 import javax.inject.Inject
 
 class CredentialSubjectCasterImpl @Inject constructor(private val gson: Gson) : CredentialSubjectCaster {
-    override fun castToCredentialSubjectData(credentialContextUrl: String, credentialSubject: CredentialSubject): CredentialSubjectData {
-
-        return try {
-            when (credentialContextUrl) {
-                EMAIL_CREDENTIAL_TYPE_CONTEXT -> {
-                    val emailVc = gson.fromJson(credentialSubject.data, EmailCredentialSubjectData::class.java)
-                    emailVc
-                }
-                else -> UnknownCredentialSubjectData()
-            }
-        } catch (e: Exception) {
-            UnknownCredentialSubjectData()
-        }
-    }
 
     override fun getCredentialSubjectFromCredentialSubjectData(credentialContextUrl: String, credentialSubjectData: CredentialSubjectData): CredentialSubject {
         val jsonString = when (credentialContextUrl) {

@@ -14,4 +14,11 @@
         <item name="android:background">@drawable/bg_primary_card</item>
         <item name="android:padding">@dimen/profile_image_large_bg_padding</item>
     </style>
+
+    <style name="ScanQRLabel">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

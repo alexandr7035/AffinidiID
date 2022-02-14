@@ -192,6 +192,9 @@
         <action
             android:id="@+id/action_credentialDetailsFragment_to_credentialRawFragment"
             app:destination="@id/credentialRawFragment" />
+        <action
+            android:id="@+id/action_credentialDetailsFragment_to_shareCredentialFragment"
+            app:destination="@id/shareCredentialFragment" />
     </fragment>
 
     <fragment
@@ -203,5 +206,42 @@
             android:name="rawCredential"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/shareCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.share_credential.ShareCredentialFragment"
+        android:label="fragment_share_credential"
+        tools:layout="@layout/fragment_share_credential" >
+        <argument
+            android:name="credentialId"
+            app:argType="string" />
+    </dialog>
+    <fragment
+        android:id="@+id/scanCredentialQrCodeFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.verify_credential_qr.ScanCredentialQrCodeFragment"
+        android:label="fragment_scan_credential_qr_code"
+        tools:layout="@layout/fragment_scan_credential_qr_code" >
+        <action
+            android:id="@+id/action_scanCredentialQrCodeFragment_to_scannedCredentialFragment"
+            app:destination="@id/scannedCredentialFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scannedCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.verify_credential_qr.ScannedCredentialFragment"
+        android:label="fragment_scanned_credential"
+        tools:layout="@layout/fragment_scanned_credential" >
+        <argument
+            android:name="qrLink"
+            app:argType="string" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="by.alexandr7035.affinidi_id.presentation.MainActivity"
+        android:label="MainActivity" />
+
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/nav_graph.xml"
+        app:popUpToInclusive="true" />
 
 </navigation>

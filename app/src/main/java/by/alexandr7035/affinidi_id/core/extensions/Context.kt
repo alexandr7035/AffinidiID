@@ -1,9 +1,12 @@
 package by.alexandr7035.affinidi_id.core.extensions
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings
 import android.widget.Toast
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
 
@@ -31,4 +34,11 @@ fun Context.vibrate(vibrationMode: VibrationMode) {
     else {
         vibrator.vibrate(vibrationTimeMills)
     }
+}
+
+fun Context.openAppSystemSettings() {
+    startActivity(Intent().apply {
+        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        data = Uri.fromParts("package", packageName, null)
+    })
 }

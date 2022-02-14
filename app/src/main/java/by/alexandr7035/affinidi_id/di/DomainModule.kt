@@ -68,13 +68,13 @@ object DomainModule {
     }
 
     @Provides
-    fun provideGetCredentialsListUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialsListUseCase {
-        return GetCredentialsListUseCase(credentialsRepository, authStateUseCase)
+    fun provideGetCredentialsListUseCase(storedCredentialsRepository: StoredCredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialsListUseCase {
+        return GetCredentialsListUseCase(storedCredentialsRepository, authStateUseCase)
     }
 
     @Provides
-    fun provideIssueCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase, checkIfHaveCredentialUseCase: CheckIfHaveCredentialUseCase): IssueCredentialUseCase {
-        return IssueCredentialUseCase(credentialsRepository, authStateUseCase, checkIfHaveCredentialUseCase)
+    fun provideIssueCredentialUseCase(issueCredentialsRepository: IssueCredentialsRepository, authStateUseCase: GetAuthStateUseCase, checkIfHaveCredentialUseCase: CheckIfHaveCredentialUseCase): IssueCredentialUseCase {
+        return IssueCredentialUseCase(issueCredentialsRepository, authStateUseCase, checkIfHaveCredentialUseCase)
     }
 
     @Provides
@@ -83,27 +83,37 @@ object DomainModule {
     }
 
     @Provides
-    fun provideDeleteCredentialUseCase(credentialsRepository: CredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): DeleteCredentialUseCase {
-        return DeleteCredentialUseCase(credentialsRepository, getAuthStateUseCase)
+    fun provideDeleteCredentialUseCase(storedCredentialsRepository: StoredCredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): DeleteCredentialUseCase {
+        return DeleteCredentialUseCase(storedCredentialsRepository, getAuthStateUseCase)
     }
 
     @Provides
-    fun provideAuthCheckUseCase(authCheckRepository: AuthCheckRepository, getAuthStateUseCase: GetAuthStateUseCase): AuthCheckUseCase {
-        return AuthCheckUseCase(authCheckRepository, getAuthStateUseCase)
+    fun provideAuthCheckUseCase(authCheckRepository: AuthCheckRepository, getAuthStateUseCase: GetAuthStateUseCase, logOutUseCase: LogOutUseCase): AuthCheckUseCase {
+        return AuthCheckUseCase(authCheckRepository, getAuthStateUseCase, logOutUseCase)
     }
 
     @Provides
-    fun provideGetCredentialByIdUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialByIdUseCase {
-        return GetCredentialByIdUseCase(credentialsRepository, authStateUseCase)
+    fun provideGetCredentialByIdUseCase(storedCredentialsRepository: StoredCredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialByIdUseCase {
+        return GetCredentialByIdUseCase(storedCredentialsRepository, authStateUseCase)
     }
 
     @Provides
-    fun provideVerifyCredentialUseCase(credentialsRepository: CredentialsRepository, authStateUseCase: GetAuthStateUseCase): VerifyCredentialUseCase {
-        return VerifyCredentialUseCase(credentialsRepository)
+    fun provideVerifyCredentialUseCase(verificationRepository: VerificationRepository): VerifyCredentialUseCase {
+        return VerifyCredentialUseCase(verificationRepository)
     }
 
     @Provides
-    fun provideCheckIfHaveCredentialUseCase(credentialsRepository: CredentialsRepository): CheckIfHaveCredentialUseCase {
-        return CheckIfHaveCredentialUseCase(credentialsRepository)
+    fun provideCheckIfHaveCredentialUseCase(storedCredentialsRepository: StoredCredentialsRepository): CheckIfHaveCredentialUseCase {
+        return CheckIfHaveCredentialUseCase(storedCredentialsRepository)
+    }
+
+    @Provides
+    fun provideShareCredentialUseCase(storedCredentialsRepository: StoredCredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): ShareCredentialUseCase {
+        return ShareCredentialUseCase(storedCredentialsRepository, getAuthStateUseCase)
+    }
+
+    @Provides
+    fun provideObtainCredentialWithQrCode(verificationRepository: VerificationRepository): ObtainCredentialWithQrCodeUseCase {
+        return ObtainCredentialWithQrCodeUseCase(verificationRepository)
     }
 }

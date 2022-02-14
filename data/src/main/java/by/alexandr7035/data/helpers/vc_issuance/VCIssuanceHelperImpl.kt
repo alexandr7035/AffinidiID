@@ -26,8 +26,8 @@ class VCIssuanceHelperImpl @Inject constructor(
     override suspend fun buildUnsignedVC(issueCredentialReqModel: IssueCredentialReqModel): UnsignedCredential {
 
         val credentialSubject = credentialSubjectCaster.getCredentialSubjectFromCredentialSubjectData(
-            credentialContextUrl = issueCredentialReqModel.credentialType.jsonLdContextUrl,
-            credentialSubjectData = issueCredentialReqModel.credentialType.credentialSubjectData
+            credentialContextUrl = issueCredentialReqModel.issuingCredentialData.jsonLdContextUrl,
+            credentialSubjectData = issueCredentialReqModel.issuingCredentialData.credentialSubjectData
         )
 
         Timber.debug("final cred $credentialSubject")
@@ -36,8 +36,8 @@ class VCIssuanceHelperImpl @Inject constructor(
             credentialSubject = credentialSubject,
             expirationDate = issueCredentialReqModel.expiresAt?.getStringDateFromLong(CREDENTIAL_DATE_FORMAT),
             holderDid = issueCredentialReqModel.holderDid,
-            jsonLdContextUrl = issueCredentialReqModel.credentialType.jsonLdContextUrl,
-            typeName = issueCredentialReqModel.credentialType.typeName
+            jsonLdContextUrl = issueCredentialReqModel.issuingCredentialData.jsonLdContextUrl,
+            typeName = issueCredentialReqModel.issuingCredentialData.typeName
         )
 
         Timber.debug("DEBUG_VC unsigned VC req $request")

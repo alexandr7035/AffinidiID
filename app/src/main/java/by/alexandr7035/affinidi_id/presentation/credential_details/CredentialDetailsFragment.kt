@@ -18,6 +18,8 @@ import by.alexandr7035.affinidi_id.core.extensions.vibrate
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
+import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
+import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +44,10 @@ class CredentialDetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        val credentialSubjectAdapter = CredentialDataAdapter()
+        binding.credentialSubjectRecycler.adapter = credentialSubjectAdapter
+        binding.credentialSubjectRecycler.layoutManager = LinearLayoutManager(requireContext())
+
         val metadataAdapter = CredentialDataAdapter()
         binding.metadataRecycler.adapter = metadataAdapter
         binding.metadataRecycler.layoutManager = LinearLayoutManager(requireContext())
@@ -56,6 +62,7 @@ class CredentialDetailsFragment : Fragment() {
             when (credentialData) {
                 is CredentialDetailsUiModel.Success -> {
                     // Set fields to cards
+                    credentialSubjectAdapter.setItems(credentialData.credentialSubjectItems)
                     metadataAdapter.setItems(credentialData.metadataItems)
                     proofAdapter.setItems(credentialData.proofItems)
 
@@ -70,7 +77,7 @@ class CredentialDetailsFragment : Fragment() {
 
                     binding.toolbar.setOnMenuItemClickListener {
                         when (it.itemId) {
-                            R.id.delete_item -> {
+                            R.id.item_delete -> {
                                 // Dialog to delete VC
                                 findNavController().navigateSafe(
                                     CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
@@ -78,6 +85,16 @@ class CredentialDetailsFragment : Fragment() {
                                     )
                                 )
                             }
+
+                            R.id.item_share -> {
+                                // Share VC dialog
+                                findNavController().navigateSafe(
+                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToShareCredentialFragment(
+                                        safeArgs.credentialId
+                                    )
+                                )
+                            }
+
                         }
 
                         true

@@ -13,7 +13,7 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordSetPasswordBinding
-import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,7 +82,7 @@ class ResetPasswordSetPasswordFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.passwordSetField.error = getString(R.string.error_wromg_password_format)
+                binding.passwordSetField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 
@@ -97,7 +97,7 @@ class ResetPasswordSetPasswordFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.passwordConfirmField.error = getString(R.string.error_wromg_password_format)
+                binding.passwordConfirmField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 

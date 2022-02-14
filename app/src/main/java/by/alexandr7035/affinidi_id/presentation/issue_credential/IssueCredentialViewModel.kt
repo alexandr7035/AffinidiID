@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
 import by.alexandr7035.affinidi_id.domain.model.credentials.available_credential_types.AvailableCredentialTypeModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.VcType
-import by.alexandr7035.affinidi_id.domain.model.credentials.common.credential_subject.EmailCredentialSubjectData
-import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.CredentialType
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssuingCredentialType
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.credential_subject.EmailCredentialSubjectData
+import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssuingCredentialData
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetAvailableVcTypesUseCase
@@ -39,14 +39,14 @@ class IssueCredentialViewModel @Inject constructor(
         }
     }
 
-    fun issueCredential(credentialType: VcType) {
+    fun issueCredential(credentialType: IssuingCredentialType) {
         val issueRequest = when (credentialType) {
-            VcType.EMAIL_CREDENTIAL -> {
+            IssuingCredentialType.EMAIL_CREDENTIAL -> {
 
                 val profile = getProfileUseCase.execute()
 
                 IssueCredentialReqModel(
-                    credentialType = CredentialType.EmailVC(
+                    issuingCredentialData = IssuingCredentialData.EmailVC(
                         credentialSubjectData = EmailCredentialSubjectData(
                             // This is a email address
                             profile.userName

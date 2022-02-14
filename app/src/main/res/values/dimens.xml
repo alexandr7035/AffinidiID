@@ -22,7 +22,7 @@
     <dimen name="primary_menu_item_padding_horizontal">20dp</dimen>
     <dimen name="primary_menu_item_spacing">16dp</dimen>
 
-    <dimen name="credential_item_min_height">200dp</dimen>
+    <dimen name="credential_item_min_height">160dp</dimen>
     <dimen name="credential_item_corners">16dp</dimen>
     <dimen name="credential_item_padding">16dp</dimen>
     <dimen name="credential_item_elevation">8dp</dimen>
@@ -38,10 +38,7 @@
     <dimen name="error_view_text">18sp</dimen>
 
     <dimen name="available_credential_item_corners">16dp</dimen>
-    <dimen name="vc_field_value_margin">8dp</dimen>
     <dimen name="vc_field_spacing">4dp</dimen>
-
-    <dimen name="vc_details_spacing_size">24dp</dimen>
 
     <dimen name="snackbar_corners">30dp</dimen>
     <dimen name="snackbar_padding_horizontal">20dp</dimen>
@@ -62,5 +59,6 @@
     <dimen name="input_form_label_text">20sp</dimen>
     <dimen name="input_field_text">18sp</dimen>
     <dimen name="input_field_padding_vertical">12dp</dimen>
+    <dimen name="qr_code_image_size">160dp</dimen>
 
 </resources>

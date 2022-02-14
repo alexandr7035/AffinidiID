@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">AffinidiID</string>
+    <string name="affinidi_id">AffinidiID</string>
     <string name="app_name_with_version">AffinidiID v%1$s</string>
     <string name="create_id">Create ID</string>
     <string name="sign_up">Sign Up</string>
@@ -14,7 +15,7 @@
     <string name="error_user_exists">User already exists. Try to sign in</string>
     <string name="error_user_not_found">User not found</string>
     <string name="error_wrong_user_or_password">Wrong e-mail or password</string>
-    <string name="error_wromg_password_format">Wrong password format. At least 8 charaters, both latin symbols and numbers</string>
+    <string name="error_wrong_password_format">Wrong password format. At least 8 charaters, both latin symbols and numbers</string>
     <string name="error_passwords_not_match">Passwords do not match</string>
     <string name="error_invalid_user_name">Username must be a valid e-mail address</string>
 
@@ -30,10 +31,8 @@
     <string name="profile">Profile</string>
     <string name="your_did">Your DID</string>
     <string name="your_username">Your username</string>
-    <string name="your_did_copied">Your DID has been copied.</string>
-    <string name="your_username_copied">Your username has been copied.</string>
-    <string name="your_credentials">Your credentials</string>
-    <string name="contacts">Contacts</string>
+    <string name="your_did_copied">Your DID has been copied</string>
+    <string name="your_username_copied">Your username has been copied</string>
     <string name="your_affinidi_id">Your Affinidi ID</string>
     <string name="log_out">Log out</string>
 
@@ -69,14 +68,10 @@
     <string name="retry">Retry</string>
     <string name="issue_credentials">Issue credentials</string>
 
-    <string name="vc_type_email">Proof of E-mail address</string>
-    <string name="vc_type_unknown">Unknown credential</string>
-    <string name="unknown_vc_exmplanation">It seems this VC type is not supported by the app yet.</string>
-    <string name="address">Address</string>
     <string name="delete_vc_explanation">Sure to delete the VC from cloud wallet? If you haven\'t saved it somewhere, you will have to re-issue it.</string>
     <string name="delete_vc">Delete VC?</string>
     <string name="error_occurred">An error occurred</string>
-    <string name="eror_auth">Your access token has expired. Please, sign in again.</string>
+    <string name="eror_auth">Your access token has expired. Please, sign in again</string>
     <string name="credential_info">Credential info</string>
     <string name="credential_id">Credential ID</string>
     <string name="holder">Holder</string>
@@ -88,15 +83,25 @@
     <string name="vc_is_not_valid">VC is NOT valid</string>
     <string name="view_json">View JSON</string>
     <string name="credential_metadata">Credential metadata</string>
-    <string name="created">Create</string>
+    <string name="created">Created</string>
     <string name="type">Type</string>
     <string name="proof_purpose">Proof purpose</string>
     <string name="verification_method">Verification method</string>
     <string name="jws">JWS</string>
     <string name="credential_proof">Credential Proof</string>
-    <string name="affinidi_id">AffinidiID</string>
-    <string name="vc_issuance_successful">A new VC has been issued! Check the credentials list.</string>
-    <string name="already_have_credential">You already have this credential in the wallet.</string>
+    <string name="vc_issuance_successful">A new VC has been issued! Check the credentials list</string>
+    <string name="already_have_credential">You already have this credential in the wallet</string>
     <string name="no_credentials_stub_text">You have no credentials in the wallet. Click + to issue your first one!</string>
+
+    <string name="share_vc">Share VC</string>
+    <string name="qr_code_explanation">Show this QR code to the Verifier so that he can verify the credential.</string>
+    <string name="credentials">Credentials</string>
+    <string name="scanned_credential">Scanned credential</string>
+
+    <string name="permission_denied">Permission denied</string>
+    <string name="permission_camera_explanation">Can\'t use camera: permission denied. To scan the credential QR code go to the application settings and allow camera access.</string>
+    <string name="open_app_settings">Open app settings</string>
+    <string name="scan_the_qr_code_of_verifiable_credential">Scan the QR code of verifiable credential</string>
+    <string name="credential_scan_error">Failed to obtain credential. Please, ensure your are scanning the right QR code. Also check your internet connection</string>
 
 </resources>

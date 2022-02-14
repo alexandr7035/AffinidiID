@@ -17,7 +17,7 @@ import by.alexandr7035.affinidi_id.databinding.FragmentChangePasswordBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
-import by.alexandr7035.affinidi_id.presentation.helpers.validation.InputValidationResult
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -114,7 +114,7 @@ class ChangePasswordFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.oldPasswordField.error = getString(R.string.error_wromg_password_format)
+                binding.oldPasswordField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 
@@ -128,7 +128,7 @@ class ChangePasswordFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.newPasswordField.error = getString(R.string.error_wromg_password_format)
+                binding.newPasswordField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 
