@@ -29,8 +29,6 @@ class ResetPasswordRepositoryImpl @Inject constructor(
             }
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
-                    // FIXME wrong errortype for 400
-                    400 -> InitializePasswordResetResponseModel.Fail(ErrorType.WRONG_CONFIRMATION_CODE)
                     404 -> InitializePasswordResetResponseModel.Fail(ErrorType.USER_DOES_NOT_EXIST)
                     else -> InitializePasswordResetResponseModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
