@@ -22,7 +22,7 @@
         style="@style/ProfileImageLarge"
         android:contentDescription="@string/cd_profile_image"
         android:layout_marginTop="@dimen/default_fragment_margin"
-        android:src="@mipmap/ic_launcher"
+        tools:src="@drawable/ic_app"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

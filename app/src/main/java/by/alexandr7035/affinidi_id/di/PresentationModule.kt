@@ -1,34 +1,33 @@
 package by.alexandr7035.affinidi_id.di
 
 import android.content.Context
-import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
-import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata.CredentialMetadataToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata.CredentialMetadataToFieldsMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_proof.CredentialProofToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_proof.CredentialProofToFieldsMapperImpl
-import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject.CredentialSubjectToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject.CredentialSubjectToFieldsMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
-import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject.CredentialSubjectToFieldsMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject.CredentialSubjectToFieldsMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
+import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsHelper
 import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsHelperImpl
 import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsPreferences
 import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsPreferencesImpl
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProviderImpl
+import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
+import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)

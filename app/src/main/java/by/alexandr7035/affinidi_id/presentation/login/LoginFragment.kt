@@ -157,7 +157,7 @@ class LoginFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.passwordField.error = getString(R.string.error_wromg_password_format)
+                binding.passwordField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 

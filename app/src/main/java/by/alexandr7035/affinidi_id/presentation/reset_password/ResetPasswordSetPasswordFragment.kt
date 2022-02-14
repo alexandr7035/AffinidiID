@@ -82,7 +82,7 @@ class ResetPasswordSetPasswordFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.passwordSetField.error = getString(R.string.error_wromg_password_format)
+                binding.passwordSetField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 
@@ -97,7 +97,7 @@ class ResetPasswordSetPasswordFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.passwordConfirmField.error = getString(R.string.error_wromg_password_format)
+                binding.passwordConfirmField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 

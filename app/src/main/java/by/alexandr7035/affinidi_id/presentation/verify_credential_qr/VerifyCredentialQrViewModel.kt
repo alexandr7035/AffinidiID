@@ -4,20 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
 import by.alexandr7035.affinidi_id.domain.model.credentials.get_from_qr_code.ObtainVcFromQrCodeReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.get_from_qr_code.ObtainVcFromQrCodeResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcReqModel
-import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.ObtainCredentialWithQrCodeUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
-import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
-import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapper
+import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +27,6 @@ class VerifyCredentialQrViewModel @Inject constructor(
     private val credentialToDetailsModelMapper: CredentialToDetailsModelMapper,
     private val verifyCredentialUseCase: VerifyCredentialUseCase,
     private val verificationResultToUiMapper: VerificationResultToUiMapper,
-    private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
     private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()

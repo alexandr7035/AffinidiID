@@ -5,7 +5,7 @@
 * [Used APIs](#used-apis)
 * [Implemented use cases](#implemented-use-cases)
 * [Technical details](#technical-details)
-   * [Overveiew](#overveiew)
+   * [Overview](#overview)
    * [Schemas](#schemas)
 
 

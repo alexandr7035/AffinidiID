@@ -42,7 +42,7 @@ class CredentialSubjectToFieldsMapperImplTest {
 
         val uiFieldsObjectActual = mapper.map(jsonObject)
 
-        val uiFieldsObjectExpected = listOf<CredentialDataItem>(
+        val uiFieldsObjectExpected = listOf(
             CredentialDataItem.Field(name = "name", value = "Name", offsetLevel = 0),
             CredentialDataItem.TitleOnly(name = "contacts", offsetLevel = 0),
             CredentialDataItem.Field(name = "telegramId", value = "12345", offsetLevel = 1)

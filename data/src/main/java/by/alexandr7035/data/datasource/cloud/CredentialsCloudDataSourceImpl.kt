@@ -13,7 +13,7 @@ class CredentialsCloudDataSourceImpl @Inject constructor(
     CredentialsCloudDataSource {
     override suspend fun getCredentialsFromCloud(authState: AuthStateModel): DataCredentialsList {
 
-        val res = apiCallHelper.executeCall() {
+        val res = apiCallHelper.executeCall {
             apiService.getAllCredentials(authState.accessToken ?: "")
         }
 

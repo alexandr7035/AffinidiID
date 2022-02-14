@@ -54,8 +54,4 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
 
         // TODO other types here
     }
-
-    companion object {
-        private const val NORMAL_CREDENTIAL = 1
-    }
 }

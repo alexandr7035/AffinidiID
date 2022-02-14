@@ -38,10 +38,7 @@
     <dimen name="error_view_text">18sp</dimen>
 
     <dimen name="available_credential_item_corners">16dp</dimen>
-    <dimen name="vc_field_value_margin">8dp</dimen>
     <dimen name="vc_field_spacing">4dp</dimen>
-
-    <dimen name="vc_details_spacing_size">24dp</dimen>
 
     <dimen name="snackbar_corners">30dp</dimen>
     <dimen name="snackbar_padding_horizontal">20dp</dimen>

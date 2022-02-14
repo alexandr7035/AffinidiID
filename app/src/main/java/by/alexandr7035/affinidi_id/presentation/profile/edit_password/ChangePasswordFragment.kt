@@ -114,7 +114,7 @@ class ChangePasswordFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.oldPasswordField.error = getString(R.string.error_wromg_password_format)
+                binding.oldPasswordField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 
@@ -128,7 +128,7 @@ class ChangePasswordFragment : Fragment() {
             }
 
             InputValidationResult.WRONG_FORMAT -> {
-                binding.newPasswordField.error = getString(R.string.error_wromg_password_format)
+                binding.newPasswordField.error = getString(R.string.error_wrong_password_format)
                 formIsValid = false
             }
 
