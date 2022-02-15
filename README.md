@@ -79,5 +79,5 @@ Also [DiceBear Avatars API](https://avatars.dicebear.com/) is used to generate u
 
 ### Schemas
 <p align="left">
-<img src="doc/vc_models_schema.webp" width="100%"/>
+<img src="https://user-images.githubusercontent.com/22574399/154149516-e73f75e8-9ab7-46b9-8427-4d840f95215f.png" width="100%"/>
 </p>
