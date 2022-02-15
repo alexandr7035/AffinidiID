@@ -1,11 +1,11 @@
 # AffinidiID
 
-* [Description](#description)
-* [What is Affinidi Wallet](#what-is-affinidi-wallet)
-* [Used APIs](#used-apis)
-* [Implemented use cases](#implemented-use-cases)
+* [About the app](#about-the-app)
+   * [Description](#description)
+   * [Gallery](#gallery)
 * [Technical details](#technical-details)
-   * [Overview](#overview)
+   * [Android](#android)
+   * [Used APIs](#used-apis)
    * [Schemas](#schemas)
 
 
@@ -42,14 +42,14 @@ Actually, it works as native android frontend close to Affinidi [wallet applicat
 <img src="https://user-images.githubusercontent.com/22574399/154146986-f84bcac6-0600-49d0-92c2-d28e9b15ff03.png" width="25%"/>
 </p>
 
-### Issue and store credentials
+#### Issue and store credentials
 <p align="left">
 <img src="https://user-images.githubusercontent.com/22574399/154147710-1808ca85-496a-4db8-8185-0d820c416432.png" width="25%"/>
 <img src="https://user-images.githubusercontent.com/22574399/154147760-b73f8699-9766-4ace-8099-773cb837cc6a.png" width="25%"/>
 <img src="https://user-images.githubusercontent.com/22574399/154147804-3ce1f6ee-bcfd-4534-8667-4b4c879bc335.png" width="25%"/>
 </p>
 
-### Share and verify credentials
+#### Share and verify credentials
 <p align="left">
 <img src="https://user-images.githubusercontent.com/22574399/154148135-3d92c7b0-1934-4ded-b45c-9180a659ab0a.png" width="25%"/>
 <img src="https://user-images.githubusercontent.com/22574399/154148769-62395099-391c-41ff-b81b-524556eaac63.png" width="25%"/>
