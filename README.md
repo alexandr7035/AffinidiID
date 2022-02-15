@@ -12,11 +12,8 @@
 ## About the app
 ### Description
 **AffinidiID** is a VC wallet app built for learning purpose. Created to dive into the technical aspects of **Self-Sovereign Identity** and **Verifiable Credentials** [concepts](hhttps://academy.affinidi.com/an-in-depth-exploration-of-self-sovereign-identity-and-verifiable-credentials-1a3eb2296004) using Affinidi open APIs. The second objective was to practice with Clean Architecture.
-<br>
-Actually, it works as native android frontend close to Affinidi [wallet application](https://wallet.affinidi.com/) but with the possibility to issue a test credential to see how it works.
 
-### Implemented use cases
-The last version covers the following use cases:
+Actually, it works as native android frontend close to Affinidi [wallet application](https://wallet.affinidi.com/) but with the possibility to issue a test credential. The last version covers the following use cases:
 
 **User profile**
 - Sign up
@@ -37,11 +34,12 @@ The last version covers the following use cases:
 "Edit username" feature was deleted due to API issue. The original name becomes lost immediately after OTP is sent (without confirmation).
 
 ### Gallery
+
+#### Profile
 <p align="left">
-<img src="doc/screenshot_sign_in.webp" width="23%"/>
-<img src="doc/screenshot_profile.webp" width="23%"/>
-<img src="doc/screenshot_credentials_list.webp" width="23%"/>
-<img src="doc/screenshot_credential_details.webp" width="23%"/>
+![Login](https://user-images.githubusercontent.com/22574399/154146941-588fd474-39cf-4e0b-a338-dbf9c74f34d7.png)
+![Profile](https://user-images.githubusercontent.com/22574399/154146971-99e5fbb8-3909-48ab-8183-222def88154a.png)
+![Menu](https://user-images.githubusercontent.com/22574399/154146986-f84bcac6-0600-49d0-92c2-d28e9b15ff03.png)
 </p>
 
 ## Technical details
