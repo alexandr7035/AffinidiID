@@ -9,26 +9,13 @@
    * [Schemas](#schemas)
 
 
-## Description
-**AffinidiID** is an android app built for learning purpose. Created to dive into the technical aspects of **Self-Sovereign Identity** and **Verifiable Credentials** [concepts](hhttps://academy.affinidi.com/an-in-depth-exploration-of-self-sovereign-identity-and-verifiable-credentials-1a3eb2296004) using Affinidi open APIs. 
-The second objective was to practice with Clean Architecture.
- 
-<p align="left">
-<img src="doc/screenshot_sign_in.webp" width="23%"/>
-<img src="doc/screenshot_profile.webp" width="23%"/>
-<img src="doc/screenshot_credentials_list.webp" width="23%"/>
-<img src="doc/screenshot_credential_details.webp" width="23%"/>
-</p>
+## About the app
+### Description
+**AffinidiID** is a VC wallet app built for learning purpose. Created to dive into the technical aspects of **Self-Sovereign Identity** and **Verifiable Credentials** [concepts](hhttps://academy.affinidi.com/an-in-depth-exploration-of-self-sovereign-identity-and-verifiable-credentials-1a3eb2296004) using Affinidi open APIs. The second objective was to practice with Clean Architecture.
+<br>
+Actually, it works as native android frontend close to Affinidi [wallet application](https://wallet.affinidi.com/) but with the possibility to issue a test credential to see how it works.
 
-## What is Affinidi Wallet
-The Affinidi Wallet is a web-based responsive SSI [wallet application](https://wallet.affinidi.com/) for holders to request, store, share and manage their Veriiable Credentials.
-
-## Used APIs
-In this application the [Affinidi APIs](https://build.affinidi.com/docs/api) are used to create Affinidi user account and interact with the wallet.
-
-Also [DiceBear Avatars API](https://avatars.dicebear.com/) is used to generate unique avatars depending on the user's DID.
-
-## Implemented use cases
+### Implemented use cases
 The last version covers the following use cases:
 
 **User profile**
@@ -43,14 +30,23 @@ The last version covers the following use cases:
 - Issue credentials
 - Store credentials in Affinidi Wallet
 - View credentials (list + details)
+- Share credentials via QR code
 - Verify credentials
 - Delete credentials from Affinidi Wallet
 
 "Edit username" feature was deleted due to API issue. The original name becomes lost immediately after OTP is sent (without confirmation).
 
+### Gallery
+<p align="left">
+<img src="doc/screenshot_sign_in.webp" width="23%"/>
+<img src="doc/screenshot_profile.webp" width="23%"/>
+<img src="doc/screenshot_credentials_list.webp" width="23%"/>
+<img src="doc/screenshot_credential_details.webp" width="23%"/>
+</p>
+
 ## Technical details
 
-### Overview
+### Android
 
 - Attempts to use clean architecture approach. Presentation / data / domain layers each in a separate module.
 - Single activity approach and [Navigation component](https://developer.android.com/guide/navigation) (with SafeArgs) to navigate across fragments.
@@ -62,9 +58,14 @@ The last version covers the following use cases:
 - [Room](https://developer.android.com/jetpack/androidx/releases/room) for credentials caching.
 - [Timber](https://github.com/JakeWharton/timber) for logging.
 - [CircleImageView](https://github.com/hdodenhof/CircleImageView) for rounded images, [Coil](https://github.com/coil-kt/coil) to load SVG images into ImageView.
+- Unit tests (junit4)
+
+### Used APIs
+In this application the [Affinidi APIs](https://build.affinidi.com/docs/api) are used to create Affinidi user account and interact with the wallet.
+
+Also [DiceBear Avatars API](https://avatars.dicebear.com/) is used to generate unique avatars depending on the user's DID.
 
 ### Schemas
-
 <p align="left">
 <img src="doc/vc_models_schema.webp" width="100%"/>
 </p>
