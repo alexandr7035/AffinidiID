@@ -54,13 +54,15 @@ class ResetPasswordSetUsernameFragment : Fragment() {
             }
         }
 
-        viewModel.initializePasswordResetLiveData.observe(viewLifecycleOwner, { result ->
+        viewModel.initializePasswordResetLiveData.observe(viewLifecycleOwner) { result ->
             binding.progressView.root.isVisible = false
 
             when (result) {
                 is InitializePasswordResetResponseModel.Success -> {
-                    findNavController().navigateSafe(ResetPasswordSetUsernameFragmentDirections
-                        .actionResetPasswordSetUsernameFragmentToResetPasswordSetPasswordFragment(result.userName))
+                    findNavController().navigateSafe(
+                        ResetPasswordSetUsernameFragmentDirections
+                            .actionResetPasswordSetUsernameFragmentToResetPasswordSetPasswordFragment(result.userName)
+                    )
                 }
 
                 is InitializePasswordResetResponseModel.Fail -> {
@@ -84,7 +86,7 @@ class ResetPasswordSetUsernameFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     private fun chekIfFormIsValid(): Boolean {

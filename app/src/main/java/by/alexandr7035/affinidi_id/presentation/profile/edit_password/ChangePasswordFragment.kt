@@ -65,7 +65,7 @@ class ChangePasswordFragment : Fragment() {
             }
         }
 
-        viewModel.changePasswordLiveData.observe(viewLifecycleOwner, { result ->
+        viewModel.changePasswordLiveData.observe(viewLifecycleOwner) { result ->
             binding.progressView.root.isVisible = false
 
             when (result) {
@@ -98,7 +98,7 @@ class ChangePasswordFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     private fun chekIfFormIsValid(): Boolean {

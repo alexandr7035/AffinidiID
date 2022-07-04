@@ -36,7 +36,7 @@ class ShareCredentialFragment : BottomSheetDialogFragment() {
 
         binding.progressView.root.isVisible = true
 
-        viewModel.getShareCredentialLiveData().observe(viewLifecycleOwner, {
+        viewModel.getShareCredentialLiveData().observe(viewLifecycleOwner) {
             binding.progressView.root.isVisible = false
 
             when (it) {
@@ -64,7 +64,7 @@ class ShareCredentialFragment : BottomSheetDialogFragment() {
                 }
             }
 
-        })
+        }
 
         viewModel.load(safeArgs.credentialId)
     }

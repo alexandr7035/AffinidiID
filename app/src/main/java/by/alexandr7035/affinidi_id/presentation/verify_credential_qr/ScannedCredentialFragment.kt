@@ -56,7 +56,7 @@ class ScannedCredentialFragment : Fragment() {
         binding.proofRecycler.adapter = proofAdapter
         binding.proofRecycler.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.getCredentialLiveData().observe(viewLifecycleOwner, { credentialData ->
+        viewModel.getCredentialLiveData().observe(viewLifecycleOwner) { credentialData ->
             binding.progressView.root.isVisible = false
 
             when (credentialData) {
@@ -87,9 +87,9 @@ class ScannedCredentialFragment : Fragment() {
                     findNavController().navigateUp()
                 }
             }
-        })
+        }
 
-        viewModel.getVerificationLiveData().observe(viewLifecycleOwner, { verificationResult ->
+        viewModel.getVerificationLiveData().observe(viewLifecycleOwner) { verificationResult ->
             binding.progressView.root.isVisible = false
 
             when (verificationResult) {
@@ -121,7 +121,7 @@ class ScannedCredentialFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
         // Load credential from QR code
         binding.progressView.root.isVisible = true

@@ -51,7 +51,7 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
         }
         binding.recycler.addItemDecoration(decoration)
 
-        viewModel.getCredentialsLiveData().observe(viewLifecycleOwner, {
+        viewModel.getCredentialsLiveData().observe(viewLifecycleOwner) {
             // Hide all before state update
             binding.progressView.root.isVisible = false
             binding.recycler.isVisible = false
@@ -79,7 +79,7 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
                     binding.errorView.errorText.text = it.errorUi.message
                 }
             }
-        })
+        }
 
         loadData()
 

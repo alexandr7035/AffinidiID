@@ -73,12 +73,12 @@ class MainMenuFragment : Fragment() {
             .build()
 
         viewModel.init()
-        viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
+        viewModel.userProfileLiveData.observe(viewLifecycleOwner) { profile ->
             binding.profileImageView.load(
                 uri = profile.imageUrl,
                 imageLoader = imageLoader
             )
-        })
+        }
 
         binding.toolbar.setOnMenuItemClickListener {
 

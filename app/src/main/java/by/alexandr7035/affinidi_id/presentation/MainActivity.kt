@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // navigateSafe method allow us not check current destination
-        viewModel.getAuthCheckLiveData().observe(this, { authCheckResult ->
+        viewModel.getAuthCheckLiveData().observe(this) { authCheckResult ->
             binding.progressView.root.isVisible = false
 
             when (authCheckResult) {
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        })
+        }
     }
 
 

@@ -56,7 +56,7 @@ class CredentialDetailsFragment : Fragment() {
         binding.proofRecycler.adapter = proofAdapter
         binding.proofRecycler.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.getCredentialLiveData().observe(viewLifecycleOwner, { credentialData ->
+        viewModel.getCredentialLiveData().observe(viewLifecycleOwner) { credentialData ->
             binding.progressView.root.isVisible = false
 
             when (credentialData) {
@@ -116,13 +116,13 @@ class CredentialDetailsFragment : Fragment() {
                 }
             }
 
-        })
+        }
 
 
         // Load credential data
         load(safeArgs.credentialId)
 
-        viewModel.getVerificationLiveData().observe(viewLifecycleOwner, { verificationResult ->
+        viewModel.getVerificationLiveData().observe(viewLifecycleOwner) { verificationResult ->
             binding.progressView.root.isVisible = false
 
             when (verificationResult) {
@@ -154,7 +154,7 @@ class CredentialDetailsFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     private fun load(credentialId: String) {
