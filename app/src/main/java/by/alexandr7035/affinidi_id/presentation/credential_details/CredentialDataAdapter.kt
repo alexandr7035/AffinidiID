@@ -5,9 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import by.alexandr7035.affinidi_id.core.extensions.copyToClipboard
+import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
+import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailFieldBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailTitleOnlyBinding
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDataItem
+import com.google.android.material.snackbar.Snackbar
 
 class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataItemViewHolder>() {
 
@@ -72,6 +77,13 @@ class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataIte
 
                 binding.typeView.text = item.name
                 binding.valueView.text = item.value
+
+                binding.root.setOnClickListener {
+                    binding.valueView.copyToClipboard(clipLabel = item.name)
+                    binding.root.context.showToast(
+                        "Copied \"${item.value}\""
+                    )
+                }
             }
         }
 
