@@ -61,4 +61,7 @@
     <dimen name="input_field_padding_vertical">12dp</dimen>
     <dimen name="qr_code_image_size">160dp</dimen>
 
+    <dimen name="tab_corner">12dp</dimen>
+    <dimen name="tab_height">32dp</dimen>
+
 </resources>
