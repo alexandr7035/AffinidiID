@@ -2,6 +2,7 @@ package by.alexandr7035.affinidi_id.presentation.credentials_list
 
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapper
@@ -20,10 +21,29 @@ class CredentialsListMapperImpl @Inject constructor(
 
                 val uiCredentials: List<CredentialItemUiModel> = domainCredentials.credentials.map {
 
-                    val textExpirationDate =
-                        it.expirationDate?.getStringDateFromLong(CARD_EXPIRATION_DATE_FORMAT) ?: resourceProvider.getString(
+                    val textExpirationDate = if (it.expirationDate != null) {
+
+                        when (it.credentialStatus) {
+                            CredentialStatus.ACTIVE -> {
+                                resourceProvider.getString(
+                                    R.string.credential_active_until_template,
+                                    it.expirationDate!!.getStringDateFromLong(CARD_EXPIRATION_DATE_FORMAT)
+                                )
+                            }
+
+                            CredentialStatus.EXPIRED -> {
+                                resourceProvider.getString(
+                                    R.string.credential_expired_at_template,
+                                    it.expirationDate!!.getStringDateFromLong(CARD_EXPIRATION_DATE_FORMAT)
+                                )
+                            }
+                        }
+
+                    } else {
+                        resourceProvider.getString(
                             R.string.no_expiration
                         )
+                    }
 
                     // Map domain fields to UI
                     val credentialStatus = credentialStatusMapper.map(it.credentialStatus)
@@ -38,8 +58,7 @@ class CredentialsListMapperImpl @Inject constructor(
 
                 if (uiCredentials.isEmpty()) {
                     CredentialListUiModel.NoCredentials
-                }
-                else {
+                } else {
                     CredentialListUiModel.Success(uiCredentials)
                 }
             }
@@ -55,6 +74,6 @@ class CredentialsListMapperImpl @Inject constructor(
     }
 
     companion object {
-        private const val CARD_EXPIRATION_DATE_FORMAT = "dd.MM.YYYY HH:mm"
+        private const val CARD_EXPIRATION_DATE_FORMAT = "dd/MMM/YYYY"
     }
 }
