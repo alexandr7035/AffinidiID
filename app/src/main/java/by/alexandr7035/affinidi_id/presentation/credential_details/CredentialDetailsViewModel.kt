@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
@@ -19,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +33,10 @@ class CredentialDetailsViewModel @Inject constructor(
 
     private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
     private val verificationLiveData = SingleLiveEvent<VerificationModelUi>()
+
+    init {
+        Timber.debug("shared viewmodel initialized")
+    }
 
     fun loadCredential(credentialId: String) {
         viewModelScope.launch(Dispatchers.IO) {
