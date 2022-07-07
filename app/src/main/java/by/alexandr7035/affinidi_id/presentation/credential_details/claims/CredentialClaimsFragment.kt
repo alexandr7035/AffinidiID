@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialClaimsBinding
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
 import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDetailsViewModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 
@@ -35,20 +35,27 @@ class CredentialClaimsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel.getCredentialLiveData().observe(viewLifecycleOwner) { credentialData ->
+        sharedViewModel.getCredentialLiveData().observe(viewLifecycleOwner) { credentialDetails ->
 
-            when (credentialData) {
-                is CredentialDetailsUiModel.Success -> {
-//                    binding.credentialCard.credentialId.text = credentialData.credentialId
-//                    binding.credentialCard.credentialExpires = credentialDat
+            when (credentialDetails) {
+                is CredentialDetailsUi.Success -> {
+                    binding.credentialCard.credentialId.text = credentialDetails.credentialCardUi.id
+                    binding.credentialCard.credentialTypeView.text = credentialDetails.credentialCardUi.credentialTypeText
+                    binding.credentialCard.credentialExpires.text = credentialDetails.credentialCardUi.credentialStatusText
+
+                    // Set other card color when VC is expired
+                    if (credentialDetails.credentialCardUi.credentialStatus != CredentialStatus.ACTIVE) {
+                        binding.credentialCard.root.background = ContextCompat
+                            .getDrawable(requireContext(), R.drawable.background_credential_item_secondary)
+                    }
                 }
 
-                is CredentialDetailsUiModel.Loading -> {
-
+                is CredentialDetailsUi.Loading -> {
+                    // Handled in parent fragment
                 }
 
-                is CredentialDetailsUiModel.Fail -> {
-
+                is CredentialDetailsUi.Fail -> {
+                    // Handled in parent fragment
                 }
             }
         }

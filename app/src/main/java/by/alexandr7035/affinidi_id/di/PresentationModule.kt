@@ -1,8 +1,8 @@
 package by.alexandr7035.affinidi_id.di
 
 import android.content.Context
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialToDetailsModelMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialToDetailsModelMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata.CredentialMetadataToFieldsMapper
@@ -65,12 +65,13 @@ object PresentationModule {
 
     @Provides
     fun provideCredentialToDetailsModelMapper(
-        statusMapper: CredentialStatusMapper,
+        credentialCardMapper: CredentialCardMapper,
         credentialSubjectMapper: CredentialSubjectToFieldsMapper,
         metadataMapper: CredentialMetadataToFieldsMapper,
-        proofMapper: CredentialProofToFieldsMapper
-    ): CredentialToDetailsModelMapper {
-        return CredentialToDetailsModelMapperImpl(statusMapper, credentialSubjectMapper, metadataMapper, proofMapper)
+        proofMapper: CredentialProofToFieldsMapper,
+        statusMapper: CredentialStatusMapper,
+        ): CredentialToDetailsModelMapper {
+        return CredentialToDetailsModelMapperImpl(credentialCardMapper, statusMapper, credentialSubjectMapper, metadataMapper, proofMapper)
     }
 
 

@@ -18,7 +18,7 @@ import by.alexandr7035.affinidi_id.databinding.FragmentScannedCredentialBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
 import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -60,7 +60,7 @@ class ScannedCredentialFragment : Fragment() {
             binding.progressView.root.isVisible = false
 
             when (credentialData) {
-                is CredentialDetailsUiModel.Success -> {
+                is CredentialDetailsUi.Success -> {
                     binding.dataContainer.isVisible = true
 
                     // Set fields to cards
@@ -68,7 +68,8 @@ class ScannedCredentialFragment : Fragment() {
                     metadataAdapter.setItems(credentialData.metadataItems)
                     proofAdapter.setItems(credentialData.proofItems)
 
-                    binding.credentialType.text = credentialData.credentialType
+                    // FIXME
+//                    binding.credentialType.text = credentialData.credentialType
                     binding.statusMark.setColorFilter(credentialData.credentialStatus.statusColor)
                     binding.statusLabel.text = credentialData.credentialStatus.status
 
@@ -78,7 +79,7 @@ class ScannedCredentialFragment : Fragment() {
                     }
                 }
 
-                is CredentialDetailsUiModel.Fail -> {
+                is CredentialDetailsUi.Fail -> {
                     binding.root.showSnackBar(
                         getString(R.string.credential_scan_error),
                         SnackBarMode.Negative,

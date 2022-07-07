@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.core.extensions.vibrate
@@ -18,6 +19,7 @@ import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
 import by.alexandr7035.affinidi_id.presentation.credential_details.claims.CredentialClaimsFragment
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -43,30 +45,6 @@ class CredentialDetailsFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-
-        val pagerAdapter = CredentialViewPagerAdapter(
-            parentFragment = this,
-            tabsCount = 2
-        )
-
-        binding.viewPager.adapter = pagerAdapter
-
-        val tabTitles = listOf(
-            getString(R.string.claims),
-            getString(R.string.nore)
-        )
-
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = tabTitles[position]
-        }.attach()
-
-
-        load(safeArgs.credentialId)
-
-        viewModel.getCredentialLiveData().observe(viewLifecycleOwner) {
-            binding.progressView.root.isVisible = false
-        }
-
 
 //
 //        val nestedNavHost = requireActivity()
@@ -103,11 +81,28 @@ class CredentialDetailsFragment : Fragment() {
 //        binding.proofRecycler.adapter = proofAdapter
 //        binding.proofRecycler.layoutManager = LinearLayoutManager(requireContext())
 //
-//        viewModel.getCredentialLiveData().observe(viewLifecycleOwner) { credentialData ->
-//            binding.progressView.root.isVisible = false
-//
-//            when (credentialData) {
-//                is CredentialDetailsUiModel.Success -> {
+        viewModel.getCredentialLiveData().observe(viewLifecycleOwner) { credentialData ->
+            binding.progressView.root.isVisible = false
+
+            when (credentialData) {
+                is CredentialDetailsUi.Success -> {
+
+                    val pagerAdapter = CredentialViewPagerAdapter(
+                        parentFragment = this,
+                        tabsCount = 2
+                    )
+
+                    binding.viewPager.adapter = pagerAdapter
+
+                    val tabTitles = listOf(
+                        getString(R.string.claims),
+                        getString(R.string.nore)
+                    )
+
+                    TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+                        tab.text = tabTitles[position]
+                    }.attach()
+
 //                    // Set fields to cards
 //                    credentialSubjectAdapter.setItems(credentialData.credentialSubjectItems)
 //                    metadataAdapter.setItems(credentialData.metadataItems)
@@ -116,58 +111,57 @@ class CredentialDetailsFragment : Fragment() {
 //                    binding.credentialType.text = credentialData.credentialType
 //                    binding.statusMark.setColorFilter(credentialData.credentialStatus.statusColor)
 //                    binding.statusLabel.text = credentialData.credentialStatus.status
-//
-//                    binding.verifyBtn.setOnClickListener {
-//                        binding.progressView.root.isVisible = true
-//                        viewModel.verifyCredential(credentialData.rawVcDataPrettyFormatted)
-//                    }
-//
-//                    binding.toolbar.setOnMenuItemClickListener {
-//                        when (it.itemId) {
-//                            R.id.item_delete -> {
-//                                // Dialog to delete VC
-//                                findNavController().navigateSafe(
-//                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
-//                                        safeArgs.credentialId
-//                                    )
-//                                )
-//                            }
-//
-//                            R.id.item_share -> {
-//                                // Share VC dialog
-//                                findNavController().navigateSafe(
-//                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToShareCredentialFragment(
-//                                        safeArgs.credentialId
-//                                    )
-//                                )
-//                            }
-//
-//                        }
-//
-//                        true
-//                    }
-//
-//                }
-//
-//                is CredentialDetailsUiModel.Loading -> {
-//                    binding.progressView.root.isVisible = true
-//                }
-//
-//                is CredentialDetailsUiModel.Fail -> {
-//                    // Show unknown error always
-//                    // Connection error is unlikely to be thrown as credential is already cached
-//                    showErrorDialog(
-//                        getString(R.string.error_unknown_title),
-//                        getString(R.string.error_unknown)
-//                    )
-//                }
-//            }
-//
-//        }
+
+                    binding.verifyBtn.setOnClickListener {
+                        binding.progressView.root.isVisible = true
+                        viewModel.verifyCredential(credentialData.rawVcDataPrettyFormatted)
+                    }
+
+                    binding.toolbar.setOnMenuItemClickListener {
+                        when (it.itemId) {
+                            R.id.item_delete -> {
+                                // Dialog to delete VC
+                                findNavController().navigateSafe(
+                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToDeleteCredentialFragment(
+                                        safeArgs.credentialId
+                                    )
+                                )
+                            }
+
+                            R.id.item_share -> {
+                                // Share VC dialog
+                                findNavController().navigateSafe(
+                                    CredentialDetailsFragmentDirections.actionCredentialDetailsFragmentToShareCredentialFragment(
+                                        safeArgs.credentialId
+                                    )
+                                )
+                            }
+
+                        }
+
+                        true
+                    }
+
+                }
+
+                is CredentialDetailsUi.Loading -> {
+                    binding.progressView.root.isVisible = true
+                }
+
+                is CredentialDetailsUi.Fail -> {
+                    // Show unknown error always
+                    // Connection error is unlikely to be thrown as credential is already cached
+                    showErrorDialog(
+                        getString(R.string.error_unknown_title),
+                        getString(R.string.error_unknown)
+                    )
+                }
+            }
+        }
 //
 //
 //        // Load credential data
-//        load(safeArgs.credentialId)
+        load(safeArgs.credentialId)
 
         viewModel.getVerificationLiveData().observe(viewLifecycleOwner) { verificationResult ->
             binding.progressView.root.isVisible = false
