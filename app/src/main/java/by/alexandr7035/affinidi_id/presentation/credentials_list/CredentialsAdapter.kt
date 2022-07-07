@@ -3,9 +3,14 @@ package by.alexandr7035.affinidi_id.presentation.credentials_list
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.databinding.ViewCredentialItemBinding
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusUi
+import java.lang.IllegalStateException
 
 class CredentialsAdapter(private val credentialClickListener: CredentialClickListener) :
     RecyclerView.Adapter<CredentialsAdapter.CredentialViewHolder>() {
@@ -14,7 +19,17 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CredentialViewHolder {
         val binding = ViewCredentialItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CredentialViewHolder.NormalVCViewHolder(binding, credentialClickListener)
+
+        return when (viewType) {
+            ACTIVE_CREDENTIAL -> {
+                CredentialViewHolder.NormalVCViewHolder(binding, credentialClickListener)
+            }
+            NON_ACTIVE_CREDENTIAL -> {
+                CredentialViewHolder.ExpiredVCViewHolder(binding, credentialClickListener)
+            }
+
+            else -> throw IllegalStateException("View type not implemented")
+        }
     }
 
     override fun onBindViewHolder(holder: CredentialViewHolder, position: Int) {
@@ -23,6 +38,15 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (items[position].credentialStatus == CredentialStatus.ACTIVE) {
+            ACTIVE_CREDENTIAL
+        }
+        else {
+            NON_ACTIVE_CREDENTIAL
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -43,8 +67,6 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
                 binding.credentialId.text = item.id
                 binding.credentialTypeView.text = item.credentialTypeString
                 binding.credentialExpires.text = item.expirationDate
-                binding.statusLabel.text = item.credentialStatus.status
-                binding.statusMark.setColorFilter(item.credentialStatus.statusColor)
 
                 binding.root.setOnClickListener {
                     credentialClickListener.onCredentialClicked(item.id)
@@ -52,6 +74,32 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
             }
         }
 
-        // TODO other types here
+
+        class ExpiredVCViewHolder(
+            override val binding: ViewCredentialItemBinding,
+            private val credentialClickListener: CredentialClickListener
+        ) : CredentialViewHolder(binding) {
+            override fun bind(item: CredentialItemUiModel) {
+                binding.credentialId.text = item.id
+                binding.credentialTypeView.text = item.credentialTypeString
+                binding.credentialExpires.text = item.expirationDate
+
+                binding.root.setOnClickListener {
+                    credentialClickListener.onCredentialClicked(item.id)
+                }
+
+                // Set other background
+                binding.root.background = ContextCompat.getDrawable(
+                    binding.root.context,
+                    R.drawable.background_credential_item_secondary
+                )
+            }
+        }
+
+    }
+
+    companion object {
+        private const val ACTIVE_CREDENTIAL = 1
+        private const val NON_ACTIVE_CREDENTIAL = 2
     }
 }

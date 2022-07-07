@@ -5,13 +5,11 @@ import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
-import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapper
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import javax.inject.Inject
 
 class CredentialsListMapperImpl @Inject constructor(
     private val resourceProvider: ResourceProvider,
-    private val credentialStatusMapper: CredentialStatusMapper,
     private val errorTypeMapper: ErrorTypeMapper
 ) : CredentialsListMapper {
 
@@ -45,14 +43,11 @@ class CredentialsListMapperImpl @Inject constructor(
                         )
                     }
 
-                    // Map domain fields to UI
-                    val credentialStatus = credentialStatusMapper.map(it.credentialStatus)
-
                     CredentialItemUiModel(
                         id = it.id,
                         expirationDate = textExpirationDate,
                         credentialTypeString = it.vcType,
-                        credentialStatus = credentialStatus,
+                        credentialStatus = it.credentialStatus,
                     )
                 }
 

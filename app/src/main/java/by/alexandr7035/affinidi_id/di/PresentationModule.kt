@@ -54,7 +54,7 @@ object PresentationModule {
         credentialStatusMapper: CredentialStatusMapper,
         errorTypeMapper: ErrorTypeMapper
     ): CredentialsListMapper {
-        return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper, errorTypeMapper)
+        return CredentialsListMapperImpl(resourceProvider, errorTypeMapper)
     }
 
     @Provides
