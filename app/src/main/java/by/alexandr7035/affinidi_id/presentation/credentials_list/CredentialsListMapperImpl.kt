@@ -1,12 +1,9 @@
 package by.alexandr7035.affinidi_id.presentation.credentials_list
 
-import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
-import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardUi
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
-import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import javax.inject.Inject
 
 class CredentialsListMapperImpl @Inject constructor(

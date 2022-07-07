@@ -5,7 +5,6 @@ import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.Credential
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
-import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialCardUi
 import javax.inject.Inject
 
 class CredentialCardMapperImpl @Inject constructor(

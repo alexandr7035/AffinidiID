@@ -1,5 +1,6 @@
 package by.alexandr7035.affinidi_id.presentation.credentials_list
 
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardUi
 import by.alexandr7035.affinidi_id.presentation.common.errors.DetailedErrorUi
 
 sealed class CredentialListUiModel {

@@ -9,6 +9,7 @@ import androidx.viewbinding.ViewBinding
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.databinding.ViewCredentialItemBinding
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardUi
 import java.lang.IllegalStateException
 
 class CredentialsAdapter(private val credentialClickListener: CredentialClickListener) :
