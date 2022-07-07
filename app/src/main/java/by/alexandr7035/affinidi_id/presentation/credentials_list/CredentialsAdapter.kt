@@ -9,13 +9,12 @@ import androidx.viewbinding.ViewBinding
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.databinding.ViewCredentialItemBinding
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
-import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusUi
 import java.lang.IllegalStateException
 
 class CredentialsAdapter(private val credentialClickListener: CredentialClickListener) :
     RecyclerView.Adapter<CredentialsAdapter.CredentialViewHolder>() {
 
-    private var items: List<CredentialItemUiModel> = emptyList()
+    private var items: List<CredentialCardUi> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CredentialViewHolder {
         val binding = ViewCredentialItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -50,23 +49,23 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<CredentialItemUiModel>) {
+    fun setItems(items: List<CredentialCardUi>) {
         this.items = items
         notifyDataSetChanged()
     }
 
     abstract class CredentialViewHolder(open val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        abstract fun bind(item: CredentialItemUiModel)
+        abstract fun bind(item: CredentialCardUi)
 
         class NormalVCViewHolder(
             override val binding: ViewCredentialItemBinding,
             private val credentialClickListener: CredentialClickListener
         ) : CredentialViewHolder(binding) {
-            override fun bind(item: CredentialItemUiModel) {
+            override fun bind(item: CredentialCardUi) {
                 binding.credentialId.text = item.id
-                binding.credentialTypeView.text = item.credentialTypeString
-                binding.credentialExpires.text = item.expirationDate
+                binding.credentialTypeView.text = item.credentialTypeText
+                binding.credentialExpires.text = item.credentialStatusText
 
                 binding.root.setOnClickListener {
                     credentialClickListener.onCredentialClicked(item.id)
@@ -79,10 +78,10 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
             override val binding: ViewCredentialItemBinding,
             private val credentialClickListener: CredentialClickListener
         ) : CredentialViewHolder(binding) {
-            override fun bind(item: CredentialItemUiModel) {
+            override fun bind(item: CredentialCardUi) {
                 binding.credentialId.text = item.id
-                binding.credentialTypeView.text = item.credentialTypeString
-                binding.credentialExpires.text = item.expirationDate
+                binding.credentialTypeView.text = item.credentialTypeText
+                binding.credentialExpires.text = item.credentialStatusText
 
                 binding.root.setOnClickListener {
                     credentialClickListener.onCredentialClicked(item.id)

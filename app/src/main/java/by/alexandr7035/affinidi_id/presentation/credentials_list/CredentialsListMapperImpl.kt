@@ -4,12 +4,13 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialsListResModel
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardMapper
 import by.alexandr7035.affinidi_id.presentation.common.errors.ErrorTypeMapper
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import javax.inject.Inject
 
 class CredentialsListMapperImpl @Inject constructor(
-    private val resourceProvider: ResourceProvider,
+    private val credentialCardMapper: CredentialCardMapper,
     private val errorTypeMapper: ErrorTypeMapper
 ) : CredentialsListMapper {
 
@@ -17,38 +18,8 @@ class CredentialsListMapperImpl @Inject constructor(
         return when (domainCredentials) {
             is CredentialsListResModel.Success -> {
 
-                val uiCredentials: List<CredentialItemUiModel> = domainCredentials.credentials.map {
-
-                    val textExpirationDate = if (it.expirationDate != null) {
-
-                        when (it.credentialStatus) {
-                            CredentialStatus.ACTIVE -> {
-                                resourceProvider.getString(
-                                    R.string.credential_active_until_template,
-                                    it.expirationDate!!.getStringDateFromLong(CARD_EXPIRATION_DATE_FORMAT)
-                                )
-                            }
-
-                            CredentialStatus.EXPIRED -> {
-                                resourceProvider.getString(
-                                    R.string.credential_expired_at_template,
-                                    it.expirationDate!!.getStringDateFromLong(CARD_EXPIRATION_DATE_FORMAT)
-                                )
-                            }
-                        }
-
-                    } else {
-                        resourceProvider.getString(
-                            R.string.no_expiration
-                        )
-                    }
-
-                    CredentialItemUiModel(
-                        id = it.id,
-                        expirationDate = textExpirationDate,
-                        credentialTypeString = it.vcType,
-                        credentialStatus = it.credentialStatus,
-                    )
+                val uiCredentials: List<CredentialCardUi> = domainCredentials.credentials.map {
+                    credentialCardMapper.map(it)
                 }
 
                 if (uiCredentials.isEmpty()) {
@@ -66,9 +37,5 @@ class CredentialsListMapperImpl @Inject constructor(
                 CredentialListUiModel.Loading
             }
         }
-    }
-
-    companion object {
-        private const val CARD_EXPIRATION_DATE_FORMAT = "dd/MMM/YYYY"
     }
 }

@@ -2,9 +2,9 @@ package by.alexandr7035.affinidi_id.presentation.credentials_list
 
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 
-data class CredentialItemUiModel(
+data class CredentialCardUi(
     val id: String,
-    val credentialTypeString: String,
-    val expirationDate: String,
     val credentialStatus: CredentialStatus,
+    val credentialTypeText: String,
+    val credentialStatusText: String,
 )
