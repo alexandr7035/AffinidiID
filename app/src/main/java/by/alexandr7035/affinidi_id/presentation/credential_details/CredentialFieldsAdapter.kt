@@ -11,7 +11,7 @@ import by.alexandr7035.affinidi_id.databinding.ViewVcDetailFieldBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailTitleOnlyBinding
 import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialFieldUi
 
-class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataItemViewHolder>() {
+class CredentialFieldsAdapter : RecyclerView.Adapter<CredentialFieldsAdapter.DataItemViewHolder>() {
 
     private var items: List<CredentialFieldUi> = emptyList()
 
