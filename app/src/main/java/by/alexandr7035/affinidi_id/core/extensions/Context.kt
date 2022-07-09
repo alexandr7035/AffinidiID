@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.provider.Settings
 import android.widget.Toast
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
@@ -23,10 +24,11 @@ fun Context.vibrate(vibrationMode: VibrationMode) {
     }.toLong()
 
     val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        this.getSystemService(Context.VIBRATOR_MANAGER_SERVICE)
+        val vibratorManager = this.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        vibratorManager.defaultVibrator
     } else {
-        this.getSystemService(Context.VIBRATOR_SERVICE)
-    } as Vibrator
+        this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         vibrator.vibrate(VibrationEffect.createOneShot(vibrationTimeMills, VibrationEffect.DEFAULT_AMPLITUDE))
