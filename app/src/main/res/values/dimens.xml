@@ -27,7 +27,7 @@
     <dimen name="credential_item_padding">16dp</dimen>
     <dimen name="credential_item_elevation">8dp</dimen>
     <dimen name="credential_item_bottom_margin">16dp</dimen>
-    <dimen name="credential_item_status_mark_size">24dp</dimen>
+    <dimen name="credential_item_status_mark_size">16dp</dimen>
 
     <dimen name="credential_item_id_padding_vertical">4dp</dimen>
     <dimen name="credential_item_id_padding_horizontal">8dp</dimen>
@@ -63,5 +63,6 @@
 
     <dimen name="tab_corner">12dp</dimen>
     <dimen name="tab_height">32dp</dimen>
+    <dimen name="credential_item_pic_size">96dp</dimen>
 
 </resources>

@@ -23,7 +23,7 @@
     <color name="gray_300">#595959</color>
 
     <color name="inactive_vc_mark">#EA5A5A</color>
-    <color name="active_vc_mark">#8ADF8C</color>
+    <color name="active_vc_mark">#33FF60</color>
 
     <!-- TODO attrs to use with dark theme -->
     <color name="snackbar_positive">#71E486</color>

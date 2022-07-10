@@ -10,11 +10,10 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.get_from_qr_code.Obt
 import by.alexandr7035.affinidi_id.domain.model.credentials.verify_vc.VerifyVcReqModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.ObtainCredentialWithQrCodeUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.VerifyCredentialUseCase
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialToDetailsModelMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationResultToUiMapper
-import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ class VerifyCredentialQrViewModel @Inject constructor(
     private val verificationResultToUiMapper: VerificationResultToUiMapper,
 ) : ViewModel() {
 
-    private val credentialLiveData = MutableLiveData<CredentialDetailsUiModel>()
+    private val credentialLiveData = MutableLiveData<CredentialDetailsUi>()
     private val verificationLiveData = SingleLiveEvent<VerificationModelUi>()
 
     fun obtainCredential(credentialLink: String) {
@@ -42,7 +41,7 @@ class VerifyCredentialQrViewModel @Inject constructor(
                 }
 
                 is ObtainVcFromQrCodeResModel.Fail -> {
-                    CredentialDetailsUiModel.Fail(res.errorType)
+                    CredentialDetailsUi.Fail(res.errorType)
                 }
             }
 
@@ -67,7 +66,7 @@ class VerifyCredentialQrViewModel @Inject constructor(
         }
     }
 
-    fun getCredentialLiveData(): LiveData<CredentialDetailsUiModel> = credentialLiveData
+    fun getCredentialLiveData(): LiveData<CredentialDetailsUi> = credentialLiveData
 
     fun getVerificationLiveData(): LiveData<VerificationModelUi> = verificationLiveData
 }

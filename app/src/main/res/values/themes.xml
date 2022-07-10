@@ -22,6 +22,14 @@
 
         <item name="snackbarStyle">@style/SnackBarStyle</item>
         <item name="snackbarTextViewStyle">@style/SnackBarTextStyle</item>
+
+        <item name="android:actionButtonStyle">@style/OptionMenuStyle</item>
+    </style>
+
+    <style name="OptionMenuStyle" parent="android:style/Widget.Material.ActionButton.Overflow">
+        <item name="android:minWidth">20dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
     </style>
 
     <style name="PrimaryCardStyle">

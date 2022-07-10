@@ -18,9 +18,9 @@ import by.alexandr7035.affinidi_id.databinding.FragmentScannedCredentialBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDetailsUiModel
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
-import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDataAdapter
+import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialFieldsAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,15 +44,15 @@ class ScannedCredentialFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val credentialSubjectAdapter = CredentialDataAdapter()
+        val credentialSubjectAdapter = CredentialFieldsAdapter()
         binding.credentialSubjectRecycler.adapter = credentialSubjectAdapter
         binding.credentialSubjectRecycler.layoutManager = LinearLayoutManager(requireContext())
 
-        val metadataAdapter = CredentialDataAdapter()
+        val metadataAdapter = CredentialFieldsAdapter()
         binding.metadataRecycler.adapter = metadataAdapter
         binding.metadataRecycler.layoutManager = LinearLayoutManager(requireContext())
 
-        val proofAdapter = CredentialDataAdapter()
+        val proofAdapter = CredentialFieldsAdapter()
         binding.proofRecycler.adapter = proofAdapter
         binding.proofRecycler.layoutManager = LinearLayoutManager(requireContext())
 
@@ -60,17 +60,18 @@ class ScannedCredentialFragment : Fragment() {
             binding.progressView.root.isVisible = false
 
             when (credentialData) {
-                is CredentialDetailsUiModel.Success -> {
+                is CredentialDetailsUi.Success -> {
                     binding.dataContainer.isVisible = true
 
                     // Set fields to cards
                     credentialSubjectAdapter.setItems(credentialData.credentialSubjectItems)
-                    metadataAdapter.setItems(credentialData.metadataItems)
+//                    metadataAdapter.setItems(credentialData.metadataItems)
                     proofAdapter.setItems(credentialData.proofItems)
 
-                    binding.credentialType.text = credentialData.credentialType
+                    // FIXME
+//                    binding.credentialType.text = credentialData.credentialType
                     binding.statusMark.setColorFilter(credentialData.credentialStatus.statusColor)
-                    binding.statusLabel.text = credentialData.credentialStatus.status
+                    binding.statusLabel.text = credentialData.credentialStatus.statusText
 
                     binding.verifyBtn.setOnClickListener {
                         binding.progressView.root.isVisible = true
@@ -78,7 +79,7 @@ class ScannedCredentialFragment : Fragment() {
                     }
                 }
 
-                is CredentialDetailsUiModel.Fail -> {
+                is CredentialDetailsUi.Fail -> {
                     binding.root.showSnackBar(
                         getString(R.string.credential_scan_error),
                         SnackBarMode.Negative,

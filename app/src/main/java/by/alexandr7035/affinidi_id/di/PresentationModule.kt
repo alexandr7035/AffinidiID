@@ -1,10 +1,8 @@
 package by.alexandr7035.affinidi_id.di
 
 import android.content.Context
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapper
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialToDetailsModelMapperImpl
-import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata.CredentialMetadataToFieldsMapper
-import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_metadata.CredentialMetadataToFieldsMapperImpl
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardMapper
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_proof.CredentialProofToFieldsMapper
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_proof.CredentialProofToFieldsMapperImpl
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusMapper
@@ -21,6 +19,8 @@ import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsPr
 import by.alexandr7035.affinidi_id.presentation.common.permissions.PermissionsPreferencesImpl
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvider
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProviderImpl
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialToDetailsModelMapper
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialToDetailsModelMapperImpl
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
 import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
 import dagger.Module
@@ -50,21 +50,25 @@ object PresentationModule {
 
     @Provides
     fun provideCredentialsListMapper(
-        resourceProvider: ResourceProvider,
-        credentialStatusMapper: CredentialStatusMapper,
-        errorTypeMapper: ErrorTypeMapper
+        errorTypeMapper: ErrorTypeMapper,
+        credentialCardMapper: CredentialCardMapper
     ): CredentialsListMapper {
-        return CredentialsListMapperImpl(resourceProvider, credentialStatusMapper, errorTypeMapper)
+        return CredentialsListMapperImpl(credentialCardMapper, errorTypeMapper)
+    }
+
+    @Provides
+    fun provideCredentialCardMapper(resourceProvider: ResourceProvider, credentialStatusMapper: CredentialStatusMapper): CredentialCardMapper {
+        return CredentialCardMapperImpl(resourceProvider, credentialStatusMapper)
     }
 
     @Provides
     fun provideCredentialToDetailsModelMapper(
-        statusMapper: CredentialStatusMapper,
+        credentialCardMapper: CredentialCardMapper,
         credentialSubjectMapper: CredentialSubjectToFieldsMapper,
-        metadataMapper: CredentialMetadataToFieldsMapper,
-        proofMapper: CredentialProofToFieldsMapper
-    ): CredentialToDetailsModelMapper {
-        return CredentialToDetailsModelMapperImpl(statusMapper, credentialSubjectMapper, metadataMapper, proofMapper)
+        proofMapper: CredentialProofToFieldsMapper,
+        statusMapper: CredentialStatusMapper,
+        ): CredentialToDetailsModelMapper {
+        return CredentialToDetailsModelMapperImpl(credentialCardMapper, statusMapper, credentialSubjectMapper, proofMapper)
     }
 
 
@@ -76,11 +80,6 @@ object PresentationModule {
     @Provides
     fun provideCredentialSubjectToFieldsMapper(): CredentialSubjectToFieldsMapper {
         return CredentialSubjectToFieldsMapperImpl()
-    }
-
-    @Provides
-    fun provideCredentialMetadataToFieldsMapper(resourceProvider: ResourceProvider): CredentialMetadataToFieldsMapper {
-        return CredentialMetadataToFieldsMapperImpl(resourceProvider)
     }
 
     @Provides

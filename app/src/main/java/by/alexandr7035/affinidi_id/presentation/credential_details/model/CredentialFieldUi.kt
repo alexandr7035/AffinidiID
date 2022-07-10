@@ -1,7 +1,6 @@
-package by.alexandr7035.affinidi_id.presentation.common.credentials
+package by.alexandr7035.affinidi_id.presentation.credential_details.model
 
-sealed class CredentialDataItem {
-
+sealed class CredentialFieldUi {
     // Determines left margin in recyclerview item
     // Use it for inner fields (e.g. for internal jsonObject in json)
     open val offsetLevel: Int = 0
@@ -10,11 +9,11 @@ sealed class CredentialDataItem {
         val name: String,
         val value: String,
         override val offsetLevel: Int = 0
-    ): CredentialDataItem()
+    ): CredentialFieldUi()
 
     data class TitleOnly(
         val name: String,
         override val offsetLevel: Int = 0
-    ): CredentialDataItem()
+    ): CredentialFieldUi()
 
 }

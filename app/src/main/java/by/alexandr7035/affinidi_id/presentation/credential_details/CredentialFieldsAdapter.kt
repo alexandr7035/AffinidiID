@@ -6,31 +6,28 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import by.alexandr7035.affinidi_id.core.extensions.copyToClipboard
-import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.core.extensions.showToast
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailFieldBinding
 import by.alexandr7035.affinidi_id.databinding.ViewVcDetailTitleOnlyBinding
-import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDataItem
-import com.google.android.material.snackbar.Snackbar
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialFieldUi
 
-class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataItemViewHolder>() {
+class CredentialFieldsAdapter : RecyclerView.Adapter<CredentialFieldsAdapter.DataItemViewHolder>() {
 
-    private var items: List<CredentialDataItem> = emptyList()
+    private var items: List<CredentialFieldUi> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<CredentialDataItem>) {
+    fun setItems(items: List<CredentialFieldUi>) {
         this.items = items
         notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
-            is CredentialDataItem.Field -> {
+            is CredentialFieldUi.Field -> {
                 FIELD_ITEM_TYPE
             }
 
-            is CredentialDataItem.TitleOnly -> {
+            is CredentialFieldUi.TitleOnly -> {
                 TITLE_ITEM_TYPE
             }
         }
@@ -69,11 +66,11 @@ class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataIte
     }
 
     abstract class DataItemViewHolder(open val binding: ViewBinding): RecyclerView.ViewHolder(binding.root) {
-        abstract fun bind(dataItem: CredentialDataItem)
+        abstract fun bind(dataItem: CredentialFieldUi)
 
         class FieldViewHolder(override val binding: ViewVcDetailFieldBinding): DataItemViewHolder(binding) {
-            override fun bind(dataItem: CredentialDataItem) {
-                val item = dataItem as CredentialDataItem.Field
+            override fun bind(dataItem: CredentialFieldUi) {
+                val item = dataItem as CredentialFieldUi.Field
 
                 binding.typeView.text = item.name
                 binding.valueView.text = item.value
@@ -88,8 +85,8 @@ class CredentialDataAdapter : RecyclerView.Adapter<CredentialDataAdapter.DataIte
         }
 
         class TitleOnlyViewHolder(override val binding: ViewVcDetailTitleOnlyBinding): DataItemViewHolder(binding) {
-            override fun bind(dataItem: CredentialDataItem) {
-                val item = dataItem as CredentialDataItem.TitleOnly
+            override fun bind(dataItem: CredentialFieldUi) {
+                val item = dataItem as CredentialFieldUi.TitleOnly
                 binding.typeView.text = item.name
             }
         }
