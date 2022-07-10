@@ -107,7 +107,7 @@
     <string name="cloud">Cloud</string>
     <string name="local">Local</string>
 
+    <string name="proof">Proof</string>
     <string name="claims">Claims</string>
-    <string name="nore">More</string>
 
 </resources>

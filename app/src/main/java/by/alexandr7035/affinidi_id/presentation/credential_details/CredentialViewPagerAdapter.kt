@@ -3,7 +3,7 @@ package by.alexandr7035.affinidi_id.presentation.credential_details
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import by.alexandr7035.affinidi_id.presentation.credential_details.claims.CredentialClaimsFragment
-import by.alexandr7035.affinidi_id.presentation.credential_details.more_info.CredentialMoreInfoFragment
+import by.alexandr7035.affinidi_id.presentation.credential_details.more_info.CredentialProofFragment
 import java.lang.IllegalStateException
 
 class CredentialViewPagerAdapter(
@@ -21,7 +21,7 @@ class CredentialViewPagerAdapter(
             }
 
             1 -> {
-                CredentialMoreInfoFragment()
+                CredentialProofFragment()
             }
 
             else -> throw IllegalStateException("Too many pages, some not implemented. Check viewpager & adapter")

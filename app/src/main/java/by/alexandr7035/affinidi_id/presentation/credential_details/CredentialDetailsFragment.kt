@@ -96,7 +96,7 @@ class CredentialDetailsFragment : Fragment() {
 
                     val tabTitles = listOf(
                         getString(R.string.claims),
-                        getString(R.string.nore)
+                        getString(R.string.proof)
                     )
 
                     TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
