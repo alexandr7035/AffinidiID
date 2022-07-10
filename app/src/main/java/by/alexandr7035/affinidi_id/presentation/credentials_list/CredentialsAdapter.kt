@@ -12,7 +12,7 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.C
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardUi
 import java.lang.IllegalStateException
 
-class CredentialsAdapter(private val credentialClickListener: CredentialClickListener) :
+class CredentialsAdapter(private val credentialClickCallback: (credentialId: String) -> Unit) :
     RecyclerView.Adapter<CredentialsAdapter.CredentialViewHolder>() {
 
     private var items: List<CredentialCardUi> = emptyList()
@@ -22,10 +22,10 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
 
         return when (viewType) {
             ACTIVE_CREDENTIAL -> {
-                CredentialViewHolder.NormalVCViewHolder(binding, credentialClickListener)
+                CredentialViewHolder.NormalVCViewHolder(binding, credentialClickCallback)
             }
             NON_ACTIVE_CREDENTIAL -> {
-                CredentialViewHolder.ExpiredVCViewHolder(binding, credentialClickListener)
+                CredentialViewHolder.ExpiredVCViewHolder(binding, credentialClickCallback)
             }
 
             else -> throw IllegalStateException("View type not implemented")
@@ -43,8 +43,7 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
     override fun getItemViewType(position: Int): Int {
         return if (items[position].credentialStatusUi.domainStatus == CredentialStatus.ACTIVE) {
             ACTIVE_CREDENTIAL
-        }
-        else {
+        } else {
             NON_ACTIVE_CREDENTIAL
         }
     }
@@ -61,14 +60,14 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
 
         class NormalVCViewHolder(
             override val binding: ViewCredentialItemBinding,
-            private val credentialClickListener: CredentialClickListener
+            private val credentialClickCallback: (credentialId: String) -> Unit
         ) : CredentialViewHolder(binding) {
             override fun bind(item: CredentialCardUi) {
                 binding.credentialId.text = item.id
                 binding.credentialTypeView.text = item.credentialTypeText
                 binding.issuanceDate.text = item.issuanceDateText
                 binding.root.setOnClickListener {
-                    credentialClickListener.onCredentialClicked(item.id)
+                    credentialClickCallback.invoke(item.id)
                 }
             }
         }
@@ -76,7 +75,7 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
 
         class ExpiredVCViewHolder(
             override val binding: ViewCredentialItemBinding,
-            private val credentialClickListener: CredentialClickListener
+            private val credentialClickCallback: (credentialId: String) -> Unit
         ) : CredentialViewHolder(binding) {
             override fun bind(item: CredentialCardUi) {
                 binding.credentialId.text = item.id
@@ -84,7 +83,7 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
                 binding.issuanceDate.text = item.issuanceDateText
 
                 binding.root.setOnClickListener {
-                    credentialClickListener.onCredentialClicked(item.id)
+                    credentialClickCallback.invoke(item.id)
                 }
 
                 // Set other background

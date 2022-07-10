@@ -15,13 +15,14 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialsListBinding
+import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialListUiModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 
 @AndroidEntryPoint
-class CredentialsListFragment : Fragment(), CredentialClickListener {
+class CredentialsListFragment : Fragment() {
 
     private val binding by viewBinding(FragmentCredentialsListBinding::bind)
     private val viewModel by viewModels<CredentialsListViewModel>()
@@ -36,7 +37,12 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
 
         Timber.debug("onViewCreated creds list")
 
-        val adapter = CredentialsAdapter(credentialClickListener = this)
+        val adapter = CredentialsAdapter(credentialClickCallback = { credentialId ->
+            findNavController().navigateSafe(CredentialsListFragmentDirections
+                .actionCredentialsListFragmentToCredentialDetailsFragment(credentialId))
+        })
+
+
         val layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.layoutManager = layoutManager
         binding.recycler.adapter = adapter
@@ -96,10 +102,5 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
     private fun loadData() {
         binding.errorView.root.isVisible = false
         viewModel.load()
-    }
-
-    override fun onCredentialClicked(credentialId: String) {
-        findNavController().navigateSafe(CredentialsListFragmentDirections
-            .actionCredentialsListFragmentToCredentialDetailsFragment(credentialId))
     }
 }
