@@ -61,6 +61,7 @@
         <item name="titleTextColor">@color/gray_500</item>
         <item name="contentInsetStart">@dimen/default_fragment_margin</item>
         <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
+        <item name="android:paddingEnd">8dp</item>
     </style>
 
     <style name="ToolbarWithBackNav" parent="Toolbar">
