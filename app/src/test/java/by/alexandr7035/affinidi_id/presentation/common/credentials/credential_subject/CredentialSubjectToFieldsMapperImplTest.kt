@@ -1,6 +1,6 @@
 package by.alexandr7035.affinidi_id.presentation.common.credentials.credential_subject
 
-import by.alexandr7035.affinidi_id.presentation.common.credentials.CredentialDataItem
+import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialFieldUi
 import com.google.gson.JsonArray
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
@@ -22,9 +22,9 @@ class CredentialSubjectToFieldsMapperImplTest {
 
         val uiFieldsObjectActual = mapper.map(jsonObject)
 
-        val uiFieldsObjectExpected = listOf<CredentialDataItem>(
-            CredentialDataItem.Field(name = "name", value = "Name", offsetLevel = 0),
-            CredentialDataItem.Field(name = "id", value = "12345", offsetLevel = 0)
+        val uiFieldsObjectExpected = listOf<CredentialFieldUi>(
+            CredentialFieldUi.Field(name = "name", value = "Name", offsetLevel = 0),
+            CredentialFieldUi.Field(name = "id", value = "12345", offsetLevel = 0)
         )
 
         assertEquals(uiFieldsObjectExpected, uiFieldsObjectActual)
@@ -46,9 +46,9 @@ class CredentialSubjectToFieldsMapperImplTest {
         val uiFieldsObjectActual = mapper.map(jsonObject)
 
         val uiFieldsObjectExpected = listOf(
-            CredentialDataItem.Field(name = "name", value = "Name", offsetLevel = 0),
-            CredentialDataItem.TitleOnly(name = "contacts", offsetLevel = 0),
-            CredentialDataItem.Field(name = "telegramId", value = "12345", offsetLevel = 1)
+            CredentialFieldUi.Field(name = "name", value = "Name", offsetLevel = 0),
+            CredentialFieldUi.TitleOnly(name = "contacts", offsetLevel = 0),
+            CredentialFieldUi.Field(name = "telegramId", value = "12345", offsetLevel = 1)
         )
 
         assertEquals(uiFieldsObjectExpected, uiFieldsObjectActual)
@@ -71,8 +71,8 @@ class CredentialSubjectToFieldsMapperImplTest {
         val uiFieldsObjectActual = mapper.map(jsonObject)
 
         val uiFieldsObjectExpected = listOf(
-            CredentialDataItem.Field(name = "name", value = "Name", offsetLevel = 0),
-            CredentialDataItem.Field(name = "array", value = "[\"element1\",\"element2\"]", offsetLevel = 0),
+            CredentialFieldUi.Field(name = "name", value = "Name", offsetLevel = 0),
+            CredentialFieldUi.Field(name = "array", value = "[\"element1\",\"element2\"]", offsetLevel = 0),
         )
 
         assertEquals(uiFieldsObjectExpected, uiFieldsObjectActual)
@@ -90,7 +90,7 @@ class CredentialSubjectToFieldsMapperImplTest {
         val uiFieldsObjectActual = mapper.map(jsonObject)
 
         val uiFieldsObjectExpected = listOf(
-            CredentialDataItem.Field(name = "name", value = "null", offsetLevel = 0),
+            CredentialFieldUi.Field(name = "name", value = "null", offsetLevel = 0),
         )
 
         assertEquals(uiFieldsObjectExpected, uiFieldsObjectActual)
