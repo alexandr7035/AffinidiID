@@ -41,7 +41,7 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (items[position].credentialStatus == CredentialStatus.ACTIVE) {
+        return if (items[position].credentialStatusUi.domainStatus == CredentialStatus.ACTIVE) {
             ACTIVE_CREDENTIAL
         }
         else {
@@ -66,8 +66,7 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
             override fun bind(item: CredentialCardUi) {
                 binding.credentialId.text = item.id
                 binding.credentialTypeView.text = item.credentialTypeText
-                binding.credentialExpires.text = item.credentialStatusText
-
+                binding.issuanceDate.text = item.issuanceDateText
                 binding.root.setOnClickListener {
                     credentialClickListener.onCredentialClicked(item.id)
                 }
@@ -82,7 +81,7 @@ class CredentialsAdapter(private val credentialClickListener: CredentialClickLis
             override fun bind(item: CredentialCardUi) {
                 binding.credentialId.text = item.id
                 binding.credentialTypeView.text = item.credentialTypeText
-                binding.credentialExpires.text = item.credentialStatusText
+                binding.issuanceDate.text = item.issuanceDateText
 
                 binding.root.setOnClickListener {
                     credentialClickListener.onCredentialClicked(item.id)

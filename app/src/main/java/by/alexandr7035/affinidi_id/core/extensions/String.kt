@@ -7,6 +7,8 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.view.View
+import timber.log.Timber
+import java.lang.Exception
 
 fun String.getClickableSpannable(
     clickableText: String,
@@ -48,4 +50,24 @@ fun String.getClickableSpannable(
     }
 
     return spannableString
+}
+
+
+fun String.getPrettifiedDid(): String {
+    return try {
+        Timber.debug(this)
+
+        val didSplit = this.split(":")
+        val didValue = didSplit[2]
+
+        Timber.debug(didValue)
+        Timber.debug(didValue.takeLast(4))
+
+        val prettifiedValue = "${didSplit[0]}:${didSplit[1]}:${didValue.take(4)}...${didValue.takeLast(4)}"
+        prettifiedValue
+    }
+    // In case of any problem retur initial value
+    catch (e: Exception) {
+        this
+    }
 }

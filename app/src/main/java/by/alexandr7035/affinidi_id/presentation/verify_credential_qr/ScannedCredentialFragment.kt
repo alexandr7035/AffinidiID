@@ -65,13 +65,13 @@ class ScannedCredentialFragment : Fragment() {
 
                     // Set fields to cards
                     credentialSubjectAdapter.setItems(credentialData.credentialSubjectItems)
-                    metadataAdapter.setItems(credentialData.metadataItems)
+//                    metadataAdapter.setItems(credentialData.metadataItems)
                     proofAdapter.setItems(credentialData.proofItems)
 
                     // FIXME
 //                    binding.credentialType.text = credentialData.credentialType
                     binding.statusMark.setColorFilter(credentialData.credentialStatus.statusColor)
-                    binding.statusLabel.text = credentialData.credentialStatus.status
+                    binding.statusLabel.text = credentialData.credentialStatus.statusText
 
                     binding.verifyBtn.setOnClickListener {
                         binding.progressView.root.isVisible = true

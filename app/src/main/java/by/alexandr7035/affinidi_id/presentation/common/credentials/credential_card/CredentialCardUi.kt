@@ -1,10 +1,12 @@
 package by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card
 
-import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
+import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_status.CredentialStatusUi
 
 data class CredentialCardUi(
     val id: String,
-    val credentialStatus: CredentialStatus,
+    val issuerDid: String,
+    val issuanceDateText: String,
+    val credentialStatusUi: CredentialStatusUi,
     val credentialTypeText: String,
-    val credentialStatusText: String,
+    val credentialExpirationText: String,
 )

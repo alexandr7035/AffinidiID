@@ -8,7 +8,6 @@ sealed class CredentialDetailsUi {
     data class Success(
         val credentialCardUi: CredentialCardUi,
         val credentialSubjectItems: List<CredentialFieldUi>,
-        val metadataItems: List<CredentialFieldUi>,
         val proofItems: List<CredentialFieldUi>,
         val credentialStatus: CredentialStatusUi,
         val rawVcDataPrettyFormatted: String

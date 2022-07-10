@@ -47,15 +47,14 @@ class CredentialClaimsFragment : Fragment() {
                 is CredentialDetailsUi.Success -> {
                     binding.credentialCard.credentialId.text = credentialDetails.credentialCardUi.id
                     binding.credentialCard.credentialTypeView.text = credentialDetails.credentialCardUi.credentialTypeText
-                    binding.credentialCard.credentialExpires.text = credentialDetails.credentialCardUi.credentialStatusText
-
-                    // Set other card color when VC is expired
-                    if (credentialDetails.credentialCardUi.credentialStatus != CredentialStatus.ACTIVE) {
-                        binding.credentialCard.root.background = ContextCompat
-                            .getDrawable(requireContext(), R.drawable.background_credential_item_secondary)
-                    }
+                    binding.credentialCard.issuanceDate.text = credentialDetails.credentialCardUi.issuanceDateText
 
                     claimsAdapter.setItems(credentialDetails.credentialSubjectItems)
+
+                    binding.credentialCard.issuer.text = credentialDetails.credentialCardUi.issuerDid
+                    binding.credentialCard.statusMark.setColorFilter(credentialDetails.credentialStatus.statusColor)
+                    binding.credentialCard.statusLabel.text = credentialDetails.credentialStatus.statusText
+                    binding.credentialCard.statusValue.text = credentialDetails.credentialCardUi.credentialExpirationText
                 }
 
                 is CredentialDetailsUi.Loading -> {
