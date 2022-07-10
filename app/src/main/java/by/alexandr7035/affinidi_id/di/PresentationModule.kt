@@ -21,8 +21,8 @@ import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProvide
 import by.alexandr7035.affinidi_id.presentation.common.resources.ResourceProviderImpl
 import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialToDetailsModelMapper
 import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialToDetailsModelMapperImpl
-import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapper
-import by.alexandr7035.affinidi_id.presentation.credentials_list.CredentialsListMapperImpl
+import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialsListMapper
+import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialsListMapperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

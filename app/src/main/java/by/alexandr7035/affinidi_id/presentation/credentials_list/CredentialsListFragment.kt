@@ -1,5 +1,6 @@
 package by.alexandr7035.affinidi_id.presentation.credentials_list
 
+import android.net.wifi.hotspot2.pps.Credential
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +16,13 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialsListBinding
+import by.alexandr7035.affinidi_id.presentation.credentials_list.filters.CredentialFilters
 import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialListUiModel
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.lang.RuntimeException
 
 
 @AndroidEntryPoint
@@ -87,11 +91,28 @@ class CredentialsListFragment : Fragment() {
             }
         }
 
-        loadData()
+        // Initial load
+        loadData(CredentialFilters.All)
 
+        // Retry load
         binding.errorView.retryBtn.setOnClickListener {
-            loadData()
+            loadData(CredentialFilters.All)
         }
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                loadData(getFiltersForTab(tab.position))
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                loadData(getFiltersForTab(tab.position))
+            }
+        })
+
 
         binding.addCredentialBtn.setOnClickListener {
             findNavController().navigateSafe(CredentialsListFragmentDirections
@@ -99,8 +120,17 @@ class CredentialsListFragment : Fragment() {
         }
     }
 
-    private fun loadData() {
+    private fun loadData(credentialFilters: CredentialFilters) {
         binding.errorView.root.isVisible = false
-        viewModel.load()
+        viewModel.load(credentialFilters)
+    }
+
+    private fun getFiltersForTab(tabPosition: Int): CredentialFilters {
+        return when (tabPosition) {
+            0 -> CredentialFilters.All
+            1 -> CredentialFilters.Active
+            2 -> CredentialFilters.Expired
+            else -> throw RuntimeException("No such tab implemented")
+        }
     }
 }
