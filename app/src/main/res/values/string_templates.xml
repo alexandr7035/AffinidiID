@@ -2,5 +2,5 @@
 <resources>
     <string name="credential_issued_on_template">Issued on\n%1$s</string>
     <string name="credential_active_until_template">by %1$s</string>
-    <string name="credential_expired_at_template">at %1$s</string>
+    <string name="credential_expired_at_template">on %1$s</string>
 </resources>
