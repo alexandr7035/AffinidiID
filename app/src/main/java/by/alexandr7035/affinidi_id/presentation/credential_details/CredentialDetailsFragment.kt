@@ -20,6 +20,7 @@ import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
 import by.alexandr7035.affinidi_id.presentation.credential_details.claims.CredentialClaimsFragment
 import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
+import by.alexandr7035.affinidi_id.presentation.verify_credential.VerificationViewModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -31,7 +32,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class CredentialDetailsFragment : Fragment() {
 
     private val binding by viewBinding(FragmentCredentialDetailsBinding::bind)
-    private val viewModel by viewModels<CredentialDetailsViewModel>()
+    private val detailsViewModel by viewModels<CredentialDetailsViewModel>()
+    private val verifyViewModel by viewModels<VerificationViewModel>()
     private val safeArgs by navArgs<CredentialDetailsFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,42 +48,7 @@ class CredentialDetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-//
-//        val nestedNavHost = requireActivity()
-//            .supportFragmentManager.findFragmentById(R.id.credential_nav_host) as NavHostFragment
-
-
-//
-
-
-//        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//            override fun onTabSelected(tab: TabLayout.Tab) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab) {
-//
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab) {
-//
-//            }
-//        })
-
-
-//        val credentialSubjectAdapter = CredentialDataAdapter()
-//        binding.credentialSubjectRecycler.adapter = credentialSubjectAdapter
-//        binding.credentialSubjectRecycler.layoutManager = LinearLayoutManager(requireContext())
-//
-//        val metadataAdapter = CredentialDataAdapter()
-//        binding.metadataRecycler.adapter = metadataAdapter
-//        binding.metadataRecycler.layoutManager = LinearLayoutManager(requireContext())
-//
-//        val proofAdapter = CredentialDataAdapter()
-//        binding.proofRecycler.adapter = proofAdapter
-//        binding.proofRecycler.layoutManager = LinearLayoutManager(requireContext())
-//
-        viewModel.getCredentialLiveData().observe(viewLifecycleOwner) { credentialData ->
+        detailsViewModel.getCredentialLiveData().observe(viewLifecycleOwner) { credentialData ->
             binding.progressView.root.isVisible = false
 
             when (credentialData) {
@@ -103,18 +70,9 @@ class CredentialDetailsFragment : Fragment() {
                         tab.text = tabTitles[position]
                     }.attach()
 
-//                    // Set fields to cards
-//                    credentialSubjectAdapter.setItems(credentialData.credentialSubjectItems)
-//                    metadataAdapter.setItems(credentialData.metadataItems)
-//                    proofAdapter.setItems(credentialData.proofItems)
-//
-//                    binding.credentialType.text = credentialData.credentialType
-//                    binding.statusMark.setColorFilter(credentialData.credentialStatus.statusColor)
-//                    binding.statusLabel.text = credentialData.credentialStatus.status
-
                     binding.verifyBtn.setOnClickListener {
                         binding.progressView.root.isVisible = true
-                        viewModel.verifyCredential(credentialData.rawVcDataPrettyFormatted)
+                        verifyViewModel.verifyCredential(credentialData.rawVcDataPrettyFormatted)
                     }
 
                     binding.toolbar.setOnMenuItemClickListener {
@@ -158,12 +116,12 @@ class CredentialDetailsFragment : Fragment() {
                 }
             }
         }
-//
-//
+
+
 //        // Load credential data
         load(safeArgs.credentialId)
 
-        viewModel.getVerificationLiveData().observe(viewLifecycleOwner) { verificationResult ->
+        verifyViewModel.getVerificationLiveData().observe(viewLifecycleOwner) { verificationResult ->
             binding.progressView.root.isVisible = false
 
             when (verificationResult) {
@@ -200,6 +158,6 @@ class CredentialDetailsFragment : Fragment() {
 
     private fun load(credentialId: String) {
         binding.progressView.progressView.isVisible = true
-        viewModel.loadCredential(credentialId)
+        detailsViewModel.loadCredential(credentialId)
     }
 }

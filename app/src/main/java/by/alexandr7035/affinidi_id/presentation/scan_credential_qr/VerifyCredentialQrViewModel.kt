@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.verify_credential_qr
+package by.alexandr7035.affinidi_id.presentation.scan_credential_qr
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
