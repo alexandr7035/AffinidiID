@@ -45,12 +45,17 @@ class CredentialCardMapperImpl @Inject constructor(
         )
 
         val formattedIssuerDid = credential.issuerDid.split(";").first()
-        val prettifiedDid = formattedIssuerDid.getPrettifiedDid()
+        val prettifiedIssuerDid = formattedIssuerDid.getPrettifiedDid()
+
+        val formattedHolderDid = credential.holderDid.split(";").first()
+        val prettifiedHolderDid = formattedHolderDid.getPrettifiedDid()
+
         val credentialStatusUi = credentialStatusMapper.map(credential.credentialStatus)
 
         return CredentialCardUi(
             id = credential.id,
-            issuerDid = prettifiedDid,
+            issuerDid = prettifiedHolderDid,
+            holderDid = prettifiedHolderDid,
             issuanceDateText = issuanceDate,
             credentialStatusUi = credentialStatusUi,
             credentialExpirationText = credentialExpirationText,

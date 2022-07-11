@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details
+package by.alexandr7035.affinidi_id.presentation.credential_details.stored_credential
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,12 +18,12 @@ import by.alexandr7035.affinidi_id.databinding.FragmentCredentialDetailsBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
 import by.alexandr7035.affinidi_id.presentation.common.credentials.verification.VerificationModelUi
-import by.alexandr7035.affinidi_id.presentation.credential_details.claims.CredentialClaimsFragment
+import by.alexandr7035.affinidi_id.presentation.credential_details.LoadCredentialDetailsViewModel
+import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialViewPagerAdapter
 import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
 import by.alexandr7035.affinidi_id.presentation.verify_credential.VerificationViewModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CredentialDetailsFragment : Fragment() {
 
     private val binding by viewBinding(FragmentCredentialDetailsBinding::bind)
-    private val detailsViewModel by viewModels<CredentialDetailsViewModel>()
+    private val detailsViewModel by viewModels<LoadCredentialDetailsViewModel>()
     private val verifyViewModel by viewModels<VerificationViewModel>()
     private val safeArgs by navArgs<CredentialDetailsFragmentArgs>()
 
@@ -158,6 +158,6 @@ class CredentialDetailsFragment : Fragment() {
 
     private fun load(credentialId: String) {
         binding.progressView.progressView.isVisible = true
-        detailsViewModel.loadCredential(credentialId)
+        detailsViewModel.loadCredentialById(credentialId)
     }
 }

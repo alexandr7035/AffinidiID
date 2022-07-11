@@ -64,5 +64,6 @@
     <dimen name="tab_corner">12dp</dimen>
     <dimen name="tab_height">32dp</dimen>
     <dimen name="credential_item_pic_size">96dp</dimen>
+    <dimen name="credential_holder_label_corners">12dp</dimen>
 
 </resources>

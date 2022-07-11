@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.extensions.debug
+import by.alexandr7035.affinidi_id.domain.model.credentials.get_from_qr_code.ObtainVcFromQrCodeReqModel
+import by.alexandr7035.affinidi_id.domain.model.credentials.get_from_qr_code.ObtainVcFromQrCodeResModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.GetCredentialByIdResModel
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialByIdUseCase
+import by.alexandr7035.affinidi_id.domain.usecase.credentials.ObtainCredentialWithQrCodeUseCase
 import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
 import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialToDetailsModelMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,18 +21,14 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class CredentialDetailsViewModel @Inject constructor(
+class LoadCredentialDetailsViewModel @Inject constructor(
     private val getCredentialByIdUseCase: GetCredentialByIdUseCase,
+    private val obtainCredentialWithQrCodeUseCase: ObtainCredentialWithQrCodeUseCase,
     private val credentialToDetailsModelMapper: CredentialToDetailsModelMapper,
 ) : ViewModel() {
-
     private val credentialLiveData = MutableLiveData<CredentialDetailsUi>()
 
-    init {
-        Timber.debug("shared viewmodel initialized")
-    }
-
-    fun loadCredential(credentialId: String) {
+    fun loadCredentialById(credentialId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             // Get credential
             getCredentialByIdUseCase.execute(
@@ -52,6 +51,26 @@ class CredentialDetailsViewModel @Inject constructor(
                 withContext(Dispatchers.Main) {
                     credentialLiveData.value = credentialDetails
                 }
+            }
+        }
+    }
+
+    fun obtainCredential(credentialLink: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = obtainCredentialWithQrCodeUseCase.execute(ObtainVcFromQrCodeReqModel(credentialLink))
+
+            val uiModel = when (res) {
+                is ObtainVcFromQrCodeResModel.Success -> {
+                    credentialToDetailsModelMapper.map(credential = res.credential)
+                }
+
+                is ObtainVcFromQrCodeResModel.Fail -> {
+                    CredentialDetailsUi.Fail(res.errorType)
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                credentialLiveData.value = uiModel
             }
         }
     }

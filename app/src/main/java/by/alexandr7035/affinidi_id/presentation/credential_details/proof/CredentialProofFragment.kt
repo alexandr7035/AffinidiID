@@ -1,4 +1,4 @@
-package by.alexandr7035.affinidi_id.presentation.credential_details.more_info
+package by.alexandr7035.affinidi_id.presentation.credential_details.proof
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialProofBinding
-import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDetailsViewModel
+import by.alexandr7035.affinidi_id.presentation.credential_details.LoadCredentialDetailsViewModel
 import by.alexandr7035.affinidi_id.presentation.credential_details.CredentialFieldsAdapter
 import by.alexandr7035.affinidi_id.presentation.credential_details.model.CredentialDetailsUi
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -17,7 +17,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 
 class CredentialProofFragment : Fragment() {
 
-    private val sharedViewModel by viewModels<CredentialDetailsViewModel>(
+    private val sharedViewModel by viewModels<LoadCredentialDetailsViewModel>(
         ownerProducer = { requireParentFragment() }
     )
     private val binding by viewBinding(FragmentCredentialProofBinding::bind)

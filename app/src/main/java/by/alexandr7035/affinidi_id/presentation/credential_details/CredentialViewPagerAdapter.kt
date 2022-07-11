@@ -3,7 +3,7 @@ package by.alexandr7035.affinidi_id.presentation.credential_details
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import by.alexandr7035.affinidi_id.presentation.credential_details.claims.CredentialClaimsFragment
-import by.alexandr7035.affinidi_id.presentation.credential_details.more_info.CredentialProofFragment
+import by.alexandr7035.affinidi_id.presentation.credential_details.proof.CredentialProofFragment
 import java.lang.IllegalStateException
 
 class CredentialViewPagerAdapter(

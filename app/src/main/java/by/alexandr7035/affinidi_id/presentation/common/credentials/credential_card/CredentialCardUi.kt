@@ -4,6 +4,7 @@ import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_st
 
 data class CredentialCardUi(
     val id: String,
+    val holderDid: String,
     val issuerDid: String,
     val issuanceDateText: String,
     val credentialStatusUi: CredentialStatusUi,
