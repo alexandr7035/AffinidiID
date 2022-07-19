@@ -109,5 +109,6 @@
 
     <string name="proof">Proof</string>
     <string name="claims">Claims</string>
+    <string name="issued_by">Issued by</string>
 
 </resources>

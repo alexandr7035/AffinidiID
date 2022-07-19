@@ -8,7 +8,7 @@ import java.lang.IllegalStateException
 
 class CredentialViewPagerAdapter(
     private val tabsCount: Int,
-    private val parentFragment: Fragment
+    parentFragment: Fragment
 ): FragmentStateAdapter(parentFragment) {
     override fun getItemCount(): Int {
         return tabsCount

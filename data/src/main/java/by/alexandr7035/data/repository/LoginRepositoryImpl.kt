@@ -5,7 +5,6 @@ import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
 import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
 import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
-import by.alexandr7035.data.datasource.cache.credentials.CredentialsDAO
 import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
 import by.alexandr7035.data.datasource.cloud.ApiCallWrapper

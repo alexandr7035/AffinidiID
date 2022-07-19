@@ -1,6 +1,5 @@
 package by.alexandr7035.affinidi_id.presentation.credentials_list
 
-import android.net.wifi.hotspot2.pps.Credential
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.lang.RuntimeException
 
 
 @AndroidEntryPoint
