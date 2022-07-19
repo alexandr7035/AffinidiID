@@ -31,7 +31,7 @@ class LogoutFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.logOutLiveData.observe(viewLifecycleOwner, { logout ->
+        viewModel.logOutLiveData.observe(viewLifecycleOwner) { logout ->
 
             binding.progressView.root.isVisible = false
 
@@ -57,7 +57,7 @@ class LogoutFragment : BottomSheetDialogFragment() {
                     }
                 }
             }
-        })
+        }
 
         binding.logoutBtn.setOnClickListener {
             binding.progressView.root.isVisible = true

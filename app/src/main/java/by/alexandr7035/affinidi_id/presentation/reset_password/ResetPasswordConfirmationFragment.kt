@@ -55,13 +55,15 @@ class ResetPasswordConfirmationFragment : Fragment() {
         }
 
 
-        viewModel.confirmPasswordResetLiveData.observe(viewLifecycleOwner, { result ->
+        viewModel.confirmPasswordResetLiveData.observe(viewLifecycleOwner) { result ->
             binding.progressView.root.isVisible = false
 
             when (result) {
                 is ConfirmPasswordResetResponseModel.Success -> {
-                    findNavController().navigateSafe(ResetPasswordConfirmationFragmentDirections
-                        .actionGlobalLoginFragment())
+                    findNavController().navigateSafe(
+                        ResetPasswordConfirmationFragmentDirections
+                            .actionGlobalLoginFragment()
+                    )
 
                     binding.root.showSnackBar(
                         message = getString(R.string.password_changed_successfully),
@@ -92,7 +94,7 @@ class ResetPasswordConfirmationFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()

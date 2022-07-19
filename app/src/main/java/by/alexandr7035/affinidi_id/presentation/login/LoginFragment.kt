@@ -67,7 +67,7 @@ class LoginFragment : Fragment() {
         }
 
 
-        viewModel.signInLiveData.observe(viewLifecycleOwner, { response ->
+        viewModel.signInLiveData.observe(viewLifecycleOwner) { response ->
 
             binding.progressView.root.isVisible = false
 
@@ -105,7 +105,7 @@ class LoginFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
 
         val goToSignUpText = getString(R.string.go_to_sign_up)

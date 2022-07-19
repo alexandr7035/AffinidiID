@@ -33,13 +33,15 @@ class DeleteCredentialFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getDeleteVcLiveData().observe(viewLifecycleOwner, { result ->
+        viewModel.getDeleteVcLiveData().observe(viewLifecycleOwner) { result ->
             binding.progressView.progressView.isVisible = false
 
             when (result) {
                 is DeleteVcResModel.Success -> {
-                    findNavController().navigateSafe(DeleteCredentialFragmentDirections
-                        .actionDeleteCredentialFragmentToCredentialsListFragment())
+                    findNavController().navigateSafe(
+                        DeleteCredentialFragmentDirections
+                            .actionDeleteCredentialFragmentToCredentialsListFragment()
+                    )
                 }
                 is DeleteVcResModel.Fail -> {
                     when (result.errorType) {
@@ -60,7 +62,7 @@ class DeleteCredentialFragment : BottomSheetDialogFragment() {
 
                 }
             }
-        })
+        }
 
         binding.confirmDeleteBtn.setOnClickListener {
             binding.progressView.progressView.isVisible = true

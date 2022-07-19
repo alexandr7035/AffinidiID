@@ -8,6 +8,10 @@ class ResourceProviderImpl(private val context: Context): ResourceProvider {
         return context.getString(id)
     }
 
+    override fun getString(id: Int, vararg args: Any): String {
+        return context.getString(id, *args)
+    }
+
     override fun getColor(id: Int): Int {
         return ContextCompat.getColor(context, id)
     }

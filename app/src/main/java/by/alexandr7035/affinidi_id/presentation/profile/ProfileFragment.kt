@@ -39,7 +39,7 @@ class ProfileFragment : Fragment() {
             .build()
 
 
-        viewModel.userProfileLiveData.observe(viewLifecycleOwner, { profile ->
+        viewModel.userProfileLiveData.observe(viewLifecycleOwner) { profile ->
             binding.userNameView.text = profile.userName
             // TODO profile ui model
             val formattedDid = profile.userDid.split(";").first()
@@ -49,7 +49,7 @@ class ProfileFragment : Fragment() {
                 uri = profile.imageUrl,
                 imageLoader = imageLoader
             )
-        })
+        }
 
         viewModel.init()
 

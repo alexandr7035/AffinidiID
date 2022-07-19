@@ -15,13 +15,16 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialsListBinding
+import by.alexandr7035.affinidi_id.presentation.credentials_list.filters.CredentialFilters
+import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialListUiModel
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 
 @AndroidEntryPoint
-class CredentialsListFragment : Fragment(), CredentialClickListener {
+class CredentialsListFragment : Fragment() {
 
     private val binding by viewBinding(FragmentCredentialsListBinding::bind)
     private val viewModel by viewModels<CredentialsListViewModel>()
@@ -36,7 +39,12 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
 
         Timber.debug("onViewCreated creds list")
 
-        val adapter = CredentialsAdapter(credentialClickListener = this)
+        val adapter = CredentialsAdapter(credentialClickCallback = { credentialId ->
+            findNavController().navigateSafe(CredentialsListFragmentDirections
+                .actionCredentialsListFragmentToCredentialDetailsFragment(credentialId))
+        })
+
+
         val layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.layoutManager = layoutManager
         binding.recycler.adapter = adapter
@@ -51,7 +59,7 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
         }
         binding.recycler.addItemDecoration(decoration)
 
-        viewModel.getCredentialsLiveData().observe(viewLifecycleOwner, {
+        viewModel.getCredentialsLiveData().observe(viewLifecycleOwner) {
             // Hide all before state update
             binding.progressView.root.isVisible = false
             binding.recycler.isVisible = false
@@ -79,13 +87,30 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
                     binding.errorView.errorText.text = it.errorUi.message
                 }
             }
+        }
+
+        // Initial load
+        loadData(CredentialFilters.All)
+
+        // Retry load
+        binding.errorView.retryBtn.setOnClickListener {
+            loadData(CredentialFilters.All)
+        }
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                loadData(getFiltersForTab(tab.position))
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                loadData(getFiltersForTab(tab.position))
+            }
         })
 
-        loadData()
-
-        binding.errorView.retryBtn.setOnClickListener {
-            loadData()
-        }
 
         binding.addCredentialBtn.setOnClickListener {
             findNavController().navigateSafe(CredentialsListFragmentDirections
@@ -93,13 +118,17 @@ class CredentialsListFragment : Fragment(), CredentialClickListener {
         }
     }
 
-    private fun loadData() {
+    private fun loadData(credentialFilters: CredentialFilters) {
         binding.errorView.root.isVisible = false
-        viewModel.load()
+        viewModel.load(credentialFilters)
     }
 
-    override fun onCredentialClicked(credentialId: String) {
-        findNavController().navigateSafe(CredentialsListFragmentDirections
-            .actionCredentialsListFragmentToCredentialDetailsFragment(credentialId))
+    private fun getFiltersForTab(tabPosition: Int): CredentialFilters {
+        return when (tabPosition) {
+            0 -> CredentialFilters.All
+            1 -> CredentialFilters.Active
+            2 -> CredentialFilters.Expired
+            else -> throw RuntimeException("No such tab implemented")
+        }
     }
 }

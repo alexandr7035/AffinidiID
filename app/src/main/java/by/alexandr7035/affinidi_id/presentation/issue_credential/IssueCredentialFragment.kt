@@ -57,14 +57,14 @@ class IssueCredentialFragment : Fragment(), CredentialClickListener {
         }
         binding.recycler.addItemDecoration(decoration)
 
-        viewModel.getAvailableVCsLiveData().observe(viewLifecycleOwner, {
+        viewModel.getAvailableVCsLiveData().observe(viewLifecycleOwner) {
             adapter.setItems(it)
-        })
+        }
 
         viewModel.loadAvailableVCs()
 
 
-        viewModel.getIssueCredentialLiveData().observe(viewLifecycleOwner, { result ->
+        viewModel.getIssueCredentialLiveData().observe(viewLifecycleOwner) { result ->
             binding.progressView.root.isVisible = false
 
             when (result) {
@@ -101,7 +101,7 @@ class IssueCredentialFragment : Fragment(), CredentialClickListener {
 
                 }
             }
-        })
+        }
     }
 
 

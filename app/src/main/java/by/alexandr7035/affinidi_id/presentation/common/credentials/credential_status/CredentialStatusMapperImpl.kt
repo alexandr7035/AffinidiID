@@ -25,6 +25,10 @@ class CredentialStatusMapperImpl @Inject constructor(private val resourceProvide
             }
         }
 
-        return CredentialStatusUi(status = stringStatus, statusColor = statusColor)
+        return CredentialStatusUi(
+            statusText = stringStatus,
+            statusColor = statusColor,
+            domainStatus = credentialStatus
+        )
     }
 }

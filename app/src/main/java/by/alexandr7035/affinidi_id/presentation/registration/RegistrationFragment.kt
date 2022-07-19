@@ -55,7 +55,7 @@ class RegistrationFragment : Fragment() {
         }
 
 
-        viewModel.signUpLiveData.observe(viewLifecycleOwner, { signUpResult ->
+        viewModel.signUpLiveData.observe(viewLifecycleOwner) { signUpResult ->
 
             when (signUpResult) {
                 is SignUpResponseModel.Success -> {
@@ -89,7 +89,7 @@ class RegistrationFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
 
         binding.userNameEditText.doOnTextChanged { text, start, before, count ->
@@ -127,7 +127,7 @@ class RegistrationFragment : Fragment() {
         }
 
 
-        viewModel.signUpConfirmationLiveData.observe(viewLifecycleOwner, { signUpConfirmationResult ->
+        viewModel.signUpConfirmationLiveData.observe(viewLifecycleOwner) { signUpConfirmationResult ->
             when (signUpConfirmationResult) {
 
                 is ConfirmSignUpResponseModel.Success -> {
@@ -165,7 +165,7 @@ class RegistrationFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     private fun chekIfFormIsValid(): Boolean {

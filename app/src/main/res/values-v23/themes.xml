@@ -24,5 +24,7 @@
 
         <item name="snackbarStyle">@style/SnackBarStyle</item>
         <item name="snackbarTextViewStyle">@style/SnackBarTextStyle</item>
+
+        <item name="android:actionButtonStyle">@style/OptionMenuStyle</item>
     </style>
 </resources>

@@ -180,7 +180,7 @@
     </dialog>
     <fragment
         android:id="@+id/credentialDetailsFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.credential_details.CredentialDetailsFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.credential_details.stored_credential.CredentialDetailsFragment"
         android:label="fragment_credential_details"
         tools:layout="@layout/fragment_credential_details" >
         <argument
@@ -217,7 +217,7 @@
     </dialog>
     <fragment
         android:id="@+id/scanCredentialQrCodeFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.verify_credential_qr.ScanCredentialQrCodeFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.scan_credential_qr.ScanCredentialQrCodeFragment"
         android:label="fragment_scan_credential_qr_code"
         tools:layout="@layout/fragment_scan_credential_qr_code" >
         <action
@@ -226,7 +226,7 @@
     </fragment>
     <fragment
         android:id="@+id/scannedCredentialFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.verify_credential_qr.ScannedCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.credential_details.scanned_credential.ScannedCredentialFragment"
         android:label="fragment_scanned_credential"
         tools:layout="@layout/fragment_scanned_credential" >
         <argument
