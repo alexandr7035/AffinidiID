@@ -37,23 +37,26 @@ Actually, it works as native android frontend close to Affinidi [wallet applicat
 
 #### Manage Affinidi profile
 <p align="left">
-<img src="https://user-images.githubusercontent.com/22574399/154146941-588fd474-39cf-4e0b-a338-dbf9c74f34d7.png" width="25%"/>
-<img src="https://user-images.githubusercontent.com/22574399/154146971-99e5fbb8-3909-48ab-8183-222def88154a.png" width="25%"/>
-<img src="https://user-images.githubusercontent.com/22574399/154146986-f84bcac6-0600-49d0-92c2-d28e9b15ff03.png" width="25%"/>
+<img src="https://user-images.githubusercontent.com/22574399/154146941-588fd474-39cf-4e0b-a338-dbf9c74f34d7.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/154146971-99e5fbb8-3909-48ab-8183-222def88154a.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/179850718-82da1e1a-4699-49a5-96f0-7f3b3e3a062f.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/179852439-f1fb09a6-a9ed-4b85-82da-0d21b9ece41f.png" width="20%"/>
 </p>
 
 #### Issue and store credentials
 <p align="left">
-<img src="https://user-images.githubusercontent.com/22574399/154147710-1808ca85-496a-4db8-8185-0d820c416432.png" width="25%"/>
-<img src="https://user-images.githubusercontent.com/22574399/154147760-b73f8699-9766-4ace-8099-773cb837cc6a.png" width="25%"/>
-<img src="https://user-images.githubusercontent.com/22574399/154147804-3ce1f6ee-bcfd-4534-8667-4b4c879bc335.png" width="25%"/>
+<img src="https://user-images.githubusercontent.com/22574399/179851073-5ff5c149-5ec1-40af-a7c9-6556fb357cba.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/179851209-e017dab4-f636-4237-8b5f-28f4b38f692d.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/179851482-81473c21-c246-4e40-a2f2-9e1643dee103.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/154147804-3ce1f6ee-bcfd-4534-8667-4b4c879bc335.png" width="20%"/>
 </p>
 
 #### Share and verify credentials
 <p align="left">
-<img src="https://user-images.githubusercontent.com/22574399/154148135-3d92c7b0-1934-4ded-b45c-9180a659ab0a.png" width="25%"/>
-<img src="https://user-images.githubusercontent.com/22574399/154148769-62395099-391c-41ff-b81b-524556eaac63.png" width="25%"/>
-<img src="https://user-images.githubusercontent.com/22574399/154148903-21b9d058-98d3-4e5c-bd45-97f152a48636.png" width="25%"/>
+<img src="https://user-images.githubusercontent.com/22574399/179851690-c8165a0f-b5eb-4c21-97a6-379472992ae5.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/154148769-62395099-391c-41ff-b81b-524556eaac63.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/154148903-21b9d058-98d3-4e5c-bd45-97f152a48636.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/22574399/179852667-171244a5-531e-4e6b-8e55-496103b34019.png" width="20%"/>
 </p>
 
 ## Technical details
