@@ -111,8 +111,7 @@ class ResetPasswordConfirmationFragment : Fragment() {
                 formIsValid = false
             }
 
-            InputValidationResult.NO_ERRORS -> {
-            }
+            else -> {}
         }
 
         return formIsValid

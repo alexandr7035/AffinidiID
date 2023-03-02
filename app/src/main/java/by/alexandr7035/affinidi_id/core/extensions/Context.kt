@@ -10,6 +10,8 @@ import android.os.VibratorManager
 import android.provider.Settings
 import android.widget.Toast
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
+import coil.ImageLoader
+import coil.decode.SvgDecoder
 
 fun Context.showToast(message: String, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, message, duration).show()
@@ -43,4 +45,15 @@ fun Context.openAppSystemSettings() {
         action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
         data = Uri.fromParts("package", packageName, null)
     })
+}
+
+
+fun Context.svgLoader(): ImageLoader {
+    val imageLoader = ImageLoader.Builder(this)
+        .components {
+            add(SvgDecoder.Factory())
+        }
+        .build()
+
+    return imageLoader
 }

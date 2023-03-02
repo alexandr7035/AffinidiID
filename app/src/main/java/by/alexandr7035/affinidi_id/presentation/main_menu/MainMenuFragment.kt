@@ -12,13 +12,17 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.BuildConfig
 import by.alexandr7035.affinidi_id.R
+import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.svgLoader
 import by.alexandr7035.affinidi_id.databinding.FragmentMainMenuBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.ComponentRegistry
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainMenuFragment : Fragment() {
@@ -38,8 +42,10 @@ class MainMenuFragment : Fragment() {
             MenuItemModel(
                 title = getString(R.string.change_password),
                 clickListener = {
-                    findNavController().navigateSafe(MainMenuFragmentDirections
-                        .actionMainMenuFragmentToChangePasswordFragment())
+                    findNavController().navigateSafe(
+                        MainMenuFragmentDirections
+                            .actionMainMenuFragmentToChangePasswordFragment()
+                    )
                 })
         )
 
@@ -65,18 +71,14 @@ class MainMenuFragment : Fragment() {
             BuildConfig.VERSION_NAME
         )
 
-        // Set profile image
-        val imageLoader = ImageLoader.Builder(requireContext())
-            .componentRegistry {
-                add(SvgDecoder(requireContext()))
-            }
-            .build()
-
         viewModel.init()
         viewModel.userProfileLiveData.observe(viewLifecycleOwner) { profile ->
+
+            Timber.debug(profile.imageUrl)
+
             binding.profileImageView.load(
-                uri = profile.imageUrl,
-                imageLoader = imageLoader
+                data = profile.imageUrl,
+                imageLoader = requireContext().svgLoader()
             )
         }
 

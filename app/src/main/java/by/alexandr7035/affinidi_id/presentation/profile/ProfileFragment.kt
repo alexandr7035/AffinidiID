@@ -9,11 +9,10 @@ import androidx.fragment.app.viewModels
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.copyToClipboard
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
+import by.alexandr7035.affinidi_id.core.extensions.svgLoader
 import by.alexandr7035.affinidi_id.databinding.FragmentProfileBinding
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
-import coil.ImageLoader
-import coil.decode.SvgDecoder
 import coil.load
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,13 +31,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val imageLoader = ImageLoader.Builder(requireContext())
-            .componentRegistry {
-                add(SvgDecoder(requireContext()))
-            }
-            .build()
-
-
         viewModel.userProfileLiveData.observe(viewLifecycleOwner) { profile ->
             binding.userNameView.text = profile.userName
             // TODO profile ui model
@@ -46,8 +38,8 @@ class ProfileFragment : Fragment() {
             binding.userDidView.text = formattedDid
 
             binding.profileImageView.load(
-                uri = profile.imageUrl,
-                imageLoader = imageLoader
+                data = profile.imageUrl,
+                imageLoader = requireContext().svgLoader()
             )
         }
 

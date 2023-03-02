@@ -64,7 +64,7 @@ class RegistrationConfirmationFragment : BottomSheetDialogFragment() {
                 formIsValid = false
             }
 
-            InputValidationResult.NO_ERRORS -> { }
+            else -> {}
         }
 
         return formIsValid
