@@ -10,7 +10,6 @@ import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.databinding.ViewCredentialItemBinding
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.presentation.common.credentials.credential_card.CredentialCardUi
-import java.lang.IllegalStateException
 
 class CredentialsAdapter(private val credentialClickCallback: (credentialId: String) -> Unit) :
     RecyclerView.Adapter<CredentialsAdapter.CredentialViewHolder>() {
@@ -41,10 +40,9 @@ class CredentialsAdapter(private val credentialClickCallback: (credentialId: Str
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (items[position].credentialStatusUi.domainStatus == CredentialStatus.ACTIVE) {
-            ACTIVE_CREDENTIAL
-        } else {
-            NON_ACTIVE_CREDENTIAL
+        return when (items[position].credentialStatusUi.domainStatus) {
+            CredentialStatus.Active -> ACTIVE_CREDENTIAL
+            CredentialStatus.Expired -> NON_ACTIVE_CREDENTIAL
         }
     }
 

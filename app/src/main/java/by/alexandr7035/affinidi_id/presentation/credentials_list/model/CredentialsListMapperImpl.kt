@@ -28,13 +28,13 @@ class CredentialsListMapperImpl @Inject constructor(
 
                     CredentialFilters.Active -> {
                         uiCredentialsUnfiltered.filter {
-                            it.credentialStatusUi.domainStatus == CredentialStatus.ACTIVE
+                            it.credentialStatusUi.domainStatus == CredentialStatus.Active
                         }
                     }
 
                     CredentialFilters.Expired -> {
                         uiCredentialsUnfiltered.filter {
-                            it.credentialStatusUi.domainStatus == CredentialStatus.EXPIRED
+                            it.credentialStatusUi.domainStatus == CredentialStatus.Expired
                         }
                     }
                 }
