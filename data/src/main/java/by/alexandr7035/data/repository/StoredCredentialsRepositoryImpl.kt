@@ -43,6 +43,8 @@ class StoredCredentialsRepositoryImpl @Inject constructor(
             val cacheCredentials = credentialsCacheDataSource.getCredentialsFromCache() as DataCredentialsList.Success
             val domainCache = cacheCredentials.signedCredentials.map {
                 mapper.map(it)
+            }.sortedByDescending {
+                it.issuanceDate
             }
 
             // Always try firstly return cache
@@ -73,6 +75,8 @@ class StoredCredentialsRepositoryImpl @Inject constructor(
 
                 val domainCloud = cloudCredentials.signedCredentials.map {
                     mapper.map(it)
+                }.sortedByDescending {
+                    it.issuanceDate
                 }
 
                 emit(CredentialsListResModel.Success(credentials = domainCloud))
