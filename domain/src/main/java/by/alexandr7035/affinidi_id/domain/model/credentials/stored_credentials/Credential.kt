@@ -2,6 +2,7 @@ package by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials
 
 data class Credential(
     val vcType: String,
+    val vcSchema: String,
     // JSON data
     val credentialSubjectData: String,
     val id: String,

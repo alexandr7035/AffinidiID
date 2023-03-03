@@ -46,9 +46,14 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
             jws = signedCredential.proof.jws
         )
 
+        val schema = signedCredential.context.find {
+            it != "https://www.w3.org/2018/credentials/v1"
+        } ?: signedCredential.context.first()
+
         return Credential(
             id = signedCredential.id,
             vcType = signedCredential.type.last(),
+            vcSchema = schema,
             expirationDate = expirationDate,
             issuanceDate = issuanceDate,
             holderDid = signedCredential.holder.holderDid,

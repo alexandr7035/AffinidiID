@@ -48,11 +48,6 @@ class CredentialsCacheDataSourceImpl @Inject constructor(
         credentialsDAO.deleteCredentials()
     }
 
-    override suspend fun checkIfHaveCredentialInCache(credentialContextUrl: String): Boolean {
-        val cache = credentialsDAO.getCredentialsWithContext(credentialContextUrl)
-        return cache.isNotEmpty()
-    }
-
     private fun mapRawVCtoSignedVc(rawVc: String): SignedCredential {
         return gson.fromJson(rawVc, SignedCredential::class.java)
     }

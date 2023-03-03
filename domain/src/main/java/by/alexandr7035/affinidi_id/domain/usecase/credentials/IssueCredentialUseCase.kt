@@ -19,7 +19,9 @@ class IssueCredentialUseCase @Inject constructor(
         // Do not issue a new if have
         val checkForCredential = checkIfHaveCredentialUseCase.execute(
             checkIfHaveVcReqModel = CheckIfHaveVcReqModel(
-                vcContextUrl = issueCredentialReqModel.issuingCredentialData.jsonLdContextUrl
+                vcContextUrl = issueCredentialReqModel.issuingCredentialData.jsonLdContextUrl,
+                // Allow issuing if previous VC is expired
+                includeExpired = false
             )
         )
 

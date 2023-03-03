@@ -19,11 +19,13 @@ import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
 import by.alexandr7035.data.model.DataCredentialsList
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
+import by.alexandr7035.data.extensions.debug
 import by.alexandr7035.data.model.DataGetCredentialById
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import javax.inject.Inject
 
 class StoredCredentialsRepositoryImpl @Inject constructor(
@@ -79,8 +81,7 @@ class StoredCredentialsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCredentialById(
-        getCredentialByIdReqModel: GetCredentialByIdReqModel,
-        authState: AuthStateModel
+        getCredentialByIdReqModel: GetCredentialByIdReqModel, authState: AuthStateModel
     ): Flow<GetCredentialByIdResModel> {
         return flow {
             // Show loading first
@@ -100,8 +101,7 @@ class StoredCredentialsRepositoryImpl @Inject constructor(
 
         val res = apiCallHelper.executeCall {
             apiService.deleteVc(
-                credentialId = deleteVcReqModel.credentialId,
-                accessToken = authState.accessToken ?: ""
+                credentialId = deleteVcReqModel.credentialId, accessToken = authState.accessToken ?: ""
             )
         }
 
@@ -123,12 +123,11 @@ class StoredCredentialsRepositoryImpl @Inject constructor(
 
         val res = apiCallHelper.executeCall {
             apiService.shareVC(
-                credentialId = shareVcReq.credentialId,
-                accessToken = authState.accessToken ?: ""
+                credentialId = shareVcReq.credentialId, accessToken = authState.accessToken ?: ""
             )
         }
 
-       return when (res) {
+        return when (res) {
             is ApiCallWrapper.Success -> {
                 // Cut to only base64 value
                 val base64 = res.data.qrCode.replace("data:image/png;base64,", "")
@@ -145,11 +144,27 @@ class StoredCredentialsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun checkIfHaveCredentialInCache(checkIfHaveVcReqModel: CheckIfHaveVcReqModel): CheckIfHaveVcResModel {
-        val haveCredential = credentialsCacheDataSource.checkIfHaveCredentialInCache(
-            credentialContextUrl = checkIfHaveVcReqModel.vcContextUrl
-        )
+        val vcsCache = credentialsCacheDataSource.getCredentialsFromCache() as DataCredentialsList.Success
+        val domainList = vcsCache.signedCredentials.map {
+            mapper.map(it)
+        }
 
-        return CheckIfHaveVcResModel(haveCredential = haveCredential)
+        val filtered = domainList.filter {
+            if (it.expirationDate == null) {
+                it.vcSchema == checkIfHaveVcReqModel.vcContextUrl
+            } else {
+                // Return with expired
+                if (checkIfHaveVcReqModel.includeExpired) {
+                    it.vcSchema == checkIfHaveVcReqModel.vcContextUrl
+                } else {
+                    it.expirationDate!! >= System.currentTimeMillis() && it.vcSchema == checkIfHaveVcReqModel.vcContextUrl
+                }
+            }
+        }
+
+        Timber.debug("cecking incl expired ${checkIfHaveVcReqModel.includeExpired} result ${filtered.isNotEmpty()}")
+
+        return CheckIfHaveVcResModel(haveCredential = filtered.isNotEmpty())
     }
 
 }
