@@ -111,4 +111,7 @@
     <string name="claims">Claims</string>
     <string name="issued_by">Issued by</string>
 
+    <string name="lock_with_biometrics">Lock app with biometrics</string>
+    <string name="biometrics_not_available">Biometrics is unavailable on your device</string>
+    <string name="biometrics_not_enabled">Biometrics is not enabled on device. Please, enable biometrics in settings</string>
 </resources>
