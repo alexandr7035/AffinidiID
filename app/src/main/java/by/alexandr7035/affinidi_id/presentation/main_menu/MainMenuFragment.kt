@@ -108,6 +108,7 @@ class MainMenuFragment : Fragment() {
                         binding.root.showSnackBar(it, SnackBarMode.Negative, snackBarLength = Snackbar.LENGTH_SHORT)
                     })
             } else {
+                binding.root.showSnackBar(getString(R.string.biometric_lock_disabled), SnackBarMode.Neutral, snackBarLength = Snackbar.LENGTH_SHORT)
                 viewModel.setAppLockedWithBiometrics(false)
             }
         }

@@ -117,4 +117,5 @@
     <string name="biometrics_not_available">Biometrics is unavailable on your device</string>
     <string name="biometrics_not_enabled">Biometrics is not enabled on device. Please, enable biometrics in settings</string>
     <string name="app_is_now_locked_with_biometrics">App is now locked with biometrics</string>
+    <string name="biometric_lock_disabled">Lock with biometrics disabled</string>
 </resources>
