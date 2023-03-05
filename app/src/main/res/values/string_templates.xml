@@ -4,4 +4,6 @@
     <string name="credential_active_until_template">by %1$s</string>
     <string name="credential_expired_at_template">on %1$s</string>
     <string name="holder_did_template">Holder: %1$s</string>
+
+    <string name="error_auth_failed_template">Authentication failed: %1$s</string>
 </resources>

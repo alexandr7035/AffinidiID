@@ -6,6 +6,8 @@ import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelperImpl
 import by.alexandr7035.data.datasource.cache.CacheDatabase
+import by.alexandr7035.affinidi_id.domain.repository.AppSettings
+import by.alexandr7035.data.datasource.cache.app.AppSettingsImpl
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSourceImpl
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsDAO
@@ -31,6 +33,10 @@ import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCasterImpl
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import by.alexandr7035.data.repository.*
+import com.cioccarellia.ksprefs.KsPrefs
+import com.cioccarellia.ksprefs.config.EncryptionType
+import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
+import com.cioccarellia.ksprefs.config.model.CommitStrategy
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -249,5 +255,22 @@ object DataModule {
             .databaseBuilder(context, CacheDatabase::class.java, "cache.db")
             .fallbackToDestructiveMigration()
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideKeyValueStorage(@ApplicationContext context: Context): KsPrefs {
+        return KsPrefs(context) {
+            // Configuration Parameters Lambda
+            encryptionType = EncryptionType.PlainText()
+            autoSave = AutoSavePolicy.AUTOMATIC
+            commitStrategy = CommitStrategy.COMMIT
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppSettings(prefs: KsPrefs): AppSettings {
+        return AppSettingsImpl(prefs)
     }
 }

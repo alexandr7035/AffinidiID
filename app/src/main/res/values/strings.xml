@@ -6,6 +6,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="menu">Menu</string>
+    <string name="cancel">Cancel</string>
 
     <string name="enter_your_login">Enter your login</string>
     <string name="set_password">Set password</string>
@@ -71,7 +72,8 @@
     <string name="delete_vc_explanation">Sure to delete the VC from cloud wallet? If you haven\'t saved it somewhere, you will have to re-issue it.</string>
     <string name="delete_vc">Delete VC?</string>
     <string name="error_occurred">An error occurred</string>
-    <string name="eror_auth">Your access token has expired. Please, sign in again</string>
+    <string name="error_session_expired">Your session has expired. Please, sign in again</string>
+    <string name="error_auth_failed">Authentication failed</string>
     <string name="credential_info">Credential info</string>
     <string name="credential_id">Credential ID</string>
     <string name="holder">Holder</string>
@@ -114,4 +116,5 @@
     <string name="lock_with_biometrics">Lock app with biometrics</string>
     <string name="biometrics_not_available">Biometrics is unavailable on your device</string>
     <string name="biometrics_not_enabled">Biometrics is not enabled on device. Please, enable biometrics in settings</string>
+    <string name="app_is_now_locked_with_biometrics">App is now locked with biometrics</string>
 </resources>

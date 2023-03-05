@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                         ErrorType.AUTHORIZATION_ERROR -> {
                             Timber.debug("AUTH_CHECK expired")
                             binding.root.showSnackBar(
-                                getString(R.string.eror_auth),
+                                getString(R.string.error_session_expired),
                                 SnackBarMode.Negative,
                                 Snackbar.LENGTH_LONG
                             )

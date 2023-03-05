@@ -1,11 +1,12 @@
 package by.alexandr7035.affinidi_id.presentation.main_menu
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -15,16 +16,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.BuildConfig
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.debug
-import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
-import by.alexandr7035.affinidi_id.core.extensions.showToast
-import by.alexandr7035.affinidi_id.core.extensions.svgLoader
+import by.alexandr7035.affinidi_id.core.extensions.*
 import by.alexandr7035.affinidi_id.databinding.FragmentMainMenuBinding
-import by.alexandr7035.affinidi_id.presentation.common.biometrics.BiometricsHelper
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.concurrent.Executor
 
 @AndroidEntryPoint
 class MainMenuFragment : Fragment() {
@@ -95,43 +95,81 @@ class MainMenuFragment : Fragment() {
             true
         }
 
-        binding.biometricsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                requireContext().showToast("Enable biometrics", Toast.LENGTH_SHORT)
-//                viewModel.checkBiometricAvailability(requireContext())
-            }
-            else {
-                requireContext().showToast("Disable biometrics", Toast.LENGTH_SHORT)
+        binding.biometricsSwitch.setOnClickListener {
+            if (binding.biometricsSwitch.isChecked) {
+                showPrompt(requireContext(),
+                    onSuccess = {
+                        viewModel.setAppLockedWithBiometrics(true)
+                        binding.biometricsSwitch.isChecked = true
+                        binding.root.showSnackBar(getString(R.string.app_is_now_locked_with_biometrics), SnackBarMode.Positive, snackBarLength = Snackbar.LENGTH_SHORT)
+                    },
+                    onError = {
+                        binding.biometricsSwitch.isChecked = false
+                        binding.root.showSnackBar(it, SnackBarMode.Negative, snackBarLength = Snackbar.LENGTH_SHORT)
+                    })
+            } else {
+                viewModel.setAppLockedWithBiometrics(false)
             }
         }
 
         viewModel.biometricsAvailableStatusLiveData.observe(viewLifecycleOwner) { biometricsStatus ->
-
-            fun disableBiometricsSwitch() {
-                binding.biometricsSwitch.isEnabled = false
-                binding.biometricsSwitch.isChecked = false
-                binding.biometricError.isVisible = true
-            }
-
-            when (biometricsStatus ) {
+            when (biometricsStatus) {
                 BiometricManager.BIOMETRIC_SUCCESS -> {
-                    requireContext().showToast( "App can authenticate using biometrics.")
-                }
-                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                    disableBiometricsSwitch()
-                    binding.biometricError.text = getString(R.string.biometrics_not_available)
-                }
-                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                    disableBiometricsSwitch()
-                    binding.biometricError.text = getString(R.string.biometrics_not_available)
+                    enableBiometricsSwitch()
+                    binding.biometricsSwitch.isChecked = viewModel.checkAppLockedWithBiometrics()
                 }
                 BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                     disableBiometricsSwitch()
                     binding.biometricError.text = getString(R.string.biometrics_not_enabled)
                 }
+                else -> {
+                    disableBiometricsSwitch()
+                    binding.biometricError.text = getString(R.string.biometrics_not_available)
+                }
             }
         }
 
         viewModel.checkBiometricAvailability(requireContext())
+    }
+
+
+    private fun showPrompt(context: Context, onSuccess: () -> Unit, onError: (error: String) -> Unit) {
+        val executor = ContextCompat.getMainExecutor(context)
+        val biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    onError.invoke(getString(R.string.error_auth_failed_template, errString))
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    onSuccess.invoke()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    onError.invoke(getString(R.string.error_auth_failed))
+                }
+            })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(getString(R.string.lock_with_biometrics))
+            .setNegativeButtonText(getString(R.string.cancel))
+            .build()
+
+        biometricPrompt.authenticate(promptInfo)
+    }
+
+
+    private fun disableBiometricsSwitch() {
+        binding.biometricsSwitch.isEnabled = false
+        binding.biometricsSwitch.isChecked = false
+        binding.biometricError.isVisible = true
+    }
+
+    private fun enableBiometricsSwitch() {
+        binding.biometricsSwitch.isEnabled = true
+        binding.biometricError.isVisible = false
     }
 }
