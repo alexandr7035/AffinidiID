@@ -34,8 +34,7 @@ fun Context.vibrate(vibrationMode: VibrationMode) {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         vibrator.vibrate(VibrationEffect.createOneShot(vibrationTimeMills, VibrationEffect.DEFAULT_AMPLITUDE))
-    }
-    else {
+    } else {
         vibrator.vibrate(vibrationTimeMills)
     }
 }

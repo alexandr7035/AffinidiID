@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.affinidi_id.R
@@ -109,6 +110,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        viewModel.startAuthCheck()
     }
 
 
@@ -119,10 +122,16 @@ class MainActivity : AppCompatActivity() {
         // Affinidi token expires in 1 hour
         // So we should check for auth on start
         // and if token expired show login fragment (or stay if already there)
-        if (viewModel.checkIfPreviouslyAuthorized()) {
-            Timber.debug("AUTH_CHECK start")
-            binding.progressView.root.isVisible = true
-            viewModel.startAuthCheck()
+//        if (viewModel.checkIfPreviouslyAuthorized()) {
+//            Timber.debug("AUTH_CHECK start")
+//            binding.progressView.root.isVisible = true
+//            viewModel.startAuthCheck()
+//        }
+
+        if (viewModel.checkAppLocked()) {
+            if (navController.currentDestination?.id != R.id.biometricsLockFragment) {
+                navController.navigateSafe(MainActivityDirections.actionGlobalBiometricsLockFragment())
+            }
         }
     }
 }
