@@ -13,15 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.clearError
-import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
-import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
-import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
+import by.alexandr7035.affinidi_id.core.extensions.*
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
+import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -90,16 +89,18 @@ class LoginFragment : Fragment() {
                             binding.passwordField.error = getString(R.string.error_wrong_user_or_password)
                         }
                         ErrorType.FAILED_CONNECTION -> {
-                            showErrorDialog(
-                                getString(R.string.error_failed_connection_title),
-                                getString(R.string.error_failed_connection)
+                            binding.root.showSnackBar(
+                                message = getString(R.string.error_failed_connection),
+                                snackBarMode = SnackBarMode.Negative,
+                                snackBarLength = Snackbar.LENGTH_SHORT
                             )
                         }
                         // Including unknown error
                         else -> {
-                            showErrorDialog(
-                                getString(R.string.error_unknown_title),
-                                getString(R.string.error_unknown)
+                            binding.root.showSnackBar(
+                                message = getString(R.string.error_unknown),
+                                snackBarMode = SnackBarMode.Negative,
+                                snackBarLength = Snackbar.LENGTH_SHORT
                             )
                         }
                     }
