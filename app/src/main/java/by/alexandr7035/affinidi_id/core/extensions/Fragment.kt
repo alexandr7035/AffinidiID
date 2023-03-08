@@ -49,7 +49,7 @@ fun Fragment.showBiometricPrompt(
         })
 
     val promptInfo = BiometricPrompt.PromptInfo.Builder()
-        .setTitle(title ?: getString(R.string.lock_with_biometrics))
+        .setTitle(title ?: getString(R.string.unlock_with_biometrics))
         .setNegativeButtonText(getString(R.string.cancel))
         .build()
 

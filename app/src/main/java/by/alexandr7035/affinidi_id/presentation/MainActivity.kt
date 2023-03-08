@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // navigateSafe method allow us not check current destination
-        viewModel.getAuthCheckLiveData().observe(this) { authCheckResult ->
+        viewModel.getAuthCheckObservable().observe(this) { authCheckResult ->
             binding.progressView.root.isVisible = false
 
             when (authCheckResult) {
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.startAuthCheck()
+        viewModel.checkIfAuthorized()
     }
 
 
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
 //            viewModel.startAuthCheck()
 //        }
 
-        if (viewModel.checkAppLocked()) {
+        if (viewModel.checkAppLockedWithBiometrics()) {
             if (navController.currentDestination?.id != R.id.biometricsLockFragment) {
                 navController.navigateSafe(MainActivityDirections.actionGlobalBiometricsLockFragment())
             }

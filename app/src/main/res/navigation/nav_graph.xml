@@ -253,6 +253,12 @@
         android:id="@+id/biometricsLockFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.app_lock.BiometricsLockFragment"
         android:label="fragment_biometrics_lock"
-        tools:layout="@layout/fragment_biometrics_lock" /><action android:id="@+id/action_global_biometricsLockFragment" app:destination="@id/biometricsLockFragment"/>
+        tools:layout="@layout/fragment_biometrics_lock" >
+        <action
+            android:id="@+id/action_biometricsLockFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph.xml"
+            app:popUpToInclusive="true" />
+    </fragment><action android:id="@+id/action_global_biometricsLockFragment" app:destination="@id/biometricsLockFragment"/>
 
 </navigation>

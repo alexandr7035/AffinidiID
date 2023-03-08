@@ -13,4 +13,6 @@ interface AuthController {
     fun checkAppLockedWithBiometrics(): Boolean
 
     fun logOut()
+
+    fun getLogOutObservable(): LiveData<Unit>
 }
