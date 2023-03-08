@@ -8,6 +8,7 @@ import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
 import by.alexandr7035.affinidi_id.domain.usecase.applock.CheckAppLockedWithBiometricsUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.AuthCheckUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.GetAuthStateUseCase
+import by.alexandr7035.affinidi_id.presentation.common.auth.AuthController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,15 +20,15 @@ class MainViewModel @Inject constructor(
     private val getAuthStateUseCase: GetAuthStateUseCase,
     private val authCheckUseCase: AuthCheckUseCase,
     private val checkAppLockedWithBiometricsUseCase: CheckAppLockedWithBiometricsUseCase
-) : ViewModel() {
+) : ViewModel(), AuthController {
 
     private val authCheckLiveData = SingleLiveEvent<AuthCheckResModel>()
 
-    fun checkIfPreviouslyAuthorized(): Boolean {
+    override fun checkIfPreviouslyAuthorized(): Boolean {
         return getAuthStateUseCase.execute().isAuthorized
     }
 
-    fun startAuthCheck() {
+    override fun checkIfAuthorized() {
         viewModelScope.launch(Dispatchers.IO) {
             val res = authCheckUseCase.execute()
 
@@ -37,11 +38,15 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getAuthCheckLiveData(): LiveData<AuthCheckResModel> {
+    override fun getAuthCheckObservable(): LiveData<AuthCheckResModel> {
         return authCheckLiveData
     }
 
-    fun checkAppLocked(): Boolean {
+    override fun checkAppLockedWithBiometrics(): Boolean {
         return checkAppLockedWithBiometricsUseCase.execute()
+    }
+
+    override fun logOut() {
+        TODO("Not yet implemented")
     }
 }
