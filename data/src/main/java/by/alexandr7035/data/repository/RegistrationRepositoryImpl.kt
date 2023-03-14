@@ -8,7 +8,6 @@ import by.alexandr7035.affinidi_id.domain.model.signup.SignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.repository.AppSettings
 import by.alexandr7035.affinidi_id.domain.repository.RegistrationRepository
-import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
 import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
 import by.alexandr7035.data.datasource.cloud.api.UserApiService

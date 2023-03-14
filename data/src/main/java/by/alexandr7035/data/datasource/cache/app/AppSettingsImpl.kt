@@ -4,7 +4,7 @@ import by.alexandr7035.affinidi_id.domain.model.login.AuthCredentials
 import by.alexandr7035.affinidi_id.domain.model.profile.UserProfile
 import by.alexandr7035.affinidi_id.domain.repository.AppSettings
 import by.alexandr7035.data.helpers.profile_avatars.DicebearAvatarsHelper
-import by.alexandr7035.data.model.local.profile.DicebearImageType
+import by.alexandr7035.data.helpers.profile_avatars.DicebearImageType
 import com.cioccarellia.ksprefs.KsPrefs
 
 class AppSettingsImpl(

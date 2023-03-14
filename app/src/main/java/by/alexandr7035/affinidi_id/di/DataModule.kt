@@ -6,15 +6,10 @@ import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelperImpl
 import by.alexandr7035.data.datasource.cache.CacheDatabase
-import by.alexandr7035.affinidi_id.domain.repository.AppSettings
 import by.alexandr7035.data.datasource.cache.app.AppSettingsImpl
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSourceImpl
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsDAO
-import by.alexandr7035.data.datasource.cache.profile.ProfileStorage
-import by.alexandr7035.data.datasource.cache.profile.ProfileStorageImpl
-import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
-import by.alexandr7035.data.datasource.cache.secrets.SecretsStorageImpl
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
 import by.alexandr7035.data.datasource.cloud.ApiCallHelperImpl
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
@@ -84,26 +79,14 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(profileStorage: ProfileStorage, avatarsHelper: DicebearAvatarsHelper): ProfileRepository {
-        return ProfileRepositoryImpl(profileStorage, avatarsHelper)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthDataStorage(@ApplicationContext context: Context): ProfileStorage {
-        return ProfileStorageImpl(context)
+    fun provideProfileRepository(appSettings: AppSettings): ProfileRepository {
+        return ProfileRepositoryImpl(appSettings)
     }
 
     @Provides
     @Singleton
     fun provideAvatarsHelper(): DicebearAvatarsHelper {
         return DicebearAvatarsHelperImpl()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSecretsStorage(@ApplicationContext context: Context): SecretsStorage {
-        return SecretsStorageImpl(context)
     }
 
     @Provides
@@ -123,11 +106,9 @@ object DataModule {
     fun provideLoginRepository(
         userApiService: UserApiService,
         apiCallHelper: ApiCallHelper,
-        secretsStorage: SecretsStorage,
-        credentialsCacheDataSource: CredentialsCacheDataSource,
         appSettings: AppSettings
     ): LoginRepository {
-        return LoginRepositoryImpl(userApiService, apiCallHelper, secretsStorage, credentialsCacheDataSource, appSettings)
+        return LoginRepositoryImpl(userApiService, apiCallHelper, appSettings)
     }
 
     @Provides
