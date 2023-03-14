@@ -10,14 +10,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
-import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.databinding.ActivityMainBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
-import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
-import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
+import by.alexandr7035.affinidi_id.domain.core.GenericRes
 import by.alexandr7035.affinidi_id.presentation.login.LoginFragmentDirections
 import by.alexandr7035.affinidi_id.presentation.profile.ProfileFragmentDirections
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -65,25 +62,26 @@ class MainActivity : AppCompatActivity() {
             binding.progressView.root.isVisible = false
 
             when (authCheckResult) {
-                is AuthCheckResModel.Success -> {
+                is GenericRes.Success -> {
                     // Means token did not expired
                     navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
                 }
 
                 // When fail, it depends.
-                is AuthCheckResModel.Fail -> {
+                is GenericRes.Fail -> {
                     when (authCheckResult.errorType) {
                         // That means token has expired
                         // Stay on login fragment and show error message
                         ErrorType.AUTHORIZATION_ERROR -> {
 
-                            if (viewModel.checkIfPreviouslyAuthorized()) {
-                                binding.root.showSnackBar(
-                                    getString(R.string.error_session_expired),
-                                    SnackBarMode.Negative,
-                                    Snackbar.LENGTH_LONG
-                                )
-                            }
+                            // TODO diff auth error and UNAUTHORIZED
+//                            if (viewModel.checkIfPreviouslyAuthorized()) {
+//                                binding.root.showSnackBar(
+//                                    getString(R.string.error_session_expired),
+//                                    SnackBarMode.Negative,
+//                                    Snackbar.LENGTH_LONG
+//                                )
+//                            }
 
                             navController.navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
                         }

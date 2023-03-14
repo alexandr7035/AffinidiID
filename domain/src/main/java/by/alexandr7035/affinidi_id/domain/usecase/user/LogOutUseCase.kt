@@ -8,15 +8,14 @@ import javax.inject.Inject
 
 class LogOutUseCase @Inject constructor(
     private val loginRepository: LoginRepository,
-    private val getAuthStateUseCase: GetAuthStateUseCase,
-
     // FIXME move to data layer
-    private val clearProfileUseCase: ClearProfileUseCase,
+//    private val clearProfileUseCase: ClearProfileUseCase,
     private val setAppLockedWithBiometricsUseCase: SetAppLockedWithBiometricsUseCase
 ) {
     suspend fun execute(): LogOutModel {
-        val accessToken = getAuthStateUseCase.execute().accessToken
-        val result = loginRepository.logOut(accessToken ?: "")
+        // FIXME login repository
+//        val accessToken = checkIfAuthorizedUseCase.execute().accessToken
+        val result = loginRepository.logOut("")
 
         setAppLockedWithBiometricsUseCase.execute(locked = false)
 
@@ -24,13 +23,15 @@ class LogOutUseCase @Inject constructor(
         // Logout in any case
         when (result) {
             is LogOutModel.Success -> {
-                clearProfileUseCase.execute()
+                // Clear data
+//                clearProfileUseCase.execute()
             }
             is LogOutModel.Fail -> {
                 if (result.errorType == ErrorType.AUTHORIZATION_ERROR) {
                     // Means authorization token already not actual
                     // Just clear token and login and return success logout
-                    loginRepository.saveAccessToken(null)
+//                    loginRepository.saveAccessToken(null)
+                    // TODO clear data
                     return LogOutModel.Success
                 }
             }

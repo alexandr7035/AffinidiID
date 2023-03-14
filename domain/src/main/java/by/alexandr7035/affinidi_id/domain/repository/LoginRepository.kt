@@ -1,17 +1,15 @@
 package by.alexandr7035.affinidi_id.domain.repository
 
+import by.alexandr7035.affinidi_id.domain.core.GenericRes
 import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
-import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
 
 interface LoginRepository {
     suspend fun signIn(
         userName: String,
         password: String,
-    ): SignInModel
+    ): GenericRes<Unit>
 
-    fun saveAccessToken(accessToken: String?)
-
-    fun getAccessToken(): String?
+    suspend fun signInWithRefreshToken(accessToken: String): GenericRes<Unit>
 
     suspend fun logOut(accessToken: String): LogOutModel
 }
