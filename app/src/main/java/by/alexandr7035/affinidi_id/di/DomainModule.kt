@@ -12,8 +12,8 @@ import dagger.hilt.android.components.ViewModelComponent
 @InstallIn(ViewModelComponent::class)
 object DomainModule {
     @Provides
-    fun provideGetProfileUseCase(appSettings: AppSettings): GetProfileUseCase {
-        return GetProfileUseCase(appSettings)
+    fun provideGetProfileUseCase(profileRepository: ProfileRepository): GetProfileUseCase {
+        return GetProfileUseCase(profileRepository)
     }
 
     @Provides
