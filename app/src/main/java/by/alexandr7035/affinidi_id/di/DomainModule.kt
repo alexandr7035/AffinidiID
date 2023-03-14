@@ -34,18 +34,18 @@ object DomainModule {
     }
 
     @Provides
-    fun provideGetAuthStateUseCase(loginRepository: LoginRepository): GetAuthStateUseCase {
-        return GetAuthStateUseCase(loginRepository)
+    fun provideGetAuthStateUseCase(loginRepository: LoginRepository): CheckIfAuthorizedUseCase {
+        return CheckIfAuthorizedUseCase(loginRepository)
     }
 
     @Provides
     fun provideLogOutUseCase(
         loginRepository: LoginRepository,
-        getAuthStateUseCase: GetAuthStateUseCase,
+        checkIfAuthorizedUseCase: CheckIfAuthorizedUseCase,
         clearProfileUseCase: ClearProfileUseCase,
         setAppLockedWithBiometricsUseCase: SetAppLockedWithBiometricsUseCase
     ): LogOutUseCase {
-        return LogOutUseCase(loginRepository, getAuthStateUseCase, clearProfileUseCase, setAppLockedWithBiometricsUseCase)
+        return LogOutUseCase(loginRepository, checkIfAuthorizedUseCase, clearProfileUseCase, setAppLockedWithBiometricsUseCase)
     }
 
     @Provides
@@ -69,17 +69,17 @@ object DomainModule {
     }
 
     @Provides
-    fun provideChangePasswordUseCase(changeProfileRepository: ChangeProfileRepository, getAuthStateUseCase: GetAuthStateUseCase): ChangePasswordUseCase {
-        return ChangePasswordUseCase(changeProfileRepository, getAuthStateUseCase)
+    fun provideChangePasswordUseCase(changeProfileRepository: ChangeProfileRepository, checkIfAuthorizedUseCase: CheckIfAuthorizedUseCase): ChangePasswordUseCase {
+        return ChangePasswordUseCase(changeProfileRepository, checkIfAuthorizedUseCase)
     }
 
     @Provides
-    fun provideGetCredentialsListUseCase(storedCredentialsRepository: StoredCredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialsListUseCase {
+    fun provideGetCredentialsListUseCase(storedCredentialsRepository: StoredCredentialsRepository, authStateUseCase: CheckIfAuthorizedUseCase): GetCredentialsListUseCase {
         return GetCredentialsListUseCase(storedCredentialsRepository, authStateUseCase)
     }
 
     @Provides
-    fun provideIssueCredentialUseCase(issueCredentialsRepository: IssueCredentialsRepository, authStateUseCase: GetAuthStateUseCase, checkIfHaveCredentialUseCase: CheckIfHaveCredentialUseCase): IssueCredentialUseCase {
+    fun provideIssueCredentialUseCase(issueCredentialsRepository: IssueCredentialsRepository, authStateUseCase: CheckIfAuthorizedUseCase, checkIfHaveCredentialUseCase: CheckIfHaveCredentialUseCase): IssueCredentialUseCase {
         return IssueCredentialUseCase(issueCredentialsRepository, authStateUseCase, checkIfHaveCredentialUseCase)
     }
 
@@ -89,17 +89,12 @@ object DomainModule {
     }
 
     @Provides
-    fun provideDeleteCredentialUseCase(storedCredentialsRepository: StoredCredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): DeleteCredentialUseCase {
-        return DeleteCredentialUseCase(storedCredentialsRepository, getAuthStateUseCase)
+    fun provideDeleteCredentialUseCase(storedCredentialsRepository: StoredCredentialsRepository, checkIfAuthorizedUseCase: CheckIfAuthorizedUseCase): DeleteCredentialUseCase {
+        return DeleteCredentialUseCase(storedCredentialsRepository, checkIfAuthorizedUseCase)
     }
 
     @Provides
-    fun provideAuthCheckUseCase(authCheckRepository: AuthCheckRepository, getAuthStateUseCase: GetAuthStateUseCase, logOutUseCase: LogOutUseCase): AuthCheckUseCase {
-        return AuthCheckUseCase(authCheckRepository, getAuthStateUseCase, logOutUseCase)
-    }
-
-    @Provides
-    fun provideGetCredentialByIdUseCase(storedCredentialsRepository: StoredCredentialsRepository, authStateUseCase: GetAuthStateUseCase): GetCredentialByIdUseCase {
+    fun provideGetCredentialByIdUseCase(storedCredentialsRepository: StoredCredentialsRepository, authStateUseCase: CheckIfAuthorizedUseCase): GetCredentialByIdUseCase {
         return GetCredentialByIdUseCase(storedCredentialsRepository, authStateUseCase)
     }
 
@@ -114,8 +109,8 @@ object DomainModule {
     }
 
     @Provides
-    fun provideShareCredentialUseCase(storedCredentialsRepository: StoredCredentialsRepository, getAuthStateUseCase: GetAuthStateUseCase): ShareCredentialUseCase {
-        return ShareCredentialUseCase(storedCredentialsRepository, getAuthStateUseCase)
+    fun provideShareCredentialUseCase(storedCredentialsRepository: StoredCredentialsRepository, checkIfAuthorizedUseCase: CheckIfAuthorizedUseCase): ShareCredentialUseCase {
+        return ShareCredentialUseCase(storedCredentialsRepository, checkIfAuthorizedUseCase)
     }
 
     @Provides

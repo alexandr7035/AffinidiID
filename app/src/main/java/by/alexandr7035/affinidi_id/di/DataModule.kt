@@ -215,12 +215,6 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideAuthCheckRepository(userApiService: UserApiService, apiCallHelper: ApiCallHelper): AuthCheckRepository {
-        return AuthCheckRepositoryImpl(userApiService, apiCallHelper)
-    }
-
-    @Provides
-    @Singleton
     fun provideIssueCredentialsRepository(vcIssuanceHelper: VCIssuanceHelper): IssueCredentialsRepository {
         return IssueCredentialsRepositoryImpl(vcIssuanceHelper)
     }
