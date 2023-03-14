@@ -15,8 +15,14 @@ class AuthCheckUseCase @Inject constructor(
     suspend fun execute(): AuthCheckResModel {
         val authState = getAuthStateUseCase.execute()
 
+        // If no token
+        // TODO refactoring (including naming)
+        if (! authState.isAuthorized) {
+            return AuthCheckResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+        }
+
+        // Make auth check request
         val authCheckResult = authCheckRepository.makeCheckRequest(authState)
-//        val authCheckResult= AuthCheckResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
 
         if (authCheckResult is AuthCheckResModel.Fail) {
             if (authCheckResult.errorType == ErrorType.AUTHORIZATION_ERROR) {

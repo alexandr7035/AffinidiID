@@ -1,6 +1,7 @@
 package by.alexandr7035.affinidi_id.di
 
 import by.alexandr7035.affinidi_id.domain.repository.*
+import by.alexandr7035.affinidi_id.domain.usecase.applock.SetAppLockedWithBiometricsUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.*
 import by.alexandr7035.affinidi_id.domain.usecase.user.*
 import dagger.Module
@@ -38,8 +39,13 @@ object DomainModule {
     }
 
     @Provides
-    fun provideLogOutUseCase(loginRepository: LoginRepository, getAuthStateUseCase: GetAuthStateUseCase, clearProfileUseCase: ClearProfileUseCase): LogOutUseCase {
-        return LogOutUseCase(loginRepository, getAuthStateUseCase, clearProfileUseCase)
+    fun provideLogOutUseCase(
+        loginRepository: LoginRepository,
+        getAuthStateUseCase: GetAuthStateUseCase,
+        clearProfileUseCase: ClearProfileUseCase,
+        setAppLockedWithBiometricsUseCase: SetAppLockedWithBiometricsUseCase
+    ): LogOutUseCase {
+        return LogOutUseCase(loginRepository, getAuthStateUseCase, clearProfileUseCase, setAppLockedWithBiometricsUseCase)
     }
 
     @Provides

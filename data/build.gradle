@@ -49,8 +49,12 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
 
+    // Room
     def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
+
+    // Kotlin SharedPrefs wrapper
+    implementation 'com.github.cioccarellia:ksprefs:2.3.2'
 }
