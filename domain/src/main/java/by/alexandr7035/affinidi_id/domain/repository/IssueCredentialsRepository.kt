@@ -5,5 +5,5 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCreden
 import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 
 interface IssueCredentialsRepository {
-    suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel, authState: AuthStateModel): IssueCredentialResModel
+    suspend fun issueCredential(issueCredentialReqModel: IssueCredentialReqModel): IssueCredentialResModel
 }

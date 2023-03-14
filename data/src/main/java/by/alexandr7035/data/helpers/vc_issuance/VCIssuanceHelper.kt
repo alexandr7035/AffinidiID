@@ -8,7 +8,7 @@ import by.alexandr7035.data.model.network.credentials.unsigned_vc.UnsignedCreden
 interface VCIssuanceHelper {
     suspend fun buildUnsignedVC(issueCredentialReqModel: IssueCredentialReqModel): UnsignedCredential
 
-    suspend fun signCredential(unsignedCredential: UnsignedCredential, authState: AuthStateModel): SignedCredential
+    suspend fun signCredential(unsignedCredential: UnsignedCredential): SignedCredential
 
-    suspend fun storeCredentials(signedCredentials: List<SignedCredential>, authState: AuthStateModel): List<String>
+    suspend fun storeCredentials(signedCredentials: List<SignedCredential>): List<String>
 }

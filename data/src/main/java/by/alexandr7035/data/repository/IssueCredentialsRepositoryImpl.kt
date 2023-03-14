@@ -3,7 +3,6 @@ package by.alexandr7035.data.repository
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
-import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
 import by.alexandr7035.affinidi_id.domain.repository.IssueCredentialsRepository
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.helpers.vc_issuance.VCIssuanceHelper
@@ -19,13 +18,12 @@ class IssueCredentialsRepositoryImpl @Inject constructor(
     // TODO give the user choice where to store in the future
     override suspend fun issueCredential(
         issueCredentialReqModel: IssueCredentialReqModel,
-        authState: AuthStateModel
     ): IssueCredentialResModel {
         try {
             val unsignedVc = vcIssuanceHelper.buildUnsignedVC(issueCredentialReqModel)
-            val signedVc = vcIssuanceHelper.signCredential(unsignedVc, authState)
+            val signedVc = vcIssuanceHelper.signCredential(unsignedVc)
             // Store only 1 VC, so just get last ID from response
-            val storedVCsID = vcIssuanceHelper.storeCredentials(listOf(signedVc), authState).last()
+            val storedVCsID = vcIssuanceHelper.storeCredentials(listOf(signedVc)).last()
 
             return IssueCredentialResModel.Success
 

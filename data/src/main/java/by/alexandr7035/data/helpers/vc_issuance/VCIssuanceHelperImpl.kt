@@ -3,7 +3,7 @@ package by.alexandr7035.data.helpers.vc_issuance
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.core.extensions.getStringDateFromLong
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
-import by.alexandr7035.affinidi_id.domain.model.login.AuthStateModel
+import by.alexandr7035.affinidi_id.domain.repository.AppSettings
 import by.alexandr7035.data.core.AppError
 import by.alexandr7035.data.datasource.cloud.api.CredentialsApiService
 import by.alexandr7035.data.extensions.debug
@@ -21,7 +21,8 @@ import javax.inject.Inject
 
 class VCIssuanceHelperImpl @Inject constructor(
     private val credentialsApiService: CredentialsApiService,
-    private val credentialSubjectCaster: CredentialSubjectCaster
+    private val credentialSubjectCaster: CredentialSubjectCaster,
+    private val appSettings: AppSettings
 ) : VCIssuanceHelper {
     override suspend fun buildUnsignedVC(issueCredentialReqModel: IssueCredentialReqModel): UnsignedCredential {
 
@@ -53,9 +54,12 @@ class VCIssuanceHelperImpl @Inject constructor(
         }
     }
 
-    override suspend fun signCredential(unsignedCredential: UnsignedCredential, authState: AuthStateModel): SignedCredential {
+    override suspend fun signCredential(unsignedCredential: UnsignedCredential): SignedCredential {
         val res =
-            credentialsApiService.signVC(SignVcReq(unsignedCredential = unsignedCredential), accessToken = authState.accessToken ?: "")
+            credentialsApiService.signVC(
+                SignVcReq(unsignedCredential = unsignedCredential),
+                accessToken = appSettings.getAuthCredentials().accessToken
+            )
 
         if (res.isSuccessful) {
             // Successfully signed VC
@@ -67,12 +71,12 @@ class VCIssuanceHelperImpl @Inject constructor(
         }
     }
 
-    override suspend fun storeCredentials(signedCredentials: List<SignedCredential>, authState: AuthStateModel): List<String> {
+    override suspend fun storeCredentials(signedCredentials: List<SignedCredential>): List<String> {
         val res = credentialsApiService.storeVCs(
             body = StoreVCsReq(
                 credentialsToStore = signedCredentials,
             ),
-            accessToken = authState.accessToken ?: ""
+            accessToken = appSettings.getAuthCredentials().accessToken
         )
 
         if (res.isSuccessful) {

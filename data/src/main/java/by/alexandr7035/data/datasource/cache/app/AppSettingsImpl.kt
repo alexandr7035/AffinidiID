@@ -22,11 +22,11 @@ class AppSettingsImpl(
 
     override fun getAuthCredentials(): AuthCredentials {
         return AuthCredentials(
-            userDid = prefs.pull(key = SettingsKeys.USER_DID.name),
-            userEmail = prefs.pull(key = SettingsKeys.USER_EMAIL.name),
-            accessToken = prefs.pull(key = SettingsKeys.ACCESS_TOKEN.name),
-            refreshToken = prefs.pull(key = SettingsKeys.REFRESH_TOKEN.name),
-            accessTokenObtained = prefs.pull(key = SettingsKeys.ACCESS_TOKEN_OBTAINED.name)
+            userDid = prefs.pull(key = SettingsKeys.USER_DID.name, fallback = ""),
+            userEmail = prefs.pull(key = SettingsKeys.USER_EMAIL.name, fallback = ""),
+            accessToken = prefs.pull(key = SettingsKeys.ACCESS_TOKEN.name, fallback = ""),
+            refreshToken = prefs.pull(key = SettingsKeys.REFRESH_TOKEN.name, fallback = ""),
+            accessTokenObtained = prefs.pull(key = SettingsKeys.ACCESS_TOKEN_OBTAINED.name, 0)
         )
     }
 
@@ -35,13 +35,13 @@ class AppSettingsImpl(
         // Did contains ":" symbol which can't be used in urls
         // So split did and get last part
         // Also take last 25 symbols as elem DID may be extremely long
-        val userDid = prefs.pull<String>(key = SettingsKeys.USER_DID.name)
+        val userDid = prefs.pull<String>(key = SettingsKeys.USER_DID.name, fallback = "")
         val uniqueString = userDid.split(":").last().takeLast(25)
         val avatartUrl = avatarsHelper.getImageUrl(DicebearImageType.AVATAR_IDENTICON, uniqueString, 1)
 
         return UserProfile(
             userDid = userDid,
-            userName = prefs.pull(key = SettingsKeys.USER_EMAIL.name),
+            userName = prefs.pull(key = SettingsKeys.USER_EMAIL.name, fallback = ""),
             imageUrl = avatartUrl
         )
     }

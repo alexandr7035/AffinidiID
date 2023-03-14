@@ -52,7 +52,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
-
     @Provides
     @Singleton
     fun provideHttpClient(): OkHttpClient {
@@ -125,9 +124,10 @@ object DataModule {
         userApiService: UserApiService,
         apiCallHelper: ApiCallHelper,
         secretsStorage: SecretsStorage,
-        credentialsCacheDataSource: CredentialsCacheDataSource
+        credentialsCacheDataSource: CredentialsCacheDataSource,
+        appSettings: AppSettings
     ): LoginRepository {
-        return LoginRepositoryImpl(userApiService, apiCallHelper, secretsStorage, credentialsCacheDataSource)
+        return LoginRepositoryImpl(userApiService, apiCallHelper, secretsStorage, credentialsCacheDataSource, appSettings)
     }
 
     @Provides
@@ -135,9 +135,9 @@ object DataModule {
     fun provideRegistrationRepository(
         userApiService: UserApiService,
         apiCallHelper: ApiCallHelper,
-        secretsStorage: SecretsStorage
+        appSettings: AppSettings
     ): RegistrationRepository {
-        return RegistrationRepositoryImpl(userApiService, apiCallHelper, secretsStorage)
+        return RegistrationRepositoryImpl(userApiService, apiCallHelper, appSettings)
     }
 
     @Provides
@@ -148,8 +148,12 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideChangeProfileRepository(userApiService: UserApiService, apiCallHelper: ApiCallHelper): ChangeProfileRepository {
-        return ChangeProfileRepositoryImpl(userApiService, apiCallHelper)
+    fun provideChangeProfileRepository(
+        userApiService: UserApiService,
+        apiCallHelper: ApiCallHelper,
+        appSettings: AppSettings
+    ): ChangeProfileRepository {
+        return ChangeProfileRepositoryImpl(userApiService, apiCallHelper, appSettings)
     }
 
     @Provides
@@ -162,18 +166,20 @@ object DataModule {
     @Singleton
     fun provideVCIssuanceHelper(
         credentialsApiService: CredentialsApiService,
-        credentialSubjectCaster: CredentialSubjectCaster
+        credentialSubjectCaster: CredentialSubjectCaster,
+        appSettings: AppSettings
     ): VCIssuanceHelper {
-        return VCIssuanceHelperImpl(credentialsApiService, credentialSubjectCaster)
+        return VCIssuanceHelperImpl(credentialsApiService, credentialSubjectCaster, appSettings)
     }
 
     @Provides
     @Singleton
     fun provideCredentialsCloudDataSource(
         credentialsApiService: CredentialsApiService,
-        apiCallHelper: ApiCallHelper
+        apiCallHelper: ApiCallHelper,
+        appSettings: AppSettings
     ): CredentialsCloudDataSource {
-        return CredentialsCloudDataSourceImpl(credentialsApiService, apiCallHelper)
+        return CredentialsCloudDataSourceImpl(credentialsApiService, apiCallHelper, appSettings)
     }
 
     @Provides
@@ -190,6 +196,7 @@ object DataModule {
         credentialsCloudDataSource: CredentialsCloudDataSource,
         credentialsCacheDataSource: CredentialsCacheDataSource,
         credentialToDomainMapper: SignedCredentialToDomainMapper,
+        appSettings: AppSettings,
     ): StoredCredentialsRepository {
         return StoredCredentialsRepositoryImpl(
             credentialsApiService,
@@ -197,9 +204,9 @@ object DataModule {
             credentialsCloudDataSource,
             credentialsCacheDataSource,
             credentialToDomainMapper,
+            appSettings
         )
     }
-
 
     @Provides
     @Singleton
@@ -264,7 +271,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideAppSettings(prefs: KsPrefs): AppSettings {
-        return AppSettingsImpl(prefs)
+    fun provideAppSettings(prefs: KsPrefs, avatarsHelper: DicebearAvatarsHelper): AppSettings {
+        return AppSettingsImpl(prefs, avatarsHelper)
     }
 }

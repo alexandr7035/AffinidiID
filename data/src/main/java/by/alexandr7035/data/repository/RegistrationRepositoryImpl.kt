@@ -1,10 +1,12 @@
 package by.alexandr7035.data.repository
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.model.login.AuthCredentials
 import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
+import by.alexandr7035.affinidi_id.domain.repository.AppSettings
 import by.alexandr7035.affinidi_id.domain.repository.RegistrationRepository
 import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
@@ -19,7 +21,7 @@ import javax.inject.Inject
 class RegistrationRepositoryImpl @Inject constructor(
     private val apiService: UserApiService,
     private val apiCallHelper: ApiCallHelper,
-    private val secretsStorage: SecretsStorage
+    private val appSettings: AppSettings
 ) : RegistrationRepository {
 
     override suspend fun signUp(signUpRequestModel: SignUpRequestModel): SignUpResponseModel {
@@ -37,7 +39,8 @@ class RegistrationRepositoryImpl @Inject constructor(
 
         return when (res) {
             is ApiCallWrapper.Success -> {
-                SignUpResponseModel.Success(res.data)
+                // Return username back
+                SignUpResponseModel.Success(confirmSignUpToken = res.data, userName = signUpRequest.userName)
             }
 
             is ApiCallWrapper.HttpError -> {
@@ -64,7 +67,17 @@ class RegistrationRepositoryImpl @Inject constructor(
 
         return when (res) {
             is ApiCallWrapper.Success -> {
-                secretsStorage.saveAccessToken(res.data.accessToken)
+                // Save auth data
+                appSettings.setAuthCredentials(
+                    AuthCredentials(
+                        userDid = res.data.userDid,
+                        userEmail = confirmSignUpRequestModel.userName,
+                        accessToken = res.data.accessToken,
+                        refreshToken = res.data.refreshToken,
+                        accessTokenObtained = System.currentTimeMillis()
+                    )
+                )
+
                 ConfirmSignUpResponseModel.Success(
                     accessToken = res.data.accessToken,
                     userDid = res.data.userDid
