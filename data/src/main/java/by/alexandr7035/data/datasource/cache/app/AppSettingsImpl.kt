@@ -59,4 +59,7 @@ class AppSettingsImpl(
         prefs.push(key = SettingsKeys.APP_LOCKED_WITH_BIOMETRICS.name, value = locked)
     }
 
+    override fun clearSettings() {
+        prefs.clear()
+    }
 }

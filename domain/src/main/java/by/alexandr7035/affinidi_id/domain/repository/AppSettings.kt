@@ -18,4 +18,6 @@ interface AppSettings {
     fun isAppLockedWithBiometrics(): Boolean
 
     fun setAppLockedWithBiometrics(locked: Boolean)
+
+    fun clearSettings()
 }
