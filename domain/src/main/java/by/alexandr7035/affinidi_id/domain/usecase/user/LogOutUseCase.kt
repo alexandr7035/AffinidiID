@@ -27,7 +27,7 @@ class LogOutUseCase @Inject constructor(
 //                clearProfileUseCase.execute()
             }
             is LogOutModel.Fail -> {
-                if (result.errorType == ErrorType.AUTHORIZATION_ERROR) {
+                if (result.errorType == ErrorType.AUTH_SESSION_EXPIRED) {
                     // Means authorization token already not actual
                     // Just clear token and login and return success logout
 //                    loginRepository.saveAccessToken(null)

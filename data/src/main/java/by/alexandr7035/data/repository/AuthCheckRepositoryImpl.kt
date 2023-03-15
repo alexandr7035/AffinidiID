@@ -27,7 +27,7 @@ class AuthCheckRepositoryImpl @Inject constructor(
             is ApiCallWrapper.Fail -> AuthCheckResModel.Fail(res.errorType)
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
-                    401 -> AuthCheckResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    401 -> AuthCheckResModel.Fail(ErrorType.AUTH_SESSION_EXPIRED)
                     else -> AuthCheckResModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }

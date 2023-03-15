@@ -111,7 +111,7 @@ class StoredCredentialsRepositoryImpl @Inject constructor(
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
                     // TODO review and fix 401
-                    401 -> DeleteVcResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    401 -> DeleteVcResModel.Fail(ErrorType.AUTH_SESSION_EXPIRED)
                     else -> DeleteVcResModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
@@ -135,7 +135,7 @@ class StoredCredentialsRepositoryImpl @Inject constructor(
             }
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
-                    401 -> ShareCredentialResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    401 -> ShareCredentialResModel.Fail(ErrorType.AUTH_SESSION_EXPIRED)
                     else -> ShareCredentialResModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }

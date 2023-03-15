@@ -9,7 +9,7 @@ interface LoginRepository {
         password: String,
     ): GenericRes<Unit>
 
-    suspend fun signInWithRefreshToken(accessToken: String): GenericRes<Unit>
+    suspend fun signInWithRefreshToken(): GenericRes<Unit>
 
     suspend fun logOut(accessToken: String): LogOutModel
 }

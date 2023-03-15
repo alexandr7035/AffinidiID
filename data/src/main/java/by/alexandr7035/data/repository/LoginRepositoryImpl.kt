@@ -9,6 +9,7 @@ import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
 import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
 import by.alexandr7035.data.datasource.cloud.api.UserApiService
+import by.alexandr7035.data.model.network.sign_in.RefreshTokenRequest
 import by.alexandr7035.data.model.network.sign_in.SignInRequest
 import javax.inject.Inject
 
@@ -51,8 +52,35 @@ class LoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signInWithRefreshToken(accessToken: String): GenericRes<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun signInWithRefreshToken(): GenericRes<Unit> {
+        val res = apiCallHelper.executeCall {
+            userApiService.signInWithRefreshToken(
+                RefreshTokenRequest(
+                    refreshToken = appSettings.getAuthCredentials().refreshToken
+                )
+            )
+        }
+
+        return when (res) {
+            is ApiCallWrapper.Success -> {
+                // Update access token
+                appSettings.updateAuthCredentials(
+                    accessToken = res.data.accessToken,
+                    accessTokenRefreshedDate = System.currentTimeMillis()
+                )
+                GenericRes.Success(Unit)
+            }
+            is ApiCallWrapper.Fail -> {
+                GenericRes.Fail(res.errorType)
+            }
+            is ApiCallWrapper.HttpError -> {
+                when (res.resultCode) {
+                    // Wrong or expired refresh token
+                    401 -> GenericRes.Fail(ErrorType.AUTH_SESSION_EXPIRED)
+                    else -> GenericRes.Fail(ErrorType.UNKNOWN_ERROR)
+                }
+            }
+        }
     }
 
     override suspend fun logOut(accessToken: String): LogOutModel {
@@ -69,7 +97,7 @@ class LoginRepositoryImpl @Inject constructor(
             }
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
-                    401 -> LogOutModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    401 -> LogOutModel.Fail(ErrorType.AUTH_SESSION_EXPIRED)
                     else -> LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
