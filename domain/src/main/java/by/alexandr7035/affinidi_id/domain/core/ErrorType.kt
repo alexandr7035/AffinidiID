@@ -2,7 +2,8 @@ package by.alexandr7035.affinidi_id.domain.core
 
 enum class ErrorType {
     FAILED_CONNECTION,
-    AUTHORIZATION_ERROR,
+    AUTH_SESSION_EXPIRED,
+    NOT_AUTHORIZED,
     USER_ALREADY_EXISTS,
     USER_DOES_NOT_EXIST,
     // Use at sign in

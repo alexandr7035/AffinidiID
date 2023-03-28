@@ -5,5 +5,5 @@ import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePa
 import by.alexandr7035.affinidi_id.domain.model.profile.change_password.ChangePasswordResModel
 
 interface ChangeProfileRepository {
-    suspend fun changePassword(changePasswordReqModel: ChangePasswordReqModel, authStateModel: AuthStateModel): ChangePasswordResModel
+    suspend fun changePassword(changePasswordReqModel: ChangePasswordReqModel): ChangePasswordResModel
 }

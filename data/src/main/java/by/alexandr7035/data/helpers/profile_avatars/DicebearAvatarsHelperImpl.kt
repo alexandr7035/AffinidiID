@@ -1,7 +1,6 @@
 package by.alexandr7035.data.helpers.profile_avatars
 
 import by.alexandr7035.data.extensions.debug
-import by.alexandr7035.data.model.local.profile.DicebearImageType
 import timber.log.Timber
 
 class DicebearAvatarsHelperImpl: DicebearAvatarsHelper {

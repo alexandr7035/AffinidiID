@@ -66,6 +66,9 @@
             <argument
                 android:name="confirmSignUpToken"
                 app:argType="string" />
+            <argument
+                android:name="userName"
+                app:argType="string" />
         </dialog>
         <action
             android:id="@+id/action_global_profileFragment"

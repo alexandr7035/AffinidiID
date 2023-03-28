@@ -1,60 +1,110 @@
 package by.alexandr7035.data.repository
 
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
+import by.alexandr7035.affinidi_id.domain.core.GenericRes
+import by.alexandr7035.affinidi_id.domain.model.login.AuthCredentials
 import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
-import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
+import by.alexandr7035.affinidi_id.domain.repository.AppSettings
 import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
-import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
 import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
 import by.alexandr7035.data.datasource.cloud.api.UserApiService
+import by.alexandr7035.data.model.network.sign_in.RefreshTokenRequest
 import by.alexandr7035.data.model.network.sign_in.SignInRequest
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val userApiService: UserApiService,
     private val apiCallHelper: ApiCallHelper,
-    private val secretsStorage: SecretsStorage,
+    private val appSettings: AppSettings,
     private val credentialsCacheDataSource: CredentialsCacheDataSource
 ) : LoginRepository {
 
-    override suspend fun signIn(userName: String, password: String): SignInModel {
-
+    override suspend fun signIn(userName: String, password: String): GenericRes<Unit> {
         val res = apiCallHelper.executeCall {
             userApiService.signIn(SignInRequest(userName, password))
         }
 
         return when (res) {
             is ApiCallWrapper.Success -> {
-                secretsStorage.saveAccessToken(res.data.accessToken)
-                return SignInModel.Success(userDid = res.data.userDid, userName = userName)
+                // Save auth data
+                appSettings.setAuthCredentials(
+                    AuthCredentials(
+                        userDid = res.data.userDid,
+                        userEmail = userName,
+                        accessToken = res.data.accessToken,
+                        refreshToken = res.data.refreshToken,
+                        accessTokenObtained = System.currentTimeMillis()
+                    )
+                )
+
+                return GenericRes.Success(Unit)
             }
-            is ApiCallWrapper.Fail -> SignInModel.Fail(res.errorType)
+            is ApiCallWrapper.Fail -> {
+                GenericRes.Fail(res.errorType)
+            }
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
-                    400 -> SignInModel.Fail(ErrorType.WRONG_USERNAME_OR_PASSWORD)
-                    404 -> SignInModel.Fail(ErrorType.USER_DOES_NOT_EXIST)
-                    else -> SignInModel.Fail(ErrorType.UNKNOWN_ERROR)
+                    400 -> GenericRes.Fail(ErrorType.WRONG_USERNAME_OR_PASSWORD)
+                    404 -> GenericRes.Fail(ErrorType.USER_DOES_NOT_EXIST)
+                    else -> GenericRes.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
         }
     }
 
-    override suspend fun logOut(accessToken: String): LogOutModel {
+    override suspend fun signInWithRefreshToken(): GenericRes<Unit> {
         val res = apiCallHelper.executeCall {
-            userApiService.logOut(accessToken)
+            userApiService.signInWithRefreshToken(
+                RefreshTokenRequest(
+                    refreshToken = appSettings.getAuthCredentials().refreshToken
+                )
+            )
         }
 
         return when (res) {
             is ApiCallWrapper.Success -> {
-                secretsStorage.saveAccessToken(null)
-                credentialsCacheDataSource.clearCredentialsCache()
+                // Update access token
+                appSettings.updateAuthCredentials(
+                    accessToken = res.data.accessToken,
+                    accessTokenRefreshedDate = System.currentTimeMillis()
+                )
+                GenericRes.Success(Unit)
+            }
+            is ApiCallWrapper.Fail -> {
+                GenericRes.Fail(res.errorType)
+            }
+            is ApiCallWrapper.HttpError -> {
+                when (res.resultCode) {
+                    // Wrong or expired refresh token
+                    401 -> {
+                        clearUserData()
+                        GenericRes.Fail(ErrorType.AUTH_SESSION_EXPIRED)
+                    }
+                    else -> GenericRes.Fail(ErrorType.UNKNOWN_ERROR)
+                }
+            }
+        }
+    }
+
+    override suspend fun logOut(): LogOutModel {
+        val res = apiCallHelper.executeCall {
+            userApiService.logOut(appSettings.getAuthCredentials().accessToken)
+        }
+
+        return when (res) {
+            is ApiCallWrapper.Success -> {
+                clearUserData()
                 LogOutModel.Success
             }
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
-                    401 -> LogOutModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    401 -> {
+                        // Session already expired
+                        clearUserData()
+                        LogOutModel.Success
+                    }
                     else -> LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
@@ -62,11 +112,8 @@ class LoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun saveAccessToken(accessToken: String?) {
-        secretsStorage.saveAccessToken(accessToken)
-    }
-
-    override fun getAccessToken(): String? {
-        return secretsStorage.getAccessToken()
+    private suspend fun clearUserData() {
+        appSettings.clearSettings()
+        credentialsCacheDataSource.clearCredentialsCache()
     }
 }

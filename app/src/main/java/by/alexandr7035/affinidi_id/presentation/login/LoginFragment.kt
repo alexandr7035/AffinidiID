@@ -17,7 +17,7 @@ import by.alexandr7035.affinidi_id.core.extensions.*
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentLoginBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
-import by.alexandr7035.affinidi_id.domain.model.login.SignInModel
+import by.alexandr7035.affinidi_id.domain.core.GenericRes
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -44,7 +44,7 @@ class LoginFragment : Fragment() {
             binding.userNameField.clearError()
             binding.passwordField.clearError()
 
-            if (chekIfFormIsValid()) {
+            if (checkIfFormIsValid()) {
                 binding.progressView.root.isVisible = true
 
                 val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
@@ -67,19 +67,18 @@ class LoginFragment : Fragment() {
 
 
         viewModel.signInLiveData.observe(viewLifecycleOwner) { response ->
-
             binding.progressView.root.isVisible = false
 
             when (response) {
 
                 // Auth successful
-                is SignInModel.Success -> {
-                    viewModel.saveProfile(userName = response.userName, userDid = response.userDid)
+                is GenericRes.Success -> {
+//                    viewModel.saveProfile(userName = response.userName, userDid = response.userDid)
                     findNavController().navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
                 }
 
                 // Auth failed
-                is SignInModel.Fail -> {
+                is GenericRes.Fail -> {
                     when (response.errorType) {
                         ErrorType.USER_DOES_NOT_EXIST -> {
                             binding.userNameField.error = getString(R.string.error_user_not_found)
@@ -131,7 +130,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun chekIfFormIsValid(): Boolean {
+    private fun checkIfFormIsValid(): Boolean {
 
         var formIsValid = true
 

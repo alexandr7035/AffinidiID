@@ -7,11 +7,10 @@ import javax.inject.Inject
 
 class ChangePasswordUseCase @Inject constructor(
     private val changeProfileRepository: ChangeProfileRepository,
-    private val getAuthStateUseCase: GetAuthStateUseCase
+
 )
 {
     suspend fun execute(changePasswordReqModel: ChangePasswordReqModel): ChangePasswordResModel {
-        val authState = getAuthStateUseCase.execute()
-        return changeProfileRepository.changePassword(changePasswordReqModel, authState)
+        return changeProfileRepository.changePassword(changePasswordReqModel)
     }
 }

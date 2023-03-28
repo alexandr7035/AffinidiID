@@ -9,6 +9,8 @@ import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
 import by.alexandr7035.data.datasource.cloud.api.UserApiService
 import javax.inject.Inject
 
+
+// TODO move logic to other use case
 class AuthCheckRepositoryImpl @Inject constructor(
     private val userApiService: UserApiService,
     private val apiCallHelper: ApiCallHelper
@@ -25,7 +27,7 @@ class AuthCheckRepositoryImpl @Inject constructor(
             is ApiCallWrapper.Fail -> AuthCheckResModel.Fail(res.errorType)
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
-                    401 -> AuthCheckResModel.Fail(ErrorType.AUTHORIZATION_ERROR)
+                    401 -> AuthCheckResModel.Fail(ErrorType.AUTH_SESSION_EXPIRED)
                     else -> AuthCheckResModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }

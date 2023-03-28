@@ -45,7 +45,7 @@ class RegistrationFragment : Fragment() {
         }
 
         binding.signUpBtn.setOnClickListener {
-            if (chekIfFormIsValid()) {
+            if (checkIfFormIsValid()) {
                 binding.progressView.root.isVisible = true
 
                 val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())
@@ -62,7 +62,8 @@ class RegistrationFragment : Fragment() {
                     findNavController()
                         .navigateSafe(
                             RegistrationFragmentDirections.actionRegistrationFragmentToRegistrationConfirmationFragment(
-                                signUpResult.confirmSignUpToken
+                                signUpResult.confirmSignUpToken,
+                                signUpResult.userName
                             )
                         )
                 }
@@ -131,8 +132,6 @@ class RegistrationFragment : Fragment() {
             when (signUpConfirmationResult) {
 
                 is ConfirmSignUpResponseModel.Success -> {
-                    // FIXME handle in models
-                    viewModel.saveProfile(binding.userNameEditText.text.toString(), signUpConfirmationResult.userDid)
                     findNavController().navigateSafe(RegistrationConfirmationFragmentDirections.actionGlobalProfileFragment())
                 }
 
@@ -168,7 +167,7 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    private fun chekIfFormIsValid(): Boolean {
+    private fun checkIfFormIsValid(): Boolean {
         var formIsValid = true
 
         val userName = binding.userNameEditText.text.toString()
