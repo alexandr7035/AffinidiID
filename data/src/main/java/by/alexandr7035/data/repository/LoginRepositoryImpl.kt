@@ -78,7 +78,10 @@ class LoginRepositoryImpl @Inject constructor(
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
                     // Wrong or expired refresh token
-                    401 -> GenericRes.Fail(ErrorType.AUTH_SESSION_EXPIRED)
+                    401 -> {
+                        clearUserData()
+                        GenericRes.Fail(ErrorType.AUTH_SESSION_EXPIRED)
+                    }
                     else -> GenericRes.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
