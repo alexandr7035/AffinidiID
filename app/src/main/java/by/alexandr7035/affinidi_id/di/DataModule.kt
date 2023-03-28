@@ -50,25 +50,17 @@ object DataModule {
     @Provides
     @Singleton
     fun provideHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor())
-            .addInterceptor(ErrorInterceptor())
-            .addInterceptor(NullBodyHandlerInterceptor())
-            .addInterceptor(HttpLoggingInterceptor().apply {
+        return OkHttpClient.Builder().addInterceptor(AuthInterceptor()).addInterceptor(ErrorInterceptor())
+            .addInterceptor(NullBodyHandlerInterceptor()).addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
-            })
-            .retryOnConnectionFailure(false)
-            .build()
+            }).retryOnConnectionFailure(false).build()
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(httpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://cloud-wallet-api.prod.affinity-project.org/")
-            .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        return Retrofit.Builder().baseUrl("https://cloud-wallet-api.prod.affinity-project.org/").client(httpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
     @Provides
@@ -106,17 +98,16 @@ object DataModule {
     fun provideLoginRepository(
         userApiService: UserApiService,
         apiCallHelper: ApiCallHelper,
-        appSettings: AppSettings
+        appSettings: AppSettings,
+        credentialsCacheDataSource: CredentialsCacheDataSource
     ): LoginRepository {
-        return LoginRepositoryImpl(userApiService, apiCallHelper, appSettings)
+        return LoginRepositoryImpl(userApiService, apiCallHelper, appSettings, credentialsCacheDataSource)
     }
 
     @Provides
     @Singleton
     fun provideRegistrationRepository(
-        userApiService: UserApiService,
-        apiCallHelper: ApiCallHelper,
-        appSettings: AppSettings
+        userApiService: UserApiService, apiCallHelper: ApiCallHelper, appSettings: AppSettings
     ): RegistrationRepository {
         return RegistrationRepositoryImpl(userApiService, apiCallHelper, appSettings)
     }
@@ -130,9 +121,7 @@ object DataModule {
     @Provides
     @Singleton
     fun provideChangeProfileRepository(
-        userApiService: UserApiService,
-        apiCallHelper: ApiCallHelper,
-        appSettings: AppSettings
+        userApiService: UserApiService, apiCallHelper: ApiCallHelper, appSettings: AppSettings
     ): ChangeProfileRepository {
         return ChangeProfileRepositoryImpl(userApiService, apiCallHelper, appSettings)
     }
@@ -146,9 +135,7 @@ object DataModule {
     @Provides
     @Singleton
     fun provideVCIssuanceHelper(
-        credentialsApiService: CredentialsApiService,
-        credentialSubjectCaster: CredentialSubjectCaster,
-        appSettings: AppSettings
+        credentialsApiService: CredentialsApiService, credentialSubjectCaster: CredentialSubjectCaster, appSettings: AppSettings
     ): VCIssuanceHelper {
         return VCIssuanceHelperImpl(credentialsApiService, credentialSubjectCaster, appSettings)
     }
@@ -156,9 +143,7 @@ object DataModule {
     @Provides
     @Singleton
     fun provideCredentialsCloudDataSource(
-        credentialsApiService: CredentialsApiService,
-        apiCallHelper: ApiCallHelper,
-        appSettings: AppSettings
+        credentialsApiService: CredentialsApiService, apiCallHelper: ApiCallHelper, appSettings: AppSettings
     ): CredentialsCloudDataSource {
         return CredentialsCloudDataSourceImpl(credentialsApiService, apiCallHelper, appSettings)
     }
@@ -233,10 +218,7 @@ object DataModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): CacheDatabase {
-        return Room
-            .databaseBuilder(context, CacheDatabase::class.java, "cache.db")
-            .fallbackToDestructiveMigration()
-            .build()
+        return Room.databaseBuilder(context, CacheDatabase::class.java, "cache.db").fallbackToDestructiveMigration().build()
     }
 
     @Provides

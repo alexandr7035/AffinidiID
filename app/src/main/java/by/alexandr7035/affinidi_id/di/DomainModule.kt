@@ -33,10 +33,9 @@ object DomainModule {
 
     @Provides
     fun provideLogOutUseCase(
-        loginRepository: LoginRepository,
-        setAppLockedWithBiometricsUseCase: by.alexandr7035.affinidi_id.domain.usecase.applock.SetAppLockedWithBiometricsUseCase
+        loginRepository: LoginRepository
     ): LogOutUseCase {
-        return LogOutUseCase(loginRepository, setAppLockedWithBiometricsUseCase)
+        return LogOutUseCase(loginRepository)
     }
 
     @Provides

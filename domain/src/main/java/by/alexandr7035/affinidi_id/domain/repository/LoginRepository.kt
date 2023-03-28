@@ -11,5 +11,5 @@ interface LoginRepository {
 
     suspend fun signInWithRefreshToken(): GenericRes<Unit>
 
-    suspend fun logOut(accessToken: String): LogOutModel
+    suspend fun logOut(): LogOutModel
 }

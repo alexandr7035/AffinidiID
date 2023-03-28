@@ -6,6 +6,7 @@ import by.alexandr7035.affinidi_id.domain.model.login.AuthCredentials
 import by.alexandr7035.affinidi_id.domain.model.login.LogOutModel
 import by.alexandr7035.affinidi_id.domain.repository.AppSettings
 import by.alexandr7035.affinidi_id.domain.repository.LoginRepository
+import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
 import by.alexandr7035.data.datasource.cloud.ApiCallWrapper
 import by.alexandr7035.data.datasource.cloud.api.UserApiService
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class LoginRepositoryImpl @Inject constructor(
     private val userApiService: UserApiService,
     private val apiCallHelper: ApiCallHelper,
-    private val appSettings: AppSettings
+    private val appSettings: AppSettings,
+    private val credentialsCacheDataSource: CredentialsCacheDataSource
 ) : LoginRepository {
 
     override suspend fun signIn(userName: String, password: String): GenericRes<Unit> {
@@ -83,25 +85,32 @@ class LoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun logOut(accessToken: String): LogOutModel {
+    override suspend fun logOut(): LogOutModel {
         val res = apiCallHelper.executeCall {
-            userApiService.logOut(accessToken)
+            userApiService.logOut(appSettings.getAuthCredentials().accessToken)
         }
 
         return when (res) {
             is ApiCallWrapper.Success -> {
-                // TODO clear use case
-//                secretsStorage.saveAccessToken(null)
-//                credentialsCacheDataSource.clearCredentialsCache()
+                clearUserData()
                 LogOutModel.Success
             }
             is ApiCallWrapper.HttpError -> {
                 when (res.resultCode) {
-                    401 -> LogOutModel.Fail(ErrorType.AUTH_SESSION_EXPIRED)
+                    401 -> {
+                        // Session already expired
+                        clearUserData()
+                        LogOutModel.Success
+                    }
                     else -> LogOutModel.Fail(ErrorType.UNKNOWN_ERROR)
                 }
             }
             is ApiCallWrapper.Fail -> LogOutModel.Fail(res.errorType)
         }
+    }
+
+    private suspend fun clearUserData() {
+        appSettings.clearSettings()
+        credentialsCacheDataSource.clearCredentialsCache()
     }
 }
