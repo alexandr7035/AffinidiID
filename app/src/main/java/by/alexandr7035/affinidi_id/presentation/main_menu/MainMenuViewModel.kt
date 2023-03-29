@@ -23,14 +23,12 @@ class MainMenuViewModel @Inject constructor(
     private val _biometricsAvailableStatusLiveData = MutableLiveData<Int>()
     val biometricsAvailableStatusLiveData = _biometricsAvailableStatusLiveData
 
-    private val biometricsHelper = BiometricsHelper()
-
     fun init() {
         userProfileLiveData.value = getProfileUseCase.execute()
     }
 
     fun checkBiometricAvailability(context: Context) {
-        val res = biometricsHelper.checkIfBiometricsAvailable(context)
+        val res = BiometricsHelper.checkIfBiometricsAvailable(context)
         biometricsAvailableStatusLiveData.value = res
     }
 

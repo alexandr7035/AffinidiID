@@ -67,12 +67,18 @@ class MainActivity : AppCompatActivity() {
             when (authCheckResult) {
                 is GenericRes.Success -> {
                     // Means token did not expired
-                    navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
+                    checkBiometricAuth()
                 }
 
                 // When fail, it depends.
                 is GenericRes.Fail -> {
                     when (authCheckResult.errorType) {
+                        // No connection with the internet
+                        // But we can let the user inside as some of his data is cached
+                        ErrorType.FAILED_CONNECTION -> {
+                            checkBiometricAuth()
+                        }
+
                         // User is not logged in
                         ErrorType.NOT_AUTHORIZED -> {
                             navController.navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
@@ -82,24 +88,17 @@ class MainActivity : AppCompatActivity() {
                         // Stay on login fragment and show error message
                         ErrorType.AUTH_SESSION_EXPIRED -> {
                             binding.root.showSnackBar(
-                                getString(R.string.error_session_expired),
-                                SnackBarMode.Negative,
-                                Snackbar.LENGTH_LONG
+                                getString(R.string.error_session_expired), SnackBarMode.Negative, Snackbar.LENGTH_LONG
                             )
 
                             navController.navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
                         }
 
-                        // No connection with the internet
-                        // But we can let the user inside as some of his data is cached
-                        ErrorType.FAILED_CONNECTION -> {}
-
                         // Unknown error. Show corresponding fragment
                         else -> {
                             navController.navigateSafe(
-                                LoginFragmentDirections.actionGlobalErrorFragment(
-                                    getString(R.string.error_unknown_title),
-                                    getString(R.string.error_unknown)
+                                ProfileFragmentDirections.actionGlobalErrorFragment(
+                                    getString(R.string.error_unknown_title), getString(R.string.error_unknown)
                                 )
                             )
                         }
@@ -115,7 +114,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+//        checkBiometricAuth()
+    }
 
+    private fun checkBiometricAuth() {
         if (viewModel.checkAppLockedWithBiometrics()) {
             if (navController.currentDestination?.id != R.id.biometricsLockFragment) {
                 navController.navigateSafe(MainActivityDirections.actionGlobalBiometricsLockFragment())
