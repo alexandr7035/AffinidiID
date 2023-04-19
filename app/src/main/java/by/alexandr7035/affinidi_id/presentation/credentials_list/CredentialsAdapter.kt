@@ -1,9 +1,9 @@
 package by.alexandr7035.affinidi_id.presentation.credentials_list
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import by.alexandr7035.affinidi_id.R
@@ -46,10 +46,11 @@ class CredentialsAdapter(private val credentialClickCallback: (credentialId: Str
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setItems(items: List<CredentialCardUi>) {
+        val diffUtilCallback = VCsDiffUtilCallback(oldList = this.items, newList = items)
+        val diff = DiffUtil.calculateDiff(diffUtilCallback)
         this.items = items
-        notifyDataSetChanged()
+        diff.dispatchUpdatesTo(this)
     }
 
     abstract class CredentialViewHolder(open val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
