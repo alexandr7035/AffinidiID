@@ -6,4 +6,5 @@
     <string name="holder_did_template">Holder: %1$s</string>
 
     <string name="error_auth_failed_template">Authentication failed: %1$s</string>
+    <string name="no_credentials_filtered_stub_text">You have no %1$s credentials in the wallet</string>
 </resources>

@@ -13,37 +13,14 @@ class CredentialsListMapperImpl @Inject constructor(
     private val errorTypeMapper: ErrorTypeMapper
 ) : CredentialsListMapper {
 
-    override fun map(domainCredentials: CredentialsListResModel, credentialFilters: CredentialFilters): CredentialListUiModel {
+    override fun map(domainCredentials: CredentialsListResModel): CredentialListUiModel {
         return when (domainCredentials) {
             is CredentialsListResModel.Success -> {
-
-                val uiCredentialsUnfiltered: List<CredentialCardUi> = domainCredentials.credentials.map {
+                val vcs = domainCredentials.credentials.map {
                     credentialCardMapper.map(it)
                 }
 
-                val uiCredentialsFiltered = when (credentialFilters) {
-                    CredentialFilters.All -> {
-                        uiCredentialsUnfiltered
-                    }
-
-                    CredentialFilters.Active -> {
-                        uiCredentialsUnfiltered.filter {
-                            it.credentialStatusUi.domainStatus == CredentialStatus.Active
-                        }
-                    }
-
-                    CredentialFilters.Expired -> {
-                        uiCredentialsUnfiltered.filter {
-                            it.credentialStatusUi.domainStatus == CredentialStatus.Expired
-                        }
-                    }
-                }
-
-                if (uiCredentialsFiltered.isEmpty()) {
-                    CredentialListUiModel.NoCredentials
-                } else {
-                    CredentialListUiModel.Success(uiCredentialsFiltered)
-                }
+                return CredentialListUiModel.Success(vcs)
             }
 
             is CredentialsListResModel.Fail -> {

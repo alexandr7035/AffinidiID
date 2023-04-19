@@ -6,6 +6,5 @@ import by.alexandr7035.affinidi_id.presentation.credentials_list.filters.Credent
 interface CredentialsListMapper {
     fun map(
         domainCredentials: CredentialsListResModel,
-        credentialFilters: CredentialFilters
     ): CredentialListUiModel
 }
