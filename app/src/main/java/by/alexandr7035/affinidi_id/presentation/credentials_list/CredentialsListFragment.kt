@@ -16,7 +16,6 @@ import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialsListBinding
 import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
-import by.alexandr7035.affinidi_id.presentation.credentials_list.filters.CredentialFilters
 import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialListUiModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayout
@@ -37,8 +36,6 @@ class CredentialsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Timber.debug("onViewCreated creds list")
 
         val adapter = CredentialsAdapter(credentialClickCallback = { credentialId ->
             findNavController().navigateSafe(
@@ -143,6 +140,7 @@ class CredentialsListFragment : Fragment() {
         viewModel.load()
     }
 
+    // TODO consider finding more flexible approach to filters (on data layer)
     private fun getFiltersForTab(tabPosition: Int): CredentialStatus? {
         return when (tabPosition) {
             0 -> null
