@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">AffinidiID</string>
     <string name="affinidi_id">AffinidiID</string>
+    <string name="copyright_note">This application includes software developed by Affinidi Pte Ltd</string>
+    <string name="copyright_span">Affinidi Pte Ltd</string>
+    <string name="copyright_site">https://www.affinidi.com/</string>
+
     <string name="app_name_with_version">AffinidiID v%1$s</string>
     <string name="create_id">Create ID</string>
     <string name="sign_up">Sign Up</string>
