@@ -143,9 +143,9 @@ class CredentialsListFragment : Fragment() {
     // TODO consider finding more flexible approach to filters (on data layer)
     private fun getFiltersForTab(tabPosition: Int): CredentialStatus? {
         return when (tabPosition) {
-            0 -> null
-            1 -> CredentialStatus.Active
-            2 -> CredentialStatus.Expired
+            0 -> CredentialStatus.Active
+            1 -> CredentialStatus.Expired
+            2 -> null
             else -> throw RuntimeException("No such tab implemented")
         }
     }
