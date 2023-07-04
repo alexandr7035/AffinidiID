@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.BuildConfig
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.*
+import by.alexandr7035.affinidi_id.core.extensions.debug
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
+import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
+import by.alexandr7035.affinidi_id.core.extensions.svgLoader
 import by.alexandr7035.affinidi_id.databinding.FragmentMainMenuBinding
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -24,7 +27,6 @@ import coil.load
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.util.concurrent.Executor
 
 @AndroidEntryPoint
 class MainMenuFragment : Fragment() {

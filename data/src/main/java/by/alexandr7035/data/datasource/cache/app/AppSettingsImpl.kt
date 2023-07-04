@@ -35,7 +35,7 @@ class AppSettingsImpl(
         // Did contains ":" symbol which can't be used in urls
         // So split did and get last part
         // Also take last 25 symbols as elem DID may be extremely long
-        val userDid = prefs.pull<String>(key = SettingsKeys.USER_DID.name, fallback = "")
+        val userDid = prefs.pull(key = SettingsKeys.USER_DID.name, fallback = "")
         val uniqueString = userDid.split(":").last().takeLast(25)
         val avatartUrl = avatarsHelper.getImageUrl(DicebearImageType.AVATAR_IDENTICON, uniqueString, 1)
 

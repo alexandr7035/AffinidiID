@@ -15,7 +15,6 @@ import by.alexandr7035.affinidi_id.databinding.ActivityMainBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.core.GenericRes
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
-import by.alexandr7035.affinidi_id.presentation.login.LoginFragmentDirections
 import by.alexandr7035.affinidi_id.presentation.profile.ProfileFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

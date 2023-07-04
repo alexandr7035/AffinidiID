@@ -5,7 +5,6 @@ import by.alexandr7035.affinidi_id.domain.model.credentials.check_if_have_vc.Che
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialReqModel
 import by.alexandr7035.affinidi_id.domain.model.credentials.issue_vc.IssueCredentialResModel
 import by.alexandr7035.affinidi_id.domain.repository.IssueCredentialsRepository
-import by.alexandr7035.affinidi_id.domain.usecase.user.CheckIfAuthorizedUseCase
 import javax.inject.Inject
 
 class IssueCredentialUseCase @Inject constructor(
