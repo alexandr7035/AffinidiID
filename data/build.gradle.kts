@@ -1,3 +1,5 @@
+val API_KEY: String by project
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -14,7 +16,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("String", "API_KEY", "\"API_KEY\"")
+        buildConfigField("String", "API_KEY", API_KEY)
     }
 
     buildTypes {
