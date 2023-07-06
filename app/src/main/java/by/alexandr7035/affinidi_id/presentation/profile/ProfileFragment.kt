@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.copyToClipboard
+import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.core.extensions.svgLoader
 import by.alexandr7035.affinidi_id.databinding.FragmentProfileBinding
@@ -57,6 +59,13 @@ class ProfileFragment : Fragment() {
             binding.userDidView.copyToClipboard(clipLabel)
 
             binding.root.showSnackBar(clipLabel, SnackBarMode.Neutral, Snackbar.LENGTH_SHORT)
+        }
+
+        binding.scanCredentialBtn.setOnClickListener {
+            findNavController().navigateSafe(
+                ProfileFragmentDirections
+                    .actionProfileFragmentToScanCredentialFragment()
+            )
         }
 
     }
