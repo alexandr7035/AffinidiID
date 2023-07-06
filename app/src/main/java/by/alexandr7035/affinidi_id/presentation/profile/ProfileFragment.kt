@@ -1,9 +1,11 @@
 package by.alexandr7035.affinidi_id.presentation.profile
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,6 +19,7 @@ import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.google.android.material.snackbar.Snackbar
+import com.permissionx.guolindev.PermissionX
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,11 +65,41 @@ class ProfileFragment : Fragment() {
         }
 
         binding.scanCredentialBtn.setOnClickListener {
-            findNavController().navigateSafe(
-                ProfileFragmentDirections
-                    .actionProfileFragmentToScanCredentialFragment()
-            )
+            processScanBtn()
         }
+    }
 
+    private fun processScanBtn() {
+        PermissionX.init(requireActivity())
+            .permissions(Manifest.permission.CAMERA)
+            .onExplainRequestReason { scope, deniedList ->
+                scope.showRequestReasonDialog(
+                    deniedList,
+                    getString(R.string.permission_camera_explanation),
+                    getString(R.string.ok),
+                    getString(R.string.cancel)
+                )
+            }
+            .onForwardToSettings { scope, deniedList ->
+                scope.showForwardToSettingsDialog(
+                    deniedList,
+                    getString(R.string.permission_camera_explanation_denied),
+                    getString(R.string.ok),
+                    getString(R.string.cancel)
+                )
+            }
+            .request { allGranted, grantedList, deniedList ->
+                if (allGranted) {
+                    findNavController().navigateSafe(
+                        ProfileFragmentDirections.actionProfileFragmentToScanCredentialFragment()
+                    )
+                } else {
+                    binding.root.showSnackBar(
+                        getString(R.string.permission_denied),
+                        snackBarLength = Snackbar.LENGTH_SHORT,
+                        snackBarMode = SnackBarMode.Negative
+                    )
+                }
+            }
     }
 }

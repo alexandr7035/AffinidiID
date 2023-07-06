@@ -11,6 +11,7 @@
     <string name="sign_in">Sign In</string>
     <string name="menu">Menu</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 
     <string name="enter_your_login">Enter your login</string>
     <string name="set_password">Set password</string>
@@ -105,7 +106,8 @@
     <string name="scanned_credential">Scanned credential</string>
 
     <string name="permission_denied">Permission denied</string>
-    <string name="permission_camera_explanation">Can\'t use camera: permission denied. To scan the credential QR code go to the application settings and allow camera access.</string>
+    <string name="permission_camera_explanation_denied">Can\'t use camera: permission denied. Please, go to the application settings and allow camera access.</string>
+    <string name="permission_camera_explanation">The app uses camera to scan QR codes. Please, provide the permission</string>
     <string name="open_app_settings">Open app settings</string>
     <string name="scan_the_qr_code_of_verifiable_credential">Scan to verify credentiall</string>
     <string name="credential_scan_error">Failed to obtain credential. Please, ensure your are scanning the right QR code. Also check your internet connection</string>

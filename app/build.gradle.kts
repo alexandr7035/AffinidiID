@@ -121,4 +121,7 @@ dependencies {
 
     // Kotlin SharedPrefs wrapper
     implementation("com.github.cioccarellia:ksprefs:2.3.2")
+
+    // Permissions lib
+    implementation("com.guolindev.permissionx:permissionx:1.7.1")
 }
