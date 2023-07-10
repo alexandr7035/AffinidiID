@@ -96,7 +96,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     // Navigation
-    val navVersion = "2.5.3"
+    val navVersion = "2.6.0"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
@@ -121,4 +121,7 @@ dependencies {
 
     // Kotlin SharedPrefs wrapper
     implementation("com.github.cioccarellia:ksprefs:2.3.2")
+
+    // Permissions lib
+    implementation("com.guolindev.permissionx:permissionx:1.7.1")
 }

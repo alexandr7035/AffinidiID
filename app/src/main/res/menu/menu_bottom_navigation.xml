@@ -10,11 +10,6 @@
         android:icon="@drawable/ic_credential" />
 
     <item
-        android:id="@+id/scanCredentialQrCodeFragment"
-        android:title="@string/verify"
-        android:icon="@drawable/ic_scan" />
-
-    <item
         android:id="@+id/mainMenuFragment"
         android:title="@string/menu"
         android:icon="@drawable/ic_menu" />
