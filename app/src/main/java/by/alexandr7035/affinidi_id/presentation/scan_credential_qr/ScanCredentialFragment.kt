@@ -1,6 +1,5 @@
 package by.alexandr7035.affinidi_id.presentation.scan_credential_qr
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -8,19 +7,14 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.affinidi_id.R
 import by.alexandr7035.affinidi_id.core.extensions.debug
-import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.setNavigationResult
-import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.core.extensions.vibrate
 import by.alexandr7035.affinidi_id.databinding.FragmentScanCredentialBinding
-import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
 import by.alexandr7035.affinidi_id.presentation.common.VibrationMode
-import by.alexandr7035.affinidi_id.presentation.scan_credential_qr.ScanCredentialQrCodeFragmentDirections
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
 

@@ -231,15 +231,6 @@
             app:argType="string" />
     </dialog>
     <fragment
-        android:id="@+id/scanCredentialQrCodeFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.scan_credential_qr.ScanCredentialQrCodeFragment"
-        android:label="fragment_scan_credential_qr_code"
-        tools:layout="@layout/fragment_scan_credential_qr_code" >
-        <action
-            android:id="@+id/action_scanCredentialQrCodeFragment_to_scannedCredentialFragment"
-            app:destination="@id/scannedCredentialFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/scannedCredentialFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.credential_details.scanned_credential.ScannedCredentialFragment"
         android:label="fragment_scanned_credential"

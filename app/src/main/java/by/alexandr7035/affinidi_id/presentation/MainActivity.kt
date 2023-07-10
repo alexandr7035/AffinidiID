@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationDestinations = listOf(
             R.id.profileFragment,
             R.id.credentialsListFragment,
-            R.id.scanCredentialQrCodeFragment,
             R.id.mainMenuFragment,
             R.id.logoutFragment
         )
