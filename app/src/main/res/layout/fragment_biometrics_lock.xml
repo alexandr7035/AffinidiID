@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
-        android:text="Welcome to SSI ID"
+        tools:text="@string/app_welcome"
         android:textColor="?attr/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -35,7 +35,7 @@
     <Button
         android:id="@+id/unlockBtn"
         style="@style/PrimaryButton"
-        android:text="Unlock app"
+        android:text="@string/unlock_app"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

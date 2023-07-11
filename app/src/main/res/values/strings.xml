@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AffinidiID</string>
     <string name="affinidi_id">AffinidiID</string>
+    <string name="app_welcome">Welcome to AffinidiID</string>
     <string name="copyright_note">This application includes software developed by Affinidi Pte Ltd</string>
     <string name="copyright_span">Affinidi Pte Ltd</string>
     <string name="copyright_site">https://www.affinidi.com/</string>
@@ -127,4 +128,5 @@
     <string name="biometric_lock_disabled">Lock with biometrics disabled</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="unlock_app">Unlock app</string>
 </resources>
