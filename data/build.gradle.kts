@@ -1,5 +1,3 @@
-val API_KEY: String by project
-
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -12,12 +10,9 @@ android {
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        buildConfigField("String", "API_KEY", API_KEY)
     }
 
     buildTypes {
