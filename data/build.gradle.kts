@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.klaxit.hiddensecrets")
 }
 
 android {
@@ -34,6 +35,13 @@ android {
     }
 
     namespace = "by.alexandr7035.data"
+
+    // Enable NDK build
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+        }
+    }
 }
 
 dependencies {
