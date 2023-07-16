@@ -1,9 +1,8 @@
-val API_KEY: String by project
-
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.klaxit.hiddensecrets")
 }
 
 android {
@@ -11,12 +10,9 @@ android {
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        buildConfigField("String", "API_KEY", API_KEY)
     }
 
     buildTypes {
@@ -34,6 +30,13 @@ android {
     }
 
     namespace = "by.alexandr7035.data"
+
+    // Enable NDK build
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+        }
+    }
 }
 
 dependencies {

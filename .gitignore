@@ -3,6 +3,11 @@ app/release
 keystore.properties
 gradle.properties
 
+# Secrets
+credentials.properties
+data/src/main/cpp/secrets.cpp
+data/src/main/java/by/alexandr7035/data/secrets/Secrets.kt
+
 *.iml
 .gradle
 /local.properties
