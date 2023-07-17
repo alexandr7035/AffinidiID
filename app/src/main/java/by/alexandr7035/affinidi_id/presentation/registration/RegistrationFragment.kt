@@ -3,9 +3,7 @@ package by.alexandr7035.affinidi_id.presentation.registration
 import android.graphics.Color
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -17,25 +15,21 @@ import by.alexandr7035.affinidi_id.core.extensions.clearError
 import by.alexandr7035.affinidi_id.core.extensions.getClickableSpannable
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showErrorDialog
-import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.alexandr7035.affinidi_id.databinding.FragmentRegistrationBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
 import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import hideKeyboard
+import java.util.Locale
 
 @AndroidEntryPoint
-class RegistrationFragment : Fragment() {
+class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
     private val binding by viewBinding(FragmentRegistrationBinding::bind)
     private val viewModel by navGraphViewModels<RegistrationViewModel>(R.id.signUpGraph) { defaultViewModelProviderFactory }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registration, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,6 +40,8 @@ class RegistrationFragment : Fragment() {
 
         binding.signUpBtn.setOnClickListener {
             if (checkIfFormIsValid()) {
+                hideKeyboard()
+
                 binding.progressView.root.isVisible = true
 
                 val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())

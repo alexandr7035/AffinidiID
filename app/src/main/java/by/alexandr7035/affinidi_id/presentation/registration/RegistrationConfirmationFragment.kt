@@ -14,6 +14,7 @@ import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseMode
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import hideKeyboard
 
 
 @AndroidEntryPoint
@@ -28,6 +29,8 @@ class RegistrationConfirmationFragment : BottomSheetDialogFragment(R.layout.frag
         binding.confirmBtn.setOnClickListener {
 
             if (checkIfFormIsValid()) {
+                hideKeyboard()
+
                 binding.progressView.root.isVisible = true
 
                 viewModel.confirmSignUp(

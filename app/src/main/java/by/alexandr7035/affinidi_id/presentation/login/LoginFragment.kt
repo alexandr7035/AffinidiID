@@ -25,6 +25,7 @@ import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidatio
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import hideKeyboard
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -43,6 +44,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             binding.passwordField.clearError()
 
             if (checkIfFormIsValid()) {
+                hideKeyboard()
+
                 binding.progressView.root.isVisible = true
 
                 val username = binding.userNameEditText.text.toString().lowercase(Locale.getDefault())

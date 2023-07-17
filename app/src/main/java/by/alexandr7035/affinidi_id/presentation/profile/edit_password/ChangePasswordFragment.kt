@@ -19,6 +19,7 @@ import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidatio
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import hideKeyboard
 
 
 @AndroidEntryPoint
@@ -49,6 +50,8 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
 
         binding.confirmBtn.setOnClickListener {
             if (checkIfFormIsValid()) {
+                hideKeyboard()
+
                 binding.progressView.root.isVisible = true
 
                 viewModel.changePassword(

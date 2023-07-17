@@ -1,9 +1,7 @@
 package by.alexandr7035.affinidi_id.presentation.reset_password
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,17 +14,13 @@ import by.alexandr7035.affinidi_id.databinding.FragmentResetPasswordSetPasswordB
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import hideKeyboard
 
 @AndroidEntryPoint
-class ResetPasswordSetPasswordFragment : Fragment() {
+class ResetPasswordSetPasswordFragment : Fragment(R.layout.fragment_reset_password_set_password) {
     private val binding by viewBinding(FragmentResetPasswordSetPasswordBinding::bind)
     private val viewModel by navGraphViewModels<ResetPasswordViewModel>(R.id.resetPasswordGraph) { defaultViewModelProviderFactory }
     private val safeArgs by navArgs<ResetPasswordSetPasswordFragmentArgs>()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reset_password_set_password, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,7 +38,8 @@ class ResetPasswordSetPasswordFragment : Fragment() {
         }
 
         binding.continueBtn.setOnClickListener {
-            if (chekIfFormIsValid()) {
+            if (checkIfFormIsValid()) {
+                hideKeyboard()
 
                 findNavController().navigateSafe(
                     ResetPasswordSetPasswordFragmentDirections
@@ -62,7 +57,7 @@ class ResetPasswordSetPasswordFragment : Fragment() {
     }
 
 
-    private fun chekIfFormIsValid(): Boolean {
+    private fun checkIfFormIsValid(): Boolean {
         var formIsValid = true
 
         val password = binding.passwordSetEditText.text.toString()
