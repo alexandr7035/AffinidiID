@@ -28,6 +28,7 @@ import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCasterImpl
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import by.alexandr7035.data.repository.*
+import com.cioccarellia.ksprefs.BuildConfig
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
@@ -50,10 +51,20 @@ object DataModule {
     @Provides
     @Singleton
     fun provideHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor(AuthInterceptor()).addInterceptor(ErrorInterceptor())
-            .addInterceptor(NullBodyHandlerInterceptor()).addInterceptor(HttpLoggingInterceptor().apply {
+
+        val builder = OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor())
+            .addInterceptor(ErrorInterceptor())
+            .addInterceptor(NullBodyHandlerInterceptor())
+            .retryOnConnectionFailure(false)
+
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
-            }).retryOnConnectionFailure(false).build()
+            })
+        }
+
+        return builder.build()
     }
 
     @Provides
