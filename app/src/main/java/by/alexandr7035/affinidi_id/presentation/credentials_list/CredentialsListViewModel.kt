@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.domain.usecase.credentials.GetCredentialsListUseCase
-import by.alexandr7035.affinidi_id.presentation.credentials_list.filters.CredentialFilters
 import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialListUiModel
 import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialsListMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,11 +21,11 @@ class CredentialsListViewModel @Inject constructor(
 
     private val credentialsLiveData = MutableLiveData<CredentialListUiModel>()
 
-    fun load(credentialFilters: CredentialFilters) {
+    fun load() {
         viewModelScope.launch(Dispatchers.IO) {
             getCredentialsListUseCase.execute().collect { res ->
-                // Map credentials to ui. Apply filters
-                val credentialListUiModel = mapper.map(res, credentialFilters)
+                // Map credentials to ui
+                val credentialListUiModel = mapper.map(res)
 
                 withContext(Dispatchers.Main) {
                     credentialsLiveData.value = credentialListUiModel
@@ -38,5 +37,4 @@ class CredentialsListViewModel @Inject constructor(
     fun getCredentialsLiveData(): LiveData<CredentialListUiModel> {
         return credentialsLiveData
     }
-
 }

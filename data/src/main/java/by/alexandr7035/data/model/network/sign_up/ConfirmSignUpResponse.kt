@@ -6,5 +6,7 @@ data class ConfirmSignUpResponse(
     @SerializedName("accessToken")
     val accessToken: String,
     @SerializedName("did")
-    val userDid: String
+    val userDid: String,
+    @SerializedName("refreshToken")
+    val refreshToken: String
 )

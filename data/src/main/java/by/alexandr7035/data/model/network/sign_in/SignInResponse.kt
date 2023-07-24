@@ -7,4 +7,6 @@ data class SignInResponse(
     val accessToken: String,
     @SerializedName("did")
     val userDid: String,
+    @SerializedName("refreshToken")
+    val refreshToken: String
 )

@@ -3,16 +3,14 @@ package by.alexandr7035.affinidi_id.presentation.registration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.alexandr7035.affinidi_id.core.livedata.SingleLiveEvent
-import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelper
-import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
-import by.alexandr7035.affinidi_id.domain.model.profile.SaveProfileModel
 import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.ConfirmSignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpRequestModel
 import by.alexandr7035.affinidi_id.domain.model.signup.SignUpResponseModel
 import by.alexandr7035.affinidi_id.domain.usecase.user.ConfirmRegisterWithEmailUseCase
 import by.alexandr7035.affinidi_id.domain.usecase.user.RegisterWithEmailUseCase
-import by.alexandr7035.affinidi_id.domain.usecase.user.SaveProfileUseCase
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelper
+import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +21,6 @@ import javax.inject.Inject
 class RegistrationViewModel @Inject constructor(
     private val registerWithEmailUseCase: RegisterWithEmailUseCase,
     private val confirmRegisterWithEmailUseCase: ConfirmRegisterWithEmailUseCase,
-    private val saveProfileUseCase: SaveProfileUseCase,
     private val inputValidationHelper: InputValidationHelper
 ): ViewModel() {
 
@@ -40,18 +37,18 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    fun confirmSignUp(confirmationToken: String, confirmationCode: String) {
+    fun confirmSignUp(userName: String, confirmationToken: String, confirmationCode: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = confirmRegisterWithEmailUseCase.execute(ConfirmSignUpRequestModel(confirmationToken, confirmationCode))
+            val result = confirmRegisterWithEmailUseCase.execute(ConfirmSignUpRequestModel(
+                userName = userName,
+                confirmationToken = confirmationToken,
+                confirmationCode = confirmationCode
+            ))
 
             withContext(Dispatchers.Main) {
                 signUpConfirmationLiveData.value = result
             }
         }
-    }
-
-    fun saveProfile(userName: String, userDid: String) {
-        saveProfileUseCase.execute(SaveProfileModel(userName, userDid))
     }
 
     fun validateUserName(userName: String): InputValidationResult {

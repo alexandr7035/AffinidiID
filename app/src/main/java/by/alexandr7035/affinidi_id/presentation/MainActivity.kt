@@ -9,17 +9,15 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.core.extensions.showSnackBar
 import by.alexandr7035.affinidi_id.databinding.ActivityMainBinding
 import by.alexandr7035.affinidi_id.domain.core.ErrorType
-import by.alexandr7035.affinidi_id.domain.model.auth_check.AuthCheckResModel
+import by.alexandr7035.affinidi_id.domain.core.GenericRes
 import by.alexandr7035.affinidi_id.presentation.common.SnackBarMode
-import by.alexandr7035.affinidi_id.presentation.login.LoginFragmentDirections
+import by.alexandr7035.affinidi_id.presentation.profile.ProfileFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -51,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationDestinations = listOf(
             R.id.profileFragment,
             R.id.credentialsListFragment,
-            R.id.scanCredentialQrCodeFragment,
             R.id.mainMenuFragment,
             R.id.logoutFragment
         )
@@ -62,46 +59,44 @@ class MainActivity : AppCompatActivity() {
         }
 
         // navigateSafe method allow us not check current destination
-        viewModel.getAuthCheckLiveData().observe(this) { authCheckResult ->
+        viewModel.getAuthCheckObservable().observe(this) { authCheckResult ->
             binding.progressView.root.isVisible = false
 
             when (authCheckResult) {
-                is AuthCheckResModel.Success -> {
-                    Timber.debug("AUTH_CHECK success")
+                is GenericRes.Success -> {
                     // Means token did not expired
-                    navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
+                    checkBiometricAuth()
                 }
 
                 // When fail, it depends.
-                is AuthCheckResModel.Fail -> {
+                is GenericRes.Fail -> {
                     when (authCheckResult.errorType) {
-                        // That means token has expired
-                        // Stay on login fragment and show error message
-                        ErrorType.AUTHORIZATION_ERROR -> {
-                            Timber.debug("AUTH_CHECK expired")
-                            binding.root.showSnackBar(
-                                getString(R.string.eror_auth),
-                                SnackBarMode.Negative,
-                                Snackbar.LENGTH_LONG
-                            )
-
-                            // Go to login fragment (if not here)
-                            navController.navigateSafe(MainActivityDirections.actionGlobalLoginFragment())
-                        }
-
                         // No connection with the internet
                         // But we can let the user inside as some of his data is cached
                         ErrorType.FAILED_CONNECTION -> {
-                            Timber.debug("AUTH_CHECK connection error")
-                            navController.navigateSafe(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
+                            checkBiometricAuth()
+                        }
+
+                        // User is not logged in
+                        ErrorType.NOT_AUTHORIZED -> {
+                            navController.navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
+                        }
+
+                        // That means token has expired
+                        // Stay on login fragment and show error message
+                        ErrorType.AUTH_SESSION_EXPIRED -> {
+                            binding.root.showSnackBar(
+                                getString(R.string.error_session_expired), SnackBarMode.Negative, Snackbar.LENGTH_LONG
+                            )
+
+                            navController.navigateSafe(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
                         }
 
                         // Unknown error. Show corresponding fragment
                         else -> {
                             navController.navigateSafe(
-                                LoginFragmentDirections.actionGlobalErrorFragment(
-                                    getString(R.string.error_unknown_title),
-                                    getString(R.string.error_unknown)
+                                ProfileFragmentDirections.actionGlobalErrorFragment(
+                                    getString(R.string.error_unknown_title), getString(R.string.error_unknown)
                                 )
                             )
                         }
@@ -109,20 +104,22 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.progressView.root.isVisible = true
+        viewModel.checkIfAuthorized()
     }
 
 
     override fun onResume() {
         super.onResume()
-        Timber.debug("AUTH_CHECK activity onResume")
+//        checkBiometricAuth()
+    }
 
-        // Affinidi token expires in 1 hour
-        // So we should check for auth on start
-        // and if token expired show login fragment (or stay if already there)
-        if (viewModel.checkIfPreviouslyAuthorized()) {
-            Timber.debug("AUTH_CHECK start")
-            binding.progressView.root.isVisible = true
-            viewModel.startAuthCheck()
+    private fun checkBiometricAuth() {
+        if (viewModel.checkAppLockedWithBiometrics()) {
+            if (navController.currentDestination?.id != R.id.biometricsLockFragment) {
+                navController.navigateSafe(MainActivityDirections.actionGlobalBiometricsLockFragment())
+            }
         }
     }
 }

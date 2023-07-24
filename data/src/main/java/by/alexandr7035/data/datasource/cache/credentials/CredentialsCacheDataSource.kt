@@ -11,6 +11,4 @@ interface CredentialsCacheDataSource {
     suspend fun saveCredentialsToCache(credentials: DataCredentialsList)
 
     suspend fun clearCredentialsCache()
-
-    suspend fun checkIfHaveCredentialInCache(credentialContextUrl: String): Boolean
 }

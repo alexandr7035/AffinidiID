@@ -12,15 +12,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.affinidi_id.R
-import by.alexandr7035.affinidi_id.core.extensions.debug
 import by.alexandr7035.affinidi_id.core.extensions.navigateSafe
 import by.alexandr7035.affinidi_id.databinding.FragmentCredentialsListBinding
-import by.alexandr7035.affinidi_id.presentation.credentials_list.filters.CredentialFilters
+import by.alexandr7035.affinidi_id.domain.model.credentials.stored_credentials.CredentialStatus
 import by.alexandr7035.affinidi_id.presentation.credentials_list.model.CredentialListUiModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -37,11 +35,10 @@ class CredentialsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Timber.debug("onViewCreated creds list")
-
         val adapter = CredentialsAdapter(credentialClickCallback = { credentialId ->
-            findNavController().navigateSafe(CredentialsListFragmentDirections
-                .actionCredentialsListFragmentToCredentialDetailsFragment(credentialId))
+            findNavController().navigateSafe(
+                CredentialsListFragmentDirections.actionCredentialsListFragmentToCredentialDetailsFragment(credentialId)
+            )
         })
 
 
@@ -51,55 +48,72 @@ class CredentialsListFragment : Fragment() {
 
         // Decoration (spacing) for menu items
         val decoration = DividerItemDecoration(
-            binding.recycler.context,
-            layoutManager.orientation
+            binding.recycler.context, layoutManager.orientation
         )
         ContextCompat.getDrawable(requireContext(), R.drawable.credential_item_bottom_decoration)?.let {
             decoration.setDrawable(it)
         }
         binding.recycler.addItemDecoration(decoration)
 
-        viewModel.getCredentialsLiveData().observe(viewLifecycleOwner) {
+        viewModel.getCredentialsLiveData().observe(viewLifecycleOwner) { vcsRes ->
             // Hide all before state update
             binding.progressView.root.isVisible = false
             binding.recycler.isVisible = false
             binding.noCredentialsStub.root.isVisible = false
             binding.errorView.root.isVisible = false
 
-            when (it) {
+            when (vcsRes) {
                 is CredentialListUiModel.Loading -> {
                     binding.progressView.root.isVisible = true
                 }
 
                 is CredentialListUiModel.Success -> {
                     binding.recycler.isVisible = true
-                    adapter.setItems(it.credentials)
+
+                    val filter = getFiltersForTab(binding.tabLayout.selectedTabPosition)
+                    val filteredVc = if (filter != null) {
+                        vcsRes.credentials.filter {
+                            it.credentialStatusUi.domainStatus === filter
+                        }
+                    } else {
+                        vcsRes.credentials
+                    }
+
+                    if (filteredVc.isEmpty()) {
+                        val type = if (filter == CredentialStatus.Active) "Active" else "Expired"
+
+                        binding.noCredentialsStub.root.text = getString(R.string.no_credentials_filtered_stub_text, type)
+                        binding.noCredentialsStub.root.isVisible = true
+                    }
+
+                    adapter.setItems(filteredVc)
                 }
 
                 is CredentialListUiModel.NoCredentials -> {
+                    binding.noCredentialsStub.root.text = getString(R.string.no_credentials_stub_text)
                     binding.noCredentialsStub.root.isVisible = true
                 }
 
                 is CredentialListUiModel.Fail -> {
                     binding.errorView.root.isVisible = true
 
-                    binding.errorView.errorTitle.text = it.errorUi.title
-                    binding.errorView.errorText.text = it.errorUi.message
+                    binding.errorView.errorTitle.text = vcsRes.errorUi.title
+                    binding.errorView.errorText.text = vcsRes.errorUi.message
                 }
             }
         }
 
         // Initial load
-        loadData(CredentialFilters.All)
+        loadData()
 
         // Retry load
         binding.errorView.retryBtn.setOnClickListener {
-            loadData(CredentialFilters.All)
+            loadData()
         }
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                loadData(getFiltersForTab(tab.position))
+                loadData()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -107,27 +121,29 @@ class CredentialsListFragment : Fragment() {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-                loadData(getFiltersForTab(tab.position))
+                loadData()
             }
         })
 
 
         binding.addCredentialBtn.setOnClickListener {
-            findNavController().navigateSafe(CredentialsListFragmentDirections
-                .actionCredentialsListFragmentToIssueCredentialFragment())
+            findNavController().navigateSafe(
+                CredentialsListFragmentDirections.actionCredentialsListFragmentToIssueCredentialFragment()
+            )
         }
     }
 
-    private fun loadData(credentialFilters: CredentialFilters) {
+    private fun loadData() {
         binding.errorView.root.isVisible = false
-        viewModel.load(credentialFilters)
+        viewModel.load()
     }
 
-    private fun getFiltersForTab(tabPosition: Int): CredentialFilters {
+    // TODO consider finding more flexible approach to filters (on data layer)
+    private fun getFiltersForTab(tabPosition: Int): CredentialStatus? {
         return when (tabPosition) {
-            0 -> CredentialFilters.All
-            1 -> CredentialFilters.Active
-            2 -> CredentialFilters.Expired
+            0 -> CredentialStatus.Active
+            1 -> CredentialStatus.Expired
+            2 -> null
             else -> throw RuntimeException("No such tab implemented")
         }
     }

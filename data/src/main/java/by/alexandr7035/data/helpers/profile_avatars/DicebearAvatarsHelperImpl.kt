@@ -1,7 +1,6 @@
 package by.alexandr7035.data.helpers.profile_avatars
 
 import by.alexandr7035.data.extensions.debug
-import by.alexandr7035.data.model.local.profile.DicebearImageType
 import timber.log.Timber
 
 class DicebearAvatarsHelperImpl: DicebearAvatarsHelper {
@@ -19,11 +18,11 @@ class DicebearAvatarsHelperImpl: DicebearAvatarsHelper {
             }
         }
 
-        return "$BASE_URL/$typeString/:$dataString.svg?size=$imageSize"
+        return "$BASE_URL/$typeString/svg?size=$imageSize&seed=:$dataString"
     }
 
     companion object {
-        private const val BASE_URL = "https://avatars.dicebear.com/api"
+        private const val BASE_URL = "https://api.dicebear.com/5.x"
         private const val JDENTICON_TYPE_STR = "jdenticon"
         private const val IDENTICON_TYPE_STR = "identicon"
     }

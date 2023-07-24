@@ -6,13 +6,10 @@ import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelperImpl
 import by.alexandr7035.data.datasource.cache.CacheDatabase
+import by.alexandr7035.data.datasource.cache.app.AppSettingsImpl
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSource
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsCacheDataSourceImpl
 import by.alexandr7035.data.datasource.cache.credentials.CredentialsDAO
-import by.alexandr7035.data.datasource.cache.profile.ProfileStorage
-import by.alexandr7035.data.datasource.cache.profile.ProfileStorageImpl
-import by.alexandr7035.data.datasource.cache.secrets.SecretsStorage
-import by.alexandr7035.data.datasource.cache.secrets.SecretsStorageImpl
 import by.alexandr7035.data.datasource.cloud.ApiCallHelper
 import by.alexandr7035.data.datasource.cloud.ApiCallHelperImpl
 import by.alexandr7035.data.datasource.cloud.CredentialsCloudDataSource
@@ -31,6 +28,11 @@ import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCasterImpl
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import by.alexandr7035.data.repository.*
+import com.cioccarellia.ksprefs.BuildConfig
+import com.cioccarellia.ksprefs.KsPrefs
+import com.cioccarellia.ksprefs.config.EncryptionType
+import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
+import com.cioccarellia.ksprefs.config.model.CommitStrategy
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -46,29 +48,30 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
-
     @Provides
     @Singleton
     fun provideHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
+
+        val builder = OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor())
             .addInterceptor(ErrorInterceptor())
             .addInterceptor(NullBodyHandlerInterceptor())
-            .addInterceptor(HttpLoggingInterceptor().apply {
+            .retryOnConnectionFailure(false)
+
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
-            .retryOnConnectionFailure(false)
-            .build()
+        }
+
+        return builder.build()
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(httpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://cloud-wallet-api.prod.affinity-project.org/")
-            .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        return Retrofit.Builder().baseUrl("https://cloud-wallet-api.prod.affinity-project.org/").client(httpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
     @Provides
@@ -79,26 +82,14 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(profileStorage: ProfileStorage, avatarsHelper: DicebearAvatarsHelper): ProfileRepository {
-        return ProfileRepositoryImpl(profileStorage, avatarsHelper)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthDataStorage(@ApplicationContext context: Context): ProfileStorage {
-        return ProfileStorageImpl(context)
+    fun provideProfileRepository(appSettings: AppSettings): ProfileRepository {
+        return ProfileRepositoryImpl(appSettings)
     }
 
     @Provides
     @Singleton
     fun provideAvatarsHelper(): DicebearAvatarsHelper {
         return DicebearAvatarsHelperImpl()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSecretsStorage(@ApplicationContext context: Context): SecretsStorage {
-        return SecretsStorageImpl(context)
     }
 
     @Provides
@@ -118,20 +109,18 @@ object DataModule {
     fun provideLoginRepository(
         userApiService: UserApiService,
         apiCallHelper: ApiCallHelper,
-        secretsStorage: SecretsStorage,
+        appSettings: AppSettings,
         credentialsCacheDataSource: CredentialsCacheDataSource
     ): LoginRepository {
-        return LoginRepositoryImpl(userApiService, apiCallHelper, secretsStorage, credentialsCacheDataSource)
+        return LoginRepositoryImpl(userApiService, apiCallHelper, appSettings, credentialsCacheDataSource)
     }
 
     @Provides
     @Singleton
     fun provideRegistrationRepository(
-        userApiService: UserApiService,
-        apiCallHelper: ApiCallHelper,
-        secretsStorage: SecretsStorage
+        userApiService: UserApiService, apiCallHelper: ApiCallHelper, appSettings: AppSettings
     ): RegistrationRepository {
-        return RegistrationRepositoryImpl(userApiService, apiCallHelper, secretsStorage)
+        return RegistrationRepositoryImpl(userApiService, apiCallHelper, appSettings)
     }
 
     @Provides
@@ -142,8 +131,10 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideChangeProfileRepository(userApiService: UserApiService, apiCallHelper: ApiCallHelper): ChangeProfileRepository {
-        return ChangeProfileRepositoryImpl(userApiService, apiCallHelper)
+    fun provideChangeProfileRepository(
+        userApiService: UserApiService, apiCallHelper: ApiCallHelper, appSettings: AppSettings
+    ): ChangeProfileRepository {
+        return ChangeProfileRepositoryImpl(userApiService, apiCallHelper, appSettings)
     }
 
     @Provides
@@ -155,19 +146,17 @@ object DataModule {
     @Provides
     @Singleton
     fun provideVCIssuanceHelper(
-        credentialsApiService: CredentialsApiService,
-        credentialSubjectCaster: CredentialSubjectCaster
+        credentialsApiService: CredentialsApiService, credentialSubjectCaster: CredentialSubjectCaster, appSettings: AppSettings
     ): VCIssuanceHelper {
-        return VCIssuanceHelperImpl(credentialsApiService, credentialSubjectCaster)
+        return VCIssuanceHelperImpl(credentialsApiService, credentialSubjectCaster, appSettings)
     }
 
     @Provides
     @Singleton
     fun provideCredentialsCloudDataSource(
-        credentialsApiService: CredentialsApiService,
-        apiCallHelper: ApiCallHelper
+        credentialsApiService: CredentialsApiService, apiCallHelper: ApiCallHelper, appSettings: AppSettings
     ): CredentialsCloudDataSource {
-        return CredentialsCloudDataSourceImpl(credentialsApiService, apiCallHelper)
+        return CredentialsCloudDataSourceImpl(credentialsApiService, apiCallHelper, appSettings)
     }
 
     @Provides
@@ -184,6 +173,7 @@ object DataModule {
         credentialsCloudDataSource: CredentialsCloudDataSource,
         credentialsCacheDataSource: CredentialsCacheDataSource,
         credentialToDomainMapper: SignedCredentialToDomainMapper,
+        appSettings: AppSettings,
     ): StoredCredentialsRepository {
         return StoredCredentialsRepositoryImpl(
             credentialsApiService,
@@ -191,9 +181,9 @@ object DataModule {
             credentialsCloudDataSource,
             credentialsCacheDataSource,
             credentialToDomainMapper,
+            appSettings
         )
     }
-
 
     @Provides
     @Singleton
@@ -205,12 +195,6 @@ object DataModule {
     @Singleton
     fun provideSignedCredentialToDomainMapper(gson: Gson): SignedCredentialToDomainMapper {
         return SignedCredentialToDomainMapperImpl(gson)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthCheckRepository(userApiService: UserApiService, apiCallHelper: ApiCallHelper): AuthCheckRepository {
-        return AuthCheckRepositoryImpl(userApiService, apiCallHelper)
     }
 
     @Provides
@@ -245,9 +229,23 @@ object DataModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): CacheDatabase {
-        return Room
-            .databaseBuilder(context, CacheDatabase::class.java, "cache.db")
-            .fallbackToDestructiveMigration()
-            .build()
+        return Room.databaseBuilder(context, CacheDatabase::class.java, "cache.db").fallbackToDestructiveMigration().build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideKeyValueStorage(@ApplicationContext context: Context): KsPrefs {
+        return KsPrefs(context) {
+            // Configuration Parameters Lambda
+            encryptionType = EncryptionType.PlainText()
+            autoSave = AutoSavePolicy.AUTOMATIC
+            commitStrategy = CommitStrategy.COMMIT
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppSettings(prefs: KsPrefs, avatarsHelper: DicebearAvatarsHelper): AppSettings {
+        return AppSettingsImpl(prefs, avatarsHelper)
     }
 }

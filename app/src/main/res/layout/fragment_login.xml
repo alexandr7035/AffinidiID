@@ -115,9 +115,21 @@
     <TextView
         android:id="@+id/goToSignUpBtn"
         style="@style/goToSignUpText"
-        tools:text="Don't have Affinidi account? Sign up"
+        tools:text="@string/go_to_sign_up"
         android:layout_margin="@dimen/default_fragment_margin"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginForm" />
+
+    <TextView
+        android:id="@+id/copyrightBtn"
+        style="@style/goToSignUpText"
+        android:textAlignment="center"
+        android:text="@string/copyright_note"
+        android:layout_margin="@dimen/default_fragment_margin"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

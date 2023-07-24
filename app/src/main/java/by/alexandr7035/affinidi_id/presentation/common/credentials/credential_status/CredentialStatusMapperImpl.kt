@@ -8,19 +8,19 @@ import javax.inject.Inject
 class CredentialStatusMapperImpl @Inject constructor(private val resourceProvider: ResourceProvider) : CredentialStatusMapper {
     override fun map(credentialStatus: CredentialStatus): CredentialStatusUi {
         val stringStatus = when (credentialStatus) {
-            CredentialStatus.ACTIVE -> {
+            CredentialStatus.Active -> {
                 resourceProvider.getString(R.string.active)
             }
-            CredentialStatus.EXPIRED -> {
+            CredentialStatus.Expired -> {
                 resourceProvider.getString(R.string.expired)
             }
         }
 
         val statusColor = when (credentialStatus) {
-            CredentialStatus.ACTIVE -> {
+            CredentialStatus.Active -> {
                 resourceProvider.getColor(R.color.active_vc_mark)
             }
-            CredentialStatus.EXPIRED -> {
+            CredentialStatus.Expired -> {
                 resourceProvider.getColor(R.color.inactive_vc_mark)
             }
         }

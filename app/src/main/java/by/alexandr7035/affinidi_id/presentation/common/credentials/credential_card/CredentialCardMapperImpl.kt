@@ -18,14 +18,14 @@ class CredentialCardMapperImpl @Inject constructor(
         val credentialExpirationText = if (credential.expirationDate != null) {
 
             when (credential.credentialStatus) {
-                CredentialStatus.ACTIVE -> {
+                CredentialStatus.Active -> {
                     resourceProvider.getString(
                         R.string.credential_active_until_template,
                         credential.expirationDate!!.getStringDateFromLong(CARD_DATE_FORMAT)
                     )
                 }
 
-                CredentialStatus.EXPIRED -> {
+                CredentialStatus.Expired -> {
                     resourceProvider.getString(
                         R.string.credential_expired_at_template,
                         credential.expirationDate!!.getStringDateFromLong(CARD_DATE_FORMAT)
@@ -43,9 +43,6 @@ class CredentialCardMapperImpl @Inject constructor(
             R.string.credential_issued_on_template,
             credential.issuanceDate.getStringDateFromLong(CARD_DATE_FORMAT)
         )
-
-        val formattedIssuerDid = credential.issuerDid.split(";").first()
-        val prettifiedIssuerDid = formattedIssuerDid.getPrettifiedDid()
 
         val formattedHolderDid = credential.holderDid.split(";").first()
         val prettifiedHolderDid = formattedHolderDid.getPrettifiedDid()

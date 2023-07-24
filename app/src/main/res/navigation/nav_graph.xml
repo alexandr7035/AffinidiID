@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/profileFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -27,7 +27,19 @@
         android:id="@+id/profileFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_scanCredentialFragment"
+            app:destination="@id/scanCredentialFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_scannedCredentialFragment"
+            app:destination="@id/scannedCredentialFragment" />
+    </fragment>
 
     <dialog
         android:id="@+id/logoutFragment"
@@ -59,6 +71,9 @@
             tools:layout="@layout/fragment_registration_confirmation">
             <argument
                 android:name="confirmSignUpToken"
+                app:argType="string" />
+            <argument
+                android:name="userName"
                 app:argType="string" />
         </dialog>
         <action
@@ -216,15 +231,6 @@
             app:argType="string" />
     </dialog>
     <fragment
-        android:id="@+id/scanCredentialQrCodeFragment"
-        android:name="by.alexandr7035.affinidi_id.presentation.scan_credential_qr.ScanCredentialQrCodeFragment"
-        android:label="fragment_scan_credential_qr_code"
-        tools:layout="@layout/fragment_scan_credential_qr_code" >
-        <action
-            android:id="@+id/action_scanCredentialQrCodeFragment_to_scannedCredentialFragment"
-            app:destination="@id/scannedCredentialFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/scannedCredentialFragment"
         android:name="by.alexandr7035.affinidi_id.presentation.credential_details.scanned_credential.ScannedCredentialFragment"
         android:label="fragment_scanned_credential"
@@ -243,5 +249,21 @@
         app:destination="@id/loginFragment"
         app:popUpTo="@id/nav_graph.xml"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/biometricsLockFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.app_lock.BiometricsLockFragment"
+        android:label="fragment_biometrics_lock"
+        tools:layout="@layout/fragment_biometrics_lock" >
+        <action
+            android:id="@+id/action_biometricsLockFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph.xml"
+            app:popUpToInclusive="true" />
+    </fragment><action android:id="@+id/action_global_biometricsLockFragment" app:destination="@id/biometricsLockFragment"/>
+    <dialog
+        android:id="@+id/scanCredentialFragment"
+        android:name="by.alexandr7035.affinidi_id.presentation.scan_credential_qr.ScanCredentialFragment"
+        android:label="fragment_scan_credential"
+        tools:layout="@layout/fragment_scan_credential" />
 
 </navigation>

@@ -20,12 +20,12 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
 
         val credentialStatus = if (expirationDate != null) {
             if (expirationDate < System.currentTimeMillis()) {
-                CredentialStatus.EXPIRED
+                CredentialStatus.Expired
             } else {
-                CredentialStatus.ACTIVE
+                CredentialStatus.Active
             }
         } else {
-            CredentialStatus.ACTIVE
+            CredentialStatus.Active
         }
 
         val credentialSubjectString = gson.toJson(signedCredential.credentialSubject.data, JsonObject::class.java)
@@ -46,9 +46,14 @@ class SignedCredentialToDomainMapperImpl @Inject constructor(
             jws = signedCredential.proof.jws
         )
 
+        val schema = signedCredential.context.find {
+            it != "https://www.w3.org/2018/credentials/v1"
+        } ?: signedCredential.context.first()
+
         return Credential(
             id = signedCredential.id,
             vcType = signedCredential.type.last(),
+            vcSchema = schema,
             expirationDate = expirationDate,
             issuanceDate = issuanceDate,
             holderDid = signedCredential.holder.holderDid,

@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">AffinidiID</string>
     <string name="affinidi_id">AffinidiID</string>
+    <string name="app_welcome">Welcome to AffinidiID</string>
+    <string name="copyright_note">This application includes software developed by Affinidi Pte Ltd</string>
+    <string name="copyright_span">Affinidi Pte Ltd</string>
+    <string name="copyright_site">https://www.affinidi.com/</string>
+
     <string name="app_name_with_version">AffinidiID v%1$s</string>
     <string name="create_id">Create ID</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="menu">Menu</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 
     <string name="enter_your_login">Enter your login</string>
     <string name="set_password">Set password</string>
@@ -47,14 +54,14 @@
     <string name="confirmation_code_explanation">We have sent a confirmation code to the e-mail address you have specified. Check your inbox.</string>
 
     <string name="want_to_log_out">Want to log out?</string>
-    <string name="log_out_explanation">Make sure you have saved your verifiable credentials. Otherwise you will have to re-issue them.</string>
+    <string name="log_out_explanation">Your credentials will remain in Affinidi Cloud Wallet until you delete them</string>
     <string name="close">Close</string>
     <string name="forgot_password">Forgot password?</string>
 
     <string name="continue_text">Continue</string>
     <string name="set_new_password">Set new password</string>
     <string name="confirm_password_reset">Confirm new password</string>
-    <string name="password_changed_successfully">Your password has been successfully changed.</string>
+    <string name="password_changed_successfully">Your password has been successfully changed</string>
 
     <string name="reset_password_stage_1">1/3 Specify username</string>
     <string name="reset_password_stage_2">2/3 Set new password</string>
@@ -71,7 +78,8 @@
     <string name="delete_vc_explanation">Sure to delete the VC from cloud wallet? If you haven\'t saved it somewhere, you will have to re-issue it.</string>
     <string name="delete_vc">Delete VC?</string>
     <string name="error_occurred">An error occurred</string>
-    <string name="eror_auth">Your access token has expired. Please, sign in again</string>
+    <string name="error_session_expired">Your session has expired. Please, sign in again</string>
+    <string name="error_auth_failed">Authentication failed</string>
     <string name="credential_info">Credential info</string>
     <string name="credential_id">Credential ID</string>
     <string name="holder">Holder</string>
@@ -91,7 +99,7 @@
     <string name="credential_proof">Credential Proof</string>
     <string name="vc_issuance_successful">A new VC has been issued! Check the credentials list</string>
     <string name="already_have_credential">You already have this credential in the wallet</string>
-    <string name="no_credentials_stub_text">You have no credentials in the wallet. Click + to issue your first one!</string>
+    <string name="no_credentials_stub_text">You have no credentials in the wallet</string>
 
     <string name="share_vc">Share VC</string>
     <string name="qr_code_explanation">Show this QR code to the Verifier so that he can verify the credential.</string>
@@ -99,9 +107,10 @@
     <string name="scanned_credential">Scanned credential</string>
 
     <string name="permission_denied">Permission denied</string>
-    <string name="permission_camera_explanation">Can\'t use camera: permission denied. To scan the credential QR code go to the application settings and allow camera access.</string>
+    <string name="permission_camera_explanation_denied">Can\'t use camera: permission denied. Please, go to the application settings and allow camera access.</string>
+    <string name="permission_camera_explanation">The app uses camera to scan QR codes. Please, provide the permission</string>
     <string name="open_app_settings">Open app settings</string>
-    <string name="scan_the_qr_code_of_verifiable_credential">Scan the QR code of verifiable credential</string>
+    <string name="scan_the_qr_code_of_verifiable_credential">Scan to verify credentiall</string>
     <string name="credential_scan_error">Failed to obtain credential. Please, ensure your are scanning the right QR code. Also check your internet connection</string>
     <string name="all">All</string>
     <string name="cloud">Cloud</string>
@@ -111,4 +120,13 @@
     <string name="claims">Claims</string>
     <string name="issued_by">Issued by</string>
 
+    <string name="lock_with_biometrics">Lock app with biometrics</string>
+    <string name="unlock_with_biometrics">Unlock the app</string>
+    <string name="biometrics_not_available">Biometrics is unavailable on your device</string>
+    <string name="biometrics_not_enabled">Biometrics is not enabled on device. Please, enable biometrics in settings</string>
+    <string name="app_is_now_locked_with_biometrics">App is now locked with biometrics</string>
+    <string name="biometric_lock_disabled">Lock with biometrics disabled</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="unlock_app">Unlock app</string>
 </resources>
