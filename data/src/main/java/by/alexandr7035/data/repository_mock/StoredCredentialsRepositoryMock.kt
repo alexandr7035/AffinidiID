@@ -43,10 +43,9 @@ class StoredCredentialsRepositoryMock: StoredCredentialsRepository {
         }.flowOn(Dispatchers.IO)
     }
 
-    // FIXME
     override suspend fun shareCredential(shareVcReq: ShareCredentialReqModel): ShareCredentialResModel {
-        // TODO check
-        return ShareCredentialResModel.Success(base64QrCode = "dGhpcyBpcyBhIG1vY2sgY3JlZGVudGlhbA==")
+        delay(MockConstants.MOCK_REQ_DELAY_MILLS)
+        return ShareCredentialResModel.Success(base64QrCode = MockConstants.MOCK_QR_CODE)
     }
 
     override suspend fun checkIfHaveCredentialInCache(checkIfHaveVcReqModel: CheckIfHaveVcReqModel): CheckIfHaveVcResModel {
