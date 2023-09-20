@@ -50,6 +50,19 @@ android {
             versionNameSuffix = ".debug"
         }
     }
+
+    flavorDimensions += "version"
+    productFlavors {
+        create("real") {
+            dimension = "version"
+        }
+        create("mock") {
+            dimension = "version"
+            applicationIdSuffix = ".mock"
+            versionNameSuffix = "-mock"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
