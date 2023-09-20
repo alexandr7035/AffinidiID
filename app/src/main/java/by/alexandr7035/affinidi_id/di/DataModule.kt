@@ -2,6 +2,7 @@ package by.alexandr7035.affinidi_id.di
 
 import android.content.Context
 import androidx.room.Room
+import by.alexandr7035.affinidi_id.BuildConfig
 import by.alexandr7035.affinidi_id.domain.repository.*
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelper
 import by.alexandr7035.affinidi_id.presentation.common.validation.InputValidationHelperImpl
@@ -28,7 +29,14 @@ import by.alexandr7035.data.helpers.vc_mapping.CredentialSubjectCasterImpl
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapper
 import by.alexandr7035.data.helpers.vc_mapping.SignedCredentialToDomainMapperImpl
 import by.alexandr7035.data.repository.*
-import com.cioccarellia.ksprefs.BuildConfig
+import by.alexandr7035.data.repository_mock.ChangeProfileRepositoryMock
+import by.alexandr7035.data.repository_mock.IssueCredentialsRepositoryMock
+import by.alexandr7035.data.repository_mock.LoginRepositoryMock
+import by.alexandr7035.data.repository_mock.ProfileRepositoryMock
+import by.alexandr7035.data.repository_mock.RegistrationRepositoryMock
+import by.alexandr7035.data.repository_mock.ResetPasswordRepositoryMock
+import by.alexandr7035.data.repository_mock.StoredCredentialsRepositoryMock
+import by.alexandr7035.data.repository_mock.VerificationRepositoryMock
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
@@ -82,12 +90,6 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(appSettings: AppSettings): ProfileRepository {
-        return ProfileRepositoryImpl(appSettings)
-    }
-
-    @Provides
-    @Singleton
     fun provideAvatarsHelper(): DicebearAvatarsHelper {
         return DicebearAvatarsHelperImpl()
     }
@@ -106,13 +108,30 @@ object DataModule {
 
     @Provides
     @Singleton
+    fun provideProfileRepository(
+        appSettings: AppSettings,
+        avatarsHelper: DicebearAvatarsHelper
+    ): ProfileRepository {
+        return if (isMockBuild()) {
+            ProfileRepositoryMock(avatarsHelper)
+        } else {
+            ProfileRepositoryImpl(appSettings)
+        }
+    }
+
+    @Provides
+    @Singleton
     fun provideLoginRepository(
         userApiService: UserApiService,
         apiCallHelper: ApiCallHelper,
         appSettings: AppSettings,
         credentialsCacheDataSource: CredentialsCacheDataSource
     ): LoginRepository {
-        return LoginRepositoryImpl(userApiService, apiCallHelper, appSettings, credentialsCacheDataSource)
+        return if (isMockBuild()) {
+            LoginRepositoryMock(appSettings)
+        } else {
+            LoginRepositoryImpl(userApiService, apiCallHelper, appSettings, credentialsCacheDataSource)
+        }
     }
 
     @Provides
@@ -120,13 +139,22 @@ object DataModule {
     fun provideRegistrationRepository(
         userApiService: UserApiService, apiCallHelper: ApiCallHelper, appSettings: AppSettings
     ): RegistrationRepository {
-        return RegistrationRepositoryImpl(userApiService, apiCallHelper, appSettings)
+
+        return if (isMockBuild()) {
+            RegistrationRepositoryMock()
+        } else {
+            RegistrationRepositoryImpl(userApiService, apiCallHelper, appSettings)
+        }
     }
 
     @Provides
     @Singleton
     fun provideResetPasswordRepository(userApiService: UserApiService, apiCallHelper: ApiCallHelper): ResetPasswordRepository {
-        return ResetPasswordRepositoryImpl(userApiService, apiCallHelper)
+        return if (isMockBuild()) {
+            ResetPasswordRepositoryMock()
+        } else {
+            ResetPasswordRepositoryImpl(userApiService, apiCallHelper)
+        }
     }
 
     @Provides
@@ -134,7 +162,11 @@ object DataModule {
     fun provideChangeProfileRepository(
         userApiService: UserApiService, apiCallHelper: ApiCallHelper, appSettings: AppSettings
     ): ChangeProfileRepository {
-        return ChangeProfileRepositoryImpl(userApiService, apiCallHelper, appSettings)
+        return if (isMockBuild()) {
+            ChangeProfileRepositoryMock()
+        } else {
+            ChangeProfileRepositoryImpl(userApiService, apiCallHelper, appSettings)
+        }
     }
 
     @Provides
@@ -175,14 +207,19 @@ object DataModule {
         credentialToDomainMapper: SignedCredentialToDomainMapper,
         appSettings: AppSettings,
     ): StoredCredentialsRepository {
-        return StoredCredentialsRepositoryImpl(
-            credentialsApiService,
-            apiCallHelper,
-            credentialsCloudDataSource,
-            credentialsCacheDataSource,
-            credentialToDomainMapper,
-            appSettings
-        )
+
+        return if (isMockBuild()) {
+            StoredCredentialsRepositoryMock()
+        } else {
+            StoredCredentialsRepositoryImpl(
+                credentialsApiService,
+                apiCallHelper,
+                credentialsCloudDataSource,
+                credentialsCacheDataSource,
+                credentialToDomainMapper,
+                appSettings
+            )
+        }
     }
 
     @Provides
@@ -200,7 +237,11 @@ object DataModule {
     @Provides
     @Singleton
     fun provideIssueCredentialsRepository(vcIssuanceHelper: VCIssuanceHelper): IssueCredentialsRepository {
-        return IssueCredentialsRepositoryImpl(vcIssuanceHelper)
+        return if (isMockBuild()) {
+            IssueCredentialsRepositoryMock()
+        } else {
+            IssueCredentialsRepositoryImpl(vcIssuanceHelper)
+        }
     }
 
     @Provides
@@ -211,7 +252,11 @@ object DataModule {
         signedCredentialToDomainMapper: SignedCredentialToDomainMapper,
         gson: Gson
     ): VerificationRepository {
-        return VerificationRepositoryImpl(credentialsApiService, apiCallHelper, signedCredentialToDomainMapper, gson)
+        return if (isMockBuild()) {
+            VerificationRepositoryMock()
+        } else {
+            VerificationRepositoryImpl(credentialsApiService, apiCallHelper, signedCredentialToDomainMapper, gson)
+        }
     }
 
     @Provides
@@ -247,5 +292,9 @@ object DataModule {
     @Singleton
     fun provideAppSettings(prefs: KsPrefs, avatarsHelper: DicebearAvatarsHelper): AppSettings {
         return AppSettingsImpl(prefs, avatarsHelper)
+    }
+
+    private fun isMockBuild(): Boolean {
+        return BuildConfig.FLAVOR == "mock"
     }
 }
