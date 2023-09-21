@@ -1,6 +1,6 @@
 # AffinidiID
 
-> :warning: Since August 2022 Affinidi API stopped working. You can download [mock](https://github.com/alexandr7035/AffinidiID/releases/tag/v4.1-mock) build of the app.  
+> :warning: Since August 2023 Affinidi API stopped working. You can download [mock](https://github.com/alexandr7035/AffinidiID/releases/tag/v4.1-mock) build of the app.  
 > Use `test@mail.com` login and `1234567Ab` password to get into the application.
 
  * [About the app](#about-the-app)
